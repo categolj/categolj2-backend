@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Events</title>
+
+    <link href="../../content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../../styles/kendo.default.min.css" rel="stylesheet">
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/kendo.web.min.js"></script>
+    <script src="../../content/shared/js/console.js"></script>
+    <script>
+        
+    </script>
+    
+    
+</head>
+<body>
+    
+        <a class="offline-button" href="../index.html">Back</a>
+    
+    
+        <div id="example" class="k-content">
+            <div class="demo-section">
+                <h3 class="title">ComboBox
+                </h3>
+                <input id="combobox"/>
+            </div>
+            <div class="demo-section">                
+                <h3 class="title">Console log
+                </h3>
+                <div class="console"></div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    function onOpen() {
+                        if ("kendoConsole" in window) {
+                            kendoConsole.log("event :: open");
+                        }
+                    }
+
+                    function onClose() {
+                        if ("kendoConsole" in window) {
+                            kendoConsole.log("event :: close");
+                        }
+                    }
+
+                    function onChange() {
+                        if ("kendoConsole" in window) {
+                            kendoConsole.log("event :: change");
+                        }
+                    }
+
+                    function onSelect(e) {
+                        if ("kendoConsole" in window) {
+                            var dataItem = this.dataItem(e.item.index());
+                            kendoConsole.log("event :: select (" + dataItem.text + " : " + dataItem.value + ")" );
+                        }
+                    };
+
+                    function onDataBound(e) {
+                        if ("kendoConsole" in window) {                            
+                            kendoConsole.log("event :: dataBound");
+                        }
+                    };
+
+                    var data = [
+                        { text: "Item 1", value:"1" },
+                        { text: "Item 2", value:"2" },
+                        { text: "Item 3", value:"3" }
+                    ];
+
+                    $("#combobox").kendoComboBox({
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataSource: data,
+                        select: onSelect,
+                        change: onChange,
+                        close: onClose,
+                        open: onOpen,
+                        dataBound:onDataBound
+                    });
+                });
+            </script>
+            <style scoped>
+                .demo-section {
+                    width: 500px;
+                    text-align: center;
+                }
+                .console {
+                    margin: 0;
+                }
+            </style>                        
+        </div>
+        
+</body>
+</html>

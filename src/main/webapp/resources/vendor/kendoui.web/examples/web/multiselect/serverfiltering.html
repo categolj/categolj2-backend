@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Server filtering</title>
+
+    <link href="../../content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../../styles/kendo.default.min.css" rel="stylesheet">
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/kendo.web.min.js"></script>
+    <script src="../../content/shared/js/console.js"></script>
+    <script>
+        
+    </script>
+    
+    
+</head>
+<body>
+    
+        <a class="offline-button" href="../index.html">Back</a>
+    
+    
+<div id="example" class="k-content">
+    <div class="demo-section">
+        <h2>Products</h2>
+        <select id="products"></select>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#products").kendoMultiSelect({
+                placeholder: "Select products...",
+                dataTextField: "ProductName",
+                dataValueField: "ProductID",
+                autoBind: false,
+                dataSource: {
+                    type: "odata",
+                    serverFiltering: true,
+                    transport: {
+                        read: {
+                            url: "http://demos.kendoui.com/service/Northwind.svc/Products",
+                        }
+                    }
+                },
+                value: [
+                    { ProductName: "Chang", ProductID: 2 },
+                    { ProductName: "Uncle Bob's Organic Dried Pears", ProductID: 7 }
+                ]
+            });
+        });
+    </script>
+    <style scoped>
+        .demo-section {
+            width: 300px;
+            margin: 35px auto 50px;
+            padding: 30px;
+        }
+        .demo-section h2 {
+            text-transform: uppercase;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+    </style>
+</div>
+
+</body>
+</html>

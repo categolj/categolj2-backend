@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <import resource="classpath:/META-INF/spring/projectName-domain.xml" />
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+    <context:property-placeholder
+        location="classpath*:/META-INF/spring/*.properties" />
+
+    <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
+        <property name="mappingFiles"
+            value="classpath*:/META-INF/dozer/**/*-mapping.xml" />
+    </bean>
+
+    <!-- Message -->
+    <bean id="messageSource"
+        class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>i18n/application-messages</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Exception Code Resolver. -->
+    <bean id="exceptionCodeResolver"
+        class="org.terasoluna.gfw.common.exception.SimpleMappingExceptionCodeResolver">
+        <!-- Setting and Customization by project. -->
+        <property name="exceptionMappings">
+            <map>
+                <entry key="ResourceNotFoundException" value="w.xx.0001" />
+                <entry key="BusinessException" value="w.xx.0002" />
+            </map>
+        </property>
+        <property name="defaultExceptionCode" value="e.xx.0001" />
+    </bean>
+
+    <!-- Exception Logger. -->
+    <bean id="exceptionLogger"
+        class="org.terasoluna.gfw.common.exception.ExceptionLogger">
+        <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
+    </bean>
+
+    <!-- Filter. -->
+    <bean id="exceptionLoggingFilter"
+        class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter" >
+        <property name="exceptionLogger" ref="exceptionLogger" />
+    </bean>
+
+</beans>

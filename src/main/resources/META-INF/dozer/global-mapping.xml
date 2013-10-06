@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <configuration>
+        <relationship-type>non-cumulative</relationship-type>
+    </configuration>
+    <mapping map-null="false" wildcard="false">
+        <class-a>am.ik.categolj2.domain.model.Entry</class-a>
+        <class-b>am.ik.categolj2.domain.model.Entry</class-b>
+        <field remove-orphans="true" relationship-type="non-cumulative">
+            <a>category</a>
+            <b>category</b>
+        </field>
+    </mapping>
+</mappings> 

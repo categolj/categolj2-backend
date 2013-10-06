@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Events</title>
+
+    <link href="../../content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../../styles/kendo.default.min.css" rel="stylesheet">
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/kendo.web.min.js"></script>
+    <script src="../../content/shared/js/console.js"></script>
+    <script>
+        
+    </script>
+    
+    
+</head>
+<body>
+    
+        <a class="offline-button" href="../index.html">Back</a>
+    
+            <div id="example" class="k-content">
+
+            <div class="demo-section">
+                <span id="autohide-true" class="key-button wider">Hover me!</span>
+                <span id="autohide-false" class="key-button wider">Hover me too!</span>
+            </div>
+
+            <script>
+                function onShow(e) {
+                    kendoConsole.log("event :: show");
+                }
+
+                function onHide(e) {
+                    kendoConsole.log("event :: hide");
+                }
+
+                $(document).ready(function() {
+                    $("#autohide-true").kendoTooltip({
+                        content: "Hello!",
+                        show: onShow,
+                        hide: onHide,
+                        position: "top"
+                    });
+                    $("#autohide-false").kendoTooltip({
+                        autoHide: false,
+                        show: onShow,
+                        hide: onHide,
+                        position: "top",
+                        content: "Hello!"
+                    });
+                });
+            </script>
+            
+            <div class="demo-section">
+                <h3 class="title">Console log</h3>
+                <div class="console"></div>
+            </div>
+            <style scoped>
+                .demo-section {
+                    width: 600px;
+                }
+            </style>
+            <style scoped>
+                .demo-section {
+                    padding-top: 2em;
+                    padding-bottom: 2em;
+                    text-align: center;
+                }
+                .wider {
+                    margin: 0 20px;
+                    padding: 15px 8px;
+                    line-height: 23px;
+                    width: 120px;
+                }
+            </style>
+        </div>
+
+</body>
+</html>

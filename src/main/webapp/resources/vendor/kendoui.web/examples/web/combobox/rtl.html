@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RTL support</title>
+
+    <link href="../../content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../../styles/kendo.default.min.css" rel="stylesheet">
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/kendo.web.min.js"></script>
+    <script src="../../content/shared/js/console.js"></script>
+    <script>
+        
+    </script>
+    
+    
+</head>
+<body>
+    
+        <a class="offline-button" href="../index.html">Back</a>
+    
+    
+        <div id="example" class="k-content">            
+            <div class="demo-section">
+                <div class="k-rtl">
+                    <h2>RTL ComboBox</h2>
+                    <input id="combobox" />
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    var data = [
+                        { text: "Item 1", value:"1" },
+                        { text: "Item 2", value:"2" },
+                        { text: "Item 3", value:"3" }
+                    ];
+
+                    $("#combobox").kendoComboBox({
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataSource: data
+                    });
+                });
+            </script>
+            
+            <style scoped>
+                .demo-section {
+                    width: 250px;
+                    margin: 35px auto 50px;
+                    padding: 30px;
+                }
+                .demo-section h2 {
+                    text-transform: uppercase;
+                    font-size: 1.2em;
+                    margin-bottom: 10px;
+                }
+            </style>
+        </div>
+</body>
+</html>

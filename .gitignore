@@ -1,0 +1,14 @@
+log
+target
+.settings
+.classpath
+.project
+.springBeans
+src/main/webapp/upload/*
+src/main/webapp/categolj2-frontend
+message
+mecab-ipadic*
+*~
+.git
+.idea
+.DS_Store

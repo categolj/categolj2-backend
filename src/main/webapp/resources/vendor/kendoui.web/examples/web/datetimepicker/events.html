@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Events</title>
+
+    <link href="../../content/shared/styles/examples-offline.css" rel="stylesheet">
+    <link href="../../../styles/kendo.common.min.css" rel="stylesheet">
+    <link href="../../../styles/kendo.default.min.css" rel="stylesheet">
+
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/kendo.web.min.js"></script>
+    <script src="../../content/shared/js/console.js"></script>
+    <script>
+        
+    </script>
+    
+    
+</head>
+<body>
+    
+        <a class="offline-button" href="../index.html">Back</a>
+    
+    
+        <div id="example" class="k-content">
+            <div class="demo-section" style="width: 185px;">
+                <h3 class="title">Select date and time
+                </h3>
+                <input id="datetimepicker"/>
+            </div>
+            <div class="demo-section">                
+                <h3 class="title">Console log
+                </h3>
+                <div class="console"></div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    function onOpen(e) {
+                        kendoConsole.log("Open: " + e.view + " view");
+                    }
+
+                    function onClose(e) {
+                        kendoConsole.log("Close: " + e.view + " view");
+                    }
+
+                    function onChange() {
+                        kendoConsole.log("Change :: " + kendo.toString(this.value(), 'g'));
+                    }
+
+                    $("#datetimepicker").kendoDateTimePicker({
+                        change: onChange,
+                        close: onClose,
+                        open: onOpen
+                    });
+                });
+            </script>
+        </div>
+        
+
+</body>
+</html>
