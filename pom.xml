@@ -16,7 +16,7 @@
 
     <properties>
         <java-version>1.7</java-version>
-    <org.hibernate.version>4.2.5.Final</org.hibernate.version>
+        <org.hibernate.version>4.2.5.Final</org.hibernate.version>
     </properties>
 
     <repositories>
@@ -69,6 +69,13 @@
             <artifactId>terasoluna-gfw-recommended-web-dependencies</artifactId>
             <type>pom</type>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>4.3.0.Final</version>
+        </dependency>
+
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
             <artifactId>terasoluna-gfw-jpa</artifactId>

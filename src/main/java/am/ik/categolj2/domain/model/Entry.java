@@ -18,6 +18,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Auditable;
 
@@ -29,6 +34,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Indexed
 @Table(name = "ENTRY")
 public class Entry implements Auditable<String, Integer> {
 	private static final long serialVersionUID = 1L;
@@ -43,6 +49,7 @@ public class Entry implements Auditable<String, Integer> {
 	@NotNull
 	@Size(min = 1, max = 65536)
 	@Column(name = "CONTENTS")
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String contents;
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true, mappedBy = "entry")
 	@OrderBy("CATEGORY_ORDER ASC")

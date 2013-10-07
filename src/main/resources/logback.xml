@@ -83,6 +83,10 @@
         <level value="debug" />
     </logger>
 
+    <logger name="org.hibernate.search">
+        <level value="debug" />
+    </logger>
+    
     <logger name="jdbc.sqltiming">
         <level value="debug" />
     </logger>

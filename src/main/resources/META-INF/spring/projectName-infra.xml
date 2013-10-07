@@ -38,6 +38,10 @@
                 <entry key="hibernate.use_sql_comments" value="true" />
                 <entry key="hibernate.jdbc.batch_size" value="30" />
                 <entry key="hibernate.jdbc.fetch_size" value="100" />
+                <entry key="hibernate.search.default.directory_provider"
+                    value="filesystem" />
+                <entry key="hibernate.search.default.indexBase"
+                    value="/tmp/lucene" />
             </util:map>
         </property>
     </bean>

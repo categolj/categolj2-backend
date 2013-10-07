@@ -10,7 +10,8 @@ import org.springframework.data.repository.query.Param;
 
 import am.ik.categolj2.domain.model.Entry;
 
-public interface EntryRepository extends JpaRepository<Entry, Integer> {
+public interface EntryRepository extends JpaRepository<Entry, Integer>,
+		EntryRepositoryCustom {
 	@Query(value = "SELECT DISTINCT x FROM Entry x JOIN FETCH x.category ORDER BY x.lastModifiedDate DESC", countQuery = "SELECT COUNT(x) FROM Entry x")
 	Page<Entry> findPageDetailsOrderByLastModifiedDateDesc(Pageable pageable);
 

@@ -100,8 +100,8 @@ public class EntryRepositoryTest {
 	@Rollback(false)
 	public void testFindDetailsByCateogyNameAndOrder() {
 		Page<Entry> entries = entryRepository
-				.findPageDetailsPublishedByCateogyNameAndOrder("Programmming", 1,
-						new PageRequest(0, 10));
+				.findPageDetailsPublishedByCateogyNameAndOrder("Programmming",
+						1, new PageRequest(0, 10));
 		System.out.println(entries.getContent());
 	}
 
@@ -113,5 +113,12 @@ public class EntryRepositoryTest {
 						0, 10));
 		System.out.println(entries.getContent());
 		System.out.println(entries.getTotalElements());
+	}
+
+	@Test
+	@Rollback(false)
+	public void testSearch() {
+		System.out.println(entryRepository.serachPageByTerm("hello",
+				new PageRequest(0, 10)).getContent());
 	}
 }
