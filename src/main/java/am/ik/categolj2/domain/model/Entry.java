@@ -45,6 +45,7 @@ public class Entry implements Auditable<String, Integer> {
 	@NotNull
 	@Size(min = 1, max = 512)
 	@Column(name = "TITLE")
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	private String title;
 	@NotNull
 	@Size(min = 1, max = 65536)

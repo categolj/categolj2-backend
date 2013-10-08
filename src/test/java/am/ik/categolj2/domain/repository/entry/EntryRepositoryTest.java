@@ -45,9 +45,8 @@ public class EntryRepositoryTest {
 		DateTime now = new DateTime();
 		String user = null;
 
-		Entry entry = new Entry(null, "Hello World!",
-				"This is a sample contents.", null, now, now, user, user, true,
-				null);
+		Entry entry = new Entry(null, "hoge!", "日本語のサンプルです", null, now, now,
+				user, user, true, null);
 
 		entryRepository.saveAndFlush(entry);
 		assertThat(entry.getEntryId(), is(notNullValue()));
@@ -118,7 +117,7 @@ public class EntryRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testSearch() {
-		System.out.println(entryRepository.serachPageByTerm("hello",
+		System.out.println(entryRepository.serachPageByKeyword("日本語",
 				new PageRequest(0, 10)).getContent());
 	}
 }

@@ -29,13 +29,13 @@ public class EntryRepositoryImpl implements EntryRepositoryCustom {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<Entry> serachPageByTerm(String term, Pageable pageable) {
+	public Page<Entry> serachPageByKeyword(String keyword, Pageable pageable) {
 		FullTextEntityManager fullTextEntityManager = Search
 				.getFullTextEntityManager(entityManager);
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
 				.buildQueryBuilder().forEntity(Entry.class).get();
 		org.apache.lucene.search.Query query = queryBuilder.keyword()
-				.onField("contents").matching(term).createQuery();
+				.onFields("contents", "title").matching(keyword).createQuery();
 		Query jpaQuery = fullTextEntityManager
 				.createFullTextQuery(query, Entry.class)
 				.setFirstResult(pageable.getOffset())

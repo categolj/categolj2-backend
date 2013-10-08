@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import am.ik.categolj2.domain.model.Entry;
 
 public interface EntryRepositoryCustom {
-	Page<Entry> serachPageByTerm(String term, Pageable pageable);
+	Page<Entry> serachPageByKeyword(String keyword, Pageable pageable);
 }
