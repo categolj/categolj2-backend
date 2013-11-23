@@ -7,7 +7,11 @@ import org.springframework.data.repository.query.Param;
 import am.ik.categolj2.domain.model.User;
 
 public interface UserRepository extends JpaRepository<User, String> {
-	User findOneByEmail(String email);
+	@Query(value = "SELECT DISTINCT x FROM User x JOIN FETCH x.roles WHERE x.username = :username")
+	User findDetails(@Param("username") String username);
+
+	@Query(value = "SELECT DISTINCT x FROM User x JOIN FETCH x.roles WHERE x.email = :email")
+	User findOneByEmail(@Param("email") String email);
 
 	@Query("SELECT x.username FROM User x WHERE x.email = :email")
 	String findUsernameByEmail(@Param("email") String email);

@@ -14,10 +14,12 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "entry")
 @Entity
 @Table(name = "CATEGORY")
 public class Category implements Comparable<Category> {
@@ -40,11 +42,6 @@ public class Category implements Comparable<Category> {
 	@Override
 	public int compareTo(Category o) {
 		return this.categoryPK.compareTo(o.categoryPK);
-	}
-
-	@Override
-	public String toString() {
-		return "Category[" + categoryPK + ", " + categoryName + "]";
 	}
 
 	@Override

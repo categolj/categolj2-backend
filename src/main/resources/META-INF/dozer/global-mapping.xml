@@ -5,10 +5,11 @@
     <configuration>
         <relationship-type>non-cumulative</relationship-type>
     </configuration>
-    <mapping map-null="false" wildcard="false">
+
+    <mapping map-null="false">
         <class-a>am.ik.categolj2.domain.model.Entry</class-a>
         <class-b>am.ik.categolj2.domain.model.Entry</class-b>
-        <field remove-orphans="true" relationship-type="non-cumulative">
+        <field relationship-type="non-cumulative" remove-orphans="true" >
             <a>category</a>
             <b>category</b>
         </field>

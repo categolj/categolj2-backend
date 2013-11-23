@@ -90,6 +90,9 @@
     <logger name="jdbc.sqltiming">
         <level value="debug" />
     </logger>
+    <logger name="jdbc.resultsettable">
+        <level value="trace" />
+    </logger>
 <!--     <logger name="org.dozer.DozerBeanMapper"> -->
 <!--         <level value="trace" /> -->
 <!--     </logger> -->

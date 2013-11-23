@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,13 +29,15 @@ public class UserServiceImpl implements UserService {
 	@Inject
 	protected PasswordEncoder passwordEncoder;
 	@Inject
+	protected Mapper beanMapper;
+	@Inject
 	protected DateFactory dateFactory;
 	@Inject
 	protected RoleRepository roleRepository;
 
 	@Override
 	public User findOne(String username) {
-		User user = userRepository.findOne(username);
+		User user = userRepository.findDetails(username);
 		if (user == null) {
 			throw new ResourceNotFoundException("user is not found. [username="
 					+ username + "]");
@@ -46,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	public User findOneByUsernameOrEmail(String usernameOrEmail) {
 		User user = userRepository.findOneByEmail(usernameOrEmail);
 		if (user == null) {
-			user = userRepository.findOne(usernameOrEmail);
+			user = userRepository.findDetails(usernameOrEmail);
 		}
 		if (user == null) {
 			throw new ResourceNotFoundException(
@@ -79,21 +82,8 @@ public class UserServiceImpl implements UserService {
 					"The given email is already used. [email=" + email + "]");
 		}
 
-		Set<Role> newRoles = new HashSet<>();
-		Set<Role> roles = user.getRoles();
-		if (roles != null) {
-			for (Role role : roles) {
-				Integer roleId = role.getRoleId();
-				Role newRole = roleRepository.findOne(roleId);
-				if (newRole == null) {
-					throw new BusinessException(
-							"The given role is invalid. [roleId=" + roleId
-									+ "]");
-				}
-				newRoles.add(newRole);
-			}
-		}
-		user.setRoles(newRoles); // replace
+		// check roles
+		checkRoles(user);
 
 		String encodedPassword = passwordEncoder.encode(rawPassword);
 		user.setPassword(encodedPassword);
@@ -108,15 +98,11 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	@Override
-	public User update(User user, String rawPassword) {
-		Assert.notNull(user, "user must not be null");
+	public User update(String username, User updatedUser,
+			String updatedRawPassword) {
+		Assert.notNull(updatedUser, "user must not be null");
 
-		Set<Role> roles = user.getRoles();
-		Set<Role> newRoles = new HashSet<>();
-		user.setRoles(newRoles); // replace
-
-		String username = user.getUsername();
-		String email = user.getEmail();
+		String email = updatedUser.getEmail();
 
 		// check the given user is existing
 		if (!userRepository.exists(username)) {
@@ -127,35 +113,44 @@ public class UserServiceImpl implements UserService {
 
 		// check the given email is not used by others
 		long countUsingEmail = userRepository.countByEmail(email);
-		if (countUsingEmail > 1) {
-			// user is already updated, so count will be 2 if the email is used
-			// this depends on JPA
+		if (countUsingEmail > 0) {
 			throw new BusinessException(
 					"The given email is already used. [email=" + email + "]");
 		}
 
-		// update roles
+		// check roles
+		checkRoles(updatedUser);
+
+		// encode raw password
+		String encodedPassword = passwordEncoder.encode(updatedRawPassword);
+		updatedUser.setPassword(encodedPassword);
+		DateTime now = dateFactory.newDateTime();
+		updatedUser.setLastModifiedDate(now);
+		// lastModifiedBy are set by AuditingEntityListener
+
+		User user = findOne(username);
+		// copy new values to user
+		beanMapper.map(updatedUser, user);
+		userRepository.save(user);
+		return user;
+	}
+
+	private void checkRoles(User user) {
+		Set<Role> rolesToReplace = new HashSet<>();
+		Set<Role> roles = user.getRoles();
 		if (roles != null) {
 			for (Role role : roles) {
 				Integer roleId = role.getRoleId();
-				Role newRole = roleRepository.findOne(roleId);
-				if (newRole == null) {
+				Role loadedRole = roleRepository.findOne(roleId);
+				if (loadedRole == null) {
 					throw new BusinessException(
 							"The given role is invalid. [roleId=" + roleId
 									+ "]");
 				}
-				newRoles.add(newRole);
+				rolesToReplace.add(loadedRole);
 			}
 		}
-
-		// encode raw password
-		String encodedPassword = passwordEncoder.encode(rawPassword);
-		user.setPassword(encodedPassword);
-		DateTime now = dateFactory.newDateTime();
-		user.setLastModifiedDate(now);
-		// lastModifiedBy are set by AuditingEntityListener
-		userRepository.save(user);
-		return user;
+		user.setRoles(rolesToReplace); // replace
 	}
 
 	@Transactional

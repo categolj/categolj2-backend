@@ -3,10 +3,8 @@ package am.ik.categolj2.domain.service.entry;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -22,11 +20,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 import am.ik.categolj2.domain.model.Category;
 import am.ik.categolj2.domain.model.Entry;
+import am.ik.categolj2.domain.model.EntryHistory;
 import am.ik.categolj2.domain.repository.category.CategoryRepository;
+import am.ik.categolj2.domain.repository.entry.EntryRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
@@ -35,6 +34,8 @@ public class EntryServiceImplTest {
 
 	@Inject
 	EntryService entryService;
+	@Inject
+	EntryRepository entryRepository;
 
 	@Inject
 	CategoryRepository categoryRepository;
@@ -88,6 +89,7 @@ public class EntryServiceImplTest {
 		Entry entry = new Entry();
 		entry.setTitle("My first entry");
 		entry.setContents("Hi, This is duke.");
+		entry.setFormat("md");
 		entry.setPublished(true);
 		entry.setCreatedDate(new DateTime(1984, 4, 12, 0, 0));
 		List<Category> category = Arrays.asList(new Category(null, 1, "aaa"),
@@ -99,33 +101,76 @@ public class EntryServiceImplTest {
 	@Test
 	@Rollback(false)
 	public void testUpdate() {
+		System.out.println("update test");
 		Integer entryId = EntryServiceImplTest.entryId;
-		Entry entry = entryService.findOne(entryId);
-		System.out.println(entry.getCategory().size() + " count: "
-				+ entry.getCategory());
+
+		Entry entry = new Entry();
 		entry.setTitle("update test");
 		entry.setContents("This contents is updated!");
+		entry.setFormat("md");
+		entry.setPublished(true);
 
 		List<Category> category = Lists.newArrayList(new Category(entryId, 1,
 				"xx"), new Category(entryId, 2, "yy"), new Category(entryId, 3,
-				"zz")
-		// , new Category(entryId, 4, "aa")
-		// , new Category(entryId, 5, "pp")
-				);
-		Entry dummy = new Entry();
-		dummy.setCategory(category);
-		beanMapper.map(dummy, entry);
+				"zz"));
+		entry.setCategory(category);
 
 		System.out.println(entry.getCategory().size() + " count: "
 				+ entry.getCategory());
-		Entry updated = entryService.update(entry, true);
+		System.out.println("do update");
+		Entry updated = entryService.update(entryId, entry, true, true);
 		System.out.println(updated);
+
+		assertThat(updated.getEntryId(), is(entryId));
+		assertThat(updated.getTitle(), is("update test"));
+		assertThat(updated.getContents(), is("This contents is updated!"));
+		assertThat(updated.getFormat(), is("md"));
+		assertThat(updated.isPublished(), is(true));
+		assertThat(updated.getCategory(), is(category));
+
+	}
+
+	//@Test
+	@Rollback(false)
+	public void testUpdate_reduce_category() {
+		System.out.println("update test 2");
+		Integer entryId = EntryServiceImplTest.entryId;
+
+		Entry entry = new Entry();
+		entry.setTitle("update test 2");
+		entry.setContents("This contents is updated twice!");
+		entry.setFormat("html");
+		entry.setPublished(true);
+
+		List<Category> category = Lists.newArrayList(new Category(entryId, 1,
+				"xx"), new Category(entryId, 2, "foo"));
+		entry.setCategory(category);
+
+		System.out.println(entry.getCategory().size() + " count: "
+				+ entry.getCategory());
+		System.out.println("do update");
+		Entry updated = entryService.update(entryId, entry, true, true);
+		System.out.println(updated);
+
+		assertThat(updated.getEntryId(), is(entryId));
+		assertThat(updated.getTitle(), is("update test 2"));
+		assertThat(updated.getContents(), is("This contents is updated twice!"));
+		assertThat(updated.getFormat(), is("html"));
+		assertThat(updated.isPublished(), is(true));
+		assertThat(updated.getCategory(), is(category));
+
 	}
 
 	@Test
 	@Rollback(false)
 	public void testDelete() {
+		Entry entry = entryService.findOne(EntryServiceImplTest.entryId);
+		for(EntryHistory h : entry.getHistories()) {
+			System.out.println(h);
+		}
 		entryService.delete(EntryServiceImplTest.entryId);
+		assertThat(entryRepository.findOne(EntryServiceImplTest.entryId),
+				is(nullValue()));
 	}
 
 }

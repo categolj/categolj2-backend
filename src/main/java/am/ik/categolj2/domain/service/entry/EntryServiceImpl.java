@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.dozer.Mapper;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,20 +19,25 @@ import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 
 import am.ik.categolj2.domain.model.Category;
 import am.ik.categolj2.domain.model.Entry;
+import am.ik.categolj2.domain.model.EntryHistory;
 import am.ik.categolj2.domain.repository.category.CategoryRepository;
+import am.ik.categolj2.domain.repository.entry.EntryHistoryRepository;
 import am.ik.categolj2.domain.repository.entry.EntryRepository;
 
 @Service
 public class EntryServiceImpl implements EntryService {
+	private static final Logger logger = LoggerFactory
+			.getLogger(EntryServiceImpl.class);
 	@Inject
 	protected EntryRepository entryRepository;
-
+	@Inject
+	protected EntryHistoryRepository entryHistoryRepository;
 	@Inject
 	protected CategoryRepository categoryRepository;
-
+	@Inject
+	protected Mapper beanMapper;
 	@Inject
 	protected DateFactory dateFactory;
-
 	protected Pageable recentlyPageable = new PageRequest(0, 10);
 
 	@Override
@@ -99,12 +107,26 @@ public class EntryServiceImpl implements EntryService {
 
 	@Override
 	@Transactional
-	public Entry update(Entry entry, boolean updateLastModifiedDate) {
-		Assert.notNull(entry, "entry must not be null");
+	public Entry update(Integer entryId, Entry updatedEntry,
+			boolean updateLastModifiedDate, boolean saveInHistory) {
+		Assert.notNull(updatedEntry, "entry must not be null");
+
+		Entry entry = findOne(entryId); // old entry
+
+		if (saveInHistory) {
+			logger.info("save history for entryId={}", entryId);
+			EntryHistory history = beanMapper.map(entry, EntryHistory.class);
+			history.setEntry(entry);
+			entryHistoryRepository.save(history);
+		}
+
 		if (updateLastModifiedDate) {
 			DateTime now = dateFactory.newDateTime();
-			entry.setLastModifiedDate(now);
+			updatedEntry.setLastModifiedDate(now);
 		}
+
+		// copy new values to entry
+		beanMapper.map(updatedEntry, entry);
 		entryRepository.save(entry);
 		return entry;
 	}

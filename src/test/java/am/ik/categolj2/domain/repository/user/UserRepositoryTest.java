@@ -34,7 +34,9 @@ public class UserRepositoryTest {
 	// @Rollback(false)
 	public void setUp() {
 		User user = new User("user1", "user1", "user1@example.com", true,
-				false, "User1", "Name1", now, now, null, null, 0L, null);
+				false, "User1", "Name1", null);
+		user.setCreatedDate(now);
+		user.setLastModifiedDate(now);
 		userRepository.save(user);
 	}
 
@@ -42,7 +44,9 @@ public class UserRepositoryTest {
 	// @Rollback(false)
 	public void testSave() {
 		User user = new User("making", "hoge", "makingx@gmail.com", true,
-				false, "Toshiaki", "Maki", now, now, null, null, 0L, null);
+				false, "Toshiaki", "Maki", null);
+		user.setCreatedDate(now);
+		user.setLastModifiedDate(now);
 		userRepository.save(user);
 	}
 
@@ -52,7 +56,6 @@ public class UserRepositoryTest {
 		System.out.println(user.getRoles());
 		assertThat(user, is(notNullValue()));
 	}
-	
 
 	@Test
 	public void testFindAll() {

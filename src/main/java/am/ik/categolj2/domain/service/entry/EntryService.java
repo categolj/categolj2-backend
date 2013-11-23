@@ -24,7 +24,8 @@ public interface EntryService {
 
 	Entry create(Entry entry, List<Category> category);
 
-	Entry update(Entry entry, boolean updateLastModifiedDate);
+	Entry update(Integer entryId, Entry updatedEntry,
+			boolean updateLastModifiedDate, boolean saveInHistory);
 
 	void delete(Integer entryId);
 

@@ -3,7 +3,6 @@ package am.ik.categolj2.domain.repository.entry;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import am.ik.categolj2.domain.model.Category;
 import am.ik.categolj2.domain.model.Entry;
-import am.ik.categolj2.domain.model.User;
 import am.ik.categolj2.domain.repository.category.CategoryRepository;
 import am.ik.categolj2.domain.repository.user.UserRepository;
 
@@ -45,8 +43,13 @@ public class EntryRepositoryTest {
 		DateTime now = new DateTime();
 		String user = null;
 
-		Entry entry = new Entry(null, "hoge!", "日本語のサンプルです", null, now, now,
-				user, user, true, null);
+		Entry entry = new Entry(null, "hoge!", "日本語のサンプルです", "html", null,
+				true, null);
+
+		entry.setCreatedBy(user);
+		entry.setCreatedDate(now);
+		entry.setLastModifiedBy(user);
+		entry.setLastModifiedDate(now);
 
 		entryRepository.saveAndFlush(entry);
 		assertThat(entry.getEntryId(), is(notNullValue()));
@@ -77,15 +80,19 @@ public class EntryRepositoryTest {
 	public void testFindOne() {
 		Entry entry = entryRepository.findOne(1);
 		System.out.println(entry);
-		System.out.println(entry.getCategory());
+		if (entry != null) {
+			System.out.println(entry.getCategory());
+		}
 	}
 
 	@Test
 	@Rollback(false)
 	public void testFindDetail() {
 		Entry entry = entryRepository.findDetails(1);
-		System.out.println(entry);
-		System.out.println(entry.getCategory());
+		if (entry != null) {
+			System.out.println(entry);
+			System.out.println(entry.getCategory());
+		}
 	}
 
 	@Test

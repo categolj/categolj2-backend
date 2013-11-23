@@ -6,7 +6,6 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
@@ -40,6 +39,7 @@ public class EntryRepositoryImpl implements EntryRepositoryCustom {
 				.createFullTextQuery(query, Entry.class)
 				.setFirstResult(pageable.getOffset())
 				.setMaxResults(pageable.getPageSize());
+		@SuppressWarnings("unchecked")
 		List<Entry> content = jpaQuery.getResultList();
 		return new PageImpl<>(content);
 	}

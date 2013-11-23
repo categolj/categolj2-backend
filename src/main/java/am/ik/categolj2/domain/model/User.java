@@ -3,6 +3,7 @@ package am.ik.categolj2.domain.model;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,24 +12,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-import org.springframework.data.domain.Auditable;
-
+import am.ik.categolj2.domain.validation.UserEmail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "roles")
 @Entity
-public class User implements Auditable<String, String> {
+public class User extends AbstractAuditableEntiry<String> {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Basic(optional = false)
@@ -41,10 +41,8 @@ public class User implements Auditable<String, String> {
 	@Size(min = 1, max = 256)
 	@Column(name = "PASSWORD")
 	private String password;
-	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "the given email is invalid.")
+	@UserEmail
 	@Basic(optional = false)
-	@NotNull
-	@Size(min = 1, max = 128)
 	@Column(name = "EMAIL")
 	private String email;
 	@Basic(optional = false)
@@ -66,22 +64,9 @@ public class User implements Auditable<String, String> {
 	@Column(name = "LAST_NAME")
 	private String lastName;
 
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-	private DateTime createdDate;
-	@Column(name = "LAST_MODIFIED_DATE")
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-	private DateTime lastModifiedDate;
-	@Column(name = "CREATED_BY")
-	@Size(min = 1, max = 128)
-	private String createdBy;
-	@Column(name = "LAST_MODIFIED_BY")
-	@Size(min = 1, max = 128)
-	private String lastModifiedBy;
-	@Version
-	@Column(name = "VERSION")
-	private Long version;
 	@JoinTable(name = "USER_ROLE", joinColumns = { @JoinColumn(name = "USERNAME") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH,
+			CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	private Set<Role> roles;
 
 	public User(String username) {
@@ -98,11 +83,6 @@ public class User implements Auditable<String, String> {
 	@Override
 	public boolean isNew() {
 		return username == null;
-	}
-
-	@Override
-	public String toString() {
-		return "User[" + username + "]";
 	}
 
 	// business methods
