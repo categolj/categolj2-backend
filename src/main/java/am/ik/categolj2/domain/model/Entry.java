@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -37,6 +38,7 @@ import lombok.ToString;
 @Indexed
 @Table(name = "ENTRY")
 public class Entry extends AbstractAuditableEntiry<Integer> {
+
 	private static final long serialVersionUID = 1L;
 	@GeneratedValue
 	@Id
@@ -64,6 +66,7 @@ public class Entry extends AbstractAuditableEntiry<Integer> {
 	private boolean published;
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true, mappedBy = "entry")
 	@OrderBy("CREATED_DATE")
+	@JsonIgnore
 	private List<EntryHistory> histories;
 
 	public Entry(Integer entryId, String title) {
@@ -73,12 +76,14 @@ public class Entry extends AbstractAuditableEntiry<Integer> {
 
 	@Override
 	@Transient
+	@JsonIgnore
 	public Integer getId() {
 		return entryId;
 	}
 
 	@Override
 	@Transient
+	@JsonIgnore
 	public boolean isNew() {
 		return entryId == null;
 	}

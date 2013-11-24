@@ -4,14 +4,11 @@
           http://dozer.sourceforge.net/schema/beanmapping.xsd">
     <configuration>
         <relationship-type>non-cumulative</relationship-type>
+        <custom-converters>
+            <converter type="am.ik.categolj2.infra.dozer.DateTimeConverter">
+                <class-a>org.joda.time.DateTime</class-a>
+                <class-b>org.joda.time.DateTime</class-b>
+            </converter>
+        </custom-converters>
     </configuration>
-
-    <mapping map-null="false">
-        <class-a>am.ik.categolj2.domain.model.Entry</class-a>
-        <class-b>am.ik.categolj2.domain.model.Entry</class-b>
-        <field relationship-type="non-cumulative" remove-orphans="true" >
-            <a>category</a>
-            <b>category</b>
-        </field>
-    </mapping>
 </mappings> 

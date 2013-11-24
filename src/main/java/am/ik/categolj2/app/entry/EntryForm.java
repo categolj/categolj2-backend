@@ -21,6 +21,11 @@ public class EntryForm implements Serializable {
 	@NotNull
 	@Size(min = 1, max = 10)
 	private String format;
+	@NotNull
 	private String categoryString;
 	private boolean published;
+
+	private boolean updateLastModifiedDate;
+	private boolean saveInHistory;
+
 }

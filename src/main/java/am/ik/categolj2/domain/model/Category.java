@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ import lombok.ToString;
 @Table(name = "CATEGORY")
 public class Category implements Comparable<Category> {
 	@EmbeddedId
+	@JsonIgnore
 	private CategoryPK categoryPK;
 	@Basic(optional = false)
 	@NotNull
@@ -33,6 +36,7 @@ public class Category implements Comparable<Category> {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ENTRY_ID", insertable = false, updatable = false)
+	@JsonIgnore
 	private Entry entry;
 
 	public Category(Integer entryId, Integer categoryOrder, String categoryName) {
@@ -76,4 +80,5 @@ public class Category implements Comparable<Category> {
 				+ ((categoryPK == null) ? 0 : categoryPK.hashCode());
 		return result;
 	}
+
 }

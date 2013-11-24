@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping>
+        <class-a>am.ik.categolj2.app.entry.EntryForm</class-a>
+        <class-b>am.ik.categolj2.domain.model.Entry</class-b>
+        <field
+            custom-converter="am.ik.categolj2.infra.dozer.StringToCategoryListConverter">
+            <a>categoryString</a>
+            <b>category</b>
+        </field>
+    </mapping>
+</mappings> 

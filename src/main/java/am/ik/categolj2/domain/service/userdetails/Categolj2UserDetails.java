@@ -18,8 +18,8 @@ public class Categolj2UserDetails extends
 	private final User user;
 
 	public Categolj2UserDetails(User user) {
-		super(user.getUsername(), user.getPassword(), user.isEnabled(), false,
-				false, !user.isLocked(), toAuthorities(user.getRoles()));
+		super(user.getUsername(), user.getPassword(), user.isEnabled(), true,
+				true, !user.isLocked(), toAuthorities(user.getRoles()));
 		this.user = user;
 	}
 

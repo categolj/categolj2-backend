@@ -12,7 +12,7 @@
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
             <bean
-                class="org.springframework.data.web.PageableArgumentResolver" />
+                class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 
@@ -58,7 +58,9 @@
         class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
         <constructor-arg>
             <util:list>
-                <bean class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" factory-method="create" />
+                <bean
+                    class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor"
+                    factory-method="create" />
                 <bean
                     class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
             </util:list>
@@ -75,14 +77,17 @@
             <map>
                 <entry key="ResourceNotFoundException" value="common/error/resourceNotFoundError" />
                 <entry key="BusinessException" value="common/error/businessError" />
-                <entry key="InvalidTransactionTokenException" value="common/error/transactionTokenError" />
+                <entry key="InvalidTransactionTokenException"
+                    value="common/error/transactionTokenError" />
             </map>
         </property>
         <property name="statusCodes">
             <map>
-                <entry key="common/error/resourceNotFoundError" value="404" />
+                <entry key="common/error/resourceNotFoundError"
+                    value="404" />
                 <entry key="common/error/businessError" value="400" />
-                <entry key="common/error/transactionTokenError" value="409" />
+                <entry key="common/error/transactionTokenError"
+                    value="409" />
             </map>
         </property>
         <property name="defaultErrorView" value="common/error/systemError" />

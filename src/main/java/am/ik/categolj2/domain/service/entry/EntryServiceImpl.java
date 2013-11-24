@@ -90,7 +90,7 @@ public class EntryServiceImpl implements EntryService {
 	public Entry create(Entry entry, List<Category> category) {
 		Assert.notNull(entry, "entry must not be null");
 		Assert.isNull(entry.getCategory(), "entry.category must be null");
-		Assert.notEmpty(category, "category must not be null or empty");
+		Assert.notNull(category, "category must not be null or empty");
 
 		DateTime now = dateFactory.newDateTime();
 		entry.setCreatedDate(now);
