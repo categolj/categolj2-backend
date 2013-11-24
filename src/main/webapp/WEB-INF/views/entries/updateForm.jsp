@@ -73,8 +73,8 @@
         <form:checkbox path="saveInHistory" cssErrorClass="error-input" />
         <form:errors path="saveInHistory" cssClass="error-messages" />
         <br>
-        <form:button>Update</form:button>
-        <form:button name="delete" onclick="return confirm('Delete?')">Delete</form:button>
+        <form:button class="btn btn-primary">Update</form:button>
+        <form:button class="btn btn-danger" name="delete" onclick="return confirm('Delete?')">Delete</form:button>
     </form:form>
     <hr>
     <table>

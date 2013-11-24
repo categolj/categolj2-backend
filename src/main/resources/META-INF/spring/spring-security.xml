@@ -12,6 +12,7 @@
             authentication-failure-url="/login.jsp?error=true"
             authentication-success-handler-ref="loginSuccessHandler" />
         <sec:logout logout-url="/logout" />
+        <sec:intercept-url pattern="/" access="isAuthenticated()" />
         <sec:intercept-url pattern="/entries/**"
             access="isAuthenticated()" />
         <sec:custom-filter ref="csrfFilter" before="LOGOUT_FILTER" />

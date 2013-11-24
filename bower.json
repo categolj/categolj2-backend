@@ -1,0 +1,9 @@
+{
+  "name": "categolj2-backend",
+  "version": "1.0.0-SNAPSHOT",
+  "dependencies": {
+    "jquery": "2.0.3",
+    "underscore": "1.5.2",
+    "bootstrap": "3.0.2"
+  }
+}

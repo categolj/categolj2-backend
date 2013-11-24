@@ -62,7 +62,7 @@
         <form:checkbox path="published" cssErrorClass="error-input" />
         <form:errors path="published" cssClass="error-messages" />
         <br>
-        <form:button>Create</form:button>
+        <form:button class="btn btn-primary">Create</form:button>
     </form:form>
 </body>
 </html>
