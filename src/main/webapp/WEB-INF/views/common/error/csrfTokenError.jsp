@@ -11,18 +11,22 @@
         <h1>CSRF Error!</h1>
         <div class="error">
             <c:if test="${!empty exceptionCode}">[${f:h(exceptionCode)}]</c:if>
-            <spring:message code="w.xx.fw.0003" />
+            <spring:message code="e.xx.fw.7002" />
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     </div>
 </body>
 </html>

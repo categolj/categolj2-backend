@@ -34,11 +34,11 @@
         <!-- Setting and Customization by project. -->
         <property name="exceptionMappings">
             <map>
-                <entry key="ResourceNotFoundException" value="w.xx.0001" />
-                <entry key="BusinessException" value="w.xx.0002" />
+                <entry key="ResourceNotFoundException" value="e.xx.fw.5001" />
+                <entry key="BusinessException" value="e.xx.fw.8001" />
             </map>
         </property>
-        <property name="defaultExceptionCode" value="e.xx.0001" />
+        <property name="defaultExceptionCode" value="e.xx.fw.9001" />
     </bean>
 
     <!-- Exception Logger. -->
@@ -52,5 +52,4 @@
         class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter" >
         <property name="exceptionLogger" ref="exceptionLogger" />
     </bean>
-
 </beans>

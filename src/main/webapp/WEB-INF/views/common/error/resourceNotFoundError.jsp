@@ -11,19 +11,23 @@
         <h1>Resource Not Found Error!</h1>
         <div class="error">
             <c:if test="${!empty exceptionCode}">[${f:h(exceptionCode)}]</c:if>
-            <spring:message code="w.xx.fw.0001" />
+            <spring:message code="e.xx.fw.5001" />
         </div>
         <t:messagesPanel />
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     </div>
 </body>
 </html>
