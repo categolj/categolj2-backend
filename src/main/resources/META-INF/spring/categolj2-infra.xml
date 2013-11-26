@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <import resource="classpath:/META-INF/spring/projectName-env.xml" />
+    <import resource="classpath:/META-INF/spring/categolj2-env.xml" />
 
     <jpa:repositories base-package="am.ik.categolj2.domain.repository"></jpa:repositories>
 
