@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,7 +25,6 @@ import am.ik.categolj2.domain.repository.user.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
-@Transactional
 public class UserRepositoryTest {
 	DateTime now = new DateTime();
 	@Inject
@@ -32,16 +32,22 @@ public class UserRepositoryTest {
 
 	@Before
 	// @Rollback(false)
+	@Transactional
 	public void setUp() {
 		User user = new User("user1", "user1", "user1@example.com", true,
 				false, "User1", "Name1", null);
 		user.setCreatedDate(now);
 		user.setLastModifiedDate(now);
-		userRepository.save(user);
+		try {
+			userRepository.save(user);
+		} catch (DataIntegrityViolationException e) {
+			// already inserted
+		}
 	}
 
 	@Test
 	// @Rollback(false)
+	@Transactional
 	public void testSave() {
 		User user = new User("making", "hoge", "makingx@gmail.com", true,
 				false, "Toshiaki", "Maki", null);
@@ -51,6 +57,7 @@ public class UserRepositoryTest {
 	}
 
 	@Test
+	@Transactional
 	public void testFindOne() {
 		User user = userRepository.findOne("admin");
 		System.out.println(user.getRoles());

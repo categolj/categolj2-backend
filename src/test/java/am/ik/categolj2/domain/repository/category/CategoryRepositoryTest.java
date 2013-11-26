@@ -15,7 +15,6 @@ import am.ik.categolj2.domain.repository.entry.EntryRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
-@Transactional
 public class CategoryRepositoryTest {
 	@Inject
 	CategoryRepository categoryRepository;

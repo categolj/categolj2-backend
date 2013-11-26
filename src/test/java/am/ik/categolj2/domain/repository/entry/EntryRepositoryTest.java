@@ -25,7 +25,6 @@ import am.ik.categolj2.domain.repository.user.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
-@Transactional
 public class EntryRepositoryTest {
 
 	@Inject
@@ -39,6 +38,7 @@ public class EntryRepositoryTest {
 
 	@Test
 	@Rollback(false)
+	@Transactional
 	public void testSave() {
 		DateTime now = new DateTime();
 		String user = null;
@@ -76,7 +76,6 @@ public class EntryRepositoryTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testFindOne() {
 		Entry entry = entryRepository.findOne(1);
 		System.out.println(entry);
@@ -86,7 +85,6 @@ public class EntryRepositoryTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testFindDetail() {
 		Entry entry = entryRepository.findDetails(1);
 		if (entry != null) {
@@ -96,14 +94,12 @@ public class EntryRepositoryTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testFindDetailPublished() {
 		Entry entry = entryRepository.findDetailsPublished(1);
 		System.out.println(entry);
 	}
 
 	@Test
-	@Rollback(false)
 	public void testFindDetailsByCateogyNameAndOrder() {
 		Page<Entry> entries = entryRepository
 				.findPageDetailsPublishedByCateogyNameAndOrder("Programmming",
@@ -112,7 +108,6 @@ public class EntryRepositoryTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testFindDetailsPublishedOrderByLastModifiedDateDesc() {
 		Page<Entry> entries = entryRepository
 				.findPageDetailsPublishedOrderByLastModifiedDateDesc(new PageRequest(
@@ -122,7 +117,7 @@ public class EntryRepositoryTest {
 	}
 
 	@Test
-	@Rollback(false)
+	@Transactional
 	public void testSearch() {
 		System.out.println(entryRepository.serachPageByKeyword("日本語",
 				new PageRequest(0, 10)).getContent());

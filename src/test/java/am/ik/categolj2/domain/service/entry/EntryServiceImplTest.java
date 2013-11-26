@@ -29,7 +29,6 @@ import am.ik.categolj2.domain.repository.entry.EntryRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:test-context.xml" })
-@Transactional
 public class EntryServiceImplTest {
 
 	@Inject
@@ -85,6 +84,7 @@ public class EntryServiceImplTest {
 
 	@Test
 	@Rollback(false)
+	@Transactional
 	public void testCreate() {
 		Entry entry = new Entry();
 		entry.setTitle("My first entry");
@@ -100,6 +100,7 @@ public class EntryServiceImplTest {
 
 	@Test
 	@Rollback(false)
+	@Transactional
 	public void testUpdate() {
 		System.out.println("update test");
 		Integer entryId = EntryServiceImplTest.entryId;
@@ -130,8 +131,9 @@ public class EntryServiceImplTest {
 
 	}
 
-	//@Test
+	// @Test
 	@Rollback(false)
+	@Transactional
 	public void testUpdate_reduce_category() {
 		System.out.println("update test 2");
 		Integer entryId = EntryServiceImplTest.entryId;
@@ -163,9 +165,10 @@ public class EntryServiceImplTest {
 
 	@Test
 	@Rollback(false)
+	@Transactional
 	public void testDelete() {
 		Entry entry = entryService.findOne(EntryServiceImplTest.entryId);
-		for(EntryHistory h : entry.getHistories()) {
+		for (EntryHistory h : entry.getHistories()) {
 			System.out.println(h);
 		}
 		entryService.delete(EntryServiceImplTest.entryId);
