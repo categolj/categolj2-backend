@@ -133,6 +133,10 @@ body {
     <script
         src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
     <script
+        src="${pageContext.request.contextPath}/resources/vendor/backbone/backbone-min.js"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/vendor/handlebars/handlebars.min.js"></script>
+    <script
         src="${pageContext.request.contextPath}/resources/app/js/AdminView.js"></script>
     <script
         src="${pageContext.request.contextPath}/resources/app/js/EntriesView.js"></script>
