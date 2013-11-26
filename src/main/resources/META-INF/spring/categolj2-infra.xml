@@ -29,7 +29,7 @@
         <property name="mappingResources" value="META-INF/orm.xml" />
         <property name="jpaPropertyMap">
             <util:map>
-                <entry key="hibernate.hbm2ddl.auto" value="none" />
+                <entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}" />
                 <entry key="hibernate.ejb.naming_strategy"
                     value="org.hibernate.cfg.ImprovedNamingStrategy" />
                 <entry key="hibernate.connection.charSet" value="UTF-8" />
