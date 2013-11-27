@@ -55,7 +55,8 @@
         <form:errors path="contents" cssClass="error-messages" />
         <br>
         <form:label path="format" cssErrorClass="error-label">Format:</form:label>
-        <form:input path="format" cssErrorClass="error-input" />
+        <form:radiobuttons path="format" items="${CL_FORMAT}"
+            cssErrorClass="error-input" />
         <form:errors path="format" cssClass="error-messages" />
         <br>
         <form:label path="published" cssErrorClass="error-label">Publish?:</form:label>
