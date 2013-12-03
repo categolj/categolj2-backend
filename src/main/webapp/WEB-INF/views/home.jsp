@@ -68,12 +68,18 @@ body {
                     <li><a href="#categories"><span
                             class="glyphicon glyphicon-bookmark"></span>
                             カテゴリー管理</a></li>
+                    <li><a href="#uploads"><span
+                            class="glyphicon glyphicon-file"></span>
+                            アップロードファイル管理</a></li>
                     <li><a href="#users"><span
                             class="glyphicon glyphicon-user"></span>
                             ユーザー管理</a></li>
                     <li><a href="#reports"><span
                             class="glyphicon glyphicon-signal"></span>
                             レポート</a></li>
+                    <li><a href="#h2Console"><span
+                            class="glyphicon glyphicon-asterisk"></span>
+                            H2管理コンソール</a></li>
                 </ul>
             </div>
             <div class="col col-sm-9">
@@ -104,6 +110,14 @@ body {
                             <div class="panel-body"></div>
                         </div>
                     </div>
+                    <div id="uploads" class="tab-pane">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">アップロードファイル管理</h3>
+                            </div>
+                            <div class="panel-body"></div>
+                        </div>
+                    </div>
                     <div id="users" class="tab-pane">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -119,7 +133,19 @@ body {
                             <div class="panel-heading">
                                 <h3 class="panel-title">レポート</h3>
                             </div>
-                            <div class="panel-body"></div>
+                            <div class="panel-body">
+                                <div id="reports-body"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="h2Console" class="tab-pane">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">H2管理コンソール</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="h2Console-body"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -142,6 +168,8 @@ body {
         src="${pageContext.request.contextPath}/resources/app/js/EntriesView.js"></script>
     <script
         src="${pageContext.request.contextPath}/resources/app/js/UsersView.js"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/app/js/H2ConsoleView.js"></script>
     <script>
 					$(function() {
 						new categolj2.AdminView();
