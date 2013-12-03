@@ -45,6 +45,9 @@ categolj2.TabView.prototype = {
 		case 'UsersView':
 			return new categolj2.UsersView();
 			break;
+		case 'SystemView':
+			return new categolj2.SystemView();
+			break;
 		case 'H2ConsoleView':
 			return new categolj2.H2ConsoleView();
 			break;

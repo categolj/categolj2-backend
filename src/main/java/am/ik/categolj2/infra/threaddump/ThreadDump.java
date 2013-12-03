@@ -13,8 +13,8 @@ import java.util.Map;
 
 public class ThreadDump {
 
-	public static Map<String, String> getThreadDump() {
-		Map<String, String> r = new LinkedHashMap<>();
+	public static Map<String, ThreadDumpInfo> getThreadDump() {
+		Map<String, ThreadDumpInfo> r = new LinkedHashMap<>();
 		ThreadInfo[] data = getThreadInfos();
 		ThreadGroupMap map = sortThreadsAndGetGroupMap(data);
 		for (ThreadInfo ti : data) {
@@ -31,68 +31,81 @@ public class ThreadDump {
 
 	// ThreadInfo.toString() truncates the stack trace by first 8, so needed my
 	// own version
-	public static String dumpThreadInfo(ThreadInfo ti, ThreadGroupMap map) {
+	public static ThreadDumpInfo dumpThreadInfo(ThreadInfo ti,
+			ThreadGroupMap map) {
 		String grp = map.getThreadGroup(ti);
-		StringBuilder sb = new StringBuilder("\"" + ti.getThreadName() + "\""
-				+ " Id=" + ti.getThreadId() + " Group="
-				+ (grp != null ? grp : "?") + " " + ti.getThreadState());
-		if (ti.getLockName() != null) {
-			sb.append(" on " + ti.getLockName());
-		}
-		if (ti.getLockOwnerName() != null) {
-			sb.append(" owned by \"" + ti.getLockOwnerName() + "\" Id="
-					+ ti.getLockOwnerId());
-		}
-		if (ti.isSuspended()) {
-			sb.append(" (suspended)");
-		}
-		if (ti.isInNative()) {
-			sb.append(" (in native)");
-		}
-		sb.append('\n');
-		StackTraceElement[] stackTrace = ti.getStackTrace();
-		for (int i = 0; i < stackTrace.length; i++) {
-			StackTraceElement ste = stackTrace[i];
-			sb.append("\tat ").append(ste);
-			sb.append('\n');
-			if (i == 0 && ti.getLockInfo() != null) {
-				Thread.State ts = ti.getThreadState();
-				switch (ts) {
-				case BLOCKED:
-					sb.append("\t-  blocked on ").append(ti.getLockInfo());
-					sb.append('\n');
-					break;
-				case WAITING:
-					sb.append("\t-  waiting on ").append(ti.getLockInfo());
-					sb.append('\n');
-					break;
-				case TIMED_WAITING:
-					sb.append("\t-  waiting on ").append(ti.getLockInfo());
-					sb.append('\n');
-					break;
-				default:
-				}
+		String threadName = ti.getThreadName();
+		long threadId = ti.getThreadId();
+		String threadGroup = grp != null ? grp : "?";
+		String threadState = null;
+		{
+			StringBuilder sb = new StringBuilder(ti.getThreadState().toString());
+			if (ti.getLockName() != null) {
+				sb.append(" on " + ti.getLockName());
 			}
-
-			for (MonitorInfo mi : ti.getLockedMonitors()) {
-				if (mi.getLockedStackDepth() == i) {
-					sb.append("\t-  locked ").append(mi);
-					sb.append('\n');
-				}
+			if (ti.getLockOwnerName() != null) {
+				sb.append(" owned by \"" + ti.getLockOwnerName() + "\" Id="
+						+ ti.getLockOwnerId());
 			}
+			if (ti.isSuspended()) {
+				sb.append(" (suspended)");
+			}
+			if (ti.isInNative()) {
+				sb.append(" (in native)");
+			}
+			threadState = sb.toString();
 		}
-
-		LockInfo[] locks = ti.getLockedSynchronizers();
-		if (locks.length > 0) {
-			sb.append("\n\tNumber of locked synchronizers = " + locks.length);
-			sb.append('\n');
-			for (LockInfo li : locks) {
-				sb.append("\t- ").append(li);
+		String stackTraceString = null;
+		{
+			StringBuilder sb = new StringBuilder();
+			StackTraceElement[] stackTrace = ti.getStackTrace();
+			for (int i = 0; i < stackTrace.length; i++) {
+				StackTraceElement ste = stackTrace[i];
+				sb.append("\tat ").append(ste);
 				sb.append('\n');
+				if (i == 0 && ti.getLockInfo() != null) {
+					Thread.State ts = ti.getThreadState();
+					switch (ts) {
+					case BLOCKED:
+						sb.append("\t-  blocked on ").append(ti.getLockInfo());
+						sb.append('\n');
+						break;
+					case WAITING:
+						sb.append("\t-  waiting on ").append(ti.getLockInfo());
+						sb.append('\n');
+						break;
+					case TIMED_WAITING:
+						sb.append("\t-  waiting on ").append(ti.getLockInfo());
+						sb.append('\n');
+						break;
+					default:
+					}
+				}
+
+				for (MonitorInfo mi : ti.getLockedMonitors()) {
+					if (mi.getLockedStackDepth() == i) {
+						sb.append("\t-  locked ").append(mi);
+						sb.append('\n');
+					}
+				}
 			}
+			LockInfo[] locks = ti.getLockedSynchronizers();
+			if (locks.length > 0) {
+				sb.append("\n\tNumber of locked synchronizers = "
+						+ locks.length);
+				sb.append('\n');
+				for (LockInfo li : locks) {
+					sb.append("\t- ").append(li);
+					sb.append('\n');
+				}
+			}
+			sb.append('\n');
+
+			stackTraceString = sb.toString();
 		}
-		sb.append('\n');
-		return sb.toString();
+
+		return new ThreadDumpInfo(threadName, threadId, threadGroup,
+				threadState, stackTraceString);
 	}
 
 	public static ThreadInfo[] getThreadInfos() {

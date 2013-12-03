@@ -57,7 +57,7 @@ body {
     <!-- メインコンテンツ -->
     <div class="container">
         <div class="row">
-            <div class="col col-sm-3">
+            <div class="col col-sm-2">
                 <ul id="nav-tab" class="nav nav-pills nav-stacked">
                     <li><a href="#dashboard"><span
                             class="glyphicon glyphicon-home"></span>
@@ -75,14 +75,17 @@ body {
                             class="glyphicon glyphicon-user"></span>
                             ユーザー管理</a></li>
                     <li><a href="#reports"><span
-                            class="glyphicon glyphicon-signal"></span>
+                            class="glyphicon glyphicon-stats"></span>
                             レポート</a></li>
+                    <li><a href="#system"><span
+                            class="glyphicon glyphicon-info-sign"></span>
+                            システム情報</a></li>
                     <li><a href="#h2Console"><span
                             class="glyphicon glyphicon-asterisk"></span>
-                            H2管理コンソール</a></li>
+                            H2管理コンソール(ログ確認)</a></li>
                 </ul>
             </div>
-            <div class="col col-sm-9">
+            <div class="col col-sm-10">
                 <div class="tab-content">
                     <div id="dashboard" class="tab-pane">
                         <div class="panel panel-default">
@@ -138,10 +141,20 @@ body {
                             </div>
                         </div>
                     </div>
+                    <div id="system" class="tab-pane">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">システム情報</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="system-body"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="h2Console" class="tab-pane">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">H2管理コンソール</h3>
+                                <h3 class="panel-title">H2管理コンソール(ログ管理)</h3>
                             </div>
                             <div class="panel-body">
                                 <div id="h2Console-body"></div>
@@ -168,6 +181,8 @@ body {
         src="${pageContext.request.contextPath}/resources/app/js/EntriesView.js"></script>
     <script
         src="${pageContext.request.contextPath}/resources/app/js/UsersView.js"></script>
+    <script
+        src="${pageContext.request.contextPath}/resources/app/js/SystemView.js"></script>
     <script
         src="${pageContext.request.contextPath}/resources/app/js/H2ConsoleView.js"></script>
     <script>

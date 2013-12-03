@@ -1,21 +1,21 @@
-<!doctype html>
-<html>
-<head>
-<link
-    href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css"
-    rel="stylesheet" media="screen">
-<link
-    href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css"
-    rel="stylesheet" media="screen">
-</head>
-<body>
-    <div class="container">
-
+<div>
+    <table
+        class="table table-striped table-bordered table-condensed table-responsive">
+        <tr>
+            <th>Thread Name</th>
+            <th>Thread Id</th>
+            <th>Thread Group</th>
+            <th>Thread State</th>
+            <th>StackTrace</th>
+        </tr>
         <c:forEach items="${threadDumps}" var="threadDump">
-            <h2>${f:h(threadDump.key)}</h2>
-            <pre><code>${f:h(threadDump.value)}</code></pre>
+            <tr>
+                <td>${f:h(threadDump.value.threadName)}</td>
+                <td>${f:h(threadDump.value.threadId)}</td>
+                <td>${f:h(threadDump.value.threadGroup)}</td>
+                <td>${f:h(threadDump.value.threadState)}</td>
+                <td><span style="display: none;">${f:h(threadDump.value.stackTrace)}</span></td>
+            </tr>
         </c:forEach>
-
-    </div>
-</body>
-</html>
+    </table>
+</div>
