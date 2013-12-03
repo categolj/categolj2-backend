@@ -7,6 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <sec:http pattern="/resources/**" security="none" />
+    <sec:http pattern="/admin/h2/*" security="none" />
     <sec:http auto-config="true" use-expressions="true">
         <sec:form-login login-page="/login.jsp"
             authentication-failure-url="/login.jsp?error=true"
