@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
-  <component name="EclipseModuleManager">
-    <conelement value="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER" />
-    <src_description expected_position="0">
-      <src_folder value="file://$MODULE_DIR$/src/main/java" expected_position="0" />
-      <src_folder value="file://$MODULE_DIR$/src/main/resources" expected_position="1" />
-      <src_folder value="file://$MODULE_DIR$/src/test/java" expected_position="2" />
-      <src_folder value="file://$MODULE_DIR$/src/test/resources" expected_position="3" />
-    </src_description>
-  </component>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="Spring" name="Spring">
-      <configuration />
-    </facet>
     <facet type="web" name="Web">
       <configuration>
         <descriptors>
@@ -21,20 +9,124 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+        </sourceRoots>
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
-    <exclude-output />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-web:1.0.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-common:1.0.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:13.0.1" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.7.3" level="project" />
+    <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.7.3" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.7" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.7" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-validator:4.3.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: javax.validation:validation-api:1.0.0.GA" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.1.0.GA" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.5" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.5" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.0.13" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.0.13" level="project" />
+    <orderEntry type="library" name="Maven: org.lazyluke:log4jdbc-remix:0.2.7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.7" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-core:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aspects:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context-support:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-expression:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-orm:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-tx:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:1.6.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-web:3.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-security-web:1.0.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-security-core:1.0.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:3.1.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:3.1.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-taglibs:3.1.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:3.1.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-acl:3.1.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.8.3" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
+    <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.6" level="project" />
+    <orderEntry type="library" name="Maven: commons-dbcp:commons-dbcp:1.2.2.patch_DBCP264_DBCP372" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.dozer:dozer:5.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tiles:tiles-core:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tiles:tiles-api:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-digester:commons-digester:2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tiles:tiles-jsp:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tiles:tiles-servlet:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.tiles:tiles-template:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time-jsptags:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search-orm:4.3.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search-engine:4.3.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search-analyzers:4.3.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-analysis-extras:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-core:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-solrj:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-kuromoji:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-phonetic:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spellchecker:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-grouping:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-smartcn:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-stempel:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.common:hibernate-commons-annotations:4.0.2.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.avro:avro:1.6.3" level="project" />
+    <orderEntry type="library" name="Maven: com.thoughtworks.paranamer:paranamer:2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.0.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-facet:3.6.2" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:4.2.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: antlr:antlr:2.7.7" level="project" />
+    <orderEntry type="library" name="Maven: dom4j:dom4j:1.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec:1.0.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.15.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-jpa:1.0.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-entitymanager:4.2.5.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-jpa:1.4.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.jadira.usertype:usertype.core:3.0.0.GA" level="project" />
+    <orderEntry type="library" name="Maven: org.jadira.usertype:usertype.spi:3.0.0.GA" level="project" />
+    <orderEntry type="library" name="Maven: javax.transaction:jta:1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.h2database:h2:1.3.172" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.23" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:marked:0.2.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.12.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-servlet-api:7.0.40" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-jsp-api:7.0.40" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-el-api:7.0.40" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:3.2.4.RELEASE" level="project" />
   </component>
 </module>
 

@@ -78,10 +78,11 @@ public class EntryRepositoryTest {
 	@Test
 	public void testFindOne() {
 		Entry entry = entryRepository.findOne(1);
-		System.out.println(entry);
-		if (entry != null) {
-			System.out.println(entry.getCategory());
-		}
+//		System.out.println(entry);
+//		if (entry != null) {
+//			System.out.println(entry.getCategory());
+//		}
+        assertThat(entry, is(notNullValue()));
 	}
 
 	@Test

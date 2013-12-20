@@ -7,7 +7,6 @@
     <packaging>war</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <description>Blank project using TERASOLUNA Global Framework (JPA)</description>
-    <!-- (1) -->
     <parent>
         <groupId>org.terasoluna.gfw</groupId>
         <artifactId>terasoluna-gfw-parent</artifactId>
@@ -95,9 +94,15 @@
         </dependency>
 
         <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>marked</artifactId>
+            <version>0.2.9</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>0.11.6</version>
+            <version>1.12.2</version>
             <scope>provided</scope>
         </dependency>
 
