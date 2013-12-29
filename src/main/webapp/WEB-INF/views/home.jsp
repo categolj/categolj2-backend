@@ -168,11 +168,9 @@ body {
     <script
         src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script
-        src="${pageContext.request.contextPath}/resources/vendor/underscore/underscore-min.js"></script>
+        src="${pageContext.request.contextPath}/resources/vendor/lodash/dist/lodash.min.js"></script>
     <script
         src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script
-        src="${pageContext.request.contextPath}/resources/vendor/backbone/backbone-min.js"></script>
     <script
         src="${pageContext.request.contextPath}/resources/vendor/handlebars/handlebars.min.js"></script>
     <script
