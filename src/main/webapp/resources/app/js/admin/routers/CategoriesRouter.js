@@ -14,7 +14,7 @@ define(function (require) {
             this.tabPanelView = this.adminView.createTabPanelView('categories');
         },
         list: function () {
-            this.adminView.renderTab(this.tabPanelView, new CategoriesView());
+            this.adminView.renderTab(this.tabPanelView, new CategoriesView().render());
         }
     });
 });

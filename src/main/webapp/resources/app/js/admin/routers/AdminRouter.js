@@ -37,7 +37,7 @@ define(function (require) {
             };
         },
         home: function () {
-            this.adminView.renderTab(this.tabPanelView, new DashboardView());
+            this.adminView.renderTab(this.tabPanelView, new DashboardView().render());
         }
     });
 });

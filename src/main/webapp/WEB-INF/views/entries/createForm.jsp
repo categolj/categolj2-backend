@@ -1,69 +1,55 @@
-<!doctype html>
-<html>
-<head>
-<title>Create Entry</title>
-<style type="text/css">
-.form-horizontal input {
-    display: block;
-    float: left;
-}
-
-.form-horizontal label {
-    display: block;
-    float: left;
-    text-align: right;
-    float: left;
-}
-
-.form-horizontal br {
-    clear: left;
-}
-
-.error-label {
-    color: #b94a48;
-}
-
-.error-input {
-    border-color: #b94a48;
-    margin-left: 5px;
-}
-
-.error-messages {
-    color: #b94a48;
-    display: block;
-    padding-left: 5px;
-    overflow-x: auto;
-}
-</style>
-</head>
-
-<body>
-
-    <form:form modelAttribute="entryForm" method="post"
-        class="form-horizontal"
-        action="${pageContext.request.contextPath}/entries">
-        <form:label path="title" cssErrorClass="error-label">Title:</form:label>
-        <form:input path="title" cssErrorClass="error-input" />
-        <form:errors path="title" cssClass="error-messages" />
-        <br>
-        <form:label path="categoryString" cssErrorClass="error-label">Category:</form:label>
-        <form:input path="categoryString" cssErrorClass="error-input" />
-        <form:errors path="categoryString" cssClass="error-messages" />
-        <br>
-        <form:label path="contents" cssErrorClass="error-label">Contents:</form:label>
-        <form:input path="contents" cssErrorClass="error-input" />
-        <form:errors path="contents" cssClass="error-messages" />
-        <br>
-        <form:label path="format" cssErrorClass="error-label">Format:</form:label>
-        <form:radiobuttons path="format" items="${CL_FORMAT}"
-            cssErrorClass="error-input" />
-        <form:errors path="format" cssClass="error-messages" />
-        <br>
-        <form:label path="published" cssErrorClass="error-label">Publish?:</form:label>
-        <form:checkbox path="published" cssErrorClass="error-input" />
-        <form:errors path="published" cssClass="error-messages" />
-        <br>
-        <form:button class="btn btn-primary">Create</form:button>
-    </form:form>
-</body>
-</html>
+<form:form modelAttribute="entryForm" method="post"
+           class="form-horizontal">
+    <fieldset>
+        <legend>Create a new entry</legend>
+        <div class="form-group">
+            <form:label path="title" cssErrorClass="error-label"
+                        cssClass="col col-sm-2 control-label">Title:</form:label>
+            <div class="col col-sm-10">
+                <form:input path="title" cssErrorClass="error-input" cssClass="form-control"/>
+                <form:errors path="title" cssClass="error-messages"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <form:label path="categoryString" cssErrorClass="error-label"
+                        cssClass="col col-sm-2 control-label">Category:</form:label>
+            <div class="col col-sm-10">
+                <form:input path="categoryString" cssErrorClass="error-input" cssClass="form-control"/>
+                <form:errors path="categoryString" cssClass="error-messages"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <form:label path="contents" cssErrorClass="error-label"
+                        cssClass="col col-sm-2 control-label">Contents:</form:label>
+            <div class="col col-sm-10">
+                <form:textarea path="contents" cssErrorClass="error-input" cssClass="form-control"/>
+                <form:errors path="contents" cssClass="error-messages"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <form:label path="format" cssErrorClass="error-label"
+                        cssClass="col col-sm-2 control-label">Format:</form:label>
+            <div class="col col-sm-10">
+                <form:radiobuttons path="format" items="${CL_FORMAT}"
+                                   cssErrorClass="error-input"/>
+                <form:errors path="format" cssClass="error-messages"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col col-sm-10 col-sm-offset-2">
+                <div class="checkbox">
+                    <label>
+                        <form:checkbox path="published"/> Publish?
+                        <form:errors path="published" cssClass="error-messages"/>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col col-sm-10 col-sm-offset-2">
+                <a href="#entries" class="btn btn-default">Back</a>
+                <form:button id="btn-entry-confirm" class="btn btn-primary">Confirm</form:button>
+            </div>
+        </div>
+    </fieldset>
+</form:form>

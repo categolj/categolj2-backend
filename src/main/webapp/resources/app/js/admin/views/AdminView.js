@@ -40,8 +40,7 @@ define(function (require) {
         },
         renderTab: function (tabPanelView, bodyView) {
             this.switchTabPanelView(tabPanelView
-                    .changeBodyView(bodyView)
-                    .render())
+                    .changeBodyView(bodyView))
                 .render();
             return this;
         },

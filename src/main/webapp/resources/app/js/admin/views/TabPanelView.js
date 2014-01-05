@@ -11,7 +11,7 @@ define(function (require) {
         template: Handlebars.compile(tabPanel),
 
         initialize: function (opts) {
-            this.$tab = $('#nav-item-list a[href=#tab-' + this.model.get('id') + ']');
+            this.$tab = $('#nav-item-list a[href=#' + this.model.get('id') + ']');
         },
         render: function () {
             this.$el.empty();
@@ -19,8 +19,9 @@ define(function (require) {
                 tab: this.model.get('id'),
                 title: this.model.get('itemName')
             }));
-            this.$el.find('.panel-body').html(this.bodyView.render().$el);
+            this.$el.find('.panel-body').html(this.bodyView.$el);
             this.$tab.tab('show');
+
             return this;
         },
         changeBodyView: function(bodyView) {

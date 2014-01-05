@@ -5,11 +5,17 @@ define(function (require) {
     var _ = require('underscore');
 
     return Backbone.View.extend({
+        events: {
+        },
 
         initialize: function () {
         },
         render: function () {
-            this.$el.html('<p>System!</p>');
+            this.$el.load('system/info');
+            return this;
+        },
+        threadDump: function () {
+            this.$el.load('system/threadDump');
             return this;
         }
     });

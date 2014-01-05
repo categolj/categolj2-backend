@@ -14,7 +14,7 @@ define(function (require) {
             this.tabPanelView = this.adminView.createTabPanelView('h2Console');
         },
         list: function () {
-            this.adminView.renderTab(this.tabPanelView, new H2ConsoleView());
+            this.adminView.renderTab(this.tabPanelView, new H2ConsoleView().render());
         }
     });
 });

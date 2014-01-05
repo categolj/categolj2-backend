@@ -20,9 +20,12 @@
 
     <context:component-scan base-package="am.ik.categolj2.app" />
 
+    <!--<mvc:resources mapping="/resources/**"-->
+        <!--location="/resources/,classpath:META-INF/resources/"-->
+        <!--cache-period="#{60 * 60}" />-->
     <mvc:resources mapping="/resources/**"
-        location="/resources/,classpath:META-INF/resources/"
-        cache-period="#{60 * 60}" />
+                   location="/resources/,classpath:META-INF/resources/"
+                   cache-period="0" />
 
     <mvc:interceptors>
         <mvc:interceptor>

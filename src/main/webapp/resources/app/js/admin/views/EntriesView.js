@@ -5,11 +5,18 @@ define(function (require) {
     var _ = require('underscore');
 
     return Backbone.View.extend({
+        events: {
+            'click #btn-entry-confirm': 'createConfirm'
+        },
 
         initialize: function () {
         },
         render: function () {
-            this.$el.html('<p>Entries!</p>');
+            this.$el.load('entries');
+            return this;
+        },
+        createForm: function () {
+            this.$el.load('entries?form');
             return this;
         }
     });
