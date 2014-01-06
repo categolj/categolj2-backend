@@ -1,5 +1,4 @@
-<form:form modelAttribute="entryForm" method="post"
-           class="form-horizontal">
+<form:form modelAttribute="entryForm" class="form-horizontal">
     <fieldset>
         <legend>Create a new entry</legend>
         <div class="form-group">
@@ -48,7 +47,7 @@
         <div class="form-group">
             <div class="col col-sm-10 col-sm-offset-2">
                 <a href="#entries" class="btn btn-default">Back</a>
-                <form:button id="btn-entry-confirm" class="btn btn-primary">Confirm</form:button>
+                <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
             </div>
         </div>
     </fieldset>

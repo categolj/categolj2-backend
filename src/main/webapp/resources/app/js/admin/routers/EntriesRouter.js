@@ -3,6 +3,7 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
+    var Entry = require('../models/Entry');
     var EntriesView = require('../views/EntriesView');
 
     return Backbone.Router.extend({
@@ -15,12 +16,20 @@ define(function (require) {
             this.tabPanelView = this.adminView.createTabPanelView('entries');
         },
         list: function () {
-            this.adminView.renderTab(this.tabPanelView, new EntriesView().render());
+            this.entriesView = new EntriesView();
+            this.adminView.renderTab(this.tabPanelView, this.entriesView.render());
         },
         createForm: function () {
-            this.adminView.renderTab(this.tabPanelView, new EntriesView({
-                model: $('#entryForm')
-            }).createForm());
+            var entry = new Entry();
+            this.entriesView = new EntriesView({
+                model: entry
+            });
+            this.adminView.renderTab(this.tabPanelView, this.entriesView.createForm());
+        },
+        confirm: function() {
+            if (!this.entriesView) {
+                return this.createForm();
+            }
         }
     });
 });
