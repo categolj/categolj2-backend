@@ -31,6 +31,12 @@ define(function (require) {
         createForm: function () {
             this.$el.load('entries?form', _.bind(function () {
                 this.stickit();
+                this.delegateEvents();
+
+                var csrfToken = this.$("[name='_csrf']").val();
+                $(document).ajaxSend(function (event, xhr, options) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                });
             }, this));
             return this;
         },
@@ -41,7 +47,10 @@ define(function (require) {
         create: function () {
             this.model.save({
                 success: _.bind(function () {
-                    this.render();
+                    Backbone.history.navigate('entries', {trigger: true});
+                }, this),
+                error: _.bind(function (m, e) {
+                    console.log(m, e);
                 }, this)
             });
             return false;
