@@ -45,14 +45,12 @@ define(function (require) {
             return false;
         },
         create: function () {
-            this.model.save({
-                success: _.bind(function () {
+            this.model.save().done(_.bind(function () {
                     Backbone.history.navigate('entries', {trigger: true});
-                }, this),
-                error: _.bind(function (m, e) {
-                    console.log(m, e);
-                }, this)
-            });
+                }, this)).fail(_.bind(function (response) {
+                    console.log(response.responseJSON);
+                    alert(response.statusText);
+                }, this));
             return false;
         }
     });

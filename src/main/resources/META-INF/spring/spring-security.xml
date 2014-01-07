@@ -20,7 +20,11 @@
             authentication-success-handler-ref="loginSuccessHandler" />
         <sec:logout logout-url="/logout" />
         <sec:intercept-url pattern="/login.jsp" access="permitAll" />
+        <sec:intercept-url pattern="/" access="isAuthenticated()" />
         <sec:intercept-url pattern="/admin*" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="POST" />
+        <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="PUT" />
+        <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="DELETE" />
         <sec:intercept-url pattern="/entries/**"
             access="isAuthenticated()" />
         <sec:custom-filter ref="csrfFilter" before="LOGOUT_FILTER" />
