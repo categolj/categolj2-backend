@@ -32,11 +32,6 @@ define(function (require) {
             this.$el.load('entries?form', _.bind(function () {
                 this.stickit();
                 this.delegateEvents();
-
-                var csrfToken = this.$("[name='_csrf']").val();
-                $(document).ajaxSend(function (event, xhr, options) {
-                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
-                });
             }, this));
             return this;
         },
