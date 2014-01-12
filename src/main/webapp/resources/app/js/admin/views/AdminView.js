@@ -12,14 +12,14 @@ define(function (require) {
     return Backbone.View.extend({
         initialize: function () {
             this.navItemList = new NavItemList([
-                {id: 'dashboard', itemName: 'ダッシュボード', itemIcon: 'home'},
-                {id: 'entries', itemName: '記事管理', itemIcon: 'pencil'},
-                {id: 'categories', itemName: 'カテゴリー管理', itemIcon: 'bookmark'},
-                {id: 'uploads', itemName: 'アップロードファイル管理', itemIcon: 'file'},
-                {id: 'users', itemName: 'ユーザー管理', itemIcon: 'user'},
-                {id: 'reports', itemName: 'レポート', itemIcon: 'stats'},
-                {id: 'system', itemName: 'システム情報', itemIcon: 'info-sign'},
-                {id: 'h2Console', itemName: 'H2管理コンソール(ログ確認)', itemIcon: 'asterisk'}
+                {id: 'dashboard', itemName: 'Dashboard', itemIcon: 'home'},
+                {id: 'entries', itemName: 'Entry', itemIcon: 'pencil'},
+                {id: 'categories', itemName: 'Category', itemIcon: 'bookmark'},
+                {id: 'uploads', itemName: 'Upload', itemIcon: 'file'},
+                {id: 'users', itemName: 'User', itemIcon: 'user'},
+                {id: 'reports', itemName: 'Report', itemIcon: 'stats'},
+                {id: 'system', itemName: 'System', itemIcon: 'info-sign'},
+                {id: 'h2Console', itemName: 'H2', itemIcon: 'asterisk'}
             ]);
             var navItemListView = new NavItemListView({
                 el: '#nav-item-list',

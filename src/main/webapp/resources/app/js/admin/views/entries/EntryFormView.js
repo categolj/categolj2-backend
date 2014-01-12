@@ -109,7 +109,9 @@ define(function (require) {
             if (confirm('Are you really delete?')) {
                 this.model.destroy()
                     .done(_.bind(function () {
-                        Backbone.history.navigate('entries', {trigger: true});
+                        Backbone.history.navigate('entries', {
+                            trigger: true
+                        });
                     }, this)).fail(_.bind(function (response) {
                         console.log(response);
                         if (response.responseJSON.details) {

@@ -17,9 +17,6 @@ require.config({
             ],
             exports: 'Backbone'
         },
-        'backbone.stickit': {
-            deps: ['backbone']
-        },
         handlebars: {
             exports: 'Handlebars'
         }
@@ -31,6 +28,7 @@ require.config({
         'backbone.stickit': 'vendor/backbone.stickit/backbone.stickit',
         'backbone.validation': 'vendor/backbone.validation/src/backbone-validation-amd',
         handlebars: 'vendor/handlebars/handlebars',
+        marked: 'vendor/marked/lib/marked',
         spin: 'vendor/spin.js/dist/spin',
         bootstrap: 'vendor/bootstrap/dist/js/bootstrap',
         text: 'vendor/requirejs-text/text'

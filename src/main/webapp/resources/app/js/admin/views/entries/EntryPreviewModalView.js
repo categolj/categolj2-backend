@@ -3,15 +3,26 @@ define(function (require) {
     var Handlebars = require('handlebars');
     var $ = require('jquery');
     var _ = require('underscore');
+    var marked = require('marked');
 
     var ModalView = require('app/js/admin/views/ModalView');
 
 
     return ModalView.extend({
         initialize: function (entry) {
+            var body = entry.get('contents');
+            if (body) {
+                switch (entry.get('format')) {
+                    case 'md':
+                    {
+                        body = marked(entry.get('contents'));
+                        break;
+                    }
+                }
+            }
             this.opts = {
                 title: 'Preview',
-                body: entry.get('contents')
+                body: new Handlebars.SafeString(body)
             }
         }
     });
