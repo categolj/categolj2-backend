@@ -5,6 +5,7 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
+    var EntryHistories = require('app/js/admin/collections/EntryHistories');
     var ButtonView = require('app/js/admin/views/ButtonView');
     var EntryPreviewModalView = require('app/js/admin/views/entries/EntryPreviewModalView');
 
@@ -15,8 +16,10 @@ define(function (require) {
         events: {
             'click #btn-entry-confirm': '_confirm',
             'click #btn-entry-back-to-form': 'render',
+            'click #btn-entry-update-form': '_updateForm',
             'click #btn-entry-create': '_create',
             'click #btn-entry-update': '_update',
+            'click #btn-entry-delete': '_delete',
             'click #btn-entry-preview': '_preview'
         },
         bindings: {
@@ -37,6 +40,8 @@ define(function (require) {
                 this.templateOpts = {
                     update: true
                 };
+                this.entryHistories = new EntryHistories().entry(this.model);
+                this.entryHistories.fetch();
             } else {
                 this.templateOpts = {
                     create: true
@@ -50,6 +55,12 @@ define(function (require) {
             this.stickit();
             return this;
         },
+        show: function () {
+            this.$el.html(this.entryShowTemplate(
+                _.merge(this.model.toJSON(), {show: true})
+            ));
+            return this;
+        },
         _confirm: function () {
             this.$el.empty().html(this.entryShowTemplate(
                 _.merge(this.model.toJSON(), this.templateOpts)
@@ -59,28 +70,49 @@ define(function (require) {
             });
             return false;
         },
+        _updateForm: function () {
+            Backbone.history.navigate('entries/' + this.model.id + '/form');
+            this.render();
+            return false;
+        },
         _create: function () {
-            this.model.save().done(_.bind(function () {
-                Backbone.history.navigate('/entries', {
-                    trigger: true
-                });
-            }, this)).fail(_.bind(this._handleError, this));
+            this.model.save()
+                .done(_.bind(function () {
+                    Backbone.history.navigate('entries', {
+                        trigger: true
+                    });
+                }, this)).fail(_.bind(this._handleError, this));
             return false;
         },
         _update: function () {
-            this.model.save().done(_.bind(function () {
-                Backbone.history.navigate('/entries/' + this.model.id, {
-                    trigger: true
-                });
-            }, this)).fail(_.bind(this._handleError, this));
+            this.model.save()
+                .done(_.bind(function () {
+                    Backbone.history.navigate('entries/' + this.model.id, {
+                        trigger: true
+                    });
+                }, this)).fail(_.bind(this._handleError, this));
             return false;
+        },
+        _delete: function () {
+            if (confirm('Are you really delete?')) {
+                this.model.destroy()
+                    .done(_.bind(function () {
+                        Backbone.history.navigate('entries', {trigger: true});
+                    }, this)).fail(_.bind(function (response) {
+                        console.log(response);
+                        if (response.responseJSON.details) {
+                            this._showErrors(response.responseJSON.details);
+                        }
+                    }, this));
+            }
         },
         _handleError: function (response) {
             console.log(response);
-            this.buttonView.enable();
+            if (this.buttonView) {
+                this.buttonView.enable();
+            }
             this.render();
 
-            // show field errors
             if (response.responseJSON.details) {
                 this._showErrors(response.responseJSON.details);
             }
@@ -89,8 +121,12 @@ define(function (require) {
             _.each(details, function (detail) {
                 var $target = this.$('#' + detail.target.split('.')[1]);
                 if ($target.length) {
-                    $target.parent().parent().addClass('has-error');
-                    $('<p>').addClass('text-danger').text(detail.message).appendTo($target.parent());
+                    $target.parent().parent()
+                        .addClass('has-error');
+                    $('<p>')
+                        .addClass('text-danger')
+                        .text(detail.message)
+                        .appendTo($target.parent());
                 }
             });
         },

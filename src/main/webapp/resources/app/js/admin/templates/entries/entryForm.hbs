@@ -4,7 +4,7 @@
             <legend>Create a new entry</legend>
         {{/if}}
         {{#if update}}
-            <legend>Update {{title}}</legend>
+            <legend>Update "{{title}}"</legend>
         {{/if}}
         <div class="form-group">
             <label for="title" class="col col-sm-2 control-label">Title:</label>
@@ -23,7 +23,7 @@
         <div class="form-group">
             <label for="contents" class="col col-sm-2 control-label">Contents:
                 <br>
-                <a id="btn-entry-preview" class="btn btn-info btn-xs">preview</a></label>
+                <a id="btn-entry-preview" class="btn btn-info btn-xs">Preview</a></label>
 
             <div class="col col-sm-10">
                 <textarea id="contents" name="contents" class="form-control" rows="10"></textarea>
@@ -67,13 +67,13 @@
         <div class="form-group">
             {{#if create}}
                 <div class="col col-sm-10 col-sm-offset-2">
-                    <a href="#/entries" class="btn btn-default">Back</a>
+                    <a href="#entries" class="btn btn-default">Back</a>
                     <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
                 </div>
             {{/if}}
             {{#if update}}
                 <div class="col col-sm-10 col-sm-offset-2">
-                    <a href="#/entries/{{entryId}}" class="btn btn-default">Back</a>
+                    <a href="#entries/{{entryId}}" class="btn btn-default">Back</a>
                     <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
                 </div>
             {{/if}}

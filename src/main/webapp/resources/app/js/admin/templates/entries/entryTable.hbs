@@ -3,13 +3,15 @@
         <th>Title</th>
         <th>Created date</th>
         <th>Last modified date</th>
+        <th>Last modified by</th>
     </tr>
     {{#each content}}
         <tr>
-            <td><a href="#/entries/{{entryId}}">{{title}}</a>
+            <td><a href="#entries/{{entryId}}">{{title}}</a>
             </td>
             <td>{{createdDate}}</td>
             <td>{{lastModifiedDate}}</td>
+            <td>{{lastModifiedBy}}</td>
         </tr>
     {{/each}}
 </table>

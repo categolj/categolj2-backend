@@ -8,13 +8,12 @@ define(function (require) {
     var Entries = require('app/js/admin/collections/Entries');
     var EntryListView = require('app/js/admin/views/entries/EntryListView');
     var EntryFormView = require('app/js/admin/views/entries/EntryFormView');
-    var EntryShowView = require('app/js/admin/views/entries/EntryShowView');
 
     return Backbone.Router.extend({
         routes: {
             'entries': 'list',
-            'entries?form': 'createForm',
-            'entries/:id?form': 'updateForm',
+            'entries/form': 'createForm',
+            'entries/:id/form': 'updateForm',
             'entries/:id': 'show'
         },
         initialize: function (opts) {
@@ -40,10 +39,10 @@ define(function (require) {
         show: function (id) {
             var entry = new Entry({entryId: id});
             entry.fetch().success(_.bind(function () {
-                this.entryShowView = new EntryShowView({
+                this.entryFormView = new EntryFormView({
                     model: entry
                 });
-                this.adminView.renderTab(this.tabPanelView, this.entryShowView.render());
+                this.adminView.renderTab(this.tabPanelView, this.entryFormView.show());
             }, this));
         },
         updateForm: function (id) {
