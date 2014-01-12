@@ -5,7 +5,7 @@ define(function (require) {
     var _ = require('underscore');
     require('bootstrap');
 
-    var modal = require('text!../templates/modal.hbs');
+    var modal = require('text!app/js/admin/templates/modal.hbs');
 
     /**
      * @see http://stackoverflow.com/questions/16085852/rendering-bootstrap-modal-using-backbone

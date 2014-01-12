@@ -5,8 +5,8 @@ define(function (require) {
     var _ = require('underscore');
 
 
-    var entryList = require('text!../../templates/entries/entryList.hbs');
-    var entryTable = require('text!../../templates/entries/entryTable.hbs');
+    var entryList = require('text!app/js/admin/templates/entries/entryList.hbs');
+    var entryTable = require('text!app/js/admin/templates/entries/entryTable.hbs');
 
     return Backbone.View.extend({
         events: {

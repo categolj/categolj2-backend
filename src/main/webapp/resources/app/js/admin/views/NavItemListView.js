@@ -4,7 +4,7 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var navItemList = require('text!../templates/navItemList.hbs');
+    var navItemList = require('text!app/js/admin/templates/navItemList.hbs');
 
     return Backbone.View.extend({
         template: Handlebars.compile(navItemList),

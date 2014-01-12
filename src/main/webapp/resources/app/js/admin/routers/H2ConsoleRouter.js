@@ -3,7 +3,7 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var H2ConsoleView = require('../views/H2ConsoleView');
+    var H2ConsoleView = require('app/js/admin/views/H2ConsoleView');
 
     return Backbone.Router.extend({
         routes: {

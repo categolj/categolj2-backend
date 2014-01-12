@@ -4,7 +4,7 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var ModalView = require('../../views/ModalView');
+    var ModalView = require('app/js/admin/views/ModalView');
 
 
     return ModalView.extend({

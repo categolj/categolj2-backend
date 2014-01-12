@@ -5,7 +5,7 @@ define(function (require) {
     var _ = require('underscore');
     require('bootstrap');
 
-    var tabPanel = require('text!../templates/tabPanel.hbs');
+    var tabPanel = require('text!app/js/admin/templates/tabPanel.hbs');
 
     return Backbone.View.extend({
         template: Handlebars.compile(tabPanel),

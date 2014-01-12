@@ -4,9 +4,9 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var EntryPreviewModalView = require('../../views/entries/EntryPreviewModalView');
+    var EntryPreviewModalView = require('app/js/admin/views/entries/EntryPreviewModalView');
 
-    var entryShow = require('text!../../templates/entries/entryShow.hbs');
+    var entryShow = require('text!app/js/admin/templates/entries/entryShow.hbs');
 
     return Backbone.View.extend({
         events: {

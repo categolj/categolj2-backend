@@ -1,6 +1,6 @@
 define(function (require) {
     var Backbone = require('backbone');
-    var Entry = require('../models/Entry');
+    var Entry = require('app/js/admin/models/Entry');
 
     return Backbone.Collection.extend({
         model: Entry,

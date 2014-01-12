@@ -4,7 +4,7 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var h2Console = require('text!../templates/h2Console.hbs');
+    var h2Console = require('text!app/js/admin/templates/h2Console.hbs');
 
     return Backbone.View.extend({
         template: Handlebars.compile(h2Console),

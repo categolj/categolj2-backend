@@ -4,10 +4,10 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var NavItemList = require('../collections/NavItemList');
-    var NavItemListView = require('../views/NavItemListView');
-    var TabPanelView = require('../views/TabPanelView');
-    var TabContentView = require('../views/TabContentView');
+    var NavItemList = require('app/js/admin/collections/NavItemList');
+    var NavItemListView = require('app/js/admin/views/NavItemListView');
+    var TabPanelView = require('app/js/admin/views/TabPanelView');
+    var TabContentView = require('app/js/admin/views/TabContentView');
 
     return Backbone.View.extend({
         initialize: function () {

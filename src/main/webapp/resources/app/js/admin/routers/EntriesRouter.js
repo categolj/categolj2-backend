@@ -4,11 +4,11 @@ define(function (require) {
     var _ = require('underscore');
 
 
-    var Entry = require('../models/Entry');
-    var Entries = require('../collections/Entries');
-    var EntryListView = require('../views/entries/EntryListView');
-    var EntryFormView = require('../views/entries/EntryFormView');
-    var EntryShowView = require('../views/entries/EntryShowView');
+    var Entry = require('app/js/admin/models/Entry');
+    var Entries = require('app/js/admin/collections/Entries');
+    var EntryListView = require('app/js/admin/views/entries/EntryListView');
+    var EntryFormView = require('app/js/admin/views/entries/EntryFormView');
+    var EntryShowView = require('app/js/admin/views/entries/EntryShowView');
 
     return Backbone.Router.extend({
         routes: {

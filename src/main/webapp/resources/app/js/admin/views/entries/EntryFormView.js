@@ -5,11 +5,11 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var ButtonView = require('../../views/ButtonView');
-    var EntryPreviewModalView = require('../../views/entries/EntryPreviewModalView');
+    var ButtonView = require('app/js/admin/views/ButtonView');
+    var EntryPreviewModalView = require('app/js/admin/views/entries/EntryPreviewModalView');
 
-    var entryForm = require('text!../../templates/entries/entryForm.hbs');
-    var entryShow = require('text!../../templates/entries/entryShow.hbs');
+    var entryForm = require('text!app/js/admin/templates/entries/entryForm.hbs');
+    var entryShow = require('text!app/js/admin/templates/entries/entryShow.hbs');
 
     return Backbone.View.extend({
         events: {
