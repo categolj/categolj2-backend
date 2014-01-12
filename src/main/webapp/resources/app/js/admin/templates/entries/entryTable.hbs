@@ -1,0 +1,15 @@
+<table class="table table-striped table-bordered table-condensed">
+    <tr>
+        <th>Title</th>
+        <th>Created date</th>
+        <th>Last modified date</th>
+    </tr>
+    {{#each content}}
+        <tr>
+            <td><a href="#/entries/{{entryId}}">{{title}}</a>
+            </td>
+            <td>{{createdDate}}</td>
+            <td>{{lastModifiedDate}}</td>
+        </tr>
+    {{/each}}
+</table>

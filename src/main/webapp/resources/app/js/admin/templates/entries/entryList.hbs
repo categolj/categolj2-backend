@@ -5,29 +5,14 @@
         id="btn-show-entry-search-form" class="btn btn-default"><span
         class="glyphicon glyphicon-search"></span> 検索</a>
 </div>
-<div id="entrySearch" style="display: none">
+<div id="entry-search" style="display: none">
     <hr>
-    <form id="entrySearchForm" class="form-inline">
+    <form id="entry-search-form" class="form-inline">
         <div class="form-group">
             <label class="sr-only" for="keyword">Keyword</label>
             <input type="search" class="form-control" id="keyword" placeholder="Enter keyword">
         </div>
-        <a class="btn btn-default">Search</a>
+        <a id="btn-entry-search" class="btn btn-default">Search</a>
     </form>
 </div>
 <hr>
-<table class="table table-striped table-bordered table-condensed">
-    <tr>
-        <th>Title</th>
-        <th>Created date</th>
-        <th>Last modified date</th>
-    </tr>
-    {{#each content}}
-        <tr>
-            <td><a href="#/entries/{{entryId}}">{{title}}</a>
-            </td>
-            <td>{{createdDate}}</td>
-            <td>{{lastModifiedDate}}</td>
-        </tr>
-    {{/each}}
-</table>

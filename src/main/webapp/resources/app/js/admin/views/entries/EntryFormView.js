@@ -16,7 +16,7 @@ define(function (require) {
             'click #btn-entry-confirm': '_confirm',
             'click #btn-entry-back-to-form': 'render',
             'click #btn-entry-create': '_create',
-            'click #btn-entry-update': '_create',
+            'click #btn-entry-update': '_update',
             'click #btn-entry-preview': '_preview'
         },
         bindings: {
@@ -60,14 +60,39 @@ define(function (require) {
             return false;
         },
         _create: function () {
-            this.model.save().done(function () {
-                Backbone.history.navigate('/entries', {trigger: true});
-            }).fail(_.bind(function (response) {
-                    console.log(response);
-                    alert(response.statusText);
-                    this.buttonView.enable();
-                }, this));
+            this.model.save().done(_.bind(function () {
+                Backbone.history.navigate('/entries', {
+                    trigger: true
+                });
+            }, this)).fail(_.bind(this._handleError, this));
             return false;
+        },
+        _update: function () {
+            this.model.save().done(_.bind(function () {
+                Backbone.history.navigate('/entries/' + this.model.id, {
+                    trigger: true
+                });
+            }, this)).fail(_.bind(this._handleError, this));
+            return false;
+        },
+        _handleError: function (response) {
+            console.log(response);
+            this.buttonView.enable();
+            this.render();
+
+            // show field errors
+            if (response.responseJSON.details) {
+                this._showErrors(response.responseJSON.details);
+            }
+        },
+        _showErrors: function (details) {
+            _.each(details, function (detail) {
+                var $target = this.$('#' + detail.target.split('.')[1]);
+                if ($target.length) {
+                    $target.parent().parent().addClass('has-error');
+                    $('<p>').addClass('text-danger').text(detail.message).appendTo($target.parent());
+                }
+            });
         },
         _preview: function () {
             var modalView = new EntryPreviewModalView(this.model);
@@ -78,5 +103,4 @@ define(function (require) {
             }
         }
     });
-})
-;
+});
