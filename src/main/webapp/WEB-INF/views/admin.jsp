@@ -65,6 +65,6 @@
         </div>
     </div>
 </div>
-<script data-curl-run="resources/app/js/run.js" src="resources/vendor/curl/src/curl.js"></script>
+<script data-main="resources/app/js/admin/main" src="resources/vendor/requirejs/require.js"></script>
 </body>
 </html>
