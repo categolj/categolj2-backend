@@ -37,6 +37,8 @@
     </bean>
 
     <bean id="loginSuccessHandler" class="am.ik.categolj2.app.login.LoginSuccessHandler">
+        <property name="defaultTargetUrl" value="/" />
+        <property name="alwaysUseDefaultTargetUrl" value="true" />
     </bean>
 
     <sec:authentication-manager>

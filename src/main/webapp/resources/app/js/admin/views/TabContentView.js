@@ -10,7 +10,7 @@ define(function (require) {
             this.panelView = opts.panelView;
         },
         render: function () {
-            this.$el.html(this.panelView.render().$el);
+            this.$el.empty().html(this.panelView.render().$el);
             return this;
         }
     });

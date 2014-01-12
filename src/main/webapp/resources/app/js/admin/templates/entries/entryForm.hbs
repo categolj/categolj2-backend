@@ -1,0 +1,52 @@
+<form id="entryForm" class="form-horizontal">
+    <fieldset>
+        <legend>Create a new entry</legend>
+        <div class="form-group">
+            <label for="title" class="col col-sm-2 control-label">Title:</label>
+
+            <div class="col col-sm-10">
+                <input id="title" name="title" class="form-control" type="text" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="categoryString" class="col col-sm-2 control-label">Category:</label>
+
+            <div class="col col-sm-10">
+                <input id="categoryString" name="categoryString" class="form-control" type="text" value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="contents" class="col col-sm-2 control-label">Contents:</label>
+
+            <div class="col col-sm-10">
+                <textarea id="contents" name="contents" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="format1" class="col col-sm-2 control-label">Format:</label>
+
+            <div class="col col-sm-10">
+                <span><input id="format1" name="format" type="radio" value="md"><label
+                        for="format1">markdown</label></span>
+                <span><input id="format2" name="format" type="radio"
+                             value="html"><label for="format2">html</label></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col col-sm-10 col-sm-offset-2">
+                <div class="checkbox">
+                    <label>
+                        <input id="published1" name="published" type="checkbox" value="true">
+                        <input type="hidden" name="_published" value="on"> Publish?
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col col-sm-10 col-sm-offset-2">
+                <a href="#/entries" class="btn btn-default">Back</a>
+                <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
+            </div>
+        </div>
+    </fieldset>
+</form>

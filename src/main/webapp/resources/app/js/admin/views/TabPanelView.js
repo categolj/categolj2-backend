@@ -19,7 +19,7 @@ define(function (require) {
                 tab: this.model.get('id'),
                 title: this.model.get('itemName')
             }));
-            this.$el.find('.panel-body').html(this.bodyView.$el);
+            this.$('.panel-body').empty().html(this.bodyView.$el);
             this.$tab.tab('show');
 
             return this;

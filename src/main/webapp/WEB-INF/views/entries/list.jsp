@@ -16,7 +16,7 @@
     <c:forEach items="${page.content}" var="entry">
         <tr>
             <td><a
-                    href="#/entries/${f:h(entry.entryId)}?form">${f:h(entry.title)}</a>
+                    href="#/entries/${f:h(entry.entryId)}">${f:h(entry.title)}</a>
             </td>
             <td>${f:h(entry.contents)}</td>
             <td>${f:h(entry.createdDate)}</td>

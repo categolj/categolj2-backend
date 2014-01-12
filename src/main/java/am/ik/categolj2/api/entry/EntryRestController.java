@@ -2,7 +2,9 @@ package am.ik.categolj2.api.entry;
 
 import javax.inject.Inject;
 
+import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.app.entry.EntryForm;
+import am.ik.categolj2.domain.model.Categories;
 import am.ik.categolj2.domain.model.Category;
 import org.dozer.Mapper;
 import org.springframework.data.domain.Page;
@@ -27,10 +29,12 @@ public class EntryRestController {
     @Inject
     Mapper beanMapper;
 
+    // Public API
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Page<Entry> getEntry(@PageableDefault Pageable pageable) {
-        Page<Entry> page = entryService.findPage(pageable);
+    public Page<Entry> getEntries(@PageableDefault Pageable pageable) {
+        Page<Entry> page = entryService.findPagePublished(pageable);
         return page;
     }
 
@@ -41,13 +45,46 @@ public class EntryRestController {
         return entry;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    // Admin API
+
+    @RequestMapping(method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
     @ResponseBody
-    public ResponseEntity<Entry> create(@RequestBody @Validated EntryForm form) {
+    public Page<Entry> getEntriesInAdmin(@PageableDefault Pageable pageable) {
+        Page<Entry> page = entryService.findPage(pageable);
+        return page;
+    }
+
+    @RequestMapping(value = "{entryId}", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
+    @ResponseBody
+    public Entry getEntryInAdmin(@PathVariable("entryId") Integer entryId) {
+        Entry entry = entryService.findOne(entryId);
+        return entry;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, headers = Categolj2Headers.X_ADMIN)
+    @ResponseBody
+    public ResponseEntity<Entry> createEntryInAdmin(@RequestBody @Validated EntryForm form) {
         Entry entry = beanMapper.map(form, Entry.class);
         List<Category> categories = entry.getCategory();
         entry.setCategory(null);
         Entry created = entryService.create(entry, categories);
-        return new ResponseEntity<Entry>(created, HttpStatus.CREATED);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "{entryId}", method = RequestMethod.PUT, headers = Categolj2Headers.X_ADMIN)
+    @ResponseBody
+    public ResponseEntity<Entry> updteEntryInAdmin(@PathVariable("entryId") Integer entryId, @RequestBody @Validated EntryForm form) {
+        Entry entry = beanMapper.map(form, Entry.class);
+        new Categories(entry.getCategory()).applyEntryId(entryId);
+        Entry updated = entryService.update(entryId, entry,
+                form.isUpdateLastModifiedDate(), form.isSaveInHistory());
+        return new ResponseEntity<>(updated, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "{entryId}", method = RequestMethod.DELETE, headers = Categolj2Headers.X_ADMIN)
+    @ResponseBody
+    public ResponseEntity<Void> deleteEntryInAdmin(@PathVariable("entryId") Integer entryId) {
+        entryService.delete(entryId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
