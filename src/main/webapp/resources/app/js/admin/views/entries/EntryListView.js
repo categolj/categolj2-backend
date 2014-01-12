@@ -9,8 +9,8 @@ define(function (require) {
 
     return Backbone.View.extend({
         events: {
-            'click #btn-show-entry-search-form': 'toggleEntrySearchForm',
-            'click #btn-close-entry-search-form': 'toggleEntrySearchForm'
+            'click #btn-entry-search': '_search',
+            'click #btn-show-entry-search-form': '_toggleEntrySearchForm'
         },
 
         entryListTemplate: Handlebars.compile(entryList),
@@ -19,18 +19,18 @@ define(function (require) {
             this.$el.html(this.entryListTemplate({
                 content: this.collection.toJSON()
             }));
+            this.$entrySearch = this.$('#entrySearch');
         },
         render: function () {
-            console.log(this.collection.toJSON());
             return this;
         },
-        toggleEntrySearchForm: function () {
+        _toggleEntrySearchForm: function () {
             if (!this.isShownSearchForm) {
                 this.isShownSearchForm = true;
-                this.$el.find('#entrySearch').css('display', 'block');
+                this.$entrySearch.css('display', 'block');
             } else {
                 this.isShownSearchForm = false;
-                this.$el.find('#entrySearch').css('display', 'none');
+                this.$entrySearch.css('display', 'none');
             }
         }
     });

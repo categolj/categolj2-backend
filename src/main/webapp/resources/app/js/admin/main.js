@@ -1,6 +1,8 @@
 define(function (require) {
-    var AdminRouter = require('./routers/AdminRouter');
     var $ = require('jquery');
+
+    var AdminRouter = require('./routers/AdminRouter');
+    var SpinView = require('./views/SpinView');
 
     new AdminRouter();
 
@@ -11,6 +13,15 @@ define(function (require) {
             xhr.setRequestHeader(header, token);
             xhr.setRequestHeader('X-Admin', true);
         });
+
+        var spinView = new SpinView();
+        $('body').append(spinView.render().$el);
+        $(document).on('ajaxStart',function () {
+            spinView.spin();
+        }).on('ajaxComplete', function () {
+                spinView.stop();
+            });
+
         Backbone.history.start();
     });
 });

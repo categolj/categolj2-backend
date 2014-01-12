@@ -1,6 +1,11 @@
 <form id="entryForm" class="form-horizontal">
     <fieldset>
-        <legend>Create a new entry</legend>
+        {{#if create}}
+            <legend>Create a new entry</legend>
+        {{/if}}
+        {{#if update}}
+            <legend>Update {{title}}</legend>
+        {{/if}}
         <div class="form-group">
             <label for="title" class="col col-sm-2 control-label">Title:</label>
 
@@ -16,37 +21,62 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="contents" class="col col-sm-2 control-label">Contents:</label>
+            <label for="contents" class="col col-sm-2 control-label">Contents:
+                <br>
+                <a id="btn-entry-preview" class="btn btn-info btn-xs">preview</a></label>
 
             <div class="col col-sm-10">
-                <textarea id="contents" name="contents" class="form-control"></textarea>
+                <textarea id="contents" name="contents" class="form-control" rows="10"></textarea>
             </div>
         </div>
         <div class="form-group">
-            <label for="format1" class="col col-sm-2 control-label">Format:</label>
+            <label for="format" class="col col-sm-2 control-label">Format:</label>
 
             <div class="col col-sm-10">
-                <span><input id="format1" name="format" type="radio" value="md"><label
-                        for="format1">markdown</label></span>
-                <span><input id="format2" name="format" type="radio"
-                             value="html"><label for="format2">html</label></span>
+                <select id="format" name="format" class="form-control">
+                    <option value="md">markdown</option>
+                    <option value="html">html</option>
+                    <option value="rst">rst</option>
+                </select>
             </div>
         </div>
         <div class="form-group">
-            <div class="col col-sm-10 col-sm-offset-2">
+            <label for="format" class="col col-sm-2 control-label">Options:</label>
+
+            <div class="col col-sm-10">
                 <div class="checkbox">
                     <label>
-                        <input id="published1" name="published" type="checkbox" value="true">
-                        <input type="hidden" name="_published" value="on"> Publish?
+                        <input id="published" name="published" type="checkbox"> Publish?
                     </label>
                 </div>
+                {{#if update}}
+                    <div class="checkbox">
+                        <label>
+                            <input id="updateLastModifiedDate" name="updateLastModifiedDate" type="checkbox"> Update
+                            last modified date?
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input id="saveInHistory" name="saveInHistory" type="checkbox"> Save in history?
+                        </label>
+                    </div>
+                {{/if}}
             </div>
         </div>
         <div class="form-group">
-            <div class="col col-sm-10 col-sm-offset-2">
-                <a href="#/entries" class="btn btn-default">Back</a>
-                <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
-            </div>
+            {{#if create}}
+                <div class="col col-sm-10 col-sm-offset-2">
+                    <a href="#/entries" class="btn btn-default">Back</a>
+                    <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
+                </div>
+            {{/if}}
+            {{#if update}}
+                <div class="col col-sm-10 col-sm-offset-2">
+                    <a href="#/entries/{{entryId}}" class="btn btn-default">Back</a>
+                    <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
+                </div>
+            {{/if}}
         </div>
     </fieldset>
 </form>

@@ -38,6 +38,14 @@ public class EntryRestController {
         return page;
     }
 
+    @RequestMapping(method = RequestMethod.GET, params = "keyword")
+    @ResponseBody
+    public Page<Entry> searchEntries(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable) {
+        // TODO search
+        Page<Entry> page = entryService.findPagePublished(pageable);
+        return page;
+    }
+
     @RequestMapping(value = "{entryId}", method = RequestMethod.GET)
     @ResponseBody
     public Entry getEntry(@PathVariable("entryId") Integer entryId) {
@@ -51,6 +59,13 @@ public class EntryRestController {
     @ResponseBody
     public Page<Entry> getEntriesInAdmin(@PageableDefault Pageable pageable) {
         Page<Entry> page = entryService.findPage(pageable);
+        return page;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "keyword", headers = Categolj2Headers.X_ADMIN)
+    @ResponseBody
+    public Page<Entry> searchEntriesInAdmin(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable) {
+        Page<Entry> page = entryService.serachPageByKeyword(keyword, pageable);
         return page;
     }
 
@@ -73,7 +88,7 @@ public class EntryRestController {
 
     @RequestMapping(value = "{entryId}", method = RequestMethod.PUT, headers = Categolj2Headers.X_ADMIN)
     @ResponseBody
-    public ResponseEntity<Entry> updteEntryInAdmin(@PathVariable("entryId") Integer entryId, @RequestBody @Validated EntryForm form) {
+    public ResponseEntity<Entry> updateEntryInAdmin(@PathVariable("entryId") Integer entryId, @RequestBody @Validated EntryForm form) {
         Entry entry = beanMapper.map(form, Entry.class);
         new Categories(entry.getCategory()).applyEntryId(entryId);
         Entry updated = entryService.update(entryId, entry,

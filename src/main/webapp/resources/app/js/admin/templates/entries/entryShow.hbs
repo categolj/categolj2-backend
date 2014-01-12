@@ -1,0 +1,73 @@
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <td>{{title}}</td>
+    </tr>
+    <tr>
+        <th>Category</th>
+        <td>{{categoryString}}</td>
+    </tr>
+    <tr>
+        <th>Contents</th>
+        <td><a id="btn-entry-preview" class="btn btn-info btn-xs">preview</a></td>
+    </tr>
+    <tr>
+        <th>Format</th>
+        <td>{{format}}</td>
+    </tr>
+    <tr>
+        <th>Publish?</th>
+        <td>{{published}}</td>
+    </tr>
+    {{#if update}}
+        <tr>
+            <th>Update last modified date?</th>
+            <td>{{updateLastModifiedDate}}</td>
+        </tr>
+        <tr>
+            <th>Save in history?</th>
+            <td>{{saveInHistory}}</td>
+        </tr>
+    {{/if}}
+    {{#if show}}
+        <tr>
+            <th>Created date</th>
+            <td>{{createdDate}}</td>
+        </tr>
+        <tr>
+            <th>Created by</th>
+            <td>{{createdBy}}</td>
+        </tr>
+        <tr>
+            <th>LastModified date</th>
+            <td>{{lastModifiedDate}}</td>
+        </tr>
+        <tr>
+            <th>LastModified by</th>
+            <td>{{lastModifiedBy}}</td>
+        </tr>
+        <tr>
+            <th>Version</th>
+            <td>{{version}}</td>
+        </tr>
+    {{/if}}
+</table>
+{{#if create}}
+    <p>
+        <a id="btn-entry-back-to-form" class="btn btn-default">Back</a>
+        <a id="btn-entry-create" class="btn btn-primary">Create</a>
+    </p>
+{{/if}}
+{{#if update}}
+    <p>
+        <a id="btn-entry-back-to-form" class="btn btn-default">Back</a>
+        <a id="btn-entry-update" class="btn btn-primary">Update</a>
+    </p>
+{{/if}}
+{{#if show}}
+    <p>
+        <a href="#/entries" class="btn btn-default">Back</a>
+        <a href="#/entries/{{entryId}}?form" class="btn btn-primary">Update</a>
+        <a id="btn-entry-delete" class="btn btn-danger">Delete</a>
+    </p>
+{{/if}}

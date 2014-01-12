@@ -3,6 +3,18 @@ define(function (require) {
 
     return Backbone.Model.extend({
         idAttribute: 'entryId',
-        urlRoot: 'api/entries'
+        urlRoot: 'api/entries',
+        defaults: {
+            'format': 'md'
+        },
+        parse: function (response) {
+            if (response.category && !response.categoryString) {
+                var categoryString = _.map(response.category,function (c) {
+                    return c.categoryName;
+                }).join('::');
+                this.set('categoryString', categoryString);
+            }
+            return response;
+        }
     });
 });

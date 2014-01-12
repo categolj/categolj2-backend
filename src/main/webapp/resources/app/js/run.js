@@ -5,7 +5,6 @@ var curl;
         baseUrl: 'resources',
         packages: {
             main: {location: 'app/js/admin'},
-            //main: {location: 'app/js/foo'},
             curl: {location: 'vendor/curl/src/curl'},
             jquery: {location: 'vendor/jquery/jquery', main: '.'},
             backbone: {location: 'vendor/backbone-amd/backbone', main: '.'},
@@ -18,6 +17,7 @@ var curl;
                     exports: 'Handlebars',
                     loader: 'curl/loader/legacy'
                 }},
+            spin: {location: 'vendor/spin.js/dist/spin.js', main: '.'},
             bootstrap: {location: 'vendor/bootstrap/dist/js/bootstrap', main: '.',
                 config: {
                     exports: 'jQuery',

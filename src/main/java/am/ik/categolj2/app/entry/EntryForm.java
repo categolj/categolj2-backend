@@ -6,8 +6,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class EntryForm implements Serializable {
 	private static final long serialVersionUID = 1L;
 
