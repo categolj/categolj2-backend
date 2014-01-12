@@ -11,6 +11,7 @@ define(function (require) {
 
     var entryForm = require('text!app/js/admin/templates/entries/entryForm.hbs');
     var entryShow = require('text!app/js/admin/templates/entries/entryShow.hbs');
+    var entryTable = require('text!app/js/admin/templates/entries/entryTable.hbs');
 
     return Backbone.View.extend({
         events: {
@@ -20,7 +21,8 @@ define(function (require) {
             'click #btn-entry-create': '_create',
             'click #btn-entry-update': '_update',
             'click #btn-entry-delete': '_delete',
-            'click #btn-entry-preview': '_preview'
+            'click #btn-entry-preview': '_preview',
+            'click #btn-entry-apply-history': '_applyHistory'
         },
         bindings: {
             '#title': 'title',
@@ -34,6 +36,7 @@ define(function (require) {
 
         entryFormTemplate: Handlebars.compile(entryForm),
         entryShowTemplate: Handlebars.compile(entryShow),
+        entryTableTemplate: Handlebars.compile(entryTable),
 
         initialize: function () {
             if (this.model.id) {
@@ -41,7 +44,7 @@ define(function (require) {
                     update: true
                 };
                 this.entryHistories = new EntryHistories().entry(this.model);
-                this.entryHistories.fetch();
+                this.listenTo(this.entryHistories, 'sync', this._appendEntryHistoryTable);
             } else {
                 this.templateOpts = {
                     create: true
@@ -53,13 +56,22 @@ define(function (require) {
                 _.merge(this.model.toJSON(), this.templateOpts)
             ));
             this.stickit();
+            if (this.entryHistories) {
+                this.entryHistories.fetch();
+            }
             return this;
         },
         show: function () {
-            this.$el.html(this.entryShowTemplate(
+            this.$el.empty().html(this.entryShowTemplate(
                 _.merge(this.model.toJSON(), {show: true})
             ));
             return this;
+        },
+        _appendEntryHistoryTable: function () {
+            this.$el.append(this.entryTableTemplate({
+                content: this.entryHistories.toJSON(),
+                history: true
+            }));
         },
         _confirm: function () {
             this.$el.empty().html(this.entryShowTemplate(
@@ -137,6 +149,16 @@ define(function (require) {
             if (this.buttonView) {
                 this.buttonView.enable();
             }
+        },
+        _applyHistory: function (e) {
+            var $btn = $(e.currentTarget);
+            var history = this.entryHistories.get($btn.data('entry-history-id'));
+            this.model.set({
+                title: history.get('title'),
+                contents: history.get('contents'),
+                format: history.get('format')
+            });
+            return false;
         }
     });
 });

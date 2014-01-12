@@ -40,12 +40,13 @@ define(function (require) {
             }
             this.collection.fetch(opts);
             this.$keyword.val('');
+            return false;
         },
         _searchOnEnter: function (e) {
             if (e.keyCode != 13 || !this.$keyword.val()) {
                 return;
             }
-            this._search();
+            return this._search();
         },
         _toggleEntrySearchForm: function () {
             this.$entrySearch.toggle(300);

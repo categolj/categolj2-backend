@@ -2,16 +2,31 @@
     <tr>
         <th>Title</th>
         <th>Created date</th>
+        <th>Created by</th>
         <th>Last modified date</th>
         <th>Last modified by</th>
+        {{#if history}}
+            <th>Action</th>
+        {{/if}}
     </tr>
     {{#each content}}
         <tr>
-            <td><a href="#entries/{{entryId}}">{{title}}</a>
+            <td>
+                {{#if ../history}}
+                    {{title}}
+                {{else}}
+                    <a href="#entries/{{entryId}}">{{title}}</a>
+                {{/if}}
             </td>
             <td>{{createdDate}}</td>
+            <td>{{createdBy}}</td>
             <td>{{lastModifiedDate}}</td>
             <td>{{lastModifiedBy}}</td>
+            {{#if ../history}}
+                <td>
+                    <a id="btn-entry-apply-history" class="btn btn-default" data-entry-history-id="{{entryHistoryId}}">Apply</a>
+                </td>
+            {{/if}}
         </tr>
     {{/each}}
 </table>
