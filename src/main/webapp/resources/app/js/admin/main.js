@@ -19,6 +19,14 @@ require.config({
         },
         handlebars: {
             exports: 'Handlebars'
+        },
+        pagedown: {
+            exports: 'Markdown'
+        },
+        'pagedown.editor': {
+            deps: [
+                'pagedown'
+            ]
         }
     },
     paths: {
@@ -30,6 +38,8 @@ require.config({
         handlebars: 'vendor/handlebars/handlebars',
         marked: 'vendor/marked/lib/marked',
         spin: 'vendor/spin.js/dist/spin',
+        pagedown: 'vendor/pagedown/Markdown.Converter',
+        'pagedown.editor': 'vendor/pagedown/Markdown.Editor',
         bootstrap: 'vendor/bootstrap/dist/js/bootstrap',
         text: 'vendor/requirejs-text/text'
     }
