@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(staticName = "of")
 public class ErrorResponse {
-    private final Class<?> type;
+    private final String type;
     private final String message;
     private final List<ErrorResponseDetail> details = new ArrayList<>();
 
@@ -41,7 +41,7 @@ public class ErrorResponse {
 
     public static ErrorResponse from(Exception e, String message,
                                      List<FieldError> errors) {
-        ErrorResponse response = ErrorResponse.of(e.getClass(), message);
+        ErrorResponse response = ErrorResponse.of(e.getClass().getSimpleName(), message);
         for (FieldError error : errors) {
             response.add(null, error.getDefaultMessage(), error.getObjectName() + "." + error.getField());
         }
@@ -50,7 +50,7 @@ public class ErrorResponse {
 
     public static ErrorResponse from(Exception e, String message,
                                      ResultMessages resultMessages) {
-        ErrorResponse response = ErrorResponse.of(e.getClass(), message);
+        ErrorResponse response = ErrorResponse.of(e.getClass().getSimpleName(), message);
         for (ResultMessage m : resultMessages) {
             response.add(m.getCode(), m.getText(), null);
         }

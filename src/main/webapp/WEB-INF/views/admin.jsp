@@ -8,6 +8,9 @@
     <link
             href="resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css"
             rel="stylesheet" media="screen">
+    <link
+            href="resources/vendor/handsontable/dist/jquery.handsontable.full.css"
+            rel="stylesheet" media="screen">
     <style>
         body {
             padding-top: 70px;

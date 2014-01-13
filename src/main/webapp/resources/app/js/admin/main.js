@@ -36,6 +36,7 @@ require.config({
         'backbone.stickit': 'vendor/backbone.stickit/backbone.stickit',
         'backbone.validation': 'vendor/backbone.validation/src/backbone-validation-amd',
         handlebars: 'vendor/handlebars/handlebars',
+        handsontable: 'vendor/handsontable/dist/jquery.handsontable.full',
         marked: 'vendor/marked/lib/marked',
         spin: 'vendor/spin.js/dist/spin',
         pagedown: 'vendor/pagedown/Markdown.Converter',

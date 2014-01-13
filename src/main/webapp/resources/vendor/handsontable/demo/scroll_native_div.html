@@ -112,12 +112,14 @@
           <script data-jsfiddle="example1">
             $('#example1').handsontable({
               data: createBigData(),
-              colWidths: [55, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47], //can also be a number or a function
+              colWidths: [55, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47, 47], //can also be a number or a function
               rowHeaders: true,
               colHeaders: true,
               minSpareRows: 1,
               stretchH: 'all',
               contextMenu: true,
+              fixedRowsTop: 2,
+              fixedColumnsLeft: 2,
               nativeScrollbars: true
             });
           </script>

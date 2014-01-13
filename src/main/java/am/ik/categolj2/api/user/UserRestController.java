@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 
@@ -41,14 +38,14 @@ public class UserRestController {
 
     @RequestMapping(method = RequestMethod.POST, headers = Categolj2Headers.X_ADMIN)
     @ResponseBody
-    public ResponseEntity<User> postUsers(@Validated User user) {
+    public ResponseEntity<User> postUsers(@Validated @RequestBody User user) {
         User created = userService.create(user, user.getPassword());
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "{username}", method = RequestMethod.PUT, headers = Categolj2Headers.X_ADMIN)
     @ResponseBody
-    public ResponseEntity<User> postUsers(@PathVariable("username") String username, @Validated User user) {
+    public ResponseEntity<User> postUsers(@PathVariable("username") String username, @Validated @RequestBody User user) {
         User updated = userService.update(username, user, user.getPassword());
         return new ResponseEntity<>(updated, HttpStatus.OK);
     }

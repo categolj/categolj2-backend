@@ -3,7 +3,7 @@ package am.ik.categolj2.api.error;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,20 +35,30 @@ public class ErrorControllerAdvice {
         return ErrorResponse.from(e, "business error!");
     }
 
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBindException(
+            BindException e) {
+        return ErrorResponse.from(e, "invalid request!",
+                e.getBindingResult().getFieldErrors());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorResponse handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
-        return ErrorResponse.from(e, "invalid request!", e.getBindingResult().getFieldErrors());
+        return ErrorResponse.from(e, "invalid request!",
+                e.getBindingResult().getFieldErrors());
     }
-
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleException(Exception e) {
         logger.error("System Error", e);
-        return ErrorResponse.from(e, "server error!", ResultMessages.error().add(ResultMessage.fromText(e.getMessage())));
+        return ErrorResponse.from(e, "server error!",
+                ResultMessages.error().add(ResultMessage.fromText(e.getMessage())));
     }
 }

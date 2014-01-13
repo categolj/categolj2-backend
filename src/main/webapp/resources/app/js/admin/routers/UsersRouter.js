@@ -16,7 +16,10 @@ define(function (require) {
         },
         list: function () {
             var users = new Users();
-            this.adminView.renderTab(this.tabPanelView, new UsersView().render());
+            this.adminView.renderTab(this.tabPanelView, new UsersView({
+                collection: users
+            }).render());
+            users.fetch();
         }
     });
 });
