@@ -13,6 +13,8 @@ define(function (require) {
     var SystemRouter = require('app/js/admin/routers/SystemRouter');
     var H2ConsoleRouter = require('app/js/admin/routers/H2ConsoleRouter');
 
+    LoginHistories = require('app/js/admin/collections/LoginHistories');
+
     return Backbone.Router.extend({
         routes: {
             '': 'home',

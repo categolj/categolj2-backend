@@ -19,6 +19,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Data
 @AllArgsConstructor
@@ -40,6 +41,7 @@ public class Role extends AbstractAuditableEntiry<Integer> {
 	@Column(name = "ROLE_NAME", unique = true)
 	private String roleName;
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @JsonIgnore
 	private Set<User> users;
 
 	public Role(Integer roleId) {

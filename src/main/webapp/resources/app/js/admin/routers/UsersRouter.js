@@ -4,6 +4,7 @@ define(function (require) {
     var _ = require('underscore');
 
     var UsersView = require('app/js/admin/views/UsersView');
+    Users = require('app/js/admin/collections/Users');
 
     return Backbone.Router.extend({
         routes: {

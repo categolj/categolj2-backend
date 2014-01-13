@@ -10,7 +10,7 @@ public interface UserService {
 
 	User findOneByUsernameOrEmail(String usernameOrEmail);
 
-	Page<User> findAllPage(Pageable pageable);
+	Page<User> findPage(Pageable pageable);
 
 	User create(User user, String rawPassword);
 
