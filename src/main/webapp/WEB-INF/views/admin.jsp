@@ -40,7 +40,7 @@
                     ${f:h(user.firstName)}
                     ${f:h(user.lastName)} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#users/update"><span
+                        <li><a href="#users/me/form"><span
                                 class="glyphicon glyphicon-edit"></span>
                             Change information</a></li>
                         <li><a
