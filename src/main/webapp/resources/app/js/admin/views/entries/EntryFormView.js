@@ -44,6 +44,7 @@ define(function (require) {
                     update: true
                 };
                 this.entryHistories = new EntryHistories().entry(this.model);
+                this.listenTo(this.entryHistories, 'sync', this._appendEntryHistoryTable);
             } else {
                 this.templateOpts = {
                     create: true
