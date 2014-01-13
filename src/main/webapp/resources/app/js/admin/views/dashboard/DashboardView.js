@@ -29,7 +29,6 @@ define(function (require) {
             return this;
         },
         renderLoginHistories: function () {
-            console.log('foo', this.loginHistoriesView);
             this.loginHistoriesView.render();
         }
     });

@@ -4,7 +4,7 @@ define(function (require) {
     var _ = require('underscore');
 
     var UsersView = require('app/js/admin/views/UsersView');
-    Users = require('app/js/admin/collections/Users');
+    var Users = require('app/js/admin/collections/Users');
 
     return Backbone.Router.extend({
         routes: {
@@ -15,6 +15,7 @@ define(function (require) {
             this.tabPanelView = this.adminView.createTabPanelView('users');
         },
         list: function () {
+            var users = new Users();
             this.adminView.renderTab(this.tabPanelView, new UsersView().render());
         }
     });

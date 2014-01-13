@@ -22,12 +22,11 @@ define(function (require) {
         },
         list: function () {
             var entries = new Entries();
-            entries.fetch().success(_.bind(function () {
-                this.entryListView = new EntryListView({
-                    collection: entries
-                });
-                this.adminView.renderTab(this.tabPanelView, this.entryListView.render());
-            }, this));
+            this.entryListView = new EntryListView({
+                collection: entries
+            });
+            this.adminView.renderTab(this.tabPanelView, this.entryListView.render());
+            entries.fetch();
         },
         createForm: function () {
             var entry = new Entry();
