@@ -7,6 +7,9 @@ define(function (require) {
         model: LoginHistory,
         url: function () {
             return '/api/loginhistories';
+        },
+        comparator: function (a, b) {
+            return a.get('loginDate') > b.get('logDate') ? -1 : 1;
         }
     }));
 });

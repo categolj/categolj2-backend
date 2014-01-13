@@ -4,7 +4,8 @@ define(function (require) {
     var _ = require('underscore');
 
     var AdminView = require('app/js/admin/views/AdminView');
-    var DashboardView = require('app/js/admin/views/DashboardView');
+    var DashboardView = require('app/js/admin/views/dashboard/DashboardView');
+
     var EntriesRouter = require('app/js/admin/routers/EntriesRouter');
     var CategoriesRouter = require('app/js/admin/routers/CategoriesRouter');
     var UploadsRouter = require('app/js/admin/routers/UploadsRouter');
@@ -12,8 +13,6 @@ define(function (require) {
     var ReportsRouter = require('app/js/admin/routers/ReportsRouter');
     var SystemRouter = require('app/js/admin/routers/SystemRouter');
     var H2ConsoleRouter = require('app/js/admin/routers/H2ConsoleRouter');
-
-    LoginHistories = require('app/js/admin/collections/LoginHistories');
 
     return Backbone.Router.extend({
         routes: {

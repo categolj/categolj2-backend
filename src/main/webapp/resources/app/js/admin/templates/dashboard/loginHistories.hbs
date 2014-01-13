@@ -1,0 +1,10 @@
+{{#each contents}}
+    <a href="#" class="list-group-item" data-login-history-id="{{loginHistoryId}}">
+        <h4 class="list-group-item-heading">{{loginDate}} {{username}}</h4>
+
+        <p class="list-group-item-text">
+            Agent: {{loginAgent}}<br>
+            Host:  {{loginHost}}
+        </p>
+    </a>
+{{/each}}
