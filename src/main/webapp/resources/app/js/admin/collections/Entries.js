@@ -13,7 +13,7 @@ define(function (require) {
             return response.content;
         },
         url: function () {
-            return '/api/entries';
+            return 'api/entries';
         }
     }));
 });

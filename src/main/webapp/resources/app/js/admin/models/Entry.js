@@ -12,7 +12,7 @@ define(function (require) {
                 var categoryString = _.map(response.category,function (c) {
                     return c.categoryName;
                 }).join('::');
-                this.set('categoryString', categoryString);
+                response.categoryString = categoryString;
             }
             return response;
         }

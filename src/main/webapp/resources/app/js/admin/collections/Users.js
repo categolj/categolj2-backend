@@ -15,7 +15,7 @@ define(function (require) {
     return Backbone.Collection.extend(_.extend(Page, {
         model: User,
         url: function () {
-            return '/api/users';
+            return 'api/users';
         },
         // Backbone.Collection doesn't support `splice`, yet! Easy to add.
         splice: hackedSplice
