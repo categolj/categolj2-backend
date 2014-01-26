@@ -51,7 +51,7 @@ define(function (require) {
                     create: true
                 };
             }
-            this.listenTo(this.model, 'change:contents', this._renderFormattedContents);
+            this.listenTo(this.model, 'change:contents change:format', this._renderFormattedContents);
         },
         render: function () {
             this.$el.empty().html(this.entryFormTemplate(
