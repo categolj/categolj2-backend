@@ -69,7 +69,7 @@ define(function (require) {
         },
         _renderFormattedContents: function () {
             if (this.contentsTab === '#contents-tab-preview') {
-                this.$('#contents-tab-preview')
+                this.$(this.contentsTab)
                     .empty().html(this.model.getFormattedContents());
             }
         },
