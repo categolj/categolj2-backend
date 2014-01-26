@@ -22,7 +22,8 @@ define(function (require) {
             'click #btn-entry-update': '_update',
             'click #btn-entry-delete': '_delete',
             'click #btn-entry-preview': '_preview',
-            'click #btn-entry-apply-history': '_applyHistory'
+            'click #btn-entry-apply-history': '_applyHistory',
+            'show.bs.tab #contents-tab > ul a': '_tabShow'
         },
         bindings: {
             '#title': 'title',
@@ -50,6 +51,7 @@ define(function (require) {
                     create: true
                 };
             }
+            this.listenTo(this.model, 'change:contents', this._renderFormattedContents);
         },
         render: function () {
             this.$el.empty().html(this.entryFormTemplate(
@@ -60,6 +62,16 @@ define(function (require) {
                 this.entryHistories.fetch();
             }
             return this;
+        },
+        _tabShow: function (e) {
+            this.contentsTab = e.target.hash;
+            this._renderFormattedContents();
+        },
+        _renderFormattedContents: function () {
+            if (this.contentsTab === '#contents-tab-preview') {
+                this.$('#contents-tab-preview')
+                    .empty().html(this.model.getFormattedContents());
+            }
         },
         show: function () {
             this.$el.empty().html(this.entryShowTemplate(

@@ -3,23 +3,13 @@ define(function (require) {
     var Handlebars = require('handlebars');
     var $ = require('jquery');
     var _ = require('underscore');
-    var marked = require('marked');
 
     var ModalView = require('app/js/admin/views/ModalView');
 
 
     return ModalView.extend({
         initialize: function (entry) {
-            var body = entry.get('contents');
-            if (body) {
-                switch (entry.get('format')) {
-                    case 'md':
-                    {
-                        body = marked(entry.get('contents'));
-                        break;
-                    }
-                }
-            }
+            var body = entry.getFormattedContents();
             this.opts = {
                 title: 'Preview',
                 body: new Handlebars.SafeString(body)

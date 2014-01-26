@@ -21,12 +21,21 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="contents" class="col col-sm-2 control-label">Contents:
-                <br>
-                <a id="btn-entry-preview" class="btn btn-info btn-xs">Preview</a></label>
+            <label for="contents" class="col col-sm-2 control-label">Contents:</label>
 
-            <div class="col col-sm-10">
-                <textarea id="contents" name="contents" class="form-control" rows="10"></textarea>
+            <div class="col col-sm-10" id="contents-tab">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#contents-tab-contents" data-toggle="tab">Contents</a></li>
+                    <li><a href="#contents-tab-preview" data-toggle="tab">Preview</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="contents-tab-contents">
+                        <textarea id="contents" name="contents" class="form-control" rows="10"></textarea>
+                    </div>
+                    <div class="tab-pane fade" id="contents-tab-preview" style="padding: 10px;">
+
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">
