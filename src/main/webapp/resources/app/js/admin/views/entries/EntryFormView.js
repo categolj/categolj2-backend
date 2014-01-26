@@ -25,8 +25,7 @@ define(function (require) {
             'click #btn-entry-delete': '_delete',
             'click #btn-entry-preview': '_preview',
             'click #btn-entry-apply-history': '_applyHistory',
-            'show.bs.tab #contents-tab > ul a': '_tabShow',
-            'input #wmd-input': '_setModel'
+            'show.bs.tab #contents-tab > ul a': '_tabShow'
         },
         bindings: {
             '#title': 'title',
