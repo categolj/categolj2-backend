@@ -1,6 +1,8 @@
 define(function (require) {
     var Backbone = require('backbone');
     var Handlebars = require('handlebars');
+    var Markdown = require('pagedown');
+    require('pagedown.editor');
     require('backbone.stickit');
     var $ = require('jquery');
     var _ = require('underscore');
@@ -23,12 +25,13 @@ define(function (require) {
             'click #btn-entry-delete': '_delete',
             'click #btn-entry-preview': '_preview',
             'click #btn-entry-apply-history': '_applyHistory',
-            'show.bs.tab #contents-tab > ul a': '_tabShow'
+            'show.bs.tab #contents-tab > ul a': '_tabShow',
+            'input #wmd-input': '_setModel'
         },
         bindings: {
             '#title': 'title',
             '#categoryString': 'categoryString',
-            '#contents': 'contents',
+            '#wmd-input': 'contents',
             '#format': 'format',
             '#published': 'published',
             '#updateLastModifiedDate': 'updateLastModifiedDate',
@@ -78,21 +81,16 @@ define(function (require) {
             }
             return this;
         },
-        _tabShow: function (e) {
-            this.contentsTab = e.target.hash;
-            this._renderFormattedContents();
-        },
-        _renderFormattedContents: function () {
-            if (this.contentsTab === '#contents-tab-preview') {
-                this.$(this.contentsTab)
-                    .empty().html(this.model.getFormattedContents());
-            }
-        },
         show: function () {
             this.$el.empty().html(this.entryShowTemplate(
                 _.merge(this.model.toJSON(), {show: true})
             ));
             return this;
+        },
+        setupPagedownEditor: function() {
+            var converter = new Markdown.Converter();
+            var editor = new Markdown.Editor(converter);
+            editor.run();
         },
         _appendEntryHistoryTable: function () {
             this.$el.append(this.entryTableTemplate({
@@ -189,6 +187,18 @@ define(function (require) {
                 format: history.get('format')
             });
             return false;
+        },
+        _tabShow: function (e) {
+            this.contentsTab = e.target.hash;
+            this._renderFormattedContents();
+        },
+        _renderFormattedContents: function () {
+            if (this.contentsTab === '#contents-tab-preview') {
+                // refresh
+                this.model.set('contents', this.$('#wmd-input').val());
+                this.$(this.contentsTab)
+                    .empty().html(this.model.getFormattedContents());
+            }
         }
     });
 });

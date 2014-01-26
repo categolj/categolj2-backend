@@ -11,6 +11,9 @@
     <link
             href="resources/vendor/handsontable/dist/jquery.handsontable.full.css"
             rel="stylesheet" media="screen">
+    <link
+            href="resources/vendor/pagedown/demo/browser/demo.css"
+            rel="stylesheet" media="screen">
     <style>
         body {
             padding-top: 70px;

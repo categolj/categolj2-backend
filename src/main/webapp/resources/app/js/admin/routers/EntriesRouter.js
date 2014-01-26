@@ -34,6 +34,7 @@ define(function (require) {
                 model: entry
             });
             this.adminView.renderTab(this.tabPanelView, this.entryFormView.render());
+            this.entryFormView.setupPagedownEditor();
         },
         show: function (id) {
             var entry = new Entry({entryId: id});
@@ -51,6 +52,7 @@ define(function (require) {
                     model: entry
                 });
                 this.adminView.renderTab(this.tabPanelView, this.entryFormView.render());
+                this.entryFormView.setupPagedownEditor();
             }, this));
         }
     });
