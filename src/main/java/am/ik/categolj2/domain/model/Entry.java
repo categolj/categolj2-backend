@@ -33,7 +33,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "histories" })
+@ToString(exclude = { "histories", "contents" })
 @Entity
 @Indexed
 @Table(name = "ENTRY")

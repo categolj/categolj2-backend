@@ -1,12 +1,30 @@
 define(function (require) {
     var Backbone = require('backbone');
     var marked = require('marked');
+    Backbone.Validation = require('backbone.validation');
 
     return Backbone.Model.extend({
         idAttribute: 'entryId',
         urlRoot: 'api/entries',
         defaults: {
             'format': 'md'
+        },
+        validation: {
+            title: {
+                required: true,
+                rangeLength: [1, 512]
+            },
+            categoryString: {
+                required: true
+            },
+            contents: {
+                required: true,
+                rangeLength: [1, 65536]
+            },
+            format: {
+                required: true,
+                rangeLength: [1, 10]
+            }
         },
         parse: function (response) {
             if (response.category && !response.categoryString) {

@@ -57,6 +57,21 @@ define(function (require) {
             this.$el.empty().html(this.entryFormTemplate(
                 _.merge(this.model.toJSON(), this.templateOpts)
             ));
+
+            Backbone.Validation.bind(this, {
+                valid: function (view, attr) {
+                    var $el = view.$('[name=' + attr + ']'),
+                        $group = $el.closest('.form-group');
+                    $group.removeClass('has-error');
+                    $group.find('.help-block').text('').addClass('hidden');
+                },
+                invalid: function (view, attr, error) {
+                    var $el = view.$('[name=' + attr + ']'),
+                        $group = $el.closest('.form-group');
+                    $group.addClass('has-error');
+                    $group.find('.help-block').text(error).removeClass('hidden');
+                }
+            });
             this.stickit();
             if (this.entryHistories) {
                 this.entryHistories.fetch();
@@ -86,6 +101,10 @@ define(function (require) {
             }));
         },
         _confirm: function () {
+            if (!this.model.isValid(true)) {
+                return false;
+            }
+
             this.$el.empty().html(this.entryShowTemplate(
                 _.merge(this.model.toJSON(), this.templateOpts)
             ));
@@ -147,12 +166,9 @@ define(function (require) {
             _.each(details, function (detail) {
                 var $target = this.$('#' + detail.target.split('.')[1]);
                 if ($target.length) {
-                    $target.parent().parent()
-                        .addClass('has-error');
-                    $('<p>')
-                        .addClass('text-danger')
-                        .text(detail.message)
-                        .appendTo($target.parent());
+                    var $group = $target.closest('.form-group');
+                    $group.addClass('has-error');
+                    $group.find('.help-block').text(detail.message).removeClass('hidden');
                 }
             });
         },

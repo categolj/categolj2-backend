@@ -17,6 +17,9 @@ require.config({
             ],
             exports: 'Backbone'
         },
+        'backbone.validation': {
+            exports: 'Backbone.Validation'
+        },
         handlebars: {
             exports: 'Handlebars'
         },
@@ -34,7 +37,7 @@ require.config({
         underscore: 'vendor/lodash/dist/lodash',
         backbone: 'vendor/backbone/backbone',
         'backbone.stickit': 'vendor/backbone.stickit/backbone.stickit',
-        'backbone.validation': 'vendor/backbone.validation/src/backbone-validation-amd',
+        'backbone.validation': 'vendor/backbone.validation/src/backbone-validation',
         handlebars: 'vendor/handlebars/handlebars',
         handsontable: 'vendor/handsontable/dist/jquery.handsontable.full',
         marked: 'vendor/marked/lib/marked',
@@ -69,7 +72,6 @@ define(function (require) {
         }).on('ajaxComplete', function () {
                 spinView.stop();
             });
-
         Backbone.history.start();
     });
 });
