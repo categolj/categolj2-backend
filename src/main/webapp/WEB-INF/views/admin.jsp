@@ -9,10 +9,10 @@
             href="resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css"
             rel="stylesheet" media="screen">
     <link
-            href="resources/vendor/handsontable/dist/jquery.handsontable.full.css"
+            href="resources/vendor/pagedown/demo/browser/demo.css"
             rel="stylesheet" media="screen">
     <link
-            href="resources/vendor/pagedown/demo/browser/demo.css"
+            href="resources/app/css/app.css"
             rel="stylesheet" media="screen">
     <style>
         body {

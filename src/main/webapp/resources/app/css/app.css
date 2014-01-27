@@ -1,0 +1,11 @@
+tr .edit {
+    display: none;
+}
+
+tr.editing .view {
+    display: none;
+}
+
+tr.editing .edit {
+    display: block;
+}
