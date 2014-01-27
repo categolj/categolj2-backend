@@ -113,6 +113,7 @@ define(function (require) {
         _updateForm: function () {
             Backbone.history.navigate('entries/' + this.model.id + '/form');
             this.render();
+            this.setupPagedownEditor();
             return false;
         },
         _create: function () {
