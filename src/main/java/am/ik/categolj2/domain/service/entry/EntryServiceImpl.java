@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import am.ik.categolj2.core.logger.LogManager;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +26,7 @@ import am.ik.categolj2.domain.repository.entry.EntryRepository;
 
 @Service
 public class EntryServiceImpl implements EntryService {
-    private static final Logger logger = LoggerFactory
-            .getLogger(EntryServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger();
     @Inject
     protected EntryRepository entryRepository;
     @Inject
