@@ -24,140 +24,159 @@ import am.ik.categolj2.domain.repository.user.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
-	@Inject
-	protected UserRepository userRepository;
-	@Inject
-	protected PasswordEncoder passwordEncoder;
-	@Inject
-	protected Mapper beanMapper;
-	@Inject
-	protected DateFactory dateFactory;
-	@Inject
-	protected RoleRepository roleRepository;
+    @Inject
+    protected UserRepository userRepository;
+    @Inject
+    protected PasswordEncoder passwordEncoder;
+    @Inject
+    protected Mapper beanMapper;
+    @Inject
+    protected DateFactory dateFactory;
+    @Inject
+    protected RoleRepository roleRepository;
 
-	@Override
-	public User findOne(String username) {
-		User user = userRepository.findDetails(username);
-		if (user == null) {
-			throw new ResourceNotFoundException("user is not found. [username="
-					+ username + "]");
-		}
-		return user;
-	}
+    @Override
+    public User findOne(String username) {
+        User user = userRepository.findDetails(username);
+        if (user == null) {
+            throw new ResourceNotFoundException("user is not found. [username="
+                    + username + "]");
+        }
+        return user;
+    }
 
-	@Override
-	public User findOneByUsernameOrEmail(String usernameOrEmail) {
-		User user = userRepository.findOneByEmail(usernameOrEmail);
-		if (user == null) {
-			user = userRepository.findDetails(usernameOrEmail);
-		}
-		if (user == null) {
-			throw new ResourceNotFoundException(
-					"The given username (or email) is not found. [username="
-							+ usernameOrEmail + "]");
-		}
-		return user;
-	}
+    @Override
+    public User findOneByUsernameOrEmail(String usernameOrEmail) {
+        User user = userRepository.findOneByEmail(usernameOrEmail);
+        if (user == null) {
+            user = userRepository.findDetails(usernameOrEmail);
+        }
+        if (user == null) {
+            throw new ResourceNotFoundException(
+                    "The given username (or email) is not found. [username="
+                            + usernameOrEmail + "]");
+        }
+        return user;
+    }
 
-	@Override
-	public Page<User> findPage(Pageable pageable) {
-		return userRepository.findAll(pageable);
-	}
+    @Override
+    public Page<User> findPage(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
 
-	@Transactional
-	@Override
-	public User create(User user, String rawPassword) {
-		Assert.notNull(user, "user must not be null");
+    @Transactional
+    @Override
+    public User create(User user, String rawPassword) {
+        Assert.notNull(user, "user must not be null");
 
-		String username = user.getUsername();
-		if (userRepository.exists(username)) {
-			throw new BusinessException(
-					"The given username is already used. [username=" + username
-							+ "]");
-		}
+        String username = user.getUsername();
+        if (userRepository.exists(username)) {
+            throw new BusinessException(
+                    "The given username is already used. [username=" + username
+                            + "]");
+        }
 
-		String email = user.getEmail();
-		if (userRepository.countByEmail(email) > 0) {
-			throw new BusinessException(
-					"The given email is already used. [email=" + email + "]");
-		}
+        String email = user.getEmail();
+        if (userRepository.countByEmail(email) > 0) {
+            throw new BusinessException(
+                    "The given email is already used. [email=" + email + "]");
+        }
 
-		// check roles
-		checkRoles(user);
+        // check roles
+        checkRoles(user);
 
-		String encodedPassword = passwordEncoder.encode(rawPassword);
-		user.setPassword(encodedPassword);
-		DateTime now = dateFactory.newDateTime();
-		user.setCreatedDate(now);
-		user.setLastModifiedDate(now);
-		// createdBy,lastModifiedBy are set by AuditingEntityListener
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+        user.setPassword(encodedPassword);
+        DateTime now = dateFactory.newDateTime();
+        user.setCreatedDate(now);
+        user.setLastModifiedDate(now);
+        // createdBy,lastModifiedBy are set by AuditingEntityListener
 
-		userRepository.save(user);
-		return user;
-	}
+        userRepository.save(user);
+        return user;
+    }
 
-	@Transactional
-	@Override
-	public User update(String username, User updatedUser,
-			String updatedRawPassword) {
-		Assert.notNull(updatedUser, "user must not be null");
+    @Transactional
+    @Override
+    public User update(String username, User updatedUser,
+                       String updatedRawPassword) {
+        Assert.notNull(updatedUser, "user must not be null");
 
-		String email = updatedUser.getEmail();
+        preUpdate(username, updatedUser);
 
-		// check the given user is existing
-		if (!userRepository.exists(username)) {
-			throw new BusinessException(
-					"The given user does not exist. [username=" + username
-							+ "]");
-		}
+        // encode raw password
+        String encodedPassword = passwordEncoder.encode(updatedRawPassword);
+        updatedUser.setPassword(encodedPassword);
 
-		// check the given email is not used by others
-		long countUsingEmail = userRepository.countByEmail(email);
-		if (countUsingEmail > 0) {
-			throw new BusinessException(
-					"The given email is already used. [email=" + email + "]");
-		}
+        return doUpdate(username, updatedUser);
+    }
 
-		// check roles
-		checkRoles(updatedUser);
+    @Transactional
+    @Override
+    public User updateWithoutPassword(String username, User updatedUser) {
+        Assert.notNull(updatedUser, "user must not be null");
+        Assert.notNull(updatedUser.getPassword(), "(old) password must not be null");
 
-		// encode raw password
-		String encodedPassword = passwordEncoder.encode(updatedRawPassword);
-		updatedUser.setPassword(encodedPassword);
-		DateTime now = dateFactory.newDateTime();
-		updatedUser.setLastModifiedDate(now);
-		// lastModifiedBy are set by AuditingEntityListener
+        preUpdate(username, updatedUser);
+        return doUpdate(username, updatedUser);
+    }
 
-		User user = findOne(username);
-		// copy new values to user
-		beanMapper.map(updatedUser, user);
-		userRepository.save(user);
-		return user;
-	}
+    private void preUpdate(String username, User updatedUser) {
+        String email = updatedUser.getEmail();
 
-	private void checkRoles(User user) {
-		Set<Role> rolesToReplace = new HashSet<>();
-		Set<Role> roles = user.getRoles();
-		if (roles != null) {
-			for (Role role : roles) {
-				Integer roleId = role.getRoleId();
-				Role loadedRole = roleRepository.findOne(roleId);
-				if (loadedRole == null) {
-					throw new BusinessException(
-							"The given role is invalid. [roleId=" + roleId
-									+ "]");
-				}
-				rolesToReplace.add(loadedRole);
-			}
-		}
-		user.setRoles(rolesToReplace); // replace
-	}
+        // check roles
+        checkRoles(updatedUser);
 
-	@Transactional
-	@Override
-	public void delete(String username) {
-		User user = findOne(username);
-		userRepository.delete(user);
-	}
+        // check the given user is existing
+        if (!userRepository.exists(username)) {
+            throw new BusinessException(
+                    "The given user does not exist. [username=" + username
+                            + "]");
+        }
+
+        // check the given email is not used by others
+        long countUsingEmail = userRepository.countByEmailOtherThanMe(email, username);
+        if (countUsingEmail > 0) {
+            throw new BusinessException(
+                    "The given email is already used. [email=" + email + "]");
+        }
+    }
+
+    private void checkRoles(User user) {
+        Set<Role> rolesToReplace = new HashSet<>();
+        Set<Role> roles = user.getRoles();
+        if (roles != null) {
+            for (Role role : roles) {
+                Integer roleId = role.getRoleId();
+                Role loadedRole = roleRepository.findOne(roleId);
+                if (loadedRole == null) {
+                    throw new BusinessException(
+                            "The given role is invalid. [roleId=" + roleId
+                                    + "]");
+                }
+                rolesToReplace.add(loadedRole);
+            }
+        }
+        user.setRoles(rolesToReplace); // replace
+    }
+
+    private User doUpdate(String username, User updatedUser) {
+        DateTime now = dateFactory.newDateTime();
+        updatedUser.setLastModifiedDate(now);
+        // lastModifiedBy are set by AuditingEntityListener
+
+        User user = findOne(username);
+        // copy new values to user
+        beanMapper.map(updatedUser, user);
+        userRepository.save(user);
+        return user;
+    }
+
+    @Transactional
+    @Override
+    public void delete(String username) {
+        User user = findOne(username);
+        userRepository.delete(user);
+    }
 
 }

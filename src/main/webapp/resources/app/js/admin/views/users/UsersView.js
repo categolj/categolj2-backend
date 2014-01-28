@@ -11,7 +11,7 @@ define(function (require) {
 
     var userTable = require('text!app/js/admin/templates/users/userTable.hbs');
 
-    return Backbone.View.extend(_.extend(ErrorHandler, {
+    return Backbone.View.extend(_.extend({
         events: {
             'click #btn-user-create': '_create',
             'click #btn-user-clear': '_resetModel'
@@ -79,5 +79,5 @@ define(function (require) {
             Backbone.Validation.bind(this);
             this.stickit();
         }
-    }));
+    }, ErrorHandler));
 });

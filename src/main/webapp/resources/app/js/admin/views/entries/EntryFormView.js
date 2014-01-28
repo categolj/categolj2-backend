@@ -16,7 +16,7 @@ define(function (require) {
     var entryShow = require('text!app/js/admin/templates/entries/entryShow.hbs');
     var entryTable = require('text!app/js/admin/templates/entries/entryTable.hbs');
 
-    return Backbone.View.extend(_.extend(ErrorHandler, {
+    return Backbone.View.extend(_.extend({
         events: {
             'click #btn-entry-confirm': '_confirm',
             'click #btn-entry-back-to-form': 'render',
@@ -110,7 +110,7 @@ define(function (require) {
                     Backbone.history.navigate('entries', {
                         trigger: true
                     });
-                }, this)).fail(_.bind(this._handleError, this));
+                }, this)).fail(_.bind(this.handleError, this));
             return false;
         },
         _update: function () {
@@ -119,7 +119,7 @@ define(function (require) {
                     Backbone.history.navigate('entries/' + this.model.id, {
                         trigger: true
                     });
-                }, this)).fail(_.bind(this._handleError, this));
+                }, this)).fail(_.bind(this.handleError, this));
             return false;
         },
         _delete: function () {
@@ -135,17 +135,6 @@ define(function (require) {
                             this.showErrors(response.responseJSON.details);
                         }
                     }, this));
-            }
-        },
-        _handleError: function (response) {
-            console.log(response);
-            if (this.buttonView) {
-                this.buttonView.enable();
-            }
-            this.render();
-
-            if (response.responseJSON.details) {
-                this.showErrors(response.responseJSON.details);
             }
         },
         _preview: function () {
@@ -178,5 +167,5 @@ define(function (require) {
                     .empty().html(this.model.getFormattedContents());
             }
         }
-    }));
+    }, ErrorHandler));
 });

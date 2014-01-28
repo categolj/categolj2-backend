@@ -4,9 +4,10 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
+    var ErrorHandler = require('app/js/admin/views/ErrorHandler');
     var userRow = require('text!app/js/admin/templates/users/userRow.hbs');
 
-    return Backbone.View.extend({
+    return Backbone.View.extend(_.extend({
         tagName: 'tr',
         template: Handlebars.compile(userRow),
 
@@ -14,8 +15,8 @@ define(function (require) {
             'dblclick': '_toggleEdit',
             'keypress': '_finishEdit',
             'click #btn-user-edit': '_enableEdit',
-            'click #btn-user-delete': '_delete'
-
+            'click #btn-user-delete': '_delete',
+            'click #btn-user-update': '_update'
         },
         bindings: {
             '[name=username]': 'username',
@@ -65,10 +66,17 @@ define(function (require) {
         },
         _delete: function () {
             if (confirm('Are you sure to delete?')) {
-                this.model.destroy();
-                this.remove();
+                this.model.destroy()
+                    .success(_.bind(this.remove, this))
+                    .fail(_.bind(this.handleError, this));
             }
             return false;
+        },
+        _update: function () {
+            this.model.save()
+                .success(_.bind(this._disableEdit, this))
+                .fail(_.bind(this.handleError, this));
+            return false;
         }
-    });
+    }, ErrorHandler));
 });

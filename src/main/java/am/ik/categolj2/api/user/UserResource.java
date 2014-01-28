@@ -14,23 +14,31 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResource {
+    public static interface Create {
+    }
+
+    public static interface Update {
+    }
+
     private String id;
     @NotNull
     @Size(min = 1, max = 128)
     private String username;
-    @NotNull
+    @NotNull(groups = Create.class)
     @Size(min = 1, max = 256)
     private String password;
-
+    @NotNull
     @UserEmail
     private String email;
 
     private boolean enabled;
 
     private boolean locked;
-
+    @NotNull
+    @Size(min = 1, max = 128)
     private String firstName;
-
+    @NotNull
+    @Size(min = 1, max = 128)
     private String lastName;
 
     @NotEmpty

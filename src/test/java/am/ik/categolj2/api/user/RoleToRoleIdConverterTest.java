@@ -57,4 +57,30 @@ public class RoleToRoleIdConverterTest {
         Collections.sort(roles);
         assertThat(roles, is(userResource.getRoles()));
     }
+
+
+    @Test
+    public void testConvertFrom_forUpdate() throws Exception {
+        UserResource userResource = new UserResource();
+        userResource.setRoles(new ArrayList(Arrays.asList(1, 2)));
+
+
+        User user = new User();
+        Set<Role> roles = new LinkedHashSet<>();
+        {
+            Role role = new Role(1);
+            role.setRoleName("ROLE_ADMIN");
+            roles.add(role);
+        }
+        {
+            Role role = new Role(2);
+            role.setRoleName("ROLE_USER");
+            roles.add(role);
+        }
+        user.setRoles(roles);
+        System.out.println(user.getRoles().hashCode());
+        mapper.map(userResource, user);
+        System.out.println(user.getRoles().hashCode());
+        System.out.println(user.getRoles());
+    }
 }

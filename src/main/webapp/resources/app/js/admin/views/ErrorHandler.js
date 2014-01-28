@@ -19,6 +19,17 @@ define(function (require) {
                     alert(detail.message);
                 }
             });
+        },
+        handleError: function (response) {
+            console.log(response);
+            if (this.buttonView) {
+                this.buttonView.enable();
+            }
+            this.render();
+
+            if (response.responseJSON.details) {
+                this.showErrors(response.responseJSON.details);
+            }
         }
     };
 });
