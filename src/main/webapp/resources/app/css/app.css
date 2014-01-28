@@ -1,11 +1,11 @@
-tr .edit {
+.editable-table tr .edit {
     display: none;
 }
 
-tr.editing .view {
+.editable-table tr.editing .view {
     display: none;
 }
 
-tr.editing .edit {
+.editable-table tr.editing .edit {
     display: block;
 }

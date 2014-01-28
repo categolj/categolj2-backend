@@ -9,6 +9,10 @@
                 <class-a>org.joda.time.DateTime</class-a>
                 <class-b>org.joda.time.DateTime</class-b>
             </converter>
+            <converter type="am.ik.categolj2.api.user.RoleToRoleIdConverter">
+                <class-a>am.ik.categolj2.domain.model.Role</class-a>
+                <class-b>java.lang.Integer</class-b>
+            </converter>
         </custom-converters>
     </configuration>
 </mappings> 

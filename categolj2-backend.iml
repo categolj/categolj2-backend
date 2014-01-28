@@ -28,6 +28,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.webjars:marked:0.2.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.12.2" level="project" />
     <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-web:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-common:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:13.0.1" level="project" />

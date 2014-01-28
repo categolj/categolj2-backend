@@ -10,12 +10,13 @@ define(function (require) {
     var EntryHistories = require('app/js/admin/collections/EntryHistories');
     var ButtonView = require('app/js/admin/views/ButtonView');
     var EntryPreviewModalView = require('app/js/admin/views/entries/EntryPreviewModalView');
+    var ErrorHandler = require('app/js/admin/views/ErrorHandler');
 
     var entryForm = require('text!app/js/admin/templates/entries/entryForm.hbs');
     var entryShow = require('text!app/js/admin/templates/entries/entryShow.hbs');
     var entryTable = require('text!app/js/admin/templates/entries/entryTable.hbs');
 
-    return Backbone.View.extend({
+    return Backbone.View.extend(_.extend(ErrorHandler, {
         events: {
             'click #btn-entry-confirm': '_confirm',
             'click #btn-entry-back-to-form': 'render',
@@ -60,20 +61,7 @@ define(function (require) {
                 _.merge(this.model.toJSON(), this.templateOpts)
             ));
 
-            Backbone.Validation.bind(this, {
-                valid: function (view, attr) {
-                    var $el = view.$('[name=' + attr + ']'),
-                        $group = $el.closest('.form-group');
-                    $group.removeClass('has-error');
-                    $group.find('.help-block').text('').addClass('hidden');
-                },
-                invalid: function (view, attr, error) {
-                    var $el = view.$('[name=' + attr + ']'),
-                        $group = $el.closest('.form-group');
-                    $group.addClass('has-error');
-                    $group.find('.help-block').text(error).removeClass('hidden');
-                }
-            });
+            Backbone.Validation.bind(this);
             this.stickit();
             if (this.entryHistories) {
                 this.entryHistories.fetch();
@@ -86,7 +74,7 @@ define(function (require) {
             ));
             return this;
         },
-        setupPagedownEditor: function() {
+        setupPagedownEditor: function () {
             var converter = new Markdown.Converter();
             var editor = new Markdown.Editor(converter);
             editor.run();
@@ -144,7 +132,7 @@ define(function (require) {
                     }, this)).fail(_.bind(function (response) {
                         console.log(response);
                         if (response.responseJSON.details) {
-                            this._showErrors(response.responseJSON.details);
+                            this.showErrors(response.responseJSON.details);
                         }
                     }, this));
             }
@@ -157,18 +145,8 @@ define(function (require) {
             this.render();
 
             if (response.responseJSON.details) {
-                this._showErrors(response.responseJSON.details);
+                this.showErrors(response.responseJSON.details);
             }
-        },
-        _showErrors: function (details) {
-            _.each(details, function (detail) {
-                var $target = this.$('#' + detail.target.split('.')[1]);
-                if ($target.length) {
-                    var $group = $target.closest('.form-group');
-                    $group.addClass('has-error');
-                    $group.find('.help-block').text(detail.message).removeClass('hidden');
-                }
-            });
         },
         _preview: function () {
             var modalView = new EntryPreviewModalView(this.model);
@@ -200,5 +178,5 @@ define(function (require) {
                     .empty().html(this.model.getFormattedContents());
             }
         }
-    });
+    }));
 });

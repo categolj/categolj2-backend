@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mapping>
+        <class-a>am.ik.categolj2.domain.model.User</class-a>
+        <class-b>am.ik.categolj2.api.user.UserResource</class-b>
+        <field relationship-type="non-cumulative" remove-orphans="true">
+            <a>roles</a>
+            <b>roles</b>
+            <a-hint>am.ik.categolj2.domain.model.Role</a-hint>
+            <b-hint>java.lang.Integer</b-hint>
+        </field>
+        <field-exclude>
+            <a>password</a>
+            <b>password</b>
+        </field-exclude>
+    </mapping>
+</mappings> 

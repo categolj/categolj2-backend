@@ -18,6 +18,9 @@ require.config({
             exports: 'Backbone'
         },
         'backbone.validation': {
+            deps: [
+                'backbone'
+            ],
             exports: 'Backbone.Validation'
         },
         handlebars: {
@@ -51,6 +54,9 @@ require.config({
 
 define(function (require) {
     var $ = require('jquery');
+    var _ = require('underscore');
+    var Backbone = require('backbone');
+    Backbone.Validation = require('backbone.validation');
 
     var AdminRouter = require('app/js/admin/routers/AdminRouter');
     var SpinView = require('app/js/admin/views/SpinView');
@@ -67,11 +73,29 @@ define(function (require) {
 
         var spinView = new SpinView();
         $('body').append(spinView.render().$el);
-        $(document).on('ajaxStart',function () {
-            spinView.spin();
-        }).on('ajaxComplete', function () {
+        $(document)
+            .on('ajaxStart',function () {
+                spinView.spin();
+            }).on('ajaxComplete', function () {
                 spinView.stop();
             });
+
+        // Global validation configuration
+        _.extend(Backbone.Validation.callbacks, {
+            valid: function (view, attr) {
+                var $el = view.$('[name=' + attr + ']'),
+                    $group = $el.closest('.form-group');
+                $group.removeClass('has-error');
+                $group.find('.help-block').text('').addClass('hidden');
+            },
+            invalid: function (view, attr, error) {
+                var $el = view.$('[name=' + attr + ']'),
+                    $group = $el.closest('.form-group');
+                $group.addClass('has-error');
+                $group.find('.help-block').text(error).removeClass('hidden');
+            }
+        });
+
         Backbone.history.start();
     });
 });

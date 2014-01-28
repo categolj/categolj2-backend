@@ -3,13 +3,34 @@
 </td>
 <td>
     <span class="view">{{email}}</span>
-    <input name="email" type="email" class="edit form-control">
+    <span class="edit"><input name="email" type="email" class="form-control"></span>
 </td>
 <td>
     <span class="view">{{firstName}}</span>
-    <input name="firstName" class="edit form-control">
+    <span class="edit"><input name="firstName" class="form-control"></span>
 </td>
 <td>
     <span class="view">{{lastName}}</span>
-    <input name="lastName" class="edit form-control">
+    <span class="edit"><input name="lastName" class="form-control"></span>
+</td>
+<td>
+    <input id="{{username}}-roles-1" name="roles" type="checkbox" value="1" disabled="disabled">
+    <label for="{{username}}-roles-1">Admin</label>
+    <input id="{{username}}-roles-2" name="roles" type="checkbox" value="2" disabled="disabled">
+    <label for="{{username}}-roles-2">Editor</label>
+</td>
+<td>
+    <input name="enabled" type="checkbox" class="form-control" disabled="disabled">
+</td>
+<td>
+    <input name="locked" type="checkbox" class="form-control" disabled="disabled">
+</td>
+<td class="text-center">
+    <div class="view btn-group btn-group-sm">
+        <a id="btn-user-edit" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
+        <a id="btn-user-delete" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+    </div>
+    <div class="edit btn-group btn-group-sm">
+        <a id="btn-user-update" class="btn btn-primary">Update</a>
+    </div>
 </td>

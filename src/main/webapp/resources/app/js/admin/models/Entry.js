@@ -1,10 +1,9 @@
 define(function (require) {
     var Backbone = require('backbone');
     var marked = require('marked');
-    Backbone.Validation = require('backbone.validation');
 
     return Backbone.Model.extend({
-        idAttribute: 'entryId',
+        idAttribute: 'id',
         urlRoot: 'api/entries',
         defaults: {
             'format': 'md'

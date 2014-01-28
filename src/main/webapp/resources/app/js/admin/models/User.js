@@ -2,13 +2,18 @@ define(function (require) {
     var Backbone = require('backbone');
 
     return Backbone.Model.extend({
-        idAttribute: 'username',
+        idAttribute: 'id',
         urlRoot: 'api/users',
+        defaults: {
+            'enabled': true,
+            'locked': false,
+            'roles': [2] // Editor
+        },
         validation: {
             username: {
                 required: true,
                 rangeLength: [1, 128],
-                pattern: /^[a-z]+$/
+                pattern: /^[a-zA-Z0-9]+$/
             },
             password: {
                 required: true,
@@ -26,6 +31,15 @@ define(function (require) {
             lastName: {
                 required: true,
                 rangeLength: [1, 128]
+            },
+            roles: {
+                required: true
+            },
+            enabled: {
+                required: true
+            },
+            locked: {
+                required: true
             }
         }
     });

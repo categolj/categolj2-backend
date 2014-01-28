@@ -11,32 +11,64 @@ define(function (require) {
         template: Handlebars.compile(userRow),
 
         events: {
-            'dblclick': '_startEdit',
-            'keypress': '_finishEdit'
+            'dblclick': '_toggleEdit',
+            'keypress': '_finishEdit',
+            'click #btn-user-edit': '_enableEdit',
+            'click #btn-user-delete': '_delete'
+
         },
         bindings: {
             '[name=username]': 'username',
             '[name=email]': 'email',
             '[name=firstName]': 'firstName',
-            '[name=lastName]': 'lastName'
+            '[name=lastName]': 'lastName',
+            '[name=roles]': {
+                observe: 'roles',
+                onGet: function (value) {
+                    return _.map(value, String);
+                },
+                onSet: function (value) {
+                    return _.map(value, Number);
+                }
+            },
+            '[name=enabled]': 'enabled',
+            '[name=locked]': 'locked'
         },
 
         initialize: function () {
-            //this.listenTo(this.model, 'change', this.render);
         },
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             this.stickit();
             return this;
         },
-        _startEdit: function () {
-            this.$el.toggleClass('editing');
-            this.render();
+        _toggleEdit: function () {
+            if (this.$el.hasClass('editing')) {
+                this._disableEdit();
+            } else {
+                this._enableEdit();
+            }
         },
         _finishEdit: function (e) {
             if (e.keyCode != 13) return;
+            this._disableEdit();
+        },
+        _enableEdit: function () {
+            this.$el.addClass('editing');
+            this.render();
+            this.$('input:checkbox').prop('disabled', false);
+        },
+        _disableEdit: function () {
             this.$el.removeClass('editing');
             this.render();
+            this.$('input:checkbox').prop('disabled', true);
+        },
+        _delete: function () {
+            if (confirm('Are you sure to delete?')) {
+                this.model.destroy();
+                this.remove();
+            }
+            return false;
         }
     });
 });

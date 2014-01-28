@@ -7,10 +7,11 @@ define(function (require) {
     var Users = require('app/js/admin/collections/Users');
     var User = require('app/js/admin/models/User');
     var UserRowView = require('app/js/admin/views/users/UserRowView');
+    var ErrorHandler = require('app/js/admin/views/ErrorHandler');
 
     var userTable = require('text!app/js/admin/templates/users/userTable.hbs');
 
-    return Backbone.View.extend({
+    return Backbone.View.extend(_.extend(ErrorHandler, {
         events: {
             'click #btn-user-create': '_create',
             'click #btn-user-clear': '_resetModel'
@@ -20,13 +21,24 @@ define(function (require) {
             '#password': 'password',
             '#email': 'email',
             '#firstName': 'firstName',
-            '#lastName': 'lastName'
+            '#lastName': 'lastName',
+            'form.form-horizontal [name=roles]': {
+                observe: 'roles',
+                onGet: function (value) {
+                    return _.map(value, String);
+                },
+                onSet: function (value) {
+                    return _.map(value, Number);
+                }
+            },
+            '#enabled': 'enabled',
+            '#locked': 'locked'
         },
 
         template: Handlebars.compile(userTable),
 
         initialize: function () {
-            this.listenTo(this.collection, 'sync add', this.renderTable);
+            this.listenTo(this.collection, 'sync', this.renderTable);
         },
         render: function () {
             this.$el.html(this.template());
@@ -44,35 +56,28 @@ define(function (require) {
         },
 
         _create: function () {
-            console.log(this.model);
             if (!this.model.isValid(true)) {
                 return false;
             }
-            this.collection.add(this.model);
-            this._resetModel();
+            this.collection.create(this.model, {
+                validate: false, // because password in response body is null
+                success: _.bind(this._resetModel, this),
+                error: _.bind(function (model, response) {
+                    if (response.responseJSON.details) {
+                        this.showErrors(response.responseJSON.details);
+                    }
+                }, this)
+            });
         },
 
         _resetModel: function () {
             if (this.model) {
                 this.unstickit(this.model);
+                Backbone.Validation.unbind(this);
             }
             this.model = new User();
+            Backbone.Validation.bind(this);
             this.stickit();
-
-            Backbone.Validation.bind(this, {
-                valid: function (view, attr) {
-                    var $el = view.$('[name=' + attr + ']'),
-                        $group = $el.closest('.form-group');
-                    $group.removeClass('has-error');
-                    $group.find('.help-block').text('').addClass('hidden');
-                },
-                invalid: function (view, attr, error) {
-                    var $el = view.$('[name=' + attr + ']'),
-                        $group = $el.closest('.form-group');
-                    $group.addClass('has-error');
-                    $group.find('.help-block').text(error).removeClass('hidden');
-                }
-            });
         }
-    });
+    }));
 });

@@ -1,43 +1,83 @@
-<form id="userForm" class="form-horizontal">
+<form id="userResource" class="form-horizontal">
     <fieldset>
-        <div class="form-group">
-            <label for="username" class="col col-sm-2 control-label">username:</label>
+        <div class="row">
+            <div class="col col-sm-6">
+                <div class="form-group">
+                    <label for="username" class="col col-sm-2 control-label">Username:</label>
 
-            <div class="col col-sm-10">
-                <input id="username" name="username" class="form-control" type="text" value="">
-                <span class="help-block hidden"></span>
+                    <div class="col col-sm-10">
+                        <input id="username" name="username" class="form-control" type="text" value="">
+                        <span class="help-block hidden"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col col-sm-2 control-label">E-mail:</label>
+
+                    <div class="col col-sm-10">
+                        <input id="email" name="email" class="form-control" type="email" value="">
+                        <span class="help-block hidden"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col col-sm-2 control-label">Password:</label>
+
+                    <div class="col col-sm-10">
+                        <input id="password" name="password" class="form-control" type="password" value="">
+                        <span class="help-block hidden"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-sm-6">
+                <div class="form-group">
+                    <label for="firstName" class="col col-sm-2 control-label">First Name:</label>
+
+                    <div class="col col-sm-10">
+                        <input id="firstName" name="firstName" class="form-control" type="text" value="">
+                        <span class="help-block hidden"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lastName" class="col col-sm-2 control-label">Last Name:</label>
+
+                    <div class="col col-sm-10">
+                        <input id="lastName" name="lastName" class="form-control" type="text" value="">
+                        <span class="help-block hidden"></span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="email" class="col col-sm-2 control-label">email:</label>
+        <div class="row">
+            <div class="col col-sm-6">
+                <div class="form-group">
+                    <label class="col col-sm-2 control-label">Roles:</label>
 
-            <div class="col col-sm-10">
-                <input id="email" name="email" class="form-control" type="email" value="">
-                <span class="help-block hidden"></span>
+                    <div class="col col-sm-10">
+                        <input id="roles-1" name="roles" type="checkbox" value="1">
+                        <label for="roles-1">Admin</label>
+                        <input id="roles-2" name="roles" type="checkbox" value="2">
+                        <label for="roles-2">Editor</label>
+                        <span class="help-block hidden"></span>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col col-sm-2 control-label">password:</label>
 
-            <div class="col col-sm-10">
-                <input id="password" name="password" class="form-control" type="password" value="">
-                <span class="help-block hidden"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="firstName" class="col col-sm-2 control-label">firstName:</label>
+            <div class="col col-sm-6">
+                <div class="form-group">
+                    <label for="locked" class="col col-sm-2 control-label">Locked:</label>
 
-            <div class="col col-sm-10">
-                <input id="firstName" name="firstName" class="form-control" type="text" value="">
-                <span class="help-block hidden"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="lastName" class="col col-sm-2 control-label">lastName:</label>
+                    <div class="col col-sm-10">
+                        <input id="locked" name="locked" type="checkbox">
+                        <span class="help-block hidden"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="enabled" class="col col-sm-2 control-label">Enabled:</label>
 
-            <div class="col col-sm-10">
-                <input id="lastName" name="lastName" class="form-control" type="text" value="">
-                <span class="help-block hidden"></span>
+                    <div class="col col-sm-10">
+                        <input id="enabled" name="enabled" type="checkbox">
+                        <span class="help-block hidden"></span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -46,16 +86,21 @@
                 <a id="btn-user-create" class="btn btn-primary">Create</a>
             </div>
         </div>
+        </div>
     </fieldset>
 </form>
 
-<table class="table table-striped table-bordered table-condensed">
+<table class="table table-striped table-bordered table-condensed editable-table">
     <thead>
     <tr>
         <th>username</th>
         <th>email</th>
         <th>first name</th>
         <th>last name</th>
+        <th>roles</th>
+        <th>enabled</th>
+        <th>locked</th>
+        <th>actions</th>
     </tr>
     </thead>
     <tbody>
