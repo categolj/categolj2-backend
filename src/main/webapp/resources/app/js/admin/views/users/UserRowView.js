@@ -22,7 +22,7 @@ define(function (require) {
         },
 
         initialize: function () {
-            this.listenTo(this.model, 'change', this.render);
+            //this.listenTo(this.model, 'change', this.render);
         },
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
@@ -31,10 +31,12 @@ define(function (require) {
         },
         _startEdit: function () {
             this.$el.toggleClass('editing');
+            this.render();
         },
         _finishEdit: function (e) {
             if (e.keyCode != 13) return;
             this.$el.removeClass('editing');
+            this.render();
         }
     });
 });
