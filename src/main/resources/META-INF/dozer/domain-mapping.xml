@@ -10,4 +10,12 @@
             <b>category</b>
         </field>
     </mapping>
+    <mapping>
+        <class-a>am.ik.categolj2.domain.model.Role</class-a>
+        <class-b>am.ik.categolj2.domain.model.Role</class-b>
+        <field-exclude>
+            <a>users</a>
+            <b>users</b>
+        </field-exclude>
+    </mapping>
 </mappings> 

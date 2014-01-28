@@ -8,9 +8,15 @@ define(function (require) {
         showErrors: function (details) {
             _.each(details, function (detail) {
                 if (detail.target) {
-                    var vals = detail.target.split('.');
-                    var $target = this.$('#' + vals[0] + ' [name=' + vals[1] + ']')
-                    if ($target.length) {
+                    var name;
+                    if (_.contains(detail.target, '.')) {
+                        name = detail.target.split('.')[1];
+                    } else {
+                        name = detail.target;
+                    }
+
+                    var $target = this.$('[name=' + name + ']');
+                    if (!_.isEmpty($target)) {
                         var $group = $target.closest('.form-group');
                         $group.addClass('has-error');
                         $group.find('.help-block').text(detail.message).removeClass('hidden');
@@ -18,7 +24,7 @@ define(function (require) {
                 } else if (detail.message) {
                     alert(detail.message);
                 }
-            });
+            }, this);
         },
         handleError: function (response) {
             console.log(response);

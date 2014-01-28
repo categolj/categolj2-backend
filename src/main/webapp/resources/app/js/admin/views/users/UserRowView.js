@@ -45,14 +45,14 @@ define(function (require) {
         },
         _toggleEdit: function () {
             if (this.$el.hasClass('editing')) {
-                this._disableEdit();
+                this._finishEdit();
             } else {
                 this._enableEdit();
             }
         },
         _finishEdit: function (e) {
-            if (e.keyCode != 13) return;
-            this._disableEdit();
+            if (e && e.keyCode != 13) return;
+            this._update();
         },
         _enableEdit: function () {
             this.$el.addClass('editing');
@@ -68,14 +68,18 @@ define(function (require) {
             if (confirm('Are you sure to delete?')) {
                 this.model.destroy()
                     .success(_.bind(this.remove, this))
-                    .fail(_.bind(this.handleError, this));
+                    .fail(_.bind(function (response) {
+                        this.showErrors(response.responseJSON.details);
+                    }, this));
             }
             return false;
         },
         _update: function () {
             this.model.save()
                 .success(_.bind(this._disableEdit, this))
-                .fail(_.bind(this.handleError, this));
+                .fail(_.bind(function (response) {
+                    this.showErrors(response.responseJSON.details);
+                }, this));
             return false;
         }
     }, ErrorHandler));
