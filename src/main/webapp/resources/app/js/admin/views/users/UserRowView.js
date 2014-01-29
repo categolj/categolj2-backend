@@ -66,7 +66,7 @@ define(function (require) {
         },
         _delete: function () {
             if (confirm('Are you sure to delete?')) {
-                this.model.destroy()
+                this.model.destroy({wait: true})
                     .success(_.bind(this.remove, this))
                     .fail(_.bind(function (response) {
                         this.showErrors(response.responseJSON.details);

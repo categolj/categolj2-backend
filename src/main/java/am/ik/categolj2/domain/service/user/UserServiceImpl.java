@@ -175,6 +175,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void delete(String username) {
+        if (userRepository.count() == 1) {
+            throw new BusinessException("At least one user must exist!");
+        }
         User user = findOne(username);
         userRepository.delete(user);
     }
