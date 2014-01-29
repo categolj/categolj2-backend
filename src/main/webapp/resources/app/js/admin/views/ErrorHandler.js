@@ -6,7 +6,7 @@ define(function (require) {
 
     return {
         showErrors: function (details) {
-            _.each(details, function (detail) {
+            _.each(details, _.bind(function (detail) {
                 if (detail.target) {
                     var name;
                     if (_.contains(detail.target, '.')) {
@@ -22,9 +22,9 @@ define(function (require) {
                         $group.find('.help-block').text(detail.message).removeClass('hidden');
                     }
                 } else if (detail.message) {
-                    alert(detail.message);
+                    Backbone.trigger('exception', detail); // send global event
                 }
-            }, this);
+            }, this));
         },
         handleError: function (response) {
             console.log(response);

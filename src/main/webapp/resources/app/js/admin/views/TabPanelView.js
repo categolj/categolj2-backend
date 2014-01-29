@@ -5,6 +5,8 @@ define(function (require) {
     var _ = require('underscore');
     require('bootstrap');
 
+    var AlertPanelView = require('app/js/admin/views/AlertPanelView');
+
     var tabPanel = require('text!app/js/admin/templates/tabPanel.hbs');
 
     return Backbone.View.extend({
@@ -20,16 +22,22 @@ define(function (require) {
                 title: this.model.get('itemName')
             }));
             this.$('.panel-body').empty().html(this.bodyView.$el);
+            this.alertPanel = new AlertPanelView({el: this.$('#alert-panel')});
             this.$tab.tab('show');
 
+            this.listenTo(Backbone, 'exception', _.bind(this.showExceptionMessage, this)); // handle global event!
             return this;
         },
-        changeBodyView: function(bodyView) {
+        changeBodyView: function (bodyView) {
             if (this.bodyView) {
                 this.bodyView.remove();
             }
             this.bodyView = bodyView;
             return this;
+        },
+        showExceptionMessage: function (detail) {
+            var message = detail.message;
+            this.alertPanel.showMessage(message);
         }
     });
 });
