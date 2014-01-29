@@ -84,14 +84,18 @@
         <div class="form-group">
             {{#if create}}
                 <div class="col col-sm-10 col-sm-offset-2">
-                    <a href="#entries" class="btn btn-default">Back</a>
-                    <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
+                    <div class="btn-group">
+                        <a href="#entries" class="btn btn-default">Back</a>
+                        <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
+                    </div>
                 </div>
             {{/if}}
             {{#if update}}
                 <div class="col col-sm-10 col-sm-offset-2">
-                    <a href="#entries/{{entryId}}" class="btn btn-default">Back</a>
-                    <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
+                    <div class="btn-group">
+                        <a href="#entries/{{entryId}}" class="btn btn-default">Back</a>
+                        <a id="btn-entry-confirm" class="btn btn-primary">Confirm</a>
+                    </div>
                 </div>
             {{/if}}
         </div>
