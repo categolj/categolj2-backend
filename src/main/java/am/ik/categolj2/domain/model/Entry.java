@@ -76,7 +76,6 @@ public class Entry extends AbstractAuditableEntiry<Integer> {
 
 	@Override
 	@Transient
-	@JsonIgnore
 	public Integer getId() {
 		return entryId;
 	}

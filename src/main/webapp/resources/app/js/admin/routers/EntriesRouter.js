@@ -37,7 +37,7 @@ define(function (require) {
             this.entryFormView.setupPagedownEditor();
         },
         show: function (id) {
-            var entry = new Entry({entryId: id});
+            var entry = new Entry({id: id});
             entry.fetch().success(_.bind(function () {
                 this.entryFormView = new EntryFormView({
                     model: entry
@@ -46,7 +46,7 @@ define(function (require) {
             }, this));
         },
         updateForm: function (id) {
-            var entry = new Entry({entryId: id});
+            var entry = new Entry({id: id});
             entry.fetch().success(_.bind(function () {
                 this.entryFormView = new EntryFormView({
                     model: entry
