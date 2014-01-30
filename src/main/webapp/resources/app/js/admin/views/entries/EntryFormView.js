@@ -11,6 +11,7 @@ define(function (require) {
     var ButtonView = require('app/js/admin/views/ButtonView');
     var EntryPreviewModalView = require('app/js/admin/views/entries/EntryPreviewModalView');
     var ErrorHandler = require('app/js/admin/views/ErrorHandler');
+    var AutoCompleteView = require('app/js/admin/views/AutoCompleteView');
 
     var entryForm = require('text!app/js/admin/templates/entries/entryForm.hbs');
     var entryShow = require('text!app/js/admin/templates/entries/entryShow.hbs');
@@ -55,6 +56,33 @@ define(function (require) {
                 };
             }
             this.listenTo(this.model, 'change:contents change:format', this._renderFormattedContents);
+
+            var Plugin = Backbone.Model.extend({
+                label: function () {
+                    return this.get("name");
+                }
+            });
+
+            var PluginCollection = Backbone.Collection.extend({
+                model: Plugin
+            });
+
+            this.plugins = new PluginCollection([
+                {"name": "backbone-autocomplete"},
+                {"name": "backbone-memento"},
+                {"name": "backbone-validations"},
+                {"name": "backbone-chosen"},
+                {"name": "backbone-relational"},
+                {"name": "backbone-bindings"},
+                {"name": "backbone-boilerplate"},
+                {"name": "backbone-traversal"},
+                {"name": "backbone-factory"},
+                {"name": "jquery"},
+                {"name": "jquery-ui"},
+                {"name": "angular.js"},
+                {"name": "keymaster.js"}
+            ]);
+
         },
         render: function () {
             this.$el.empty().html(this.entryFormTemplate(
@@ -68,16 +96,27 @@ define(function (require) {
             }
             return this;
         },
+        showAutoComplete: function () {
+            new AutoCompleteView({
+                input: this.$("#categoryString"),
+                model: this.plugins,
+                onSelect: function (model) {
+                    console.log(model);
+                }
+            }).render();
+            return this;
+        },
         show: function () {
             this.$el.empty().html(this.entryShowTemplate(
                 _.merge(this.model.toJSON(), {show: true})
             ));
             return this;
         },
-        setupPagedownEditor: function () {
+        showPagedownEditor: function () {
             var converter = new Markdown.Converter();
             var editor = new Markdown.Editor(converter);
             editor.run();
+            return this;
         },
         _appendEntryHistoryTable: function () {
             this.$el.append(this.entryTableTemplate({
@@ -101,7 +140,7 @@ define(function (require) {
         _updateForm: function () {
             Backbone.history.navigate('entries/' + this.model.id + '/form');
             this.render();
-            this.setupPagedownEditor();
+            this.showPagedownEditor();
             return false;
         },
         _create: function () {
