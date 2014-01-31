@@ -15,6 +15,21 @@
         </sourceRoots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/META-INF/spring/categolj2-infra.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/META-INF/spring/spring-mvc-rest.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/META-INF/spring/spring-security.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/META-INF/spring/categolj2-domain.xml</file>
+          <file>file://$MODULE_DIR$/src/test/resources/test-context.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/META-INF/spring/spring-mvc.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/META-INF/spring/categolj2-env.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/META-INF/spring/categolj2-codelist.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/META-INF/spring/applicationContext.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />

@@ -43,6 +43,13 @@ define(function (require) {
                         body = marked(this.get('contents'));
                         break;
                     }
+                    case 'rst':
+                    {
+                        Backbone.trigger('exception', {
+                            message: '"rst" is not supported yet!'
+                        });
+                        break;
+                    }
                 }
             }
             return body;

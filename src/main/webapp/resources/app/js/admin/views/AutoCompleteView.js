@@ -31,7 +31,7 @@ define(function (require) {
     var AutoCompleteView = Backbone.View.extend({
         tagName: 'ul',
         itemView: AutoCompleteItemView,
-        className: 'autocomplete',
+        className: 'dropdown-menu',
 
         wait: 300,
         queryParameter: 'query',
@@ -39,19 +39,15 @@ define(function (require) {
         currentText: '',
 
         initialize: function (opts) {
-            this.input = opts.input;
-            if (opts.onSelect) {
-                this.onSelect = opts.onSelect;
-            }
+            _.extend(this, opts);
             this.filter = _.debounce(this.filter, this.wait);
         },
 
         render: function () {
-            // disable the native auto complete functionality
             this.input.attr('autocomplete', 'off');
 
             this.$el.width(this.input.outerWidth());
-            console.log(this);
+            this.$el.css('left', '15px'); // move to adjusted position
 
             this.input
                 .keyup(_.bind(this.keyup, this))
@@ -81,17 +77,14 @@ define(function (require) {
 
         filter: function (keyword) {
             if (this.model.url) {
-
                 var parameters = {};
                 parameters[this.queryParameter] = keyword;
 
                 this.model.fetch({
-                    success: function () {
-                        this.loadResult(this.model.models, keyword);
-                    }.bind(this),
                     data: parameters
-                });
-
+                }).done(_.bind(function () {
+                        this.loadResult(this.model.models, keyword);
+                    }, this));
             } else {
                 this.loadResult(this.model.filter(function (model) {
                     return model.label().indexOf(keyword) > -1
@@ -100,7 +93,7 @@ define(function (require) {
         },
 
         isValid: function (keyword) {
-            return keyword.length > this.minKeywordLength
+            return keyword.length >= this.minKeywordLength
         },
 
         isChanged: function (keyword) {
@@ -165,7 +158,6 @@ define(function (require) {
 
         // callback definitions
         onSelect: function (model) {
-            console.log(model);
         }
 
     });
