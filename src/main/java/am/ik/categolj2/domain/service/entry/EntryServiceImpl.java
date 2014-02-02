@@ -1,10 +1,14 @@
 package am.ik.categolj2.domain.service.entry;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import am.ik.categolj2.core.logger.LogManager;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.TreeMultimap;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -61,20 +65,42 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public Page<Entry> findPage(Pageable pageable) {
-        return entryRepository
-                .findPageDetailsOrderByLastModifiedDateDesc(pageable);
+        Page<Entry> page = entryRepository
+                .findPageOrderByLastModifiedDateDesc(pageable);
+        applyCategory(page);
+        return page;
+    }
+
+    void applyCategory(Iterable<Entry> entries) {
+        List<Integer> entryIds = new ArrayList<>();
+        for (Entry entry : entries) {
+            entryIds.add(entry.getId());
+        }
+        List<Category> categories = categoryRepository.findByEntryIds(entryIds);
+
+        Multimap<Integer, Category> multimap = TreeMultimap.create();
+        for (Category c : categories) {
+            multimap.put(c.getEntry().getId(), c);
+        }
+        for (Entry entry : entries) {
+            entry.setCategory(new ArrayList<>(multimap.get(entry.getId())));
+        }
     }
 
     @Override
     public Page<Entry> findPagePublished(Pageable pageable) {
-        return entryRepository
-                .findPageDetailsPublishedOrderByLastModifiedDateDesc(pageable);
+        Page<Entry> page = entryRepository
+                .findPagePublishedOrderByLastModifiedDateDesc(pageable);
+        applyCategory(page);
+        return page;
     }
 
     @Override
     public List<Entry> findAllPublishedUpdatedRecently() {
-        return entryRepository
-                .findAllDetailsPublishedOrderByLastModifiedDateDesc(recentlyPageable);
+        List<Entry> entries = entryRepository
+                .findAllPublishedOrderByLastModifiedDateDesc(recentlyPageable);
+        applyCategory(entries);
+        return entries;
     }
 
     @Override
@@ -86,7 +112,9 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public Page<Entry> serachPageByKeyword(String keyword, Pageable pageable) {
-        return entryRepository.serachPageByKeyword(keyword, pageable);
+        Page<Entry> page = entryRepository.serachPageByKeyword(keyword, pageable);
+        applyCategory(page);
+        return page;
     }
 
     @Override

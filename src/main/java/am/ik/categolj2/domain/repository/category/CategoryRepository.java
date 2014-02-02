@@ -13,10 +13,13 @@ import am.ik.categolj2.domain.model.CategoryPK;
 
 public interface CategoryRepository extends JpaRepository<Category, CategoryPK> {
 
-	@Query(value = "SELECT DISTINCT GROUP_CONCAT(DISTINCT category_name ORDER BY category_order ASC SEPARATOR '::') FROM category GROUP BY entry_id", nativeQuery = true)
-	List<String> findAllConcatenatedCategory();
+    @Query(value = "SELECT DISTINCT GROUP_CONCAT(DISTINCT category_name ORDER BY category_order ASC SEPARATOR '::') FROM category GROUP BY entry_id", nativeQuery = true)
+    List<String> findAllConcatenatedCategory();
 
-	@Modifying(clearAutomatically = true)
-	@Query("DELETE FROM Category x WHERE x.categoryPK IN (:ids)")
-	void forceDelete(@Param("ids") Collection<CategoryPK> ids);
+    @Query("SELECT x FROM Category x WHERE x.entry.entryId IN (:entryIds)")
+    List<Category> findByEntryIds(@Param("entryIds") List<Integer> entryIds);
+
+    @Modifying(clearAutomatically = true)
+    @Query("DELETE FROM Category x WHERE x.categoryPK IN (:ids)")
+    void forceDelete(@Param("ids") Collection<CategoryPK> ids);
 }

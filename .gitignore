@@ -12,3 +12,4 @@ mecab-ipadic*
 .git
 .idea
 .DS_Store
+entry.json

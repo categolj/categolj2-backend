@@ -5,7 +5,7 @@
 
     <import resource="classpath:META-INF/spring/applicationContext.xml" />
 
-    <bean class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource" />
+    <bean class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg name="dataSource" ref="dataSource"></constructor-arg>
     </bean>
 </beans>

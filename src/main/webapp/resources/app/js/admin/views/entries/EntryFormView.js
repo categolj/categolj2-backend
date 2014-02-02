@@ -10,6 +10,8 @@ define(function (require) {
     var EntryHistories = require('app/js/admin/collections/EntryHistories');
     var ButtonView = require('app/js/admin/views/ButtonView');
     var EntryPreviewModalView = require('app/js/admin/views/entries/EntryPreviewModalView');
+    var AmazonSearchView = require('app/js/admin/views/entries/AmazonSearchView');
+    var FileUploadView = require('app/js/admin/views/entries/FileUploadView');
     var ErrorHandler = require('app/js/admin/views/ErrorHandler');
     var AutoCompleteView = require('app/js/admin/views/AutoCompleteView');
 
@@ -204,6 +206,12 @@ define(function (require) {
                 this.model.set('contents', this.$('#wmd-input').val());
                 this.$(this.contentsTab)
                     .empty().html(this.model.getFormattedContents());
+            } else if (this.contentsTab === '#contents-tab-fileupload') {
+                this.$(this.contentsTab)
+                    .empty().html(new FileUploadView().render().el);
+            } else if (this.contentsTab === '#contents-tab-amazon') {
+                this.$(this.contentsTab)
+                    .empty().html(new AmazonSearchView().render().el);
             }
         }
     }, ErrorHandler));
