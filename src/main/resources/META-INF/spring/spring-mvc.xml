@@ -79,8 +79,7 @@
         <constructor-arg>
             <util:list>
                 <bean
-                    class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor"
-                    factory-method="create" />
+                    class="org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor" />
                 <bean
                     class="org.terasoluna.gfw.web.token.transaction.TransactionTokenRequestDataValueProcessor" />
             </util:list>

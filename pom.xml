@@ -14,8 +14,10 @@
     </parent>
 
     <properties>
-        <java-version>1.7</java-version>
+        <java-version>1.8</java-version>
         <org.hibernate.version>4.2.5.Final</org.hibernate.version>
+        <org.springframework-version>4.0.1.RELEASE</org.springframework-version>
+        <org.springframework.security.version>3.2.0.RELEASE</org.springframework.security.version>
     </properties>
 
     <repositories>
