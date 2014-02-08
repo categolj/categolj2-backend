@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +17,12 @@ public class LoginHistoryServiceImpl implements LoginHistoryService {
 
     @Override
     @Transactional
-    @Async
     public void save(LoginHistory loginHistory) {
         loginHistoryRepository.save(loginHistory);
     }
 
     @Override
     public Page<LoginHistory> findPage(Pageable pageable) {
-        return loginHistoryRepository.findAll(pageable);
+        return loginHistoryRepository.findPageOrderByLoginDateDesc(pageable);
     }
 }

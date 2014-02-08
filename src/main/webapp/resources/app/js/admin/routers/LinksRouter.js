@@ -3,18 +3,18 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var CategoriesView = require('app/js/admin/views/CategoriesView');
+    var LinksView = require('app/js/admin/views/LinksView');
 
     return Backbone.Router.extend({
         routes: {
-            'categories': 'list'
+            'links': 'list'
         },
         initialize: function (opts) {
             this.adminView = opts.adminView;
-            this.tabPanelView = this.adminView.createTabPanelView('categories');
+            this.tabPanelView = this.adminView.createTabPanelView('links');
         },
         list: function () {
-            this.adminView.renderTab(this.tabPanelView, new CategoriesView().render());
+            this.adminView.renderTab(this.tabPanelView, new LinksView().render());
         }
     });
 });

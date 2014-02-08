@@ -9,7 +9,7 @@ define(function (require) {
         initialize: function () {
         },
         render: function () {
-            this.$el.html('<p>Categories!</p>');
+            this.$el.html('<p>Links!</p>');
             return this;
         }
     });

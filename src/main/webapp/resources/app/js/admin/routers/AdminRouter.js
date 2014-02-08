@@ -7,12 +7,12 @@ define(function (require) {
     var DashboardView = require('app/js/admin/views/dashboard/DashboardView');
 
     var EntriesRouter = require('app/js/admin/routers/EntriesRouter');
-    var CategoriesRouter = require('app/js/admin/routers/CategoriesRouter');
+    var LinksRouter = require('app/js/admin/routers/LinksRouter');
     var UploadsRouter = require('app/js/admin/routers/UploadsRouter');
     var UsersRouter = require('app/js/admin/routers/UsersRouter');
+    var ApisRouter = require('app/js/admin/routers/ApisRouter');
     var ReportsRouter = require('app/js/admin/routers/ReportsRouter');
     var SystemRouter = require('app/js/admin/routers/SystemRouter');
-    var H2ConsoleRouter = require('app/js/admin/routers/H2ConsoleRouter');
 
     return Backbone.Router.extend({
         routes: {
@@ -29,12 +29,12 @@ define(function (require) {
         initializeRouters: function () {
             return {
                 'entries': new EntriesRouter({adminView: this.adminView}),
-                'categories': new CategoriesRouter({adminView: this.adminView}),
+                'links': new LinksRouter({adminView: this.adminView}),
                 'uploads': new UploadsRouter({adminView: this.adminView}),
                 'users': new UsersRouter({adminView: this.adminView}),
+                'apis': new ApisRouter({adminView: this.adminView}),
                 'reports': new ReportsRouter({adminView: this.adminView}),
-                'system': new SystemRouter({adminView: this.adminView}),
-                'h2Console': new H2ConsoleRouter({adminView: this.adminView})
+                'system': new SystemRouter({adminView: this.adminView})
             };
         },
         home: function () {

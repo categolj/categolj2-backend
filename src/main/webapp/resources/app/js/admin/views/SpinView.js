@@ -7,7 +7,7 @@ define(function (require) {
     return Backbone.View.extend({
         initialize: function () {
             this.spinner = new Spinner({
-                radius: 60,
+                radius: 45,
                 width: 30,
                 top: 100,
                 position: 'absolute'

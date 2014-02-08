@@ -22,7 +22,7 @@ public class LoginHistoryRestController {
     LoginHistoryService loginHistoryService;
 
     @RequestMapping(method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
-    public Page<LoginHistory> getLoginHistoriesInAdmin(@PageableDefault Pageable pageable) {
+    public Page<LoginHistory> getLoginHistoriesInAdmin(@PageableDefault(size = 5) Pageable pageable) {
         return loginHistoryService.findPage(pageable);
     }
 }

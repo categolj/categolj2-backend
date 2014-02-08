@@ -1,5 +1,6 @@
 package am.ik.categolj2.api.category;
 
+import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.service.category.CategoryDto;
 import am.ik.categolj2.domain.service.category.CategoryService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class CategoryRestController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, params = "keyword")
+    @RequestMapping(method = RequestMethod.GET, params = "keyword", headers = Categolj2Headers.X_ADMIN)
     public List<CategoryDto> searchCategories(@RequestParam("keyword") String keyword) {
         return categoryService.search(keyword);
     }

@@ -30,7 +30,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public List<Link> findAll() {
-        return linkRepository.findAll();
+        return linkRepository.findAllOrderByLastModifiedDateDesc();
     }
 
     @Transactional

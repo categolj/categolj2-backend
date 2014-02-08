@@ -14,12 +14,12 @@ define(function (require) {
             this.navItemList = new NavItemList([
                 {id: 'dashboard', itemName: 'Dashboard', itemIcon: 'home'},
                 {id: 'entries', itemName: 'Entry', itemIcon: 'pencil'},
-                {id: 'categories', itemName: 'Category', itemIcon: 'bookmark'},
                 {id: 'uploads', itemName: 'Upload', itemIcon: 'file'},
                 {id: 'users', itemName: 'User', itemIcon: 'user'},
+                {id: 'links', itemName: 'Link', itemIcon: 'bookmark'},
+                {id: 'apis', itemName: 'API', itemIcon: 'asterisk'},
                 {id: 'reports', itemName: 'Report', itemIcon: 'stats'},
-                {id: 'system', itemName: 'System', itemIcon: 'info-sign'},
-                {id: 'h2Console', itemName: 'H2', itemIcon: 'asterisk'}
+                {id: 'system', itemName: 'System', itemIcon: 'info-sign'}
             ]);
             var navItemListView = new NavItemListView({
                 el: '#nav-item-list',
