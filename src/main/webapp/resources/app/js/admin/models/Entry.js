@@ -4,7 +4,7 @@ define(function (require) {
 
     return Backbone.Model.extend({
         idAttribute: 'id',
-        urlRoot: 'api/entries',
+        urlRoot: 'api/v1/entries',
         defaults: {
             'format': 'md'
         },

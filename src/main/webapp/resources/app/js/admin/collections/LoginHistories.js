@@ -6,7 +6,7 @@ define(function (require) {
     return Backbone.Collection.extend(_.extend({
         model: LoginHistory,
         url: function () {
-            return 'api/loginhistories';
+            return 'api/v1/loginhistories';
         },
         comparator: function (a, b) {
             return a.get('loginDate') > b.get('loginDate') ? -1 : 1;

@@ -11,7 +11,7 @@
 <tr>
     <td>Entries</td>
     <td>GET</td>
-    <td><code>/api/entries</code></td>
+    <td><code>/api/v1/entries</code></td>
     <td>Get all entries</td>
     <td><span class="glyphicon glyphicon-check"></span></td>
     <td></td>
@@ -19,7 +19,7 @@
 <tr>
     <td>Entries</td>
     <td>GET</td>
-    <td><code>/api/entries?keyword={keyword}</code></td>
+    <td><code>/api/v1/entries?keyword={keyword}</code></td>
     <td>Search entries.</td>
     <td><span class="glyphicon glyphicon-check"></span></td>
     <td></td>
@@ -27,7 +27,7 @@
 <tr>
     <td>Entries</td>
     <td>GET</td>
-    <td><code>/api/categories/{category}/entries</code></td>
+    <td><code>/api/v1/categories/{category}/entries</code></td>
     <td>Get all entries associated with the specified category.<br>(not implemented yet)</td>
     <td><span class="glyphicon glyphicon-check"></span></td>
     <td></td>
@@ -35,7 +35,7 @@
 <tr>
     <td>Entries</td>
     <td>GET</td>
-    <td><code>/api/users/{users}/entries</code></td>
+    <td><code>/api/v1/users/{users}/entries</code></td>
     <td>Get all entries created with the specified user.<br>(not implemented yet)</td>
     <td><span class="glyphicon glyphicon-check"></span></td>
     <td></td>
@@ -43,7 +43,7 @@
 <tr>
     <td>Entries</td>
     <td>POST</td>
-    <td><code>/api/entries</code></td>
+    <td><code>/api/v1/entries</code></td>
     <td>Create a new entry.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -51,7 +51,7 @@
 <tr>
     <td>Entry</td>
     <td>GET</td>
-    <td><code>/api/entries/{entryId}</code></td>
+    <td><code>/api/v1/entries/{entryId}</code></td>
     <td>Get the specified entry.</td>
     <td></td>
     <td></td>
@@ -59,7 +59,7 @@
 <tr>
     <td>Entry</td>
     <td>PUT</td>
-    <td><code>/api/entries/{entryId}</code></td>
+    <td><code>/api/v1/entries/{entryId}</code></td>
     <td>Update the specified entry.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -67,7 +67,7 @@
 <tr>
     <td>Entry</td>
     <td>DELETE</td>
-    <td><code>/api/entries/{entryId}</code></td>
+    <td><code>/api/v1/entries/{entryId}</code></td>
     <td>Delete the specified entry.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -75,7 +75,7 @@
 <tr>
     <td>Entry Histories</td>
     <td>GET</td>
-    <td><code>/api/entries/{entryId}/histories</code></td>
+    <td><code>/api/v1/entries/{entryId}/histories</code></td>
     <td>Get all entry histories associated with the specified entry.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -83,7 +83,7 @@
 <tr>
     <td>Categories</td>
     <td>GET</td>
-    <td><code>/api/categories</code></td>
+    <td><code>/api/v1/categories</code></td>
     <td>Get all categories.</td>
     <td></td>
     <td></td>
@@ -91,7 +91,7 @@
 <tr>
     <td>Categories</td>
     <td>GET</td>
-    <td><code>/api/categories?keyword={keyword}</code></td>
+    <td><code>/api/v1/categories?keyword={keyword}</code></td>
     <td>Search categories.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -99,7 +99,7 @@
 <tr>
     <td>Recently Posts</td>
     <td>GET</td>
-    <td><code>/api/recentlyposts</code></td>
+    <td><code>/api/v1/recentlyposts</code></td>
     <td>Get entries updated recently.<br>(not implemented yet)</td>
     <td></td>
     <td></td>
@@ -107,7 +107,7 @@
 <tr>
     <td>Users</td>
     <td>GET</td>
-    <td><code>/api/users</code></td>
+    <td><code>/api/v1/users</code></td>
     <td>Get all users.</td>
     <td><span class="glyphicon glyphicon-check"></span></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -115,7 +115,7 @@
 <tr>
     <td>Users</td>
     <td>POST</td>
-    <td><code>/api/users</code></td>
+    <td><code>/api/v1/users</code></td>
     <td>Create a new user.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -123,7 +123,7 @@
 <tr>
     <td>User</td>
     <td>GET</td>
-    <td><code>/api/users/{username}</code></td>
+    <td><code>/api/v1/users/{username}</code></td>
     <td>Get the specified user.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -131,7 +131,7 @@
 <tr>
     <td>User</td>
     <td>PUT</td>
-    <td><code>/api/users/{username}</code></td>
+    <td><code>/api/v1/users/{username}</code></td>
     <td>Update the specified user.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -139,7 +139,7 @@
 <tr>
     <td>User</td>
     <td>DELETE</td>
-    <td><code>/api/users/{username}</code></td>
+    <td><code>/api/v1/users/{username}</code></td>
     <td>Delete the specified user.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -147,7 +147,7 @@
 <tr>
     <td>Links</td>
     <td>GET</td>
-    <td><code>/api/links</code></td>
+    <td><code>/api/v1/links</code></td>
     <td>Get all links.</td>
     <td></td>
     <td></td>
@@ -155,7 +155,7 @@
 <tr>
     <td>Links</td>
     <td>POST</td>
-    <td><code>/api/links</code></td>
+    <td><code>/api/v1/links</code></td>
     <td>Create a new link.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -163,7 +163,7 @@
 <tr>
     <td>Link</td>
     <td>GET</td>
-    <td><code>/api/links/{url}</code></td>
+    <td><code>/api/v1/links/{url}</code></td>
     <td>Get the specified link.</td>
     <td></td>
     <td></td>
@@ -171,7 +171,7 @@
 <tr>
     <td>Link</td>
     <td>PUT</td>
-    <td><code>/api/links/{url}</code></td>
+    <td><code>/api/v1/links/{url}</code></td>
     <td>Update the specified link.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -179,7 +179,7 @@
 <tr>
     <td>Link</td>
     <td>DELETE</td>
-    <td><code>/api/links/{url}</code></td>
+    <td><code>/api/v1/links/{url}</code></td>
     <td>Delete the specified link.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -187,7 +187,7 @@
 <tr>
     <td>Files</td>
     <td>GET</td>
-    <td><code>/api/files</code></td>
+    <td><code>/api/v1/files</code></td>
     <td>Get all files.<br>(not implemented yet)</td>
     <td><span class="glyphicon glyphicon-check"></span></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -195,7 +195,7 @@
 <tr>
     <td>Files</td>
     <td>POST</td>
-    <td><code>/api/files</code></td>
+    <td><code>/api/v1/files</code></td>
     <td>Upload a new file.<br>(not implemented yet)</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -203,7 +203,7 @@
 <tr>
     <td>File</td>
     <td>GET</td>
-    <td><code>/api/files/{fileId}</code></td>
+    <td><code>/api/v1/files/{fileId}</code></td>
     <td>Download the specified file.<br>(not implemented yet)</td>
     <td></td>
     <td></td>
@@ -211,7 +211,7 @@
 <tr>
     <td>File</td>
     <td>PUT</td>
-    <td><code>/api/files/{fileId}</code></td>
+    <td><code>/api/v1/files/{fileId}</code></td>
     <td>Re-upload the specified file.<br>(not implemented yet)</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
@@ -219,7 +219,7 @@
 <tr>
     <td>File</td>
     <td>DELETE</td>
-    <td><code>/api/files/{fileId}</code></td>
+    <td><code>/api/v1/files/{fileId}</code></td>
     <td>Delete the specified file.<br>(not implemented yet)</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>

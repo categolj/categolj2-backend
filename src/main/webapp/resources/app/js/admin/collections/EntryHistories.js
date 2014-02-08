@@ -13,7 +13,7 @@ define(function (require) {
             }
         },
         url: function () {
-            return 'api/entries/' + this.entry.id + '/histories';
+            return 'api/v1/entries/' + this.entry.id + '/histories';
         }
     });
 });

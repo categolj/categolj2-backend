@@ -6,7 +6,7 @@ define(function (require) {
     return Backbone.Collection.extend(_.extend({
         model: Entry,
         url: function () {
-            return 'api/entries';
+            return 'api/v1/entries';
         }
     }, Page));
 });

@@ -3,7 +3,7 @@ define(function (require) {
 
     return Backbone.Model.extend({
         idAttribute: 'id',
-        urlRoot: 'api/users',
+        urlRoot: 'api/v1/users',
         defaults: {
             'enabled': true,
             'locked': false,
