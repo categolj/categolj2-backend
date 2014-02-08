@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +20,7 @@ import am.ik.categolj2.domain.service.entry.EntryService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("entries")
 public class EntryRestController {
     @Inject
@@ -32,14 +31,12 @@ public class EntryRestController {
     // Public API
 
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
     public Page<Entry> getEntries(@PageableDefault Pageable pageable) {
         Page<Entry> page = entryService.findPagePublished(pageable);
         return page;
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "keyword")
-    @ResponseBody
     public Page<Entry> searchEntries(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable) {
         // TODO search
         Page<Entry> page = entryService.findPagePublished(pageable);
@@ -47,7 +44,6 @@ public class EntryRestController {
     }
 
     @RequestMapping(value = "{entryId}", method = RequestMethod.GET)
-    @ResponseBody
     public Entry getEntry(@PathVariable("entryId") Integer entryId) {
         Entry entry = entryService.findOnePublished(entryId);
         return entry;
@@ -56,28 +52,24 @@ public class EntryRestController {
     // Admin API
 
     @RequestMapping(method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
-    @ResponseBody
     public Page<Entry> getEntriesInAdmin(@PageableDefault Pageable pageable) {
         Page<Entry> page = entryService.findPage(pageable);
         return page;
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "keyword", headers = Categolj2Headers.X_ADMIN)
-    @ResponseBody
     public Page<Entry> searchEntriesInAdmin(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable) {
         Page<Entry> page = entryService.serachPageByKeyword(keyword, pageable);
         return page;
     }
 
     @RequestMapping(value = "{entryId}", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
-    @ResponseBody
     public Entry getEntryInAdmin(@PathVariable("entryId") Integer entryId) {
         Entry entry = entryService.findOne(entryId);
         return entry;
     }
 
     @RequestMapping(method = RequestMethod.POST, headers = Categolj2Headers.X_ADMIN)
-    @ResponseBody
     public ResponseEntity<Entry> createEntryInAdmin(@RequestBody @Validated EntryForm form) {
         Entry entry = beanMapper.map(form, Entry.class);
         List<Category> categories = entry.getCategory();
@@ -87,7 +79,6 @@ public class EntryRestController {
     }
 
     @RequestMapping(value = "{entryId}", method = RequestMethod.PUT, headers = Categolj2Headers.X_ADMIN)
-    @ResponseBody
     public ResponseEntity<Entry> updateEntryInAdmin(@PathVariable("entryId") Integer entryId, @RequestBody @Validated EntryForm form) {
         Entry entry = beanMapper.map(form, Entry.class);
         new Categories(entry.getCategory()).applyEntryId(entryId);
@@ -97,7 +88,6 @@ public class EntryRestController {
     }
 
     @RequestMapping(value = "{entryId}", method = RequestMethod.DELETE, headers = Categolj2Headers.X_ADMIN)
-    @ResponseBody
     public ResponseEntity<Void> deleteEntryInAdmin(@PathVariable("entryId") Integer entryId) {
         entryService.delete(entryId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

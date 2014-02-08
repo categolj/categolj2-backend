@@ -76,14 +76,16 @@ public class EntryServiceImpl implements EntryService {
         for (Entry entry : entries) {
             entryIds.add(entry.getId());
         }
-        List<Category> categories = categoryRepository.findByEntryIds(entryIds);
+        if (!entryIds.isEmpty()) {
+            List<Category> categories = categoryRepository.findByEntryIds(entryIds);
 
-        Multimap<Integer, Category> multimap = TreeMultimap.create();
-        for (Category c : categories) {
-            multimap.put(c.getEntry().getId(), c);
-        }
-        for (Entry entry : entries) {
-            entry.setCategory(new ArrayList<>(multimap.get(entry.getId())));
+            Multimap<Integer, Category> multimap = TreeMultimap.create();
+            for (Category c : categories) {
+                multimap.put(c.getEntry().getId(), c);
+            }
+            for (Entry entry : entries) {
+                entry.setCategory(new ArrayList<>(multimap.get(entry.getId())));
+            }
         }
     }
 

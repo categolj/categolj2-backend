@@ -10,10 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 
-@Controller
+@RestController
 @RequestMapping("loginhistories")
 public class LoginHistoryRestController {
 
@@ -21,7 +22,6 @@ public class LoginHistoryRestController {
     LoginHistoryService loginHistoryService;
 
     @RequestMapping(method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
-    @ResponseBody
     public Page<LoginHistory> getLoginHistoriesInAdmin(@PageableDefault Pageable pageable) {
         return loginHistoryService.findPage(pageable);
     }

@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-    xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <import resource="classpath:/META-INF/spring/categolj2-env.xml" />
+    <import resource="classpath:/META-INF/spring/categolj2-env.xml"/>
 
     <jpa:repositories base-package="am.ik.categolj2.domain.repository"></jpa:repositories>
 
     <jpa:auditing auditor-aware-ref="auditAwareBean"
-        set-dates="false" />
+                  set-dates="false"/>
     <bean id="auditAwareBean" class="am.ik.categolj2.domain.AuditAwareBean"></bean>
 
     <bean id="jpaVendorAdapter"
-        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="showSql" value="false" />
-        <property name="database" value="${database}" />
+          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="false"/>
+        <property name="database" value="${database}"/>
     </bean>
 
     <bean
-        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-        id="entityManagerFactory">
-        <property name="packagesToScan" value="am.ik.categolj2.domain.model" />
-        <property name="dataSource" ref="dataSource" />
-        <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
-        <property name="mappingResources" value="META-INF/orm.xml" />
+            class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+            id="entityManagerFactory">
+        <property name="packagesToScan" value="am.ik.categolj2.domain.model"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <property name="mappingResources" value="META-INF/orm.xml"/>
         <property name="jpaPropertyMap">
             <util:map>
-                <entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}" />
+                <entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}"/>
                 <entry key="hibernate.ejb.naming_strategy"
-                    value="org.hibernate.cfg.ImprovedNamingStrategy" />
-                <entry key="hibernate.connection.charSet" value="UTF-8" />
-                <entry key="hibernate.show_sql" value="false" />
-                <entry key="hibernate.format_sql" value="false" />
-                <entry key="hibernate.use_sql_comments" value="true" />
-                <entry key="hibernate.jdbc.batch_size" value="30" />
-                <entry key="hibernate.jdbc.fetch_size" value="100" />
+                       value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+                <entry key="hibernate.connection.charSet" value="UTF-8"/>
+                <entry key="hibernate.show_sql" value="false"/>
+                <entry key="hibernate.format_sql" value="false"/>
+                <entry key="hibernate.use_sql_comments" value="true"/>
+                <entry key="hibernate.jdbc.batch_size" value="30"/>
+                <entry key="hibernate.jdbc.fetch_size" value="100"/>
                 <entry key="hibernate.search.default.directory_provider"
-                    value="filesystem" />
+                       value="filesystem"/>
                 <entry key="hibernate.search.default.indexBase"
-                    value="/tmp/lucene" />
+                       value="/tmp/lucene"/>
+                <!--<entry key="hibernate.search.model_mapping" value="am.ik.categolj2.infra.search.SearchMappingFactory"/>-->
+                <entry key="hibernate.search.analyzer" value="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
             </util:map>
         </property>
     </bean>
