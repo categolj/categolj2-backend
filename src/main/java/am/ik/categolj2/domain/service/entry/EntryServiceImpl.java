@@ -101,7 +101,6 @@ public class EntryServiceImpl implements EntryService {
     public List<Entry> findAllPublishedUpdatedRecently() {
         List<Entry> entries = entryRepository
                 .findAllPublishedOrderByLastModifiedDateDesc(recentlyPageable);
-        applyCategory(entries);
         return entries;
     }
 
