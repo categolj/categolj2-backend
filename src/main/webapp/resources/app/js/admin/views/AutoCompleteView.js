@@ -35,7 +35,7 @@ define(function (require) {
 
         wait: 300,
         queryParameter: 'query',
-        minKeywordLength: 2,
+        minKeywordLength: 3,
         currentText: '',
 
         initialize: function (opts) {
@@ -87,7 +87,7 @@ define(function (require) {
                     }, this));
             } else {
                 this.loadResult(this.model.filter(function (model) {
-                    return model.label().indexOf(keyword) > -1
+                    return model.label().toLowerCase().indexOf(keyword.toLowerCase()) > -1
                 }), keyword);
             }
         },

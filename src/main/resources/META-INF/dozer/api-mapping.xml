@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://dozer.sourceforge.net
+          xsi:schemaLocation="http://dozer.sourceforge.net
           http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <mapping map-null="false" map-empty-string="false">
+        <class-a>am.ik.categolj2.domain.model.Entry</class-a>
+        <class-b>am.ik.categolj2.api.entry.EntryResource</class-b>
+        <field
+                custom-converter="am.ik.categolj2.infra.dozer.StringToCategoryListConverter">
+            <a>category</a>
+            <b>categoryString</b>
+        </field>
+    </mapping>
     <mapping>
         <class-a>am.ik.categolj2.domain.model.User</class-a>
         <class-b>am.ik.categolj2.api.user.UserResource</class-b>

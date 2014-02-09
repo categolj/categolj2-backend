@@ -8,6 +8,7 @@ define(function (require) {
     var _ = require('underscore');
 
     var EntryHistories = require('app/js/admin/collections/EntryHistories');
+    var Categories = require('app/js/admin/collections/Categories');
     var ButtonView = require('app/js/admin/views/ButtonView');
     var EntryPreviewModalView = require('app/js/admin/views/entries/EntryPreviewModalView');
     var AmazonSearchView = require('app/js/admin/views/entries/AmazonSearchView');
@@ -58,33 +59,7 @@ define(function (require) {
                 };
             }
             this.listenTo(this.model, 'change:contents change:format', this._renderFormattedContents);
-
-            var Plugin = Backbone.Model.extend({
-                label: function () {
-                    return this.get("name");
-                }
-            });
-
-            var PluginCollection = Backbone.Collection.extend({
-                model: Plugin
-            });
-
-            this.plugins = new PluginCollection([
-                {"name": "backbone-autocomplete"},
-                {"name": "backbone-memento"},
-                {"name": "backbone-validations"},
-                {"name": "backbone-chosen"},
-                {"name": "backbone-relational"},
-                {"name": "backbone-bindings"},
-                {"name": "backbone-boilerplate"},
-                {"name": "backbone-traversal"},
-                {"name": "backbone-factory"},
-                {"name": "jquery"},
-                {"name": "jquery-ui"},
-                {"name": "angular.js"},
-                {"name": "keymaster.js"}
-            ]);
-
+            this.categories = new Categories();
         },
         render: function () {
             this.$el.empty().html(this.entryFormTemplate(
@@ -101,7 +76,8 @@ define(function (require) {
         showAutoComplete: function () {
             new AutoCompleteView({
                 input: this.$("#categoryString"),
-                model: this.plugins,
+                queryParameter: 'keyword',
+                model: this.categories,
                 onSelect: function (model) {
                     console.log(model);
                 }

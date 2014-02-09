@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDto {
-    private List<String> category;
+    private List<String> categoryName;
 
     public CategoryDto(Categories categories) {
-        this.category = categories.getCategories().stream()
+        this.categoryName = categories.getCategories().stream()
                 .map(Category::getCategoryName)
                 .collect(Collectors.toList());
     }
