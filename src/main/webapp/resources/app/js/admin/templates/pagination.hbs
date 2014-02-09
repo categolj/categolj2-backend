@@ -1,0 +1,25 @@
+<ul class="pagination">
+    <!-- firstPage -->
+    {{#if firstPageDisabled}}
+        <li class="disabled"><span>&laquo;</span></li>
+    {{/if}}
+    {{#if firstPageEnabled}}
+        <li><a href="#" class="go-first">&laquo;</a></li>
+    {{/if}}
+    <!-- links -->
+    {{#each links}}
+        {{#if active}}
+            <li class="active"><span>{{displayPage}}</span></li>
+        {{/if}}
+        {{#if inactive}}
+            <li><a href="#" class="go-to" data-page="{{page}}">{{displayPage}}</a></li>
+        {{/if}}
+    {{/each}}
+    <!-- lastPage -->
+    {{#if lastPageDisabled}}
+        <li class="disabled"><span>&raquo;</span></li>
+    {{/if}}
+    {{#if lastPageEnabled}}
+        <li><a href="#" class="go-last">&raquo;</a></li>
+    {{/if}}
+</ul>

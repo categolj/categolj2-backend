@@ -103,6 +103,6 @@ public class EntryRestController {
         List<EntryResource> resources = page.getContent().stream()
                 .map(this::toResource)
                 .collect(Collectors.toList());
-        return new PageImpl<>(resources, pageable, page.getTotalPages());
+        return new PageImpl<>(resources, pageable, page.getTotalElements());
     }
 }

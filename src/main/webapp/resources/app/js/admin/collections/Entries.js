@@ -7,6 +7,13 @@ define(function (require) {
         model: Entry,
         url: function () {
             return 'api/v1/entries';
+        },
+        search: function (keyword, data) {
+            return this.fetch({
+                data: _.extend({
+                    keyword: keyword
+                }, data || {})
+            });
         }
     }, Page));
 });

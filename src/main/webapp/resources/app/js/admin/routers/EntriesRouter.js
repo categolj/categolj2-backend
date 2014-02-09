@@ -12,6 +12,7 @@ define(function (require) {
     return Backbone.Router.extend({
         routes: {
             'entries': 'list',
+            'entries/page=:page/size=:pageSize': 'list',
             'entries/form': 'createForm',
             'entries/:id/form': 'updateForm',
             'entries/:id': 'show'
@@ -20,13 +21,18 @@ define(function (require) {
             this.adminView = opts.adminView;
             this.tabPanelView = this.adminView.createTabPanelView('entries');
         },
-        list: function () {
-            var entries = new Entries();
+        list: function (page, pageSize) {
+            var entries = new Entries({
+                page: page,
+                pageSize: pageSize
+            });
             this.entryListView = new EntryListView({
                 collection: entries
             });
             this.adminView.renderTab(this.tabPanelView, this.entryListView.render());
-            entries.fetch();
+            entries.fetch({
+                data: entries.pagingData()
+            });
         },
         createForm: function () {
             var entry = new Entry();

@@ -41,7 +41,7 @@ public class UserRestController {
         List<UserResource> userResources = page.getContent().stream()
                 .map(user -> beanMapper.map(user, UserResource.class))
                 .collect(Collectors.toList());
-        return new PageImpl<>(userResources, pageable, page.getTotalPages());
+        return new PageImpl<>(userResources, pageable, page.getTotalElements());
     }
 
     @RequestMapping(value = "{username}", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)

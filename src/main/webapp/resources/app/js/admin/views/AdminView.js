@@ -49,7 +49,7 @@ define(function (require) {
                 this.tabContentView.panelView = tabPanelView;
             } else {
                 this.tabContentView = new TabContentView({
-                    el: $('.tab-content'),
+                    el: this.$('.tab-content'),
                     panelView: tabPanelView
                 });
             }

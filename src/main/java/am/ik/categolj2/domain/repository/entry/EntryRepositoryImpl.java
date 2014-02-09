@@ -43,9 +43,11 @@ public class EntryRepositoryImpl implements EntryRepositoryCustom {
                 .setSort(sort)
                 .setFirstResult(pageable.getOffset())
                 .setMaxResults(pageable.getPageSize());
+        int count = fullTextEntityManager
+                .createFullTextQuery(query, Entry.class).getResultSize();
         @SuppressWarnings("unchecked")
         List<Entry> content = jpaQuery.getResultList();
-        return new PageImpl<>(content);
+        return new PageImpl<>(content, pageable, count);
     }
 
     @PostConstruct

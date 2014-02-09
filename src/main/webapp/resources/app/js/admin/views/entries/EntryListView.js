@@ -4,6 +4,8 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
+    var PaginationView = require('app/js/admin/views/PaginationView');
+    var SearchPaginationView = require('app/js/admin/views/entries/SearchPaginationView');
 
     var entryList = require('text!app/js/admin/templates/entries/entryList.hbs');
     var entryTable = require('text!app/js/admin/templates/entries/entryTable.hbs');
@@ -19,37 +21,54 @@ define(function (require) {
         entryTableTemplate: Handlebars.compile(entryTable),
 
         initialize: function () {
-            this.listenTo(this.collection, 'sync', this.render);
+            this.listenTo(this.collection, 'sync', this.renderTableAndPagination);
             this.$el.html(this.entryListTemplate());
             this.$keyword = this.$('#keyword');
         },
         render: function () {
             this.$('hr').last().next().remove();
+            if (this.paginationView) {
+                this.paginationView.remove();
+            }
             this.$el.append(this.entryTableTemplate({
                 content: this.collection.toJSON()
             }));
             this.$entrySearch = this.$('#entry-search');
             return this;
         },
-        _search: function () {
-            var opts = {};
+        renderTableAndPagination: function () {
+            this.render();
             if (this.$keyword.val()) {
-                opts.data = {
-                    keyword: this.$keyword.val()
-                }
+                // search
+                this.paginationView = new SearchPaginationView({
+                    keyword: this.$keyword.val(),
+                    collection: this.collection
+                });
+            } else {
+                this.paginationView = new PaginationView({
+                    collection: this.collection
+                });
             }
-            this.collection.fetch(opts);
-            this.$keyword.val('');
+            this.$el.append(this.paginationView.render().el);
+            return this;
+        },
+        _search: function () {
+            Backbone.history.navigate('entries');
+            if (this.$keyword.val()) {
+                this.collection.search(this.$keyword.val());
+            } else {
+                this.collection.fetch();
+            }
             return false;
         },
         _searchOnEnter: function (e) {
-            if (e.keyCode != 13 || !this.$keyword.val()) {
-                return;
-            }
+            if (e.keyCode != 13) return;
+            e.preventDefault();
             return this._search();
         },
         _toggleEntrySearchForm: function () {
             this.$entrySearch.toggle(300);
+            this.$keyword.focus();
         }
     });
 });
