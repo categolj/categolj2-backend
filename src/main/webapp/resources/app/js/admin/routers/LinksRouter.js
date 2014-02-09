@@ -3,7 +3,8 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var LinksView = require('app/js/admin/views/LinksView');
+    var LinksView = require('app/js/admin/views/links/LinksView');
+    var Links = require('app/js/admin/collections/Links');
 
     return Backbone.Router.extend({
         routes: {
@@ -14,7 +15,11 @@ define(function (require) {
             this.tabPanelView = this.adminView.createTabPanelView('links');
         },
         list: function () {
-            this.adminView.renderTab(this.tabPanelView, new LinksView().render());
+            var links = new Links();
+            this.adminView.renderTab(this.tabPanelView, new LinksView({
+                collection: links
+            }).render());
+            links.fetch();
         }
     });
 });

@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LinkResource {
+    private String id;
     @NotNull
     @Size(min = 1, max = 128)
     private String url;
