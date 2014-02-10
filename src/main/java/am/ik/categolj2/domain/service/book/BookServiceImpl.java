@@ -1,0 +1,92 @@
+package am.ik.categolj2.domain.service.book;
+
+import am.ik.aws.apa.AwsApaRequester;
+import am.ik.aws.apa.jaxws.*;
+import org.springframework.stereotype.Service;
+import org.terasoluna.gfw.common.exception.SystemException;
+
+import javax.inject.Inject;
+import javax.xml.ws.Response;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
+
+@Service
+public class BookServiceImpl implements BookService {
+    @Inject
+    AwsApaRequester requester;
+
+    List<BookDto> reseponseToBooks(ItemSearchResponse response) {
+        return response.getItems().stream()
+                .flatMap(items -> items.getItem().stream())
+                .map(item -> {
+                    BookDto book = new BookDto();
+                    ItemAttributes attributes = item.getItemAttributes();
+                    Image image = item.getMediumImage();
+                    book.setAsin(item.getASIN());
+                    book.setBookLink(item.getDetailPageURL());
+                    if (image != null) {
+                        book.setBookImage(image.getURL());
+                    }
+                    if (attributes != null) {
+                        book.setBookTitle(attributes.getTitle());
+                        book.setAuthors(attributes.getAuthor());
+                        book.setPublicationDate(attributes.getPublicationDate());
+                    }
+                    return book;
+                })
+                .collect(Collectors.toList());
+    }
+
+    Response<ItemSearchResponse> searchBook(ItemSearchRequest request) throws ExecutionException, InterruptedException {
+        request.getResponseGroup().add("Large");
+        return requester.itemSearchAsync(request);
+    }
+
+    @Override
+    public List<BookDto> searchByTitle(String title) {
+        List<BookDto> books = new ArrayList<>();
+
+        try {
+            ItemSearchRequest requestForBooks = new ItemSearchRequest();
+            requestForBooks.setTitle(title);
+            requestForBooks.setSearchIndex("Books");
+            Response<ItemSearchResponse> responseForBooks = searchBook(requestForBooks);
+
+            ItemSearchRequest requestForForeignBooks = new ItemSearchRequest();
+            requestForForeignBooks.setTitle(title);
+            requestForForeignBooks.setSearchIndex("ForeignBooks");
+            Response<ItemSearchResponse> responseForForeignBooks = searchBook(requestForForeignBooks);
+
+            books.addAll(reseponseToBooks(responseForBooks.get()));
+            books.addAll(reseponseToBooks(responseForForeignBooks.get()));
+        } catch (ExecutionException | InterruptedException e) {
+            throw new SystemException("Search API execution failed", e);
+        }
+        return books;
+    }
+
+    @Override
+    public List<BookDto> searchByKeyword(String keyword) {
+        List<BookDto> books = new ArrayList<>();
+
+        try {
+            ItemSearchRequest requestForBooks = new ItemSearchRequest();
+            requestForBooks.setKeywords(keyword);
+            requestForBooks.setSearchIndex("Books");
+            Response<ItemSearchResponse> responseForBooks = searchBook(requestForBooks);
+
+            ItemSearchRequest requestForForeignBooks = new ItemSearchRequest();
+            requestForForeignBooks.setKeywords(keyword);
+            requestForForeignBooks.setSearchIndex("ForeignBooks");
+            Response<ItemSearchResponse> responseForForeignBooks = searchBook(requestForForeignBooks);
+
+            books.addAll(reseponseToBooks(responseForBooks.get()));
+            books.addAll(reseponseToBooks(responseForForeignBooks.get()));
+        } catch (ExecutionException | InterruptedException e) {
+            throw new SystemException("Search API execution failed", e);
+        }
+        return books;
+    }
+}
