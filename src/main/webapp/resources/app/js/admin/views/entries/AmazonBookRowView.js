@@ -12,7 +12,7 @@ define(function (require) {
         template: Handlebars.compile(amazonBookRow),
 
         events: {
-            'click #btn-insert-book': '_insertBook'
+            'click button': '_insertBook'
         },
 
         initialize: function () {
@@ -24,7 +24,8 @@ define(function (require) {
         },
         _insertBook: function (e) {
             e.preventDefault();
-            console.log(this.model);
+            this.trigger('bookSelected', this.model);
+            return false;
         }
     });
 });

@@ -19,6 +19,7 @@ define(function (require) {
     var entryForm = require('text!app/js/admin/templates/entries/entryForm.hbs');
     var entryShow = require('text!app/js/admin/templates/entries/entryShow.hbs');
     var entryTable = require('text!app/js/admin/templates/entries/entryTable.hbs');
+    var amazonBookInserted = require('text!app/js/admin/templates/entries/amazonBookInserted.hbs');
 
     return Backbone.View.extend(_.extend({
         events: {
@@ -45,6 +46,7 @@ define(function (require) {
         entryFormTemplate: Handlebars.compile(entryForm),
         entryShowTemplate: Handlebars.compile(entryShow),
         entryTableTemplate: Handlebars.compile(entryTable),
+        amazonBookInsertedTemplate: Handlebars.compile(amazonBookInserted),
 
         initialize: function () {
             if (this.model.id) {
@@ -58,7 +60,7 @@ define(function (require) {
                     create: true
                 };
             }
-            this.listenTo(this.model, 'change:contents change:format', this._renderFormattedContents);
+            this.listenTo(this.model, 'change:contents change:format', this._renderContents);
             this.categories = new Categories();
         },
         render: function () {
@@ -174,21 +176,33 @@ define(function (require) {
         },
         _tabShow: function (e) {
             this.contentsTab = e.target.hash;
-            this._renderFormattedContents();
+            this._renderContents();
         },
-        _renderFormattedContents: function () {
+        _renderContents: function () {
             if (this.contentsTab === '#contents-tab-preview') {
                 // refresh
                 this.model.set('contents', this.$('#wmd-input').val());
                 this.$(this.contentsTab)
                     .empty().html(this.model.getFormattedContents());
             } else if (this.contentsTab === '#contents-tab-fileupload') {
+                if (!this.fileUploadView) {
+                    this.fileUploadView = new FileUploadView();
+                }
                 this.$(this.contentsTab)
-                    .empty().html(new FileUploadView().render().el);
+                    .empty().html(this.fileUploadView.render().el);
             } else if (this.contentsTab === '#contents-tab-amazon') {
+                if (!this.amazonSearchView) {
+                    this.amazonSearchView = new AmazonSearchView();
+                    this.listenTo(this.amazonSearchView, 'bookSelected', this._onBookSelected);
+                }
                 this.$(this.contentsTab)
-                    .empty().html(new AmazonSearchView().render().el);
+                    .empty().html(this.amazonSearchView.render().el);
             }
+        },
+        _onBookSelected: function (book) {
+            var contents = this.model.get('contents');
+            contents = (contents || '') + this.amazonBookInsertedTemplate(book.toJSON());
+            this.model.set('contents', contents);
         }
     }, ErrorHandler));
 });

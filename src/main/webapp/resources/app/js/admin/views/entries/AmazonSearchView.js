@@ -35,11 +35,13 @@ define(function (require) {
             this.$searchResult.removeClass('hidden');
             var $tableBody = this.$searchResult.find('tbody');
             $tableBody.empty();
-            this.collection.forEach(function (book) {
-                $tableBody.append(new AmazonBookRowView({
+            this.collection.forEach(_.bind(function (book) {
+                var amazonBookRowView = new AmazonBookRowView({
                     model: book
-                }).render().el);
-            });
+                });
+                this.listenTo(amazonBookRowView, 'bookSelected', this._onBookSelected);
+                $tableBody.append(amazonBookRowView.render().el);
+            }, this));
         },
         _checkState: function () {
             if (this.model.get('keyword')) {
@@ -57,6 +59,9 @@ define(function (require) {
         _searchOnEnter: function (e) {
             if (e.keyCode !== 13) return;
             this._searchByKeyword(e);
+        },
+        _onBookSelected: function (book) {
+            this.trigger('bookSelected', book);
         }
     });
     return AmazonSearchView;
