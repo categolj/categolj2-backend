@@ -18,14 +18,17 @@ define(function (require) {
         },
         initialize: function () {
             this.$el.html(this.template());
-            this.$('#keyword').focus();
             this.model = new Backbone.Model();
             this.collection = new Books();
             this.stickit();
             this.$searchResult = this.$('#amazon-search-result');
+            this.$keyword = this.$('#keyword');
+            this.$searchBtn = this.$('#search-by-keyword');
             this.listenTo(this.collection, 'sync', this.renderSearchResult);
+            this.listenTo(this.model, 'change:keyword', this._checkState);
         },
         render: function () {
+            this.$keyword.focus();
             return this;
         },
         renderSearchResult: function () {
@@ -37,6 +40,13 @@ define(function (require) {
                     model: book
                 }).render().el);
             });
+        },
+        _checkState: function () {
+            if (this.model.get('keyword')) {
+                this.$searchBtn.removeClass('disabled');
+            } else {
+                this.$searchBtn.addClass('disabled');
+            }
         },
         _searchByKeyword: function (e) {
             e.preventDefault();
