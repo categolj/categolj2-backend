@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import java.util.Arrays;
 
+import am.ik.categolj2.api.entry.EntryResource;
 import org.dozer.DozerBeanMapper;
 import org.junit.After;
 import org.junit.Before;
@@ -12,14 +13,13 @@ import org.junit.Test;
 
 import com.google.common.collect.Lists;
 
-import am.ik.categolj2.app.entry.EntryForm;
 import am.ik.categolj2.domain.model.Categories;
 import am.ik.categolj2.domain.model.Category;
 import am.ik.categolj2.domain.model.Entry;
 
 public class StringToCategoryListConverterTest {
 	DozerBeanMapper beanMapper = new DozerBeanMapper(
-			Arrays.asList("META-INF/dozer/app-mapping.xml"));
+			Arrays.asList("META-INF/dozer/api-mapping.xml"));
 
 	@Before
 	public void setUp() throws Exception {
@@ -32,7 +32,7 @@ public class StringToCategoryListConverterTest {
 	@Test
 	public void testConvertStringToCategoryList() {
 		Integer entryId = 100;
-		EntryForm form = new EntryForm();
+		EntryResource form = new EntryResource();
 		form.setContents("aa");
 		form.setTitle("hello");
 		form.setCategoryString("foo::bar::zzz");
@@ -52,7 +52,7 @@ public class StringToCategoryListConverterTest {
 	@Test
 	public void testConvertEmptyStringToEmptyCategoryList() {
 		Integer entryId = 100;
-		EntryForm form = new EntryForm();
+		EntryResource form = new EntryResource();
 		form.setContents("aa");
 		form.setTitle("hello");
 		form.setCategoryString("");
@@ -77,7 +77,7 @@ public class StringToCategoryListConverterTest {
 				new Category(entryId, 2, "yy"), new Category(entryId, 3, "zz")));
 		entry.setEntryId(entryId);
 
-		EntryForm form = beanMapper.map(entry, EntryForm.class);
+		EntryResource form = beanMapper.map(entry, EntryResource.class);
 
 		assertThat(form.getEntryId(), is(entryId));
 		assertThat(form.getContents(), is("aa"));
