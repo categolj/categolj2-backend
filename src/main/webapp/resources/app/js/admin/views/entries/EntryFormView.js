@@ -187,16 +187,17 @@ define(function (require) {
             } else if (this.contentsTab === '#contents-tab-fileupload') {
                 if (!this.fileUploadView) {
                     this.fileUploadView = new FileUploadView();
+                    this.$(this.contentsTab)
+                        .empty().html(this.fileUploadView.render().el);
                 }
-                this.$(this.contentsTab)
-                    .empty().html(this.fileUploadView.render().el);
             } else if (this.contentsTab === '#contents-tab-amazon') {
                 if (!this.amazonSearchView) {
                     this.amazonSearchView = new AmazonSearchView();
                     this.listenTo(this.amazonSearchView, 'bookSelected', this._onBookSelected);
+                    this.$(this.contentsTab)
+                        .empty().html(this.amazonSearchView.render().el);
                 }
-                this.$(this.contentsTab)
-                    .empty().html(this.amazonSearchView.render().el);
+                //this.amazonSearchView.focus();
             }
         },
         _onBookSelected: function (book) {

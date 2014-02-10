@@ -1,46 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="am.ik.categolj2.api" />
+    <context:component-scan base-package="am.ik.categolj2.api"/>
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean
-                class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-                <property name="objectMapper" ref="objectMapper" />
+                    class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper"/>
             </bean>
         </mvc:message-converters>
         <mvc:argument-resolvers>
             <bean
-                class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+                    class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
             </bean>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 
     <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
         <property name="dateFormat">
-            <bean class="org.codehaus.jackson.map.util.StdDateFormat" />
+            <bean class="org.codehaus.jackson.map.util.StdDateFormat"/>
         </property>
+    </bean>
+
+    <bean class="am.ik.categolj2.api.MediaTypeResolver">
+        <constructor-arg index="0">
+            <map>
+                <entry key="json" value="application/json"/>
+                <entry key="xml" value="application/xml"/>
+                <entry key="gif" value="image/gif"/>
+                <entry key="jpeg" value="image/jpeg"/>
+                <entry key="jpg" value="image/jpeg"/>
+                <entry key="png" value="image/png"/>
+                <entry key="html" value="text/html"/>
+                <entry key="text" value="text/plain"/>
+                <entry key="xhtml" value="text/xml"/>
+            </map>
+        </constructor-arg>
+        <property name="fallbackMediaType" value="application/octet-stream"/>
     </bean>
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/**" />
-            <mvc:exclude-mapping path="/resources/**" />
-            <mvc:exclude-mapping path="/**/*.html" />
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <mvc:exclude-mapping path="/**/*.html"/>
             <bean
-                class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
+                    class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/**" />
-            <mvc:exclude-mapping path="/resources/**" />
-            <mvc:exclude-mapping path="/**/*.html" />
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <mvc:exclude-mapping path="/**/*.html"/>
             <bean
-                class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
+                    class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>

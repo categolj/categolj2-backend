@@ -22,26 +22,29 @@ define(function (require) {
             this.collection = new Books();
             this.stickit();
             this.$searchResult = this.$('#amazon-search-result');
-            this.$keyword = this.$('#keyword');
             this.$searchBtn = this.$('#search-by-keyword');
             this.listenTo(this.collection, 'sync', this.renderSearchResult);
             this.listenTo(this.model, 'change:keyword', this._checkState);
         },
         render: function () {
-            this.$keyword.focus();
+            this.focus();
             return this;
         },
         renderSearchResult: function () {
             this.$searchResult.removeClass('hidden');
             var $tableBody = this.$searchResult.find('tbody');
             $tableBody.empty();
-            this.collection.forEach(_.bind(function (book) {
+            this.collection.each(_.bind(function (book) {
                 var amazonBookRowView = new AmazonBookRowView({
                     model: book
                 });
                 this.listenTo(amazonBookRowView, 'bookSelected', this._onBookSelected);
                 $tableBody.append(amazonBookRowView.render().el);
             }, this));
+        },
+        focus: function () {
+            this.$('#keyword').focus();
+            return this;
         },
         _checkState: function () {
             if (this.model.get('keyword')) {
