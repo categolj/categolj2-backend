@@ -43,9 +43,16 @@
                 <entry key="hibernate.search.default.indexBase"
                        value="/tmp/lucene"/>
                 <!--<entry key="hibernate.search.model_mapping" value="am.ik.categolj2.infra.search.SearchMappingFactory"/>-->
-                <entry key="hibernate.search.analyzer" value="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
+                <entry key="hibernate.search.analyzer" value="org.apache.lucene.analysis.cjk.CJKAnalyzer"/>
             </util:map>
         </property>
     </bean>
 
+    <!-- Amazon Product Advertising API -->
+    <bean id="awsApaRequester" class="am.ik.aws.apa.AwsApaRequesterImpl">
+        <constructor-arg index="0" value="${aws.accesskey.id}"/>
+        <constructor-arg index="1" value="${aws.secret.accesskey}"/>
+        <constructor-arg index="2" value="${aws.endpoint}"/>
+        <constructor-arg index="3" value="${aws.associate.tag}"/>
+    </bean>
 </beans>
