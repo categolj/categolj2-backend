@@ -23,11 +23,11 @@ Entries	| GET	| /api/v1/entries	| Get all entries	| × |
 Entries	| GET	| /api/v1/entries?keyword={keyword}	| Search entries	| ×  | 		
 Entries	| GET	| /api/v1/categories/{category}/entries	| Get all entries associated with the specified category. (not implemented yet)		 | ×  | 
 Entries	| GET	| /api/v1/users/{users}/entries	| Get all entries created with the specified user. (not implemented yet)	| ×  | 	
-Entries	| POST	| /api/v1/entries	| Create a new entry.	| | 
-Entry	| GET	| /api/v1/entries/{entryId}	| Get the specified entry.	 | | × 	
-Entry	| PUT	| /api/v1/entries/{entryId}	| Update the specified entry.	 | |	
-Entry	| DELETE	 | /api/v1/entries/{entryId}	| Delete the specified entry.	| | 	 × 
-Entry Histories	| GET	| /api/v1/entries/{entryId}/histories	| Get all entry histories associated with the specified entry. | | 	 × 	
+Entries	| POST	| /api/v1/entries	| Create a new entry.	| | ×
+Entry	| GET	| /api/v1/entries/{entryId}	| Get the specified entry.	 | |  	
+Entry	| PUT	| /api/v1/entries/{entryId}	| Update the specified entry.	 | | ×	
+Entry	| DELETE	 | /api/v1/entries/{entryId}	| Delete the specified entry.	| | × 
+Entry Histories	| GET	| /api/v1/entries/{entryId}/histories	| Get all entry histories associated with the specified entry. | | × 	
 Categories	| GET	| /api/v1/categories	| Get all categories.	| | 	
 Categories	| GET	| /api/v1/categories?keyword={keyword}	| Search categories. | | × 		
 Recently Posts	| GET	| /api/v1/recentlyposts	| Get entries updated recently.	 | | 	
