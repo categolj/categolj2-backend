@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 public interface UploadFileService {
     UploadFile findOne(String fileId);
 
+    UploadFileSummary findOneSummary(String fileId);
+
     Page<UploadFileSummary> findPage(Pageable pageable);
 
     UploadFile create(UploadFile uploadFile);

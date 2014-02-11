@@ -2,10 +2,13 @@
     {{fileId}}
 </td>
 <td>
-    <a href="api/v1/files/{{fileId}}" target="_blank">{{fileName}}</a>
+    <a href="api/v1/files/{{fileId}}">{{fileName}}</a>
 </td>
 <td>
-    {{fileExtension}}
+    {{#if isImage}}
+        <a href="api/v1/files/{{fileId}}" target="_blank"><img src="api/v1/files/{{fileId}}" width="100"></a>
+    {{else}}
+    {{/if}}
 </td>
 <td>
     <div class="btn-group">

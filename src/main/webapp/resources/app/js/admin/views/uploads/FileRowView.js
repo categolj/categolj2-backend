@@ -20,7 +20,9 @@ define(function (require) {
         initialize: function () {
         },
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template(_.extend({
+                isImage: this.model.isImage()
+            }, this.model.toJSON())));
             this.stickit();
             return this;
         },

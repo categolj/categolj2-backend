@@ -56,14 +56,15 @@ public class FileRestController {
 
     @RequestMapping(value = "{fileId}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> downloadFile(@PathVariable("fileId") String fileId, HttpServletRequest request) {
-        UploadFile uploadFile = uploadFileService.findOne(fileId);
+        UploadFileSummary summary = uploadFileService.findOneSummary(fileId);
         HttpHeaders headers = new HttpHeadersBuilder(mediaTypeResolver)
-                .contentTypeAttachmentIfNeccessary(uploadFile.getFileName())
-                .lastModified(uploadFile.getLastModifiedDate())
+                .contentTypeAttachmentIfNeccessary(summary.getFileName())
+                .lastModified(summary.getLastModifiedDate())
                 .cacheForSeconds(cacheSeconds, false)
                 .build();
         long ifModifiedSince = request.getDateHeader(com.google.common.net.HttpHeaders.IF_MODIFIED_SINCE);
-        return fileHelper.creteHttpResponse(ifModifiedSince, uploadFile, headers);
+
+        return fileHelper.creteHttpResponse(ifModifiedSince, summary, headers);
     }
 
     @RequestMapping(value = "{fileId}", method = RequestMethod.GET, params = "no-cache")

@@ -4,6 +4,8 @@ import am.ik.categolj2.domain.model.UploadFile;
 import am.ik.categolj2.domain.repository.uploadfile.UploadFileRepository;
 import am.ik.categolj2.domain.repository.uploadfile.UploadFileSummary;
 import org.joda.time.DateTime;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,17 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
+    @Cacheable(value = "uploadFileSummary")
+    public UploadFileSummary findOneSummary(String fileId) {
+        UploadFileSummary summary = uploadFileRepository.findOneSummary(fileId);
+        if (summary == null) {
+            throw new ResourceNotFoundException("file is not found. [fileId="
+                    + fileId + "]");
+        }
+        return summary;
+    }
+
+    @Override
     public Page<UploadFileSummary> findPage(Pageable pageable) {
         return uploadFileRepository.findSummaryPageOrderByLastModifiedDateDesc(pageable);
     }
@@ -46,6 +59,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "uploadFileSummary")
     public void delete(String fileId) {
         uploadFileRepository.delete(fileId);
     }
