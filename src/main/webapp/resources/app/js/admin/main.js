@@ -13,7 +13,8 @@ require.config({
         backbone: {
             deps: [
                 'underscore',
-                'jquery'
+                'jquery',
+                'jquery.iframe-transport'
             ],
             exports: 'Backbone'
         },
@@ -33,6 +34,9 @@ require.config({
             deps: [
                 'pagedown'
             ]
+        },
+        'jquery.iframe-transport': {
+
         }
     },
     paths: {
@@ -42,11 +46,11 @@ require.config({
         'backbone.stickit': 'vendor/backbone.stickit/backbone.stickit',
         'backbone.validation': 'vendor/backbone.validation/src/backbone-validation',
         handlebars: 'vendor/handlebars/handlebars',
-        handsontable: 'vendor/handsontable/dist/jquery.handsontable.full',
         marked: 'vendor/marked/lib/marked',
         spin: 'vendor/spin.js/dist/spin',
         pagedown: 'vendor/pagedown/Markdown.Converter',
         'pagedown.editor': 'vendor/pagedown/Markdown.Editor',
+        'jquery.iframe-transport': 'vendor/jquery.iframe-transport/jquery.iframe-transport',
         bootstrap: 'vendor/bootstrap/dist/js/bootstrap',
         text: 'vendor/requirejs-text/text'
     }

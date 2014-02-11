@@ -8,18 +8,24 @@ define(function (require) {
 
     return Backbone.Router.extend({
         routes: {
-            'uploads': 'list'
+            'uploads': 'list',
+            'uploads/page=:page/size=:pageSize': 'list',
         },
         initialize: function (opts) {
             this.adminView = opts.adminView;
             this.tabPanelView = this.adminView.createTabPanelView('uploads');
         },
-        list: function () {
-            var files = new Files();
+        list: function (page, pageSize) {
+            var files = new Files({
+                page: page,
+                pageSize: pageSize
+            });
             this.adminView.renderTab(this.tabPanelView, new UploadsView({
                 collection: files
             }).render());
-            files.fetch();
+            files.fetch({
+                data: files.pagingData()
+            });
         }
     });
 });

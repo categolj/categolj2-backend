@@ -21,6 +21,8 @@
     </style>
     <meta name="_csrf" content="${f:h(_csrf.token)}"/>
     <meta name="_csrf_header" content="${f:h(_csrf.headerName)}"/>
+    <meta name="_csrf_parameter" content="${f:h(_csrf.parameterName)}"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 </head>
 <body>
 <sec:authentication property="principal.user" var="user"/>

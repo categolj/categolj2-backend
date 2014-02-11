@@ -46,9 +46,9 @@ public class FileRestController {
         return new PageImpl<>(resources, pageable, summaries.getTotalElements());
     }
 
-    @RequestMapping(method = RequestMethod.POST, headers = Categolj2Headers.X_ADMIN)
-    public ResponseEntity<FileResource> postFile(MultipartFile file) {
-        UploadFile uploadFile = fileHelper.multipartFileToUploadFile(file);
+    @RequestMapping(method = RequestMethod.POST/*, headers = Categolj2Headers.X_ADMIN*/)
+    public ResponseEntity<FileResource> postFile(FileResource fileResource) {
+        UploadFile uploadFile = fileHelper.multipartFileToUploadFile(fileResource.getFile());
         UploadFile created = uploadFileService.create(uploadFile);
 
         return new ResponseEntity<>(beanMapper.map(created, FileResource.class), HttpStatus.CREATED);
