@@ -1,6 +1,6 @@
 # CategolJ2 Backend
 
-CategoljJ2 is a RESTfull micro Rblog system. This backend provides REST API for blog system and admin console to manage these data.
+CategoljJ2 is a micro blog system. This backend provides REST API for blog system and admin console to manage these data.
 
 The following technologies are used.
 
@@ -19,37 +19,37 @@ Supported REST APIs are following.
 
 Resource	| Method	| Path	| Description	| Pageable	| Authenticated
 --------------- | ------------- | ----- | ------------- | ------------- | ----------------
-Entries	| GET	| /api/v1/entries	| Get all entries	| | 	
-Entries	| GET	| /api/v1/entries?keyword={keyword}	| Search entries	| | 		
-Entries	| GET	| /api/v1/categories/{category}/entries	| Get all entries associated with the specified category. (not implemented yet)		 | | 
-Entries	| GET	| /api/v1/users/{users}/entries	| Get all entries created with the specified user. (not implemented yet)	| | 	
+Entries	| GET	| /api/v1/entries	| Get all entries	| × | 	
+Entries	| GET	| /api/v1/entries?keyword={keyword}	| Search entries	| ×  | 		
+Entries	| GET	| /api/v1/categories/{category}/entries	| Get all entries associated with the specified category. (not implemented yet)		 | ×  | 
+Entries	| GET	| /api/v1/users/{users}/entries	| Get all entries created with the specified user. (not implemented yet)	| ×  | 	
 Entries	| POST	| /api/v1/entries	| Create a new entry.	| | 
-Entry	| GET	| /api/v1/entries/{entryId}	| Get the specified entry.	 | |	
+Entry	| GET	| /api/v1/entries/{entryId}	| Get the specified entry.	 | | × 	
 Entry	| PUT	| /api/v1/entries/{entryId}	| Update the specified entry.	 | |	
-Entry	| DELETE	 | /api/v1/entries/{entryId}	| Delete the specified entry.	| | 	
-Entry Histories	| GET	| /api/v1/entries/{entryId}/histories	| Get all entry histories associated with the specified entry. | | 		
+Entry	| DELETE	 | /api/v1/entries/{entryId}	| Delete the specified entry.	| | 	 × 
+Entry Histories	| GET	| /api/v1/entries/{entryId}/histories	| Get all entry histories associated with the specified entry. | | 	 × 	
 Categories	| GET	| /api/v1/categories	| Get all categories.	| | 	
-Categories	| GET	| /api/v1/categories?keyword={keyword}	| Search categories. | |		
+Categories	| GET	| /api/v1/categories?keyword={keyword}	| Search categories. | | × 		
 Recently Posts	| GET	| /api/v1/recentlyposts	| Get entries updated recently.	 | | 	
-Users	| GET	| /api/v1/users	| Get all users.	 | | 	
-Users	| POST	| /api/v1/users	| Create a new user.	 | | 	
-User	| GET	| /api/v1/users/{username}	| Get the specified user. | | 		
-User	| PUT	| /api/v1/users/{username}	| Update the specified user.  | | 		
-User	| DELETE	| /api/v1/users/{username}	| Delete the specified user. | | 
-User	| GET	| /api/v1/users/me	| Get login user. (not implemented yet) | | 		
-User	| PUT	| /api/v1/users/me	| Update login user. (not implemented yet)  | | 		
+Users	| GET	| /api/v1/users	| Get all users.	 | ×  |  × 	
+Users	| POST	| /api/v1/users	| Create a new user.	 | |  × 	
+User	| GET	| /api/v1/users/{username}	| Get the specified user. | | ×  		
+User	| PUT	| /api/v1/users/{username}	| Update the specified user.  | | ×  		
+User	| DELETE	| /api/v1/users/{username}	| Delete the specified user. | | ×  
+User	| GET	| /api/v1/users/me	| Get login user. (not implemented yet) | | ×  		
+User	| PUT	| /api/v1/users/me	| Update login user. (not implemented yet)  | | ×  		
 Links	| GET	| /api/v1/links	| Get all links.	 | | 	
-Links	| POST	| /api/v1/links	| Create a new link. | | 		
+Links	| POST	| /api/v1/links	| Create a new link. | | ×  		
 Link	| GET	| /api/v1/links/{url}	| Get the specified link.	 | | 	
-Link	| PUT	| /api/v1/links/{url}	| Update the specified link. | | 		
-Link	| DELETE	| /api/v1/links/{url}	| Delete the specified link. | | 		
-Files	| GET	| /api/v1/files	| Get all file summaries (not include file contents).  | | 
-Files	| POST	| /api/v1/files	Upload files. | | 
+Link	| PUT	| /api/v1/links/{url}	| Update the specified link. | | ×  		
+Link	| DELETE	| /api/v1/links/{url}	| Delete the specified link. | | ×  		
+Files	| GET	| /api/v1/files	| Get all file summaries (not include file contents).  | ×  |  × 
+Files	| POST	| /api/v1/files	Upload files. | | ×  
 File	| GET	| /api/v1/files/{fileId}	| Get the specified file. | | 
 File	| GET	| /api/v1/files/{fileId}?attachment	| Download the specified file (with prompt). | |
-File	| DELETE	| /api/v1/files/{fileId}	| Delete the specified file. | | 
-Books	| GET	| /api/v1/books?title={title}	| Search books by the given title using Amazon Product API		 | | 
-Books	| GET	| /api/v1/books?keyword={keyword}	| Search books by the given keyword using Amazon Product API | | 		
+File	| DELETE	| /api/v1/files/{fileId}	| Delete the specified file. | |  × 
+Books	| GET	| /api/v1/books?title={title}	| Search books by the given title using Amazon Product API		 | | ×  
+Books	| GET	| /api/v1/books?keyword={keyword}	| Search books by the given keyword using Amazon Product API | | ×  		
 
 ## Admin Console Screen Shots
 
