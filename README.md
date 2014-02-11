@@ -51,7 +51,7 @@ File	| DELETE	| /api/v1/files/{fileId}	| Delete the specified file. | |  ×
 Books	| GET	| /api/v1/books?title={title}	| Search books by the given title using Amazon Product API		 | | ×  
 Books	| GET	| /api/v1/books?keyword={keyword}	| Search books by the given keyword using Amazon Product API | | ×  		
 
-## Admin Console Screen Shots
+## Admin Console Screenshots
 
 Admin console is a single page application using AJAX/REST API mentioned above. 
 
