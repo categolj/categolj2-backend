@@ -7,7 +7,12 @@ define(function (require) {
         model: File,
         url: 'api/v1/files',
         comparator: function (a, b) {
-            return a.get('lastModifiedDate') > b.get('lastModifiedDate') ? -1 : 1;
+            var isSameLastModifiedDate = a.get('lastModifiedDate') == b.get('lastModifiedDate');
+            if (isSameLastModifiedDate) {
+                return a.get('fileName') > b.get('fileName') ? 1 : -1;
+            } else {
+                return a.get('lastModifiedDate') > b.get('lastModifiedDate') ? -1 : 1;
+            }
         },
         upload: function (files, options) {
             var opts = _.extend({
