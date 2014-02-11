@@ -7,6 +7,9 @@ define(function (require) {
         model: User,
         url: function () {
             return 'api/v1/users';
+        },
+        comparator: function (a, b) {
+            return a.get('lastModifiedDate') > b.get('lastModifiedDate') ? -1 : 1;
         }
     }, Page));
 });

@@ -53,6 +53,11 @@ define(function (require) {
                 }
             }
             return body;
+        },
+        appendContents: function (append) {
+            var contents = this.get('contents');
+            contents = (contents || '') + append;
+            this.set('contents', contents);
         }
     });
 });

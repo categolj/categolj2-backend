@@ -9,6 +9,7 @@ define(function (require) {
 
     var EntryHistories = require('app/js/admin/collections/EntryHistories');
     var Categories = require('app/js/admin/collections/Categories');
+    var Files = require('app/js/admin/collections/Files');
     var ButtonView = require('app/js/admin/views/ButtonView');
     var EntryPreviewModalView = require('app/js/admin/views/entries/EntryPreviewModalView');
     var AmazonSearchView = require('app/js/admin/views/entries/AmazonSearchView');
@@ -20,6 +21,7 @@ define(function (require) {
     var entryShow = require('text!app/js/admin/templates/entries/entryShow.hbs');
     var entryTable = require('text!app/js/admin/templates/entries/entryTable.hbs');
     var amazonBookInserted = require('text!app/js/admin/templates/entries/amazonBookInserted.hbs');
+    var fileInserted = require('text!app/js/admin/templates/entries/fileInserted.hbs');
 
     return Backbone.View.extend(_.extend({
         events: {
@@ -47,6 +49,7 @@ define(function (require) {
         entryShowTemplate: Handlebars.compile(entryShow),
         entryTableTemplate: Handlebars.compile(entryTable),
         amazonBookInsertedTemplate: Handlebars.compile(amazonBookInserted),
+        fileInsertedTemplate: Handlebars.compile(fileInserted),
 
         initialize: function () {
             if (this.model.id) {
@@ -186,10 +189,15 @@ define(function (require) {
                     .empty().html(this.model.getFormattedContents());
             } else if (this.contentsTab === '#contents-tab-fileupload') {
                 if (!this.fileUploadView) {
-                    this.fileUploadView = new FileUploadView();
+                    var files = new Files();
+                    this.fileUploadView = new FileUploadView({
+                        collection: files
+                    });
+                    this.listenTo(this.fileUploadView, 'fileSelected', this._onFileSelected);
                     this.$(this.contentsTab)
                         .empty().html(this.fileUploadView.render().el);
                 }
+                this.fileUploadView.collection.fetch();
             } else if (this.contentsTab === '#contents-tab-amazon') {
                 if (!this.amazonSearchView) {
                     this.amazonSearchView = new AmazonSearchView();
@@ -201,9 +209,10 @@ define(function (require) {
             }
         },
         _onBookSelected: function (book) {
-            var contents = this.model.get('contents');
-            contents = (contents || '') + this.amazonBookInsertedTemplate(book.toJSON());
-            this.model.set('contents', contents);
+            this.model.appendContents(this.amazonBookInsertedTemplate(book.toJSON()));
+        },
+        _onFileSelected: function (file) {
+            this.model.appendContents(this.fileInsertedTemplate(file.toJSONForView()));
         }
     }, ErrorHandler));
 });

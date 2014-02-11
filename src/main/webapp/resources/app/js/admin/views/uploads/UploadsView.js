@@ -5,19 +5,12 @@ define(function (require) {
     var _ = require('underscore');
 
     var Files = require('app/js/admin/collections/Files');
+    var FilesForm = require('app/js/admin/models/FilesForm');
     var FileRowView = require('app/js/admin/views/uploads/FileRowView');
     var PaginationView = require('app/js/admin/views/PaginationView');
     var ErrorHandler = require('app/js/admin/views/ErrorHandler');
 
     var fileTable = require('text!app/js/admin/templates/uploads/fileTable.hbs');
-
-    var FilesForm = Backbone.Model.extend({
-        validation: {
-            files: {
-                required: true
-            }
-        }
-    });
 
     return Backbone.View.extend(_.extend({
         events: {

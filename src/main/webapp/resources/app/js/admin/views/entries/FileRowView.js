@@ -5,13 +5,14 @@ define(function (require) {
     var _ = require('underscore');
 
     var ErrorHandler = require('app/js/admin/views/ErrorHandler');
-    var fileRow = require('text!app/js/admin/templates/uploads/fileRow.hbs');
+    var fileRow = require('text!app/js/admin/templates/entries/fileRow.hbs');
 
     return Backbone.View.extend(_.extend({
         tagName: 'tr',
         template: Handlebars.compile(fileRow),
 
         events: {
+            'click #btn-file-insert': '_insertFile',
             'click #btn-file-delete': '_delete'
         },
         bindings: {
@@ -23,6 +24,11 @@ define(function (require) {
             this.$el.html(this.template(this.model.toJSONForView()));
             this.stickit();
             return this;
+        },
+        _insertFile: function (e) {
+            e.preventDefault();
+            this.trigger('fileSelected', this.model);
+            return false;
         },
         _delete: function () {
             if (confirm('Are you sure to delete?')) {

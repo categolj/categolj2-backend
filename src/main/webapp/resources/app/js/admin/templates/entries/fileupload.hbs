@@ -1,13 +1,31 @@
 <div class="row">
-    <div class="col col-sm-4">
+    <div class="col col-sm-6">
         <div class="form-group">
-            <input type="file" multiple>
-            <span class="help-block hidden"></span>
+            <label for="files" class="col col-sm-2 control-label">Files:</label>
+
+            <div class="col col-sm-10">
+                <input id="files" name="files" type="file" multiple>
+                <span class="help-block hidden"></span>
+            </div>
         </div>
     </div>
-    <div class="col col-sm-8">
-        <button class="btn btn-primary">Upload</button>
+    <div class="col col-sm-6">
+        <button id="btn-file-upload" class="btn btn-primary">Upload</button>
     </div>
 </div>
 
+<hr>
+
+<table class="table table-striped table-bordered table-condensed editable-table">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>preview</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 

@@ -8,6 +8,12 @@ define(function (require) {
 
         isImage: function () {
             return _.contains(["png", "jpg", "jpeg", "gif"], this.get('fileExtension'));
+        },
+        toJSONForView: function () {
+            return _.extend({
+                isImage: this.isImage(),
+                url: this.url()
+            }, this.toJSON())
         }
     });
 });
