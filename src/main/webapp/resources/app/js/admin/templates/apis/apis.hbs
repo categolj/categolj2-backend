@@ -145,6 +145,22 @@
     <td><span class="glyphicon glyphicon-check"></span></td>
 </tr>
 <tr>
+    <td>User</td>
+    <td>GET</td>
+    <td><code>/api/v1/users/me</code></td>
+    <td>Get login user.<br>(not implemented yet)</td>
+    <td></td>
+    <td><span class="glyphicon glyphicon-check"></span></td>
+</tr>
+<tr>
+    <td>User</td>
+    <td>PUT</td>
+    <td><code>/api/v1/users/me</code></td>
+    <td>Update login user.<br>(not implemented yet)</td>
+    <td></td>
+    <td><span class="glyphicon glyphicon-check"></span></td>
+</tr>
+<tr>
     <td>Links</td>
     <td>GET</td>
     <td><code>/api/v1/links</code></td>
@@ -188,7 +204,7 @@
     <td>Files</td>
     <td>GET</td>
     <td><code>/api/v1/files</code></td>
-    <td>Get all files.<br>(not implemented yet)</td>
+    <td>Get all file summaries (not include file contents).</td>
     <td><span class="glyphicon glyphicon-check"></span></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
 </tr>
@@ -196,7 +212,7 @@
     <td>Files</td>
     <td>POST</td>
     <td><code>/api/v1/files</code></td>
-    <td>Upload a new file.<br>(not implemented yet)</td>
+    <td>Upload a new file.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
 </tr>
@@ -204,23 +220,23 @@
     <td>File</td>
     <td>GET</td>
     <td><code>/api/v1/files/{fileId}</code></td>
-    <td>Download the specified file.<br>(not implemented yet)</td>
+    <td>Get the specified file.</td>
     <td></td>
     <td></td>
 </tr>
 <tr>
     <td>File</td>
-    <td>PUT</td>
-    <td><code>/api/v1/files/{fileId}</code></td>
-    <td>Re-upload the specified file.<br>(not implemented yet)</td>
+    <td>GET</td>
+    <td><code>/api/v1/files/{fileId}?attachment</code></td>
+    <td>Download the specified file (with prompt).</td>
     <td></td>
-    <td><span class="glyphicon glyphicon-check"></span></td>
+    <td></td>
 </tr>
 <tr>
     <td>File</td>
     <td>DELETE</td>
     <td><code>/api/v1/files/{fileId}</code></td>
-    <td>Delete the specified file.<br>(not implemented yet)</td>
+    <td>Delete the specified file.</td>
     <td></td>
     <td><span class="glyphicon glyphicon-check"></span></td>
 </tr>
