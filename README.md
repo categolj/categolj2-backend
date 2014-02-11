@@ -110,19 +110,6 @@ Inline edit is available.
 ![Manage links][11]
 
 
-## Try quickly
-
-You can try this system using H2 in-memory .
-
-    $ git clone https://github.com/making/categolj2-backend.git
-    $ mvn package -Dmaven.test.skip=true
-    $ mvn tomcat7:run
-
-To use your environment, modify `src/main/resources/META-INF/spring/categolj2-infra.properties`
-
-Note that **Java 8 is required**. Only MySQL is tested.
-
-
 ## License
 
 Licensed under the Apache License, Version 2.0.
