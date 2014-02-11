@@ -2,17 +2,17 @@
     {{fileId}}
 </td>
 <td>
-    <a href="api/v1/files/{{fileId}}">{{fileName}}</a>
+    <a href="{{url}}">{{fileName}}</a>
 </td>
 <td>
     {{#if isImage}}
-        <a href="api/v1/files/{{fileId}}" target="_blank"><img src="api/v1/files/{{fileId}}" width="100"></a>
+        <a href="{{url}}" target="_blank"><img src="{{url}}" width="100"></a>
     {{else}}
     {{/if}}
 </td>
 <td>
     <div class="btn-group">
-        <a href="api/v1/files/{{fileId}}?attachment" class="btn btn-default">Download</a>
+        <a href="{{url}}?attachment" class="btn btn-default">Download</a>
         <a id="btn-file-delete" class="btn btn-danger">Delete</a>
     </div>
 </td>

@@ -21,7 +21,8 @@ define(function (require) {
         },
         render: function () {
             this.$el.html(this.template(_.extend({
-                isImage: this.model.isImage()
+                isImage: this.model.isImage(),
+                url: this.model.url()
             }, this.model.toJSON())));
             this.stickit();
             return this;
