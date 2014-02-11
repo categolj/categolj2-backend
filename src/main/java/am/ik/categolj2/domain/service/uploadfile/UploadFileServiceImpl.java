@@ -2,10 +2,13 @@ package am.ik.categolj2.domain.service.uploadfile;
 
 import am.ik.categolj2.domain.model.UploadFile;
 import am.ik.categolj2.domain.repository.uploadfile.UploadFileRepository;
+import am.ik.categolj2.domain.repository.uploadfile.UploadFileSummary;
+import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.date.DateFactory;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -14,6 +17,8 @@ import javax.inject.Inject;
 public class UploadFileServiceImpl implements UploadFileService {
     @Inject
     UploadFileRepository uploadFileRepository;
+    @Inject
+    DateFactory dateFactory;
 
     @Override
     public UploadFile findOne(String fileId) {
@@ -26,13 +31,16 @@ public class UploadFileServiceImpl implements UploadFileService {
     }
 
     @Override
-    public Page<UploadFile> findAllPage(Pageable pageable) {
-        return uploadFileRepository.findAll(pageable);
+    public Page<UploadFileSummary> findPage(Pageable pageable) {
+        return uploadFileRepository.findSummaryPageOrderByLastModifiedDateDesc(pageable);
     }
 
     @Override
     @Transactional
     public UploadFile create(UploadFile uploadFile) {
+        DateTime now = dateFactory.newDateTime();
+        uploadFile.setCreatedDate(now);
+        uploadFile.setLastModifiedDate(now);
         return uploadFileRepository.save(uploadFile);
     }
 

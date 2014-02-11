@@ -1,7 +1,6 @@
 package am.ik.categolj2.domain.service.entry;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,16 +31,16 @@ import am.ik.categolj2.domain.repository.entry.EntryRepository;
 public class EntryServiceImpl implements EntryService {
     private static final Logger logger = LogManager.getLogger();
     @Inject
-    protected EntryRepository entryRepository;
+    EntryRepository entryRepository;
     @Inject
-    protected EntryHistoryRepository entryHistoryRepository;
+    EntryHistoryRepository entryHistoryRepository;
     @Inject
-    protected CategoryRepository categoryRepository;
+    CategoryRepository categoryRepository;
     @Inject
-    protected Mapper beanMapper;
+    Mapper beanMapper;
     @Inject
-    protected DateFactory dateFactory;
-    protected Pageable recentlyPageable = new PageRequest(0, 10);
+    DateFactory dateFactory;
+    Pageable recentlyPageable = new PageRequest(0, 10);
 
     @Override
     public Entry findOne(Integer entryId) {

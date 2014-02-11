@@ -3,7 +3,8 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var UploadsView = require('app/js/admin/views/UploadsView');
+    var UploadsView = require('app/js/admin/views/uploads/UploadsView');
+    var Files = require('app/js/admin/collections/Files');
 
     return Backbone.Router.extend({
         routes: {
@@ -14,7 +15,11 @@ define(function (require) {
             this.tabPanelView = this.adminView.createTabPanelView('uploads');
         },
         list: function () {
-            this.adminView.renderTab(this.tabPanelView, new UploadsView().render());
+            var files = new Files();
+            this.adminView.renderTab(this.tabPanelView, new UploadsView({
+                collection: files
+            }).render());
+            files.fetch();
         }
     });
 });

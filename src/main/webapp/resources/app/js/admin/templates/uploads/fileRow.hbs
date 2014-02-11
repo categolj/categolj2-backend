@@ -1,0 +1,15 @@
+<td>
+    {{fileId}}
+</td>
+<td>
+    <a href="api/v1/files/{{fileId}}" target="_blank">{{fileName}}</a>
+</td>
+<td>
+    {{fileExtension}}
+</td>
+<td>
+    <div class="btn-group">
+        <a href="api/v1/files/{{fileId}}?attachment" class="btn btn-default">Download</a>
+        <a id="btn-file-delete" class="btn btn-danger">Delete</a>
+    </div>
+</td>

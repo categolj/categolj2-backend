@@ -4,8 +4,10 @@ package am.ik.categolj2.domain.service.link;
 import am.ik.categolj2.domain.model.Link;
 import am.ik.categolj2.domain.repository.link.LinkRepository;
 import org.dozer.Mapper;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.date.DateFactory;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 
 import javax.inject.Inject;
@@ -15,6 +17,8 @@ import java.util.List;
 public class LinkServiceImpl implements LinkService {
     @Inject
     LinkRepository linkRepository;
+    @Inject
+    DateFactory dateFactory;
     @Inject
     Mapper beanMapper;
 
@@ -36,14 +40,19 @@ public class LinkServiceImpl implements LinkService {
     @Transactional
     @Override
     public Link create(Link link) {
+        DateTime now = dateFactory.newDateTime();
+        link.setCreatedDate(now);
+        link.setLastModifiedDate(now);
         return linkRepository.save(link);
     }
 
     @Transactional
     @Override
     public Link update(String url, Link link) {
+        DateTime now = dateFactory.newDateTime();
         Link old = linkRepository.findOne(url);
         beanMapper.map(link, old);
+        link.setLastModifiedDate(now);
         return linkRepository.save(old);
     }
 

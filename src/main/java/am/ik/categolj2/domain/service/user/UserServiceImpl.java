@@ -25,15 +25,15 @@ import am.ik.categolj2.domain.repository.user.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
     @Inject
-    protected UserRepository userRepository;
+    UserRepository userRepository;
     @Inject
-    protected PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
     @Inject
-    protected Mapper beanMapper;
+    Mapper beanMapper;
     @Inject
-    protected DateFactory dateFactory;
+    DateFactory dateFactory;
     @Inject
-    protected RoleRepository roleRepository;
+    RoleRepository roleRepository;
 
     @Override
     public User findOne(String username) {

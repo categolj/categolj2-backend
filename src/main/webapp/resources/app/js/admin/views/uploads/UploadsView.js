@@ -1,0 +1,57 @@
+define(function (require) {
+    var Backbone = require('backbone');
+    var Handlebars = require('handlebars');
+    var $ = require('jquery');
+    var _ = require('underscore');
+
+    var Files = require('app/js/admin/collections/Files');
+    var File = require('app/js/admin/models/File');
+    var FileRowView = require('app/js/admin/views/uploads/FileRowView');
+    var ErrorHandler = require('app/js/admin/views/ErrorHandler');
+
+    var fileTable = require('text!app/js/admin/templates/uploads/fileTable.hbs');
+
+    return Backbone.View.extend(_.extend({
+        events: {
+            'click #btn-file-upload': '_upload',
+            'click #btn-file-clear': '_resetModel'
+        },
+        bindings: {
+        },
+
+        template: Handlebars.compile(fileTable),
+
+        initialize: function () {
+            this.listenTo(this.collection, 'sync', this.renderTable);
+        },
+        render: function () {
+            this.$el.html(this.template());
+            this._resetModel();
+            return this;
+        },
+        renderTable: function () {
+            var $tbody = this.$('tbody').empty();
+            this.collection.each(function (file) {
+                $tbody.append(new FileRowView({
+                    model: file
+                }).render().el)
+            });
+            return this;
+        },
+
+        _upload: function (e) {
+            e.preventDefault();
+            alert('not implemented yet!');
+        },
+
+        _resetModel: function () {
+            if (this.model) {
+                this.unstickit(this.model);
+                Backbone.Validation.unbind(this);
+            }
+            this.model = new Backbone.Model();
+            Backbone.Validation.bind(this);
+            this.stickit();
+        }
+    }, ErrorHandler));
+});

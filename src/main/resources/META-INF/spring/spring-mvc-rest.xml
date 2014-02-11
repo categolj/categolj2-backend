@@ -6,6 +6,9 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:property-placeholder
+            location="classpath*:/META-INF/spring/*.properties" />
+
     <context:component-scan base-package="am.ik.categolj2.api"/>
     <mvc:annotation-driven>
         <mvc:message-converters>
@@ -25,6 +28,10 @@
         <property name="dateFormat">
             <bean class="org.codehaus.jackson.map.util.StdDateFormat"/>
         </property>
+    </bean>
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
     </bean>
 
     <bean class="am.ik.categolj2.api.MediaTypeResolver">
