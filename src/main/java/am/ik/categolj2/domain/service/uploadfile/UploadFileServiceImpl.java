@@ -14,6 +14,7 @@ import org.terasoluna.gfw.common.date.DateFactory;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @Service
 public class UploadFileServiceImpl implements UploadFileService {
@@ -55,6 +56,19 @@ public class UploadFileServiceImpl implements UploadFileService {
         uploadFile.setCreatedDate(now);
         uploadFile.setLastModifiedDate(now);
         return uploadFileRepository.save(uploadFile);
+    }
+
+    @Override
+    @Transactional
+    public List<UploadFile> create(List<UploadFile> uploadFiles) {
+        DateTime now = dateFactory.newDateTime();
+
+        uploadFiles.stream().forEach(uploadFile -> {
+            uploadFile.setCreatedDate(now);
+            uploadFile.setLastModifiedDate(now);
+        });
+
+        return uploadFileRepository.save(uploadFiles);
     }
 
     @Override

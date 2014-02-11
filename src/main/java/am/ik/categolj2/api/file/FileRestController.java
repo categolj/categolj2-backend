@@ -47,11 +47,14 @@ public class FileRestController {
     }
 
     @RequestMapping(method = RequestMethod.POST/*, headers = Categolj2Headers.X_ADMIN*/)
-    public ResponseEntity<FileResource> postFile(FileResource fileResource) {
-        UploadFile uploadFile = fileHelper.multipartFileToUploadFile(fileResource.getFile());
-        UploadFile created = uploadFileService.create(uploadFile);
-
-        return new ResponseEntity<>(beanMapper.map(created, FileResource.class), HttpStatus.CREATED);
+    public ResponseEntity<List<FileResource>> uploadFiles(FilesForm filesForm) {
+        List<UploadFile> uploadFiles = filesForm.getFiles().stream()
+                .map(fileHelper::multipartFileToUploadFile)
+                .collect(Collectors.toList());
+        List<FileResource> created = uploadFileService.create(uploadFiles).stream()
+                .map(resource -> beanMapper.map(resource, FileResource.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "{fileId}", method = RequestMethod.GET)
