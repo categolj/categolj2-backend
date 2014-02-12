@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -41,7 +42,8 @@ public class LoginSuccessHandler extends
 
 	LoginHistory createHistory(HttpServletRequest request, String username) {
 		LoginHistory loginHistory = new LoginHistory();
-		loginHistory.setLoginAgent(request.getHeader(HttpHeaders.USER_AGENT));
+        String userAgent = StringUtils.substring(request.getHeader(HttpHeaders.USER_AGENT), 0, 127);
+		loginHistory.setLoginAgent(userAgent);
 		loginHistory.setLoginHost(getAddressFromRequest(request));
 		loginHistory.setLoginDate(dateFactory.newDateTime());
 		loginHistory.setUsername(username);
