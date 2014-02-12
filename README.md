@@ -1,6 +1,6 @@
 # CategolJ2 Backend
 
-CategoljJ2 is a micro blog system. This backend provides REST API for blog system and admin console to manage these data.
+CategoljJ2 is a micro blog system. This backend provides REST API for blog system and admin console to manage these data. You can create any blog frontend using this APIs ;)
 
 The following technologies are used.
 
