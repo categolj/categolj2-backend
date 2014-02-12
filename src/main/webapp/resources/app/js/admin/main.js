@@ -36,7 +36,9 @@ require.config({
             ]
         },
         'jquery.iframe-transport': {
-
+            deps: [
+                'jquery'
+            ]
         }
     },
     paths: {
