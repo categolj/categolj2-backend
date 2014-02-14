@@ -9,26 +9,28 @@ import am.ik.categolj2.domain.model.Category;
 import am.ik.categolj2.domain.model.Entry;
 
 public interface EntryService {
-	Entry findOne(Integer entryId);
+    Entry findOne(Integer entryId);
 
-	Entry findOnePublished(Integer entryId);
+    Entry findOnePublished(Integer entryId);
 
-	Page<Entry> findPage(Pageable pageable);
+    Page<Entry> findPage(Pageable pageable);
 
-	Page<Entry> findPagePublished(Pageable pageable);
+    Page<Entry> findPagePublished(Pageable pageable);
 
-	List<Entry> findAllPublishedUpdatedRecently();
+    List<Entry> findAllPublishedUpdatedRecently();
 
-	Page<Entry> findPagePublishedByCategoryNameAndCategoryOrder(
+    Page<Entry> findPagePublishedByCategoryNameAndCategoryOrder(
             String categoryName, Integer categoryOrder, Pageable pageable);
+
+    Page<Entry> findPagePublishedByCreatedBy(String createdBy, Pageable pageable);
 
     Page<Entry> searchPageByKeyword(String keyword, Pageable pageable);
 
-	Entry create(Entry entry, List<Category> category);
+    Entry create(Entry entry, List<Category> category);
 
-	Entry update(Integer entryId, Entry updatedEntry,
-			boolean updateLastModifiedDate, boolean saveInHistory);
+    Entry update(Integer entryId, Entry updatedEntry,
+                 boolean updateLastModifiedDate, boolean saveInHistory);
 
-	void delete(Integer entryId);
+    void delete(Integer entryId);
 
 }

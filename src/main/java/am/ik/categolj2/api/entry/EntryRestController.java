@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("entries")
+@RequestMapping
 public class EntryRestController {
     @Inject
     EntryService entryService;
@@ -31,46 +31,61 @@ public class EntryRestController {
 
     // Public API
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "entries", method = RequestMethod.GET)
     public Page<EntryResource> getEntries(@PageableDefault Pageable pageable) {
         Page<Entry> page = entryService.findPagePublished(pageable);
         return toResourcePage(page, pageable);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "keyword")
+    @RequestMapping(value = "entries", method = RequestMethod.GET, params = "keyword")
     public Page<EntryResource> searchEntries(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable) {
         // TODO search
         Page<Entry> page = entryService.findPagePublished(pageable);
         return toResourcePage(page, pageable);
     }
 
-    @RequestMapping(value = "{entryId}", method = RequestMethod.GET)
+    @RequestMapping(value = "entries/{entryId}", method = RequestMethod.GET)
     public EntryResource getEntry(@PathVariable("entryId") Integer entryId) {
         Entry entry = entryService.findOnePublished(entryId);
         return toResource(entry);
     }
 
+    @RequestMapping(value = "categories/{category}/entries", method = RequestMethod.GET)
+    public Page<EntryResource> getEntriesByCategory(@PathVariable("category") String category, @PageableDefault Pageable pageable) {
+        Categories categories = Categories.fromCategory(category);
+        Integer categoryOrder = categories.getCategories().size();
+        String categoryName = categories.getCategories().get(categoryOrder - 1).getCategoryName();
+        Page<Entry> page = entryService.findPagePublishedByCategoryNameAndCategoryOrder(categoryName, categoryOrder, pageable);
+        return toResourcePage(page, pageable);
+    }
+
+    @RequestMapping(value = "users/{createdBy}/entries", method = RequestMethod.GET)
+    public Page<EntryResource> getEntriesByCreatedBy(@PathVariable("createdBy") String createdBy, @PageableDefault Pageable pageable) {
+        Page<Entry> page = entryService.findPagePublishedByCreatedBy(createdBy, pageable);
+        return toResourcePage(page, pageable);
+    }
+
     // Admin API
 
-    @RequestMapping(method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
+    @RequestMapping(value = "entries", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
     public Page<EntryResource> getEntriesInAdmin(@PageableDefault Pageable pageable) {
         Page<Entry> page = entryService.findPage(pageable);
         return toResourcePage(page, pageable);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "keyword", headers = Categolj2Headers.X_ADMIN)
+    @RequestMapping(value = "entries", method = RequestMethod.GET, params = "keyword", headers = Categolj2Headers.X_ADMIN)
     public Page<EntryResource> searchEntriesInAdmin(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable) {
         Page<Entry> page = entryService.searchPageByKeyword(keyword, pageable);
         return toResourcePage(page, pageable);
     }
 
-    @RequestMapping(value = "{entryId}", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
+    @RequestMapping(value = "entries/{entryId}", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
     public EntryResource getEntryInAdmin(@PathVariable("entryId") Integer entryId) {
         Entry entry = entryService.findOne(entryId);
         return toResource(entry);
     }
 
-    @RequestMapping(method = RequestMethod.POST, headers = Categolj2Headers.X_ADMIN)
+    @RequestMapping(value = "entries", method = RequestMethod.POST, headers = Categolj2Headers.X_ADMIN)
     public ResponseEntity<EntryResource> createEntryInAdmin(@RequestBody @Validated EntryResource entryResource) {
         Entry entry = beanMapper.map(entryResource, Entry.class);
         List<Category> categories = entry.getCategory();
@@ -79,7 +94,7 @@ public class EntryRestController {
         return new ResponseEntity<>(toResource(created), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "{entryId}", method = RequestMethod.PUT, headers = Categolj2Headers.X_ADMIN)
+    @RequestMapping(value = "entries/{entryId}", method = RequestMethod.PUT, headers = Categolj2Headers.X_ADMIN)
     public ResponseEntity<EntryResource> updateEntryInAdmin(@PathVariable("entryId") Integer entryId, @RequestBody @Validated EntryResource entryResource) {
         Entry entry = beanMapper.map(entryResource, Entry.class);
         new Categories(entry.getCategory()).applyEntryId(entryId);
@@ -88,7 +103,7 @@ public class EntryRestController {
         return new ResponseEntity<>(toResource(updated), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{entryId}", method = RequestMethod.DELETE, headers = Categolj2Headers.X_ADMIN)
+    @RequestMapping(value = "entries/{entryId}", method = RequestMethod.DELETE, headers = Categolj2Headers.X_ADMIN)
     public ResponseEntity<Void> deleteEntryInAdmin(@PathVariable("entryId") Integer entryId) {
         entryService.delete(entryId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -47,7 +47,6 @@ public interface EntryRepository extends JpaRepository<Entry, Integer>,
     List<Entry> findAllDetailsByEntryIdIn(@Param("ids") List<Integer> ids);
 
     @Query(value = "SELECT DISTINCT x FROM Entry x"
-            + " LEFT JOIN FETCH x.category"
             + " WHERE x.entryId IN"
             + "  (SELECT c.categoryPK.entryId FROM Category c WHERE c.categoryName = :categoryName AND c.categoryPK.categoryOrder = :categoryOrder)"
             + "  AND x.published = true" + " ORDER BY x.lastModifiedDate DESC", countQuery = "SELECT COUNT(x) FROM Entry x "
@@ -57,4 +56,9 @@ public interface EntryRepository extends JpaRepository<Entry, Integer>,
     Page<Entry> findPageDetailsPublishedByCategoryNameAndOrder(
             @Param("categoryName") String categoryName,
             @Param("categoryOrder") Integer categoryOrder, Pageable pageable);
+
+    @Query(value = "SELECT x FROM Entry x WHERE x.createdBy = :createdBy AND x.published = true ORDER BY x.lastModifiedDate DESC",
+            countQuery = "SELECT COUNT(x) FROM Entry x WHERE x.createdBy = :createdBy AND x.published = true")
+    Page<Entry> findPagePublishedByCreatedBy(
+            @Param("createdBy") String createdBy, Pageable pageable);
 }

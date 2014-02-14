@@ -106,8 +106,17 @@ public class EntryServiceImpl implements EntryService {
     @Override
     public Page<Entry> findPagePublishedByCategoryNameAndCategoryOrder(
             String categoryName, Integer categoryOrder, Pageable pageable) {
-        return entryRepository.findPageDetailsPublishedByCategoryNameAndOrder(
+        Page<Entry> page = entryRepository.findPageDetailsPublishedByCategoryNameAndOrder(
                 categoryName, categoryOrder, pageable);
+        applyCategory(page);
+        return page;
+    }
+
+    @Override
+    public Page<Entry> findPagePublishedByCreatedBy(String createdBy, Pageable pageable) {
+        Page<Entry> page = entryRepository.findPagePublishedByCreatedBy(createdBy, pageable);
+        applyCategory(page);
+        return page;
     }
 
     @Override
