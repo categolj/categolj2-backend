@@ -60,7 +60,7 @@ public class EntryRestController {
 
     @RequestMapping(method = RequestMethod.GET, params = "keyword", headers = Categolj2Headers.X_ADMIN)
     public Page<EntryResource> searchEntriesInAdmin(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable) {
-        Page<Entry> page = entryService.serachPageByKeyword(keyword, pageable);
+        Page<Entry> page = entryService.searchPageByKeyword(keyword, pageable);
         return toResourcePage(page, pageable);
     }
 

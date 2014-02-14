@@ -22,7 +22,7 @@ public interface EntryService {
 	Page<Entry> findPagePublishedByCateogryNameAndCategoryOrder(
 			String categoryName, Integer categoryOrder, Pageable pageable);
 
-    Page<Entry> serachPageByKeyword(String keyword, Pageable pageable);
+    Page<Entry> searchPageByKeyword(String keyword, Pageable pageable);
 
 	Entry create(Entry entry, List<Category> category);
 
