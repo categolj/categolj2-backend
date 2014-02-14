@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.joda.time.DateTime;
 
 import javax.validation.constraints.NotNull;
@@ -55,5 +56,10 @@ public class EntryResource implements Serializable {
                 .map(Category::getCategoryName)
                 .collect(Collectors.toList());
         return this;
+    }
+
+    @JsonProperty
+    public List<String> getCategoryName() {
+        return this.categoryName;
     }
 }
