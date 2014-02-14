@@ -19,8 +19,8 @@ public interface EntryService {
 
 	List<Entry> findAllPublishedUpdatedRecently();
 
-	Page<Entry> findPagePublishedByCateogryNameAndCategoryOrder(
-			String categoryName, Integer categoryOrder, Pageable pageable);
+	Page<Entry> findPagePublishedByCategoryNameAndCategoryOrder(
+            String categoryName, Integer categoryOrder, Pageable pageable);
 
     Page<Entry> searchPageByKeyword(String keyword, Pageable pageable);
 
