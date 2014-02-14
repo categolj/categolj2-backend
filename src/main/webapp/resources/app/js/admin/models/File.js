@@ -6,6 +6,9 @@ define(function (require) {
         idAttribute: 'fileId',
         urlRoot: 'api/v1/files',
 
+        url: function () {
+            return this.urlRoot + '/' + this.get('fileId') + '/' + this.get('fileName');
+        },
         isImage: function () {
             return _.contains(["png", "jpg", "jpeg", "gif"], this.get('fileExtension'));
         },
