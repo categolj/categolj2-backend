@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.Categories;
 import am.ik.categolj2.domain.model.Category;
+import am.ik.categolj2.domain.model.EntryFormat;
 import org.dozer.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,75 +33,86 @@ public class EntryRestController {
     // Public API
 
     @RequestMapping(value = "entries", method = RequestMethod.GET)
-    public Page<EntryResource> getEntries(@PageableDefault Pageable pageable) {
+    public Page<EntryResource> getEntries(@PageableDefault Pageable pageable
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         Page<Entry> page = entryService.findPagePublished(pageable);
-        return toResourcePage(page, pageable);
+        return toResourcePage(page, pageable, isFormatted);
     }
 
     @RequestMapping(value = "entries", method = RequestMethod.GET, params = "keyword")
-    public Page<EntryResource> searchEntries(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable) {
+    public Page<EntryResource> searchEntries(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         // TODO search
         Page<Entry> page = entryService.findPagePublished(pageable);
-        return toResourcePage(page, pageable);
+        return toResourcePage(page, pageable, isFormatted);
     }
 
     @RequestMapping(value = "entries/{entryId}", method = RequestMethod.GET)
-    public EntryResource getEntry(@PathVariable("entryId") Integer entryId) {
+    public EntryResource getEntry(@PathVariable("entryId") Integer entryId
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         Entry entry = entryService.findOnePublished(entryId);
-        return toResource(entry);
+        return toResource(entry, isFormatted);
     }
 
     @RequestMapping(value = "categories/{category}/entries", method = RequestMethod.GET)
-    public Page<EntryResource> getEntriesByCategory(@PathVariable("category") String category, @PageableDefault Pageable pageable) {
+    public Page<EntryResource> getEntriesByCategory(@PathVariable("category") String category, @PageableDefault Pageable pageable
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         Categories categories = Categories.fromCategory(category);
         Integer categoryOrder = categories.getCategories().size();
         String categoryName = categories.getCategories().get(categoryOrder - 1).getCategoryName();
         Page<Entry> page = entryService.findPagePublishedByCategoryNameAndCategoryOrder(categoryName, categoryOrder, pageable);
-        return toResourcePage(page, pageable);
+        return toResourcePage(page, pageable, isFormatted);
     }
 
     @RequestMapping(value = "users/{createdBy}/entries", method = RequestMethod.GET)
-    public Page<EntryResource> getEntriesByCreatedBy(@PathVariable("createdBy") String createdBy, @PageableDefault Pageable pageable) {
+    public Page<EntryResource> getEntriesByCreatedBy(@PathVariable("createdBy") String createdBy, @PageableDefault Pageable pageable
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         Page<Entry> page = entryService.findPagePublishedByCreatedBy(createdBy, pageable);
-        return toResourcePage(page, pageable);
+        return toResourcePage(page, pageable, isFormatted);
     }
 
     // Admin API
 
     @RequestMapping(value = "entries", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
-    public Page<EntryResource> getEntriesInAdmin(@PageableDefault Pageable pageable) {
+    public Page<EntryResource> getEntriesInAdmin(@PageableDefault Pageable pageable
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         Page<Entry> page = entryService.findPage(pageable);
-        return toResourcePage(page, pageable);
+        return toResourcePage(page, pageable, isFormatted);
     }
 
     @RequestMapping(value = "entries", method = RequestMethod.GET, params = "keyword", headers = Categolj2Headers.X_ADMIN)
-    public Page<EntryResource> searchEntriesInAdmin(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable) {
+    public Page<EntryResource> searchEntriesInAdmin(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         Page<Entry> page = entryService.searchPageByKeyword(keyword, pageable);
-        return toResourcePage(page, pageable);
+        return toResourcePage(page, pageable, isFormatted);
     }
 
     @RequestMapping(value = "entries/{entryId}", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
-    public EntryResource getEntryInAdmin(@PathVariable("entryId") Integer entryId) {
+    public EntryResource getEntryInAdmin(@PathVariable("entryId") Integer entryId
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         Entry entry = entryService.findOne(entryId);
-        return toResource(entry);
+        return toResource(entry, isFormatted);
     }
 
     @RequestMapping(value = "entries", method = RequestMethod.POST, headers = Categolj2Headers.X_ADMIN)
-    public ResponseEntity<EntryResource> createEntryInAdmin(@RequestBody @Validated EntryResource entryResource) {
+    public ResponseEntity<EntryResource> createEntryInAdmin(@RequestBody @Validated EntryResource entryResource
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         Entry entry = beanMapper.map(entryResource, Entry.class);
         List<Category> categories = entry.getCategory();
         entry.setCategory(null);
         Entry created = entryService.create(entry, categories);
-        return new ResponseEntity<>(toResource(created), HttpStatus.CREATED);
+        return new ResponseEntity<>(toResource(created, isFormatted), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "entries/{entryId}", method = RequestMethod.PUT, headers = Categolj2Headers.X_ADMIN)
-    public ResponseEntity<EntryResource> updateEntryInAdmin(@PathVariable("entryId") Integer entryId, @RequestBody @Validated EntryResource entryResource) {
+    public ResponseEntity<EntryResource> updateEntryInAdmin(@PathVariable("entryId") Integer entryId
+            , @RequestBody @Validated EntryResource entryResource
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         Entry entry = beanMapper.map(entryResource, Entry.class);
         new Categories(entry.getCategory()).applyEntryId(entryId);
         Entry updated = entryService.update(entryId, entry,
                 entryResource.isUpdateLastModifiedDate(), entryResource.isSaveInHistory());
-        return new ResponseEntity<>(toResource(updated), HttpStatus.OK);
+        return new ResponseEntity<>(toResource(updated, isFormatted), HttpStatus.OK);
     }
 
     @RequestMapping(value = "entries/{entryId}", method = RequestMethod.DELETE, headers = Categolj2Headers.X_ADMIN)
@@ -109,14 +121,19 @@ public class EntryRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    EntryResource toResource(Entry entry) {
-        return beanMapper.map(entry, EntryResource.class)
+    EntryResource toResource(Entry entry, boolean isFormatted) {
+        EntryResource resource = beanMapper.map(entry, EntryResource.class)
                 .setCategoryName(entry.getCategory());
+        if (isFormatted) {
+            EntryFormat format = EntryFormat.valueOf(resource.getFormat().toUpperCase());
+            resource.setContents(format.format(resource.getContents()));
+        }
+        return resource;
     }
 
-    Page<EntryResource> toResourcePage(Page<Entry> page, Pageable pageable) {
+    Page<EntryResource> toResourcePage(Page<Entry> page, Pageable pageable, boolean isFormatted) {
         List<EntryResource> resources = page.getContent().stream()
-                .map(this::toResource)
+                .map(entry -> toResource(entry, isFormatted))
                 .collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, page.getTotalElements());
     }
