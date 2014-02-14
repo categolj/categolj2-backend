@@ -103,8 +103,8 @@ public class EntryRepositoryTest {
 	@Test
 	public void testFindDetailsByCateogyNameAndOrder() {
 		Page<Entry> entries = entryRepository
-				.findPageDetailsPublishedByCateogyNameAndOrder("Programmming",
-						1, new PageRequest(0, 10));
+				.findPageDetailsPublishedByCategoryNameAndOrder("Programmming",
+                        1, new PageRequest(0, 10));
 		System.out.println(entries.getContent());
 	}
 

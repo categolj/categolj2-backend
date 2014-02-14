@@ -54,7 +54,7 @@ public interface EntryRepository extends JpaRepository<Entry, Integer>,
             + " WHERE x.entryId IN "
             + "  (SELECT c.categoryPK.entryId FROM Category c WHERE c.categoryName = :categoryName AND c.categoryPK.categoryOrder = :categoryOrder)"
             + "  AND x.published = true")
-    Page<Entry> findPageDetailsPublishedByCateogyNameAndOrder(
+    Page<Entry> findPageDetailsPublishedByCategoryNameAndOrder(
             @Param("categoryName") String categoryName,
             @Param("categoryOrder") Integer categoryOrder, Pageable pageable);
 }
