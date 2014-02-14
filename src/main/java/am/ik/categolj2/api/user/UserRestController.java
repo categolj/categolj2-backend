@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,11 @@ public class UserRestController {
                 .map(user -> beanMapper.map(user, UserResource.class))
                 .collect(Collectors.toList());
         return new PageImpl<>(userResources, pageable, page.getTotalElements());
+    }
+
+    @RequestMapping(value = "me", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
+    public UserResource getMe(Authentication authentication) {
+        return getUser(authentication.getName());
     }
 
     @RequestMapping(value = "{username}", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)

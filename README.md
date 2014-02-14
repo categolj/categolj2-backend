@@ -36,7 +36,7 @@ Users	| POST	| /api/v1/users	| Create a new user.	 | |  ×
 User	| GET	| /api/v1/users/{username}	| Get the specified user. | | ×  		
 User	| PUT	| /api/v1/users/{username}	| Update the specified user.  | | ×  		
 User	| DELETE	| /api/v1/users/{username}	| Delete the specified user. | | ×  
-User	| GET	| /api/v1/users/me	| Get login user. (not implemented yet) | | ×  		
+User	| GET	| /api/v1/users/me	| Get login user.  | | ×
 User	| PUT	| /api/v1/users/me	| Update login user. (not implemented yet)  | | ×  		
 Links	| GET	| /api/v1/links	| Get all links.	 | | 	
 Links	| POST	| /api/v1/links	| Create a new link. | | ×  		
