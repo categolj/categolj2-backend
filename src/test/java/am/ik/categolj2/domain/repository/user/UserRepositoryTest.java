@@ -3,8 +3,6 @@ package am.ik.categolj2.domain.repository.user;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
-import java.util.Collections;
-
 import javax.inject.Inject;
 
 import org.joda.time.DateTime;
@@ -12,16 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.collect.Collections2;
-
-import am.ik.categolj2.domain.model.Role;
 import am.ik.categolj2.domain.model.User;
-import am.ik.categolj2.domain.repository.user.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:test-context.xml"})
@@ -72,6 +65,6 @@ public class UserRepositoryTest {
 
     @Test
     public void testCountAdmin() {
-        System.out.println(userRepository.countAdminOtherThanMe("admin"));
+        System.out.println(userRepository.countActiveAdminOtherThanMe("admin"));
     }
 }

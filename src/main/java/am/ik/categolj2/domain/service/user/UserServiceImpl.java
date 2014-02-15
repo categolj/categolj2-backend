@@ -142,9 +142,20 @@ public class UserServiceImpl implements UserService {
                     "The given email is already used. [email=" + email + "]");
         }
 
+        boolean notExistAdminOtherThanMe = userRepository.countActiveAdminOtherThanMe(username) == 0;
+        boolean isAdmin = Roles.isAdmin(updatedUser);
+
         // in case updated user is not admin or removed admin role
-        if (!Roles.isAdmin(updatedUser) && userRepository.countAdminOtherThanMe(username) == 0) {
-            throw new BusinessException("At least one admin must exist!");
+        if (!isAdmin && notExistAdminOtherThanMe) {
+            throw new BusinessException("At least one active admin must exist!");
+        }
+        // if single admin is to be locked.
+        if (isAdmin && notExistAdminOtherThanMe && updatedUser.isLocked()) {
+            throw new BusinessException("At least one unlocked admin must exist!");
+        }
+        // if single admin is to be disabled
+        if (isAdmin && notExistAdminOtherThanMe && !updatedUser.isEnabled()) {
+            throw new BusinessException("At least one enabled admin must exist!");
         }
     }
 
@@ -184,8 +195,8 @@ public class UserServiceImpl implements UserService {
         User user = findOne(username);
 
         // check admin count
-        if (Roles.isAdmin(user) && userRepository.countAdminOtherThanMe(username) == 0) {
-            throw new BusinessException("At least one admin must exist!");
+        if (Roles.isAdmin(user) && userRepository.countActiveAdminOtherThanMe(username) == 0) {
+            throw new BusinessException("At least one active admin must exist!");
         }
 
         userRepository.delete(user);
