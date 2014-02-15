@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import am.ik.categolj2.domain.model.RoleNames;
+import am.ik.categolj2.domain.model.Roles;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
@@ -141,6 +141,11 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException(
                     "The given email is already used. [email=" + email + "]");
         }
+
+        // in case updated user is not admin or removed admin role
+        if (!Roles.isAdmin(updatedUser) && userRepository.countAdminOtherThanMe(username) == 0) {
+            throw new BusinessException("At least one admin must exist!");
+        }
     }
 
     private void checkRoles(User user) {
@@ -179,10 +184,7 @@ public class UserServiceImpl implements UserService {
         User user = findOne(username);
 
         // check admin count
-        boolean isAdmin = user.getRoles().stream()
-                .filter(role -> RoleNames.ADMIN.equals(role.getRoleName()))
-                .count() > 0;
-        if (isAdmin && userRepository.countAdmin() == 1) {
+        if (Roles.isAdmin(user) && userRepository.countAdminOtherThanMe(username) == 0) {
             throw new BusinessException("At least one admin must exist!");
         }
 
