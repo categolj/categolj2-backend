@@ -120,7 +120,7 @@ public class EntryRepositoryTest {
 	@Test
 	@Transactional
 	public void testSearch() {
-		System.out.println(entryRepository.serachPageByKeyword("日本語",
-				new PageRequest(0, 10)).getContent());
+		System.out.println(entryRepository.searchPageByKeyword("日本語",
+                new PageRequest(0, 10)).getContent());
 	}
 }

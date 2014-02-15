@@ -30,7 +30,7 @@ public class EntryRepositoryImpl implements EntryRepositoryCustom {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Entry> serachPageByKeyword(String keyword, Pageable pageable) {
+    public Page<Entry> searchPageByKeyword(String keyword, Pageable pageable) {
         FullTextEntityManager fullTextEntityManager = Search
                 .getFullTextEntityManager(entityManager);
         QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()

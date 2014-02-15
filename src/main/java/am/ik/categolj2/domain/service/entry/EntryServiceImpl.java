@@ -121,7 +121,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public Page<Entry> searchPageByKeyword(String keyword, Pageable pageable) {
-        Page<Entry> page = entryRepository.serachPageByKeyword(keyword, pageable);
+        Page<Entry> page = entryRepository.searchPageByKeyword(keyword, pageable);
         applyCategory(page);
         return page;
     }
