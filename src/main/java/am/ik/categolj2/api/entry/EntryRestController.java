@@ -42,10 +42,10 @@ public class EntryRestController {
     @RequestMapping(value = "entries", method = RequestMethod.GET, params = "keyword")
     public Page<EntryResource> searchEntries(@RequestParam("keyword") String keyword, @PageableDefault Pageable pageable
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
-        // TODO search
-        Page<Entry> page = entryService.findPagePublished(pageable);
+        Page<Entry> page = entryService.searchPagePublishedByKeyword(keyword, pageable);
         return toResourcePage(page, pageable, isFormatted);
     }
+
 
     @RequestMapping(value = "entries/{entryId}", method = RequestMethod.GET)
     public EntryResource getEntry(@PathVariable("entryId") Integer entryId

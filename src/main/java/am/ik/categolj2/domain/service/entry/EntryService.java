@@ -26,6 +26,8 @@ public interface EntryService {
 
     Page<Entry> searchPageByKeyword(String keyword, Pageable pageable);
 
+    Page<Entry> searchPagePublishedByKeyword(String keyword, Pageable pageable);
+
     Entry create(Entry entry, List<Category> category);
 
     Entry update(Integer entryId, Entry updatedEntry,

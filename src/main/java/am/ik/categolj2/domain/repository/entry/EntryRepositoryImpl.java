@@ -1,19 +1,20 @@
 package am.ik.categolj2.domain.repository.entry;
 
 import java.util.List;
+import java.util.function.Function;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import am.ik.categolj2.core.logger.LogManager;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,18 +26,15 @@ public class EntryRepositoryImpl implements EntryRepositoryCustom {
     @PersistenceContext
     EntityManager entityManager;
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(EntryRepositoryImpl.class);
+    private static final Logger logger = LogManager.getLogger();
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<Entry> searchPageByKeyword(String keyword, Pageable pageable) {
+    Page<Entry> searchTemplate(Pageable pageable, Function<QueryBuilder, org.apache.lucene.search.Query> queryCreator) {
         FullTextEntityManager fullTextEntityManager = Search
                 .getFullTextEntityManager(entityManager);
         QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
                 .buildQueryBuilder().forEntity(Entry.class).get();
-        org.apache.lucene.search.Query query = queryBuilder.keyword()
-                .onFields("contents", "title").matching(keyword).createQuery();
+
+        org.apache.lucene.search.Query query = queryCreator.apply(queryBuilder);
         org.apache.lucene.search.Sort sort = new Sort(new SortField("lastModifiedDate", SortField.STRING_VAL, true));
         Query jpaQuery = fullTextEntityManager
                 .createFullTextQuery(query, Entry.class)
@@ -50,15 +48,40 @@ public class EntryRepositoryImpl implements EntryRepositoryCustom {
         return new PageImpl<>(content, pageable, count);
     }
 
+    org.apache.lucene.search.Query createSearchQuery(String keyword, QueryBuilder queryBuilder) {
+        return queryBuilder.keyword()
+                .onFields("contents", "title").matching(keyword).createQuery();
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Entry> searchPageByKeyword(String keyword, Pageable pageable) {
+        return searchTemplate(pageable, queryBuilder ->
+                createSearchQuery(keyword, queryBuilder));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Entry> searchPagePublishedByKeyword(String keyword, Pageable pageable) {
+        return searchTemplate(pageable, queryBuilder ->
+                queryBuilder.bool()
+                        .must(createSearchQuery(keyword, queryBuilder))
+                        .must(queryBuilder.keyword().onField("published").matching(true).createQuery())
+                        .createQuery()
+        );
+    }
+
     @PostConstruct
     public void doIndex() {
         FullTextEntityManager fullTextEntityManager = Search
                 .getFullTextEntityManager(entityManager);
         try {
-            logger.debug("create index...");
+            logger.info("Create index...");
             fullTextEntityManager.createIndexer().startAndWait();
+            logger.info("Created!");
         } catch (InterruptedException e) {
-            logger.warn("interupted!", e);
+            logger.warn("Interrupted!", e);
             Thread.currentThread().interrupt();
         }
     }

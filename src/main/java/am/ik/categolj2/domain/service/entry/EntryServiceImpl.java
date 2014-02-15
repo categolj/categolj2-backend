@@ -127,6 +127,13 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    public Page<Entry> searchPagePublishedByKeyword(String keyword, Pageable pageable) {
+        Page<Entry> page = entryRepository.searchPagePublishedByKeyword(keyword, pageable);
+        applyCategory(page);
+        return page;
+    }
+
+    @Override
     @Transactional
     public Entry create(Entry entry, List<Category> category) {
         Assert.notNull(entry, "entry must not be null");

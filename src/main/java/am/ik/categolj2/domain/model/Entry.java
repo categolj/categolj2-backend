@@ -33,61 +33,62 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = { "histories", "contents" })
+@ToString(exclude = {"histories", "contents"})
 @Entity
 @Indexed
 @Table(name = "ENTRY")
 public class Entry extends AbstractAuditableEntiry<Integer> {
 
-	private static final long serialVersionUID = 1L;
-	@GeneratedValue
-	@Id
-	@Column(name = "ENTRY_ID")
-	private Integer entryId;
-	@NotNull
-	@Size(min = 1, max = 512)
-	@Column(name = "TITLE")
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
-	private String title;
-	@NotNull
-	@Size(min = 1, max = 65536)
-	@Column(name = "CONTENTS")
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
-	private String contents;
-	@NotNull
-	@Size(min = 1, max = 10)
-	@Column(name = "FORMAT")
-	private String format;
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true, mappedBy = "entry")
-	@OrderBy("CATEGORY_ORDER ASC")
-	private List<Category> category;
-	@Column(name = "PUBLISHED")
-	@Basic(optional = false)
-	private boolean published;
-	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval = true, mappedBy = "entry")
-	@OrderBy("CREATED_DATE")
-	@JsonIgnore
-	private List<EntryHistory> histories;
+    private static final long serialVersionUID = 1L;
+    @GeneratedValue
+    @Id
+    @Column(name = "ENTRY_ID")
+    private Integer entryId;
+    @NotNull
+    @Size(min = 1, max = 512)
+    @Column(name = "TITLE")
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+    private String title;
+    @NotNull
+    @Size(min = 1, max = 65536)
+    @Column(name = "CONTENTS")
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+    private String contents;
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "FORMAT")
+    private String format;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "entry")
+    @OrderBy("CATEGORY_ORDER ASC")
+    private List<Category> category;
+    @Column(name = "PUBLISHED")
+    @Basic(optional = false)
+    @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
+    private boolean published;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "entry")
+    @OrderBy("CREATED_DATE")
+    @JsonIgnore
+    private List<EntryHistory> histories;
 
-	public Entry(Integer entryId, String title) {
-		this.entryId = entryId;
-		this.title = title;
-	}
+    public Entry(Integer entryId, String title) {
+        this.entryId = entryId;
+        this.title = title;
+    }
 
-	@Override
-	@Transient
-	public Integer getId() {
-		return entryId;
-	}
+    @Override
+    @Transient
+    public Integer getId() {
+        return entryId;
+    }
 
-	@Override
-	@Transient
-	@JsonIgnore
-	public boolean isNew() {
-		return entryId == null;
-	}
+    @Override
+    @Transient
+    @JsonIgnore
+    public boolean isNew() {
+        return entryId == null;
+    }
 
-	// public String toString() {
-	// return "Entry[" + entryId + "]";
-	// }
+    // public String toString() {
+    // return "Entry[" + entryId + "]";
+    // }
 }
