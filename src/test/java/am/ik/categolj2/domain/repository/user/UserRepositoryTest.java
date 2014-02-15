@@ -68,4 +68,10 @@ public class UserRepositoryTest {
 	public void testFindAll() {
 		System.out.println(userRepository.findAll());
 	}
+
+
+    @Test
+    public void testCountAdmin() {
+        System.out.println(userRepository.countAdmin());
+    }
 }

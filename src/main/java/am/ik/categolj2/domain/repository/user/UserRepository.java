@@ -20,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("SELECT COUNT(x) FROM User x WHERE x.email = :email AND x.username != :username")
     long countByEmailOtherThanMe(@Param("email") String email, @Param("username") String username);
+
+    @Query("SELECT COUNT(x) FROM User x JOIN x.roles r WHERE r.roleName = 'ADMIN'")
+    long countAdmin();
 }

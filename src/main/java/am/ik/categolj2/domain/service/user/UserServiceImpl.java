@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import am.ik.categolj2.domain.model.RoleNames;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
@@ -175,10 +176,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void delete(String username) {
-        if (userRepository.count() == 1) {
-            throw new BusinessException("At least one user must exist!");
-        }
         User user = findOne(username);
+
+        // check admin count
+        boolean isAdmin = user.getRoles().stream()
+                .filter(role -> RoleNames.ADMIN.equals(role.getRoleName()))
+                .count() > 0;
+        if (isAdmin && userRepository.countAdmin() == 1) {
+            throw new BusinessException("At least one admin must exist!");
+        }
+
         userRepository.delete(user);
     }
 
