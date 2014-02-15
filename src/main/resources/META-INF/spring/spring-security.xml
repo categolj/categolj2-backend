@@ -31,6 +31,7 @@
         <sec:session-management
             session-authentication-strategy-ref="sessionAuthenticationStrategy" />
     </sec:http>
+    <sec:global-method-security pre-post-annotations="enabled" />
 
     <bean id="userDetailsService"
         class="am.ik.categolj2.domain.service.userdetails.Categolj2UserDetailsService">

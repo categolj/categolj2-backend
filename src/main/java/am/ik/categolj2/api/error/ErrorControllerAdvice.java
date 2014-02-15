@@ -1,8 +1,12 @@
 package am.ik.categolj2.api.error;
 
+import am.ik.categolj2.core.logger.LogManager;
+import am.ik.categolj2.core.web.RemoteAddresses;
+import am.ik.categolj2.core.web.UserAgents;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,9 +18,11 @@ import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import javax.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class ErrorControllerAdvice {
-    private static final Logger logger = LoggerFactory.getLogger(ErrorControllerAdvice.class);
+    private static final Logger logger = LogManager.getLogger();
 
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseBody
@@ -43,6 +49,23 @@ public class ErrorControllerAdvice {
         return ErrorResponse.from(e, "invalid request!",
                 e.getBindingResult().getFieldErrors());
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    public ErrorResponse handleAccessDeniedException(
+            AccessDeniedException e, HttpServletRequest request, Authentication authentication) {
+        logger.warn("Access denied! method={},uri={},query={},principal={},remote={},user-agent={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                request.getQueryString(),
+                authentication == null ? "@@@@" : authentication.getName(),
+                RemoteAddresses.getRemoteAddress(request),
+                UserAgents.getUserAgent(request));
+        return ErrorResponse.from(e, "access denied!",
+                ResultMessages.error().add(ResultMessage.fromText(e.getMessage())));
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody

@@ -82,8 +82,16 @@ define(function (require) {
         $(document)
             .on('ajaxStart',function () {
                 spinView.spin();
-            }).on('ajaxComplete', function () {
+            }).on('ajaxComplete',function () {
                 spinView.stop();
+            }).on('ajaxError', function (event, xhr) {
+                console.log(arguments);
+                var resp = xhr.responseJSON;
+                if (xhr.status == 403) {
+                    if (_.isArray(resp.details)) {
+                        Backbone.trigger('exception', resp.details[0]);
+                    }
+                }
             });
 
         // Global validation configuration
