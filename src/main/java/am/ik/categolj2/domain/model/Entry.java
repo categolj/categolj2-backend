@@ -36,7 +36,10 @@ import lombok.ToString;
 @ToString(exclude = {"histories", "contents"})
 @Entity
 @Indexed
-@Table(name = "ENTRY")
+@Table(name = "ENTRY", indexes = {
+        @javax.persistence.Index(columnList = "LAST_MODIFIED_DATE"),
+        @javax.persistence.Index(columnList = "CREATED_BY")
+})
 public class Entry extends AbstractAuditableEntiry<Integer> {
 
     private static final long serialVersionUID = 1L;

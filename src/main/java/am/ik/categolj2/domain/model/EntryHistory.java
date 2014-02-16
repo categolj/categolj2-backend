@@ -26,43 +26,45 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString(exclude = "entry")
 @Entity
-@Table(name = "ENTRY_HISTORY")
+@Table(name = "ENTRY_HISTORY", indexes = {
+        @javax.persistence.Index(columnList = "LAST_MODIFIED_DATE")
+})
 public class EntryHistory extends AbstractAuditableEntiry<String> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	@Size(min = 36, max = 36)
-	@Column(name = "ENTRY_HISTRY_ID")
-	private String entryHistoryId;
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Size(min = 36, max = 36)
+    @Column(name = "ENTRY_HISTRY_ID")
+    private String entryHistoryId;
 
-	@NotNull
-	@Size(min = 1, max = 512)
-	@Column(name = "TITLE")
-	private String title;
-	@NotNull
-	@Size(min = 1, max = 65536)
-	@Column(name = "CONTENTS")
-	private String contents;
-	@NotNull
-	@Size(min = 1, max = 10)
-	@Column(name = "FORMAT")
-	private String format;
-	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ENTRY_ID")
+    @NotNull
+    @Size(min = 1, max = 512)
+    @Column(name = "TITLE")
+    private String title;
+    @NotNull
+    @Size(min = 1, max = 65536)
+    @Column(name = "CONTENTS")
+    private String contents;
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "FORMAT")
+    private String format;
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ENTRY_ID")
     @JsonIgnore
-	private Entry entry;
+    private Entry entry;
 
-	@Override
-	public String getId() {
-		return entryHistoryId;
-	}
+    @Override
+    public String getId() {
+        return entryHistoryId;
+    }
 
-	@Override
-	public boolean isNew() {
-		return getVersion() == null;
-	}
+    @Override
+    public boolean isNew() {
+        return getVersion() == null;
+    }
 
 }
