@@ -45,7 +45,7 @@ public class LoginHistory {
 	private String loginAgent;
 
 	@NotNull
-	@Column(name = "CREATED_DATE")
+	@Column(name = "LOGIN_DATE")
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	private DateTime loginDate;
 }
