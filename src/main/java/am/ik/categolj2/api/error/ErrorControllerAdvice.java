@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartException;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessage;
@@ -37,7 +38,9 @@ public class ErrorControllerAdvice {
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public ErrorResponse handleBusinessException(
             BusinessException e) {
-        logger.warn("Business Error", e);
+        if (logger.isWarnEnabled()) {
+            logger.warn("Business Error message={}", e.getMessage());
+        }
         return ErrorResponse.from(e, "business error!");
     }
 
@@ -55,13 +58,15 @@ public class ErrorControllerAdvice {
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     public ErrorResponse handleAccessDeniedException(
             AccessDeniedException e, HttpServletRequest request, Authentication authentication) {
-        logger.warn("Access denied! method={},uri={},query={},principal={},remote={},user-agent={}",
-                request.getMethod(),
-                request.getRequestURI(),
-                request.getQueryString(),
-                authentication == null ? "@@@@" : authentication.getName(),
-                RemoteAddresses.getRemoteAddress(request),
-                UserAgents.getUserAgent(request));
+        if (logger.isWarnEnabled()) {
+            logger.warn("Access denied! method={},uri={},query={},principal={},remote={},user-agent={}",
+                    request.getMethod(),
+                    request.getRequestURI(),
+                    request.getQueryString(),
+                    authentication == null ? "@@@@" : authentication.getName(),
+                    RemoteAddresses.getRemoteAddress(request),
+                    UserAgents.getUserAgent(request));
+        }
         return ErrorResponse.from(e, "access denied!",
                 ResultMessages.error().add(ResultMessage.fromText(e.getMessage())));
     }
@@ -74,6 +79,15 @@ public class ErrorControllerAdvice {
             MethodArgumentNotValidException e) {
         return ErrorResponse.from(e, "invalid request!",
                 e.getBindingResult().getFieldErrors());
+    }
+
+    @ExceptionHandler(MultipartException.class)
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMultipartException(
+            MultipartException e) {
+        return ErrorResponse.from(e, "upload failed!",
+                ResultMessages.error().add(ResultMessage.fromText(e.getMessage())));
     }
 
     @ExceptionHandler(Exception.class)
