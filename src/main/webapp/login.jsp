@@ -80,7 +80,7 @@
                autofocus>
         <input name="j_password" type="password" class="form-control" value="demo" placeholder="Password" required>
         <label class="checkbox">
-            <input type="checkbox" value="rememberme"> Remember me
+            <input type="checkbox" name="_spring_security_remember_me"> Remember me
         </label>
         <input type="hidden"
                name="${f:h(_csrf.parameterName)}"

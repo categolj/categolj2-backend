@@ -39,8 +39,8 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav pull-right">
-                <li><a href="index.html">Check site</a></li>
-                <li><a href="#config">Config</a></li>
+                <%--<li><a href="index.html">Check site</a></li>--%>
+                <%--<li><a href="#config">Config</a></li>--%>
                 <li class="nav-divider"></li>
                 <li class="dropdown"><a href="#"
                                         class="dropdown-toggle" data-toggle="dropdown"><span
@@ -50,7 +50,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="#users/me/form"><span
                                 class="glyphicon glyphicon-edit"></span>
-                            Change information</a></li>
+                            Change information (not implemented yet)</a></li>
                         <li><a
                                 href="${pageContext.request.contextPath}/logout"><span
                                 class="glyphicon glyphicon-off"></span>
