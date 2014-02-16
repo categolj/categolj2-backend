@@ -15,7 +15,7 @@
 
     <properties>
         <java-version>1.8</java-version>
-        <org.hibernate.version>4.2.5.Final</org.hibernate.version>
+        <org.hibernate.version>4.3.1.Final</org.hibernate.version>
         <org.springframework-version>4.0.1.RELEASE</org.springframework-version>
         <org.springframework.security.version>3.2.0.RELEASE</org.springframework.security.version>
     </properties>
@@ -82,13 +82,34 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-orm</artifactId>
-            <version>4.3.0.Final</version>
+            <version>4.5.0.Final</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.avro</groupId>
+                    <artifactId>avro</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
             <artifactId>terasoluna-gfw-jpa</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.transaction</groupId>
+                    <artifactId>jta</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.hibernate.javax.persistence</groupId>
+                    <artifactId>hibernate-jpa-2.0-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
