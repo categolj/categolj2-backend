@@ -134,6 +134,8 @@
     <orderEntry type="library" name="Maven: org.jadira.usertype:usertype.spi:3.0.0.GA" level="project" />
     <orderEntry type="library" name="Maven: com.h2database:h2:1.3.172" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.23" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.rome:rome:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: jdom:jdom:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:marked:0.2.9" level="project" />
     <orderEntry type="library" name="Maven: am.ik.aws:aws-apa:0.9.4" level="project" />
     <orderEntry type="library" name="Maven: am.ik.yalf:yalf:0.9.1" level="project" />
