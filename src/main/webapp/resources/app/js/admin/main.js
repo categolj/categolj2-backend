@@ -75,6 +75,10 @@ define(function (require) {
         $(document).ajaxSend(function (e, xhr) {
             xhr.setRequestHeader(header, token);
             xhr.setRequestHeader('X-Admin', true);
+            // prevent cache
+            xhr.setRequestHeader('Pragma', 'no-cache');
+            xhr.setRequestHeader('Cache-Control', 'no-cache');
+            xhr.setRequestHeader('If-Modified-Since', 'Thu, 01 Jun 1970 00:00:00 GMT');
         });
 
         var spinView = new SpinView();

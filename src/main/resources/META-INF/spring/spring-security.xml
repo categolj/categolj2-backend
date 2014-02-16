@@ -11,9 +11,8 @@
         <sec:form-login login-page="/login.jsp"
             authentication-failure-url="/login.jsp?error=true"
             authentication-success-handler-ref="loginSuccessHandler" />
-        <sec:logout logout-url="/logout" />
+        <sec:logout logout-url="/logout" logout-success-url="/login.jsp" />
         <sec:intercept-url pattern="/login.jsp" access="permitAll" />
-        <sec:intercept-url pattern="/" access="isAuthenticated()" />
         <sec:intercept-url pattern="/admin*" access="isAuthenticated()" />
         <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="POST" />
         <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="PUT" />
@@ -31,7 +30,7 @@
     </bean>
 
     <bean id="loginSuccessHandler" class="am.ik.categolj2.app.login.LoginSuccessHandler">
-        <property name="defaultTargetUrl" value="/" />
+        <property name="defaultTargetUrl" value="/admin.jsp" />
         <property name="alwaysUseDefaultTargetUrl" value="true" />
     </bean>
 
