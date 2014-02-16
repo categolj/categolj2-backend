@@ -20,9 +20,8 @@
             </bean>
         </mvc:message-converters>
         <mvc:argument-resolvers>
-            <bean
-                    class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
-            </bean>
+            <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"></bean>
+            <bean class="am.ik.categolj2.core.web.accesslog.AccessLogMethodArgumentResolver"></bean>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 
@@ -69,14 +68,4 @@
                     class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-
-    <!-- Setting AOP. -->
-    <bean id="handlerExceptionResolverLoggingInterceptor"
-          class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
-        <property name="exceptionLogger" ref="exceptionLogger"/>
-    </bean>
-    <aop:config>
-        <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
-                     pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))"/>
-    </aop:config>
 </beans>
