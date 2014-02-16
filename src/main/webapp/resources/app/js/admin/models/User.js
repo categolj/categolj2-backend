@@ -12,7 +12,7 @@ define(function (require) {
         validation: {
             username: {
                 required: true,
-                rangeLength: [1, 128],
+                rangeLength: [4, 128],
                 pattern: /^[a-zA-Z0-9]+$/
             },
             password: {

@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import am.ik.categolj2.domain.validation.UserEmail;
+import am.ik.categolj2.domain.validation.Username;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,7 +34,7 @@ public class User extends AbstractAuditableEntiry<String> {
 	@Id
 	@Basic(optional = false)
 	@NotNull
-	@Size(min = 1, max = 128)
+    @Username
 	@Column(name = "USERNAME")
 	private String username;
 	@Basic(optional = false)

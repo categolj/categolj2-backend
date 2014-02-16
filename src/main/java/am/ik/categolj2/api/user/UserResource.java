@@ -1,6 +1,7 @@
 package am.ik.categolj2.api.user;
 
 import am.ik.categolj2.domain.validation.UserEmail;
+import am.ik.categolj2.domain.validation.Username;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class UserResource {
 
     private String id;
     @NotNull
-    @Size(min = 1, max = 128)
+    @Username
     private String username;
     @NotNull(groups = Create.class)
     @Size(min = 1, max = 256)
