@@ -5,7 +5,6 @@ target
 .project
 .springBeans
 src/main/webapp/upload/*
-src/main/webapp/categolj2-frontend
 message
 mecab-ipadic*
 *~
