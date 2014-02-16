@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import am.ik.categolj2.domain.model.Roles;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
@@ -143,7 +142,7 @@ public class UserServiceImpl implements UserService {
         }
 
         boolean notExistAdminOtherThanMe = userRepository.countActiveAdminOtherThanMe(username) == 0;
-        boolean isAdmin = Roles.isAdmin(updatedUser);
+        boolean isAdmin = updatedUser.isAdmin();
 
         // in case updated user is not admin or removed admin role
         if (!isAdmin && notExistAdminOtherThanMe) {
@@ -195,7 +194,7 @@ public class UserServiceImpl implements UserService {
         User user = findOne(username);
 
         // check admin count
-        if (Roles.isAdmin(user) && userRepository.countActiveAdminOtherThanMe(username) == 0) {
+        if (user.isAdmin() && userRepository.countActiveAdminOtherThanMe(username) == 0) {
             throw new BusinessException("At least one active admin must exist!");
         }
 
