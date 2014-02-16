@@ -70,7 +70,7 @@
     <article class="uk-article uk-panel uk-panel-box">
         <h3 class="uk-article-title"><a href="#/entries/{{entryId}}" class="entry-title">{{title}}</a></h3>
 
-        <p class="uk-article-meta">updated at {{lastModifiedDate}} by <a href="#/users/{{updatedBy}}/entries">{{lastModifiedBy}}</a>
+        <p class="uk-article-meta">updated at {{lastModifiedDate}} created by <a href="#/users/{{createdBy}}/entries">{{createdBy}}</a>
             &nbsp; category: {{categoryLink categoryName}}</p>
 
         <p class="uk-article-lead">
@@ -87,7 +87,8 @@
         </p>
         {{#if social}}
         <hr class="uk-article-divider">
-        <a href="http://b.hatena.ne.jp/entry/{{frontendRoot}}%23/entries/{{entryId}}" class="hatena-bookmark-button" data-hatena-bookmark-title="{{title}} - {{blogTitle}}"
+        <a href="http://b.hatena.ne.jp/entry/{{frontendRoot}}%23/entries/{{entryId}}" class="hatena-bookmark-button"
+           data-hatena-bookmark-title="{{title}} - {{blogTitle}}"
            data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img
                 src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加"
                 width="20" height="20" style="border: none;"/></a>
@@ -95,7 +96,7 @@
            data-count="horizontal" data-text="{{title}} - {{blogTitle}}"
            data-via="making" data-url="{{frontendRoot}}#/entries/{{entryId}}">Tweet</a>
         {{/if}}
-        </article>
+    </article>
     <hr class="uk-article-divider">
 </script>
 <script type="text/x-handlebars-template" id="categories-tmpl">
