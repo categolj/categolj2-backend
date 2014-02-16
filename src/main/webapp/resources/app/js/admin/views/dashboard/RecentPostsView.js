@@ -4,12 +4,12 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var recentlyPosts = require('text!app/js/admin/templates/dashboard/recentlyPosts.hbs');
+    var recentPosts = require('text!app/js/admin/templates/dashboard/recentPosts.hbs');
 
     return Backbone.View.extend({
         tagName: 'ul',
         className: 'list-group',
-        template: Handlebars.compile(recentlyPosts),
+        template: Handlebars.compile(recentPosts),
         events: {
         },
         initialize: function () {

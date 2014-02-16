@@ -1,11 +1,11 @@
 define(function (require) {
     var Backbone = require('backbone');
-    var RecentlyPost = require('app/js/admin/models/RecentlyPost');
+    var RecentPost = require('app/js/admin/models/RecentPost');
 
     return Backbone.Collection.extend({
-        model: RecentlyPost,
+        model: RecentPost,
         url: function () {
-            return 'api/v1/recentlyposts';
+            return 'api/v1/recentposts';
         }
     });
 });

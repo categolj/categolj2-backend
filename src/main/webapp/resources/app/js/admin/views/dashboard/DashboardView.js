@@ -7,8 +7,8 @@ define(function (require) {
     var LoginHistories = require('app/js/admin/collections/LoginHistories');
     var LoginHistoriesView = require('app/js/admin/views/dashboard/LoginHistoriesView');
 
-    var RecentlyPosts = require('app/js/admin/collections/RecentlyPosts');
-    var RecentlyPostsView = require('app/js/admin/views/dashboard/RecentlyPostsView');
+    var RecentPosts = require('app/js/admin/collections/RecentPosts');
+    var RecentPostsView = require('app/js/admin/views/dashboard/RecentPostsView');
 
     var dashboard = require('text!app/js/admin/templates/dashboard/dashboard.hbs');
 
@@ -17,12 +17,12 @@ define(function (require) {
 
         initialize: function () {
             this.loginHistories = new LoginHistories();
-            this.recentlyPosts = new RecentlyPosts();
+            this.recentPosts = new RecentPosts();
             this.render();
             this.listenTo(this.loginHistories, 'sync', this.renderLoginHistories);
-            this.listenTo(this.recentlyPosts, 'sync', this.renderRecentlyPosts);
+            this.listenTo(this.recentPosts, 'sync', this.renderRecentPosts);
             this.loginHistories.fetch();
-            this.recentlyPosts.fetch();
+            this.recentPosts.fetch();
         },
         render: function () {
             this.$el.html(this.dashboardTemplate());
@@ -30,19 +30,19 @@ define(function (require) {
                 el: this.$('#login-history'),
                 collection: this.loginHistories
             });
-            this.recentlyPostsView = new RecentlyPostsView({
-                el: this.$('#recently-posts'),
-                collection: this.recentlyPosts
+            this.recentPostsView = new RecentPostsView({
+                el: this.$('#recent-posts'),
+                collection: this.recentPosts
             });
             this.renderLoginHistories();
-            this.renderRecentlyPosts();
+            this.renderRecentPosts();
             return this;
         },
         renderLoginHistories: function () {
             this.loginHistoriesView.render();
         },
-        renderRecentlyPosts: function () {
-            this.recentlyPostsView.render();
+        renderRecentPosts: function () {
+            this.recentPostsView.render();
         }
     });
 });

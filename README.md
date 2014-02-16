@@ -9,7 +9,8 @@ The following technologies are used.
 * Spring MVC
 * Spring Security
 * Spring Data JPA
-* Hibernate
+* JPA 2.1
+* Hibernate Search
 * Backbone.js
 * ...
 
@@ -30,7 +31,7 @@ Entry	| DELETE	 | /api/v1/entries/{entryId}	| Delete the specified entry.	| | ×
 Entry Histories	| GET	| /api/v1/entries/{entryId}/histories	| Get all entry histories associated with the specified entry. | | × 	
 Categories	| GET	| /api/v1/categories	| Get all categories.	| | 	
 Categories	| GET	| /api/v1/categories?keyword={keyword}	| Search categories. | | × 		
-Recently Posts	| GET	| /api/v1/recentlyposts	| Get entries updated recently.	 | | 	
+Recent Posts	| GET	| /api/v1/recentposts	| Get entries updated recently.	 | |
 Users	| GET	| /api/v1/users	| Get all users.	 | ×  |  × 	
 Users	| POST	| /api/v1/users	| Create a new user.	 | |  × 	
 User	| GET	| /api/v1/users/{username}	| Get the specified user. | | ×  		

@@ -1,4 +1,4 @@
-package am.ik.categolj2.api.recentlypost;
+package am.ik.categolj2.api.recentpost;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecentlyPostResource {
+public class RecentPostResource {
     private Integer entryId;
     private String title;
 }

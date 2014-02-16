@@ -1,4 +1,4 @@
-package am.ik.categolj2.api.recentlypost;
+package am.ik.categolj2.api.recentpost;
 
 import am.ik.categolj2.domain.model.Entry;
 import am.ik.categolj2.domain.service.entry.EntryService;
@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("recentlyposts")
-public class RecentlyPostRestController {
+@RequestMapping("recentposts")
+public class RecentPostRestController {
     @Inject
     EntryService entryService;
 
@@ -21,10 +21,10 @@ public class RecentlyPostRestController {
     Mapper beanMapper;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<RecentlyPostResource> getRecentlyPosts() {
+    public List<RecentPostResource> getRecentPosts() {
         List<Entry> entries = entryService.findAllPublishedUpdatedRecently();
         return entries.stream()
-                .map(entry -> beanMapper.map(entry, RecentlyPostResource.class))
+                .map(entry -> beanMapper.map(entry, RecentPostResource.class))
                 .collect(Collectors.toList());
     }
 }

@@ -40,7 +40,7 @@ public class EntryServiceImpl implements EntryService {
     Mapper beanMapper;
     @Inject
     DateFactory dateFactory;
-    Pageable recentlyPageable = new PageRequest(0, 10);
+    Pageable recentPageable = new PageRequest(0, 10);
 
     @Override
     public Entry findOne(Integer entryId) {
@@ -99,7 +99,7 @@ public class EntryServiceImpl implements EntryService {
     @Override
     public List<Entry> findAllPublishedUpdatedRecently() {
         List<Entry> entries = entryRepository
-                .findAllPublishedOrderByLastModifiedDateDesc(recentlyPageable);
+                .findAllPublishedOrderByLastModifiedDateDesc(recentPageable);
         return entries;
     }
 
