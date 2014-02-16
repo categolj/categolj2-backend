@@ -37,22 +37,6 @@
         </encoder>
     </appender>
 
-    <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
-        <connectionSource
-            class="ch.qos.logback.core.db.DataSourceConnectionSource">
-            <dataSource class="org.apache.commons.dbcp.BasicDataSource">
-                <driverClassName>org.h2.Driver</driverClassName>
-                <url>jdbc:h2:mem:categolj2;DB_CLOSE_DELAY=-1</url>
-                <username>sa</username>
-                <password></password>
-            </dataSource>
-        </connectionSource>
-    </appender>
-
-    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="DB" />
-    </appender>
-
     <!-- Application Loggers -->
     <logger name="am.ik.categolj2">
         <level value="debug" />
@@ -118,7 +102,6 @@
     <root level="warn">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="APPLICATION_LOG_FILE" />
-        <appender-ref ref="ASYNC" />
     </root>
 
 </configuration>
