@@ -39,7 +39,9 @@ require.config({
             deps: [
                 'jquery'
             ]
-        }
+        },
+        'backbone.stickit': ['backbone'],
+        bootstrap: ['jquery']
     },
     paths: {
         jquery: 'vendor/jquery/jquery',
