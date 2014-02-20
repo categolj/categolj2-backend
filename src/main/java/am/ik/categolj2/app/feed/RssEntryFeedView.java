@@ -25,7 +25,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import am.ik.categolj2.domain.model.Entry;
 import am.ik.categolj2.domain.model.EntryFormat;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -51,7 +50,6 @@ public class RssEntryFeedView extends AbstractView {
         setContentType("application/rss+xml");
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void renderMergedOutputModel(Map<String, Object> model,
                                            HttpServletRequest request, HttpServletResponse response)
@@ -67,8 +65,8 @@ public class RssEntryFeedView extends AbstractView {
         feed.setDescription(feedDescription);
         feed.setFeedType("rss_2.0");
 
-        List<Entry> entries = (List<Entry>) model.get("entries");
-        List<SyndEntry> feedEntries = entries.stream()
+        FeedEntries entries = (FeedEntries) model.get("entries");
+        List<SyndEntry> feedEntries = entries.getEntries().stream()
                 .map(e -> {
                     SyndContent description = new SyndContentImpl();
                     EntryFormat format = EntryFormat.valueOf(e.getFormat().toUpperCase());
@@ -92,17 +90,4 @@ public class RssEntryFeedView extends AbstractView {
         feedOutput.output(feed.createWireFeed(), new OutputStreamWriter(out,
                 feed.getEncoding()), true);
     }
-
-    public void setFeedTitle(String feedTitle) {
-        this.feedTitle = feedTitle;
-    }
-
-    public void setFeedLink(String feedLink) {
-        this.feedLink = feedLink;
-    }
-
-    public void setFeedDescription(String feedDescription) {
-        this.feedDescription = feedDescription;
-    }
-
 }

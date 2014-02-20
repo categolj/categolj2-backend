@@ -33,7 +33,7 @@ public class FeedController {
     @RequestMapping({"/feed", "/rss"})
     public String feed(Model model) {
         List<Entry> entries = entryService.findAllPublishedUpdatedRecently();
-        model.addAttribute("entries", entries);
+        model.addAttribute("entries", new FeedEntries(entries));
         return "rssEntryFeedView";
     }
 }
