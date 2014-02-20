@@ -10,6 +10,7 @@ define(function (require) {
     var LinksRouter = require('app/js/admin/routers/LinksRouter');
     var UploadsRouter = require('app/js/admin/routers/UploadsRouter');
     var UsersRouter = require('app/js/admin/routers/UsersRouter');
+    var LoggersRouter = require('app/js/admin/routers/LoggersRouter');
     var ApisRouter = require('app/js/admin/routers/ApisRouter');
     var ReportsRouter = require('app/js/admin/routers/ReportsRouter');
     var SystemRouter = require('app/js/admin/routers/SystemRouter');
@@ -32,6 +33,7 @@ define(function (require) {
                 'links': new LinksRouter({adminView: this.adminView}),
                 'uploads': new UploadsRouter({adminView: this.adminView}),
                 'users': new UsersRouter({adminView: this.adminView}),
+                'loggers': new LoggersRouter({adminView: this.adminView}),
                 'apis': new ApisRouter({adminView: this.adminView}),
                 'reports': new ReportsRouter({adminView: this.adminView}),
                 'system': new SystemRouter({adminView: this.adminView})

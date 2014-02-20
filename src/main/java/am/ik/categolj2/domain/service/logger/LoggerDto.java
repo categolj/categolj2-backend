@@ -15,10 +15,7 @@
  */
 package am.ik.categolj2.domain.service.logger;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
@@ -26,6 +23,7 @@ import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class LoggerDto {
     @NotEmpty
     private String name;

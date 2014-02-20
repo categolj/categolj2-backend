@@ -38,7 +38,7 @@ public class LoggerRestController {
         return loggerService.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.PUT, headers = Categolj2Headers.X_ADMIN)
+    @RequestMapping(value = "{name}", method = RequestMethod.PUT, headers = Categolj2Headers.X_ADMIN)
     public void putLogger(@Validated @RequestBody LoggerDto loggerDto) {
         loggerService.changeLevel(loggerDto);
     }

@@ -17,6 +17,7 @@ define(function (require) {
                 {id: 'uploads', itemName: 'Upload', itemIcon: 'file'},
                 {id: 'users', itemName: 'User', itemIcon: 'user'},
                 {id: 'links', itemName: 'Link', itemIcon: 'bookmark'},
+                {id: 'loggers', itemName: 'Logger', itemIcon: 'tasks'},
                 {id: 'apis', itemName: 'API', itemIcon: 'asterisk'},
                 {id: 'reports', itemName: 'Report', itemIcon: 'stats'},
                 {id: 'system', itemName: 'System', itemIcon: 'info-sign'}
