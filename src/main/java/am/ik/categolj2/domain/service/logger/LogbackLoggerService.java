@@ -30,7 +30,7 @@ public class LogbackLoggerService implements LoggerService {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public List<LoggerDto> findAll() {
+    public synchronized List<LoggerDto> findAll() {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
         return context.getLoggerList().stream()
                 .map(logger -> new LoggerDto(logger.getName(), logger.getEffectiveLevel().toString()))
@@ -38,7 +38,7 @@ public class LogbackLoggerService implements LoggerService {
     }
 
     @Override
-    public void changeLevel(LoggerDto loggerDto) {
+    public synchronized void changeLevel(LoggerDto loggerDto) {
         logger.info("change logger level -> {}", loggerDto);
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
         context.getLogger(loggerDto.getName()).setLevel(Level.valueOf(loggerDto.getLevel()));
