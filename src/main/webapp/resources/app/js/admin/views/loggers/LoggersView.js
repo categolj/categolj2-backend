@@ -13,17 +13,34 @@ define(function (require) {
 
     return Backbone.View.extend(_.extend({
         template: Handlebars.compile(loggerTable),
+        bindings: {
+            '#filter': 'filter'
+        },
 
         initialize: function () {
+            this.model = new Backbone.Model();
+            this.lazyRenderTable = _.debounce(_.bind(this.renderTable, this), 300);
             this.listenTo(this.collection, 'sync', this.renderTable);
+            this.listenTo(this.model, 'change:filter', this.lazyRenderTable);
         },
         render: function () {
             this.$el.html(this.template());
+            this.stickit();
             return this;
         },
         renderTable: function () {
             var $tbody = this.$('tbody').empty();
-            this.collection.each(_.bind(function (logger) {
+            var filter = this.model.get('filter');
+            console.log(filter);
+            var toRender;
+            if (filter) {
+                toRender = new Loggers(this.collection.filter(function (model) {
+                    return _.contains(model.get('name'), filter);
+                }));
+            } else {
+                toRender = this.collection;
+            }
+            toRender.each(_.bind(function (logger) {
                 var loggerView = new LoggerRowView({
                     model: logger
                 });
