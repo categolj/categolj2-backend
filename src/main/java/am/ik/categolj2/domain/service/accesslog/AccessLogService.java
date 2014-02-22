@@ -15,10 +15,36 @@
  */
 package am.ik.categolj2.domain.service.accesslog;
 
+import am.ik.categolj2.domain.Categolj2AuthorizeAccesses;
 import am.ik.categolj2.domain.model.AccessLog;
+import am.ik.categolj2.domain.repository.accesslog.AccessLogReportGroupByUri;
+import am.ik.categolj2.domain.repository.accesslog.AccessLogReportGroupByUriAndRemoteAddress;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.access.prepost.PreAuthorize;
+
+import java.util.List;
 
 public interface AccessLogService {
     @Async
     void save(AccessLog accessLog);
+
+    @PreAuthorize(Categolj2AuthorizeAccesses.AUTHORIZED)
+    Page<AccessLog> findPage(Pageable pageable);
+
+    @PreAuthorize(Categolj2AuthorizeAccesses.AUTHORIZED)
+    List<AccessLogReportGroupByUri> findAllReportGroupByUriLike(String uri);
+
+    @PreAuthorize(Categolj2AuthorizeAccesses.AUTHORIZED)
+    List<AccessLogReportGroupByUri> findAllReportGroupByUri();
+
+    @PreAuthorize(Categolj2AuthorizeAccesses.AUTHORIZED)
+    List<AccessLogReportGroupByUriAndRemoteAddress> findAllReportGroupByUriAndRemoteAddress();
+
+    @PreAuthorize(Categolj2AuthorizeAccesses.ADMIN_ONLY)
+    int deleteFromRemoteAddress(String remoteAddress);
+
+    @PreAuthorize(Categolj2AuthorizeAccesses.ADMIN_ONLY)
+    void delete(String accessLogId);
 }

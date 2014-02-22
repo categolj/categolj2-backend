@@ -34,6 +34,7 @@ import java.io.Serializable;
 @Table(indexes = {
         @Index(columnList = "METHOD"),
         @Index(columnList = "URI"),
+        @Index(columnList = "REMOTE_ADDRESS"),
         @Index(columnList = "X_TRACK"),
         @Index(columnList = "ACCESS_DATE")
 })
