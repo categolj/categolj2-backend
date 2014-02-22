@@ -106,6 +106,7 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    @Cacheable("entry")
     public Page<Entry> findPagePublished(Pageable pageable) {
         Page<Entry> page = entryRepository
                 .findPagePublishedOrderByLastModifiedDateDesc(pageable);
@@ -153,7 +154,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Transactional
-    @CacheEvict(value = {"recentPost"}, allEntries = true)
+    @CacheEvict(value = {"recentPost", "entry"}, allEntries = true)
     public Entry create(Entry entry, List<Category> category) {
         Assert.notNull(entry, "entry must not be null");
         Assert.isNull(entry.getCategory(), "entry.category must be null");
@@ -174,7 +175,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Transactional
-    @CacheEvict(value = {"recentPost"}, allEntries = true)
+    @CacheEvict(value = {"recentPost", "entry"}, allEntries = true)
     public Entry update(Integer entryId, Entry updatedEntry,
                         boolean updateLastModifiedDate, boolean saveInHistory) {
         Assert.notNull(updatedEntry, "entry must not be null");
@@ -201,7 +202,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Transactional
-    @CacheEvict(value = {"recentPost"}, allEntries = true)
+    @CacheEvict(value = {"recentPost", "entry"}, allEntries = true)
     public void delete(Integer entryId) {
         Entry entry = findOne(entryId);
         entryRepository.delete(entry);
