@@ -20,6 +20,8 @@ import am.ik.categolj2.domain.model.Link;
 import am.ik.categolj2.domain.repository.link.LinkRepository;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.date.DateFactory;
@@ -48,11 +50,13 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
+    @Cacheable("link")
     public List<Link> findAll() {
         return linkRepository.findAllOrderByLastModifiedDateDesc();
     }
 
     @Transactional
+    @CacheEvict(value = {"link"}, allEntries = true)
     @Override
     public Link create(Link link) {
         DateTime now = dateFactory.newDateTime();
@@ -62,6 +66,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Transactional
+    @CacheEvict(value = {"link"}, allEntries = true)
     @Override
     public Link update(String url, Link link) {
         DateTime now = dateFactory.newDateTime();
@@ -72,6 +77,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Transactional
+    @CacheEvict(value = {"link"}, allEntries = true)
     @Override
     public void delete(String url) {
         linkRepository.delete(url);
