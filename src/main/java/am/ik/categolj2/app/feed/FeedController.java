@@ -19,7 +19,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import am.ik.categolj2.domain.model.AccessLog;
 import am.ik.categolj2.domain.model.Entry;
+import am.ik.categolj2.domain.service.accesslog.AccessLogService;
 import am.ik.categolj2.domain.service.entry.EntryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +31,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FeedController {
     @Inject
     EntryService entryService;
+    @Inject
+    AccessLogService accessLogService;
 
     @RequestMapping({"/feed", "/rss"})
-    public String feed(Model model) {
+    public String feed(AccessLog accessLog, Model model) {
+        accessLogService.save(accessLog);
         List<Entry> entries = entryService.findAllPublishedUpdatedRecently();
         model.addAttribute("entries", new FeedEntries(entries));
         return "rssEntryFeedView";
