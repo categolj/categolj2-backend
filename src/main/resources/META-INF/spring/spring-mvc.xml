@@ -15,8 +15,8 @@
 
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
-            <bean
-                    class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"/>
+            <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"></bean>
+            <bean class="am.ik.categolj2.core.web.accesslog.AccessLogMethodArgumentResolver"></bean>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 
