@@ -26,6 +26,8 @@ import com.google.common.collect.TreeMultimap;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -112,6 +114,7 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    @Cacheable("recentPost")
     public List<Entry> findAllPublishedUpdatedRecently() {
         List<Entry> entries = entryRepository
                 .findAllPublishedOrderByLastModifiedDateDesc(recentPageable);
@@ -150,6 +153,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {"recentPost"}, allEntries = true)
     public Entry create(Entry entry, List<Category> category) {
         Assert.notNull(entry, "entry must not be null");
         Assert.isNull(entry.getCategory(), "entry.category must be null");
@@ -170,6 +174,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {"recentPost"}, allEntries = true)
     public Entry update(Integer entryId, Entry updatedEntry,
                         boolean updateLastModifiedDate, boolean saveInHistory) {
         Assert.notNull(updatedEntry, "entry must not be null");
@@ -196,6 +201,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Transactional
+    @CacheEvict(value = {"recentPost"}, allEntries = true)
     public void delete(Integer entryId) {
         Entry entry = findOne(entryId);
         entryRepository.delete(entry);
