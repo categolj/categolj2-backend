@@ -44,18 +44,18 @@ require.config({
         bootstrap: ['jquery']
     },
     paths: {
-        jquery: 'vendor/jquery/jquery',
-        underscore: 'vendor/lodash/dist/lodash',
-        backbone: 'vendor/backbone/backbone',
+        jquery: 'vendor/jquery/jquery.min',
+        underscore: 'vendor/lodash/dist/lodash.min',
+        backbone: 'vendor/backbone/backbone-min',
         'backbone.stickit': 'vendor/backbone.stickit/backbone.stickit',
-        'backbone.validation': 'vendor/backbone.validation/src/backbone-validation',
-        handlebars: 'vendor/handlebars/handlebars',
+        'backbone.validation': 'vendor/backbone.validation/dist/backbone-validation-min',
+        handlebars: 'vendor/handlebars/handlebars.min',
         marked: 'vendor/marked/lib/marked',
-        spin: 'vendor/spin.js/dist/spin',
+        spin: 'vendor/spin.js/dist/spin.min',
         pagedown: 'vendor/pagedown/Markdown.Converter',
         'pagedown.editor': 'vendor/pagedown/Markdown.Editor',
         'jquery.iframe-transport': 'vendor/jquery.iframe-transport/jquery.iframe-transport',
-        bootstrap: 'vendor/bootstrap/dist/js/bootstrap',
+        bootstrap: 'vendor/bootstrap/dist/js/bootstrap.min',
         text: 'vendor/requirejs-text/text'
     }
 });
