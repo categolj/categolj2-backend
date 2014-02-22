@@ -31,7 +31,6 @@ define(function (require) {
         renderTable: function () {
             var $tbody = this.$('tbody').empty();
             var filter = this.model.get('filter');
-            console.log(filter);
             var toRender;
             if (filter) {
                 toRender = new Loggers(this.collection.filter(function (model) {
