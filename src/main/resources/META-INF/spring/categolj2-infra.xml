@@ -59,19 +59,15 @@
 
     <!-- Cache Abstraction -->
     <cache:annotation-driven/>
-    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
-        <property name="caches">
-            <set>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="uploadFileSummary"/>
-                </bean>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="recentPost"/>
-                </bean>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="link"/>
-                </bean>
-            </set>
+    <bean id="cacheManager" class="am.ik.categolj2.infra.cache.LoggingGuavaCacheManager">
+        <property name="cacheSpecification" value="maximumSize=10000,expireAfterWrite=3d"/>
+        <property name="cacheNames">
+            <list>
+                <value>entry</value>
+                <value>recentPost</value>
+                <value>link</value>
+                <value>uploadFileSummary</value>
+            </list>
         </property>
     </bean>
 </beans>
