@@ -32,7 +32,11 @@
                    cache-period="0"/>
 
     <!-- CategLJ2 FrontEnd support -->
-    <mvc:resources mapping="/*" location="categolj2-frontend/"
+    <mvc:resources mapping="/index.html" location="categolj2-frontend/"
+                   cache-period="604800"/>
+    <mvc:resources mapping="/js/*" location="categolj2-frontend/js"
+                   cache-period="604800"/>
+    <mvc:resources mapping="/css/*" location="categolj2-frontend/uikit"
                    cache-period="604800"/>
     <mvc:view-controller path="/" view-name="forward:/index.html"/>
 
