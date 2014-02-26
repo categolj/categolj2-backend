@@ -1,4 +1,4 @@
-<!DOCTYPE logback>
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -39,12 +39,12 @@
 
     <!-- Application Loggers -->
     <logger name="am.ik.categolj2">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
 
     <!-- TERASOLUNA -->
     <logger name="org.terasoluna.gfw">
-        <level value="info" />
+        <level value="warn" />
     </logger>
     <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor">
         <level value="trace" />
@@ -83,15 +83,21 @@
     <!-- </logger> -->
 
     <logger name="org.hibernate.engine.transaction">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
 
     <!--<logger name="org.hibernate.search">-->
         <!--<level value="debug" />-->
     <!--</logger>-->
 
+    <logger name="jdbc">
+        <level value="off" />
+    </logger>
     <logger name="jdbc.sqltiming">
-        <level value="debug" />
+        <level value="error" />
+    </logger>
+    <logger name="jdbc.resultsettable">
+        <level value="error" />
     </logger>
     <!--<logger name="jdbc.resultsettable">-->
         <!--<level value="trace" />-->
