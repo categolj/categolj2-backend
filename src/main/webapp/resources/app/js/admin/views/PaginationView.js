@@ -1,5 +1,6 @@
 define(function (require) {
     var Backbone = require('backbone');
+    var Handlebars = require('handlebars');
 
     var pagination = require('text!app/js/admin/templates/pagination.hbs');
 
