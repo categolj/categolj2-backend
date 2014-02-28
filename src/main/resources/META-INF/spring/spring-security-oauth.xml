@@ -29,7 +29,7 @@
     <bean id="clientCredentialsTokenEndpointFilter"
           class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter">
         <property name="authenticationManager" ref="clientAuthenticationManager"/>
-        <property name="authenticationEntryPoint" ref="oauthAuthenticationEntryPoint" />
+        <property name="authenticationEntryPoint" ref="oauthAuthenticationEntryPoint"/>
     </bean>
 
     <sec:authentication-manager id="clientAuthenticationManager">
@@ -40,8 +40,9 @@
           class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
         <constructor-arg ref="clientDetails"/>
     </bean>
-    <bean id="authorizationRequestManager" class="org.springframework.security.oauth2.provider.DefaultAuthorizationRequestManager">
-        <constructor-arg index="0" ref="clientDetails" />
+    <bean id="authorizationRequestManager"
+          class="org.springframework.security.oauth2.provider.DefaultAuthorizationRequestManager">
+        <constructor-arg index="0" ref="clientDetails"/>
     </bean>
 
     <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.InMemoryTokenStore"/>
@@ -52,10 +53,15 @@
         <property name="clientDetailsService" ref="clientDetails"/>
     </bean>
 
+    <oauth:resource-server id="oauthAuthenticationProcessingFilter"
+                           entry-point-ref="oauthAuthenticationEntryPoint"
+                           resource-id="categolj2"
+                           token-services-ref="tokenServices"/>
+
     <oauth:authorization-server client-details-service-ref="clientDetails"
                                 token-services-ref="tokenServices"
                                 authorization-request-manager-ref="authorizationRequestManager">
-        <oauth:refresh-token />
+        <oauth:refresh-token/>
         <oauth:password authentication-manager-ref="authenticationManager"/>
     </oauth:authorization-server>
 
@@ -75,7 +81,7 @@
     <sec:authentication-manager id="authenticationManager">
         <sec:authentication-provider
                 user-service-ref="userDetailsService">
-            <sec:password-encoder ref="passwordEncoder" />
+            <sec:password-encoder ref="passwordEncoder"/>
         </sec:authentication-provider>
     </sec:authentication-manager>
 </beans>
