@@ -63,42 +63,67 @@ require.config({
 define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
+
+    var cookie = _.chain(document.cookie.split(';'))
+        .map(function (x) {
+            return $.trim(x).split('=')
+        })
+        .object()
+        .value();
+
+    if (_.isEmpty(cookie.CATEGOLJ2_ACCESS_TOKEN_VALUE)) {
+        location.href = "login.jsp";
+        return;
+    }
+
+    var accessToken = decodeURIComponent(cookie.CATEGOLJ2_ACCESS_TOKEN_VALUE);
+    var expiration = new Date(Number(cookie.CATEGOLJ2_ACCESS_TOKEN_EXPIRATION));
+    if (cookie.CATEGOLJ2_REFRESH_TOKEN_VALUE) {
+        var refreshToken = decodeURIComponent(cookie.CATEGOLJ2_REFRESH_TOKEN_VALUE);
+    }
+
     var Backbone = require('backbone');
     Backbone.Validation = require('backbone.validation');
 
     var AdminRouter = require('app/js/admin/routers/AdminRouter');
     var SpinView = require('app/js/admin/views/SpinView');
+    var spinView = new SpinView();
 
     new AdminRouter();
 
-    $(document).ready(function () {
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-        $(document).ajaxSend(function (e, xhr) {
-            xhr.setRequestHeader(header, token);
-            xhr.setRequestHeader('X-Admin', true);
-            // prevent cache
-            xhr.setRequestHeader('Pragma', 'no-cache');
-            xhr.setRequestHeader('Cache-Control', 'no-cache');
-            xhr.setRequestHeader('If-Modified-Since', 'Thu, 01 Jun 1970 00:00:00 GMT');
+    $(document).ajaxSend(function (e, xhr) {
+        xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+        xhr.setRequestHeader('X-Admin', true);
+        // prevent cache
+        xhr.setRequestHeader('Pragma', 'no-cache');
+        xhr.setRequestHeader('Cache-Control', 'no-cache');
+        xhr.setRequestHeader('If-Modified-Since', 'Thu, 01 Jun 1970 00:00:00 GMT');
+    });
+
+    $(document)
+        .on('ajaxStart',function () {
+            spinView.spin();
+        }).on('ajaxComplete',function () {
+            spinView.stop();
+        }).on('ajaxError', function (event, xhr) {
+            console.log(arguments);
+            var resp = xhr.responseJSON;
+            if (xhr.status == 401 && resp.error == "invalid_token") {
+                // TODO refresh token
+                alert(resp.error_description);
+                location.href = "logout";
+            }
+            if (xhr.status == 403) {
+                if (_.isArray(resp.details)) {
+                    Backbone.trigger('exception', resp.details[0]);
+                }
+            }
         });
 
-        var spinView = new SpinView();
+    $(document).ready(function () {
         $('body').append(spinView.render().$el);
-        $(document)
-            .on('ajaxStart',function () {
-                spinView.spin();
-            }).on('ajaxComplete',function () {
-                spinView.stop();
-            }).on('ajaxError', function (event, xhr) {
-                console.log(arguments);
-                var resp = xhr.responseJSON;
-                if (xhr.status == 403) {
-                    if (_.isArray(resp.details)) {
-                        Backbone.trigger('exception', resp.details[0]);
-                    }
-                }
-            });
+        var user = JSON.parse(decodeURIComponent(cookie.CATEGOLJ2_USER));
+        $('#user-display-name').text(user.firstName + ' ' + user.lastName);
 
         // Global validation configuration
         _.extend(Backbone.Validation.callbacks, {
@@ -115,7 +140,6 @@ define(function (require) {
                 $group.find('.help-block').text(error).removeClass('hidden');
             }
         });
-
         Backbone.history.start();
     });
 });

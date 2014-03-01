@@ -52,4 +52,12 @@
         class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter" >
         <property name="exceptionLogger" ref="exceptionLogger" />
     </bean>
+
+    <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
+        <property name="dateFormat">
+            <bean class="org.codehaus.jackson.map.util.StdDateFormat"/>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.client.RestTemplate"></bean>
 </beans>

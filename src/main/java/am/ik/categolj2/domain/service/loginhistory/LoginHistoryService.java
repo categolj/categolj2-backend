@@ -22,8 +22,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface LoginHistoryService {
-
-    @PreAuthorize(Categolj2AuthorizeAccesses.AUTHORIZED)
     void save(LoginHistory loginHistory);
 
     @PreAuthorize(Categolj2AuthorizeAccesses.AUTHORIZED)

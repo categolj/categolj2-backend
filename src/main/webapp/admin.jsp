@@ -1,3 +1,22 @@
+<%@ page import="am.ik.categolj2.app.Categolj2Cookies" %>
+<%
+    // check access token in cookie
+
+    Cookie[] cookies = request.getCookies();
+    boolean hasAccessToken = false;
+    for (Cookie cookie : cookies) {
+        if (Categolj2Cookies.ACCESS_TOKEN_VALUE_COOKIE.equals(cookie.getName())) {
+            if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
+                hasAccessToken = true;
+                break;
+            }
+        }
+    }
+
+    if (!hasAccessToken) {
+        response.sendRedirect("login.jsp");
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,9 +38,6 @@
             padding-top: 70px;
         }
     </style>
-    <meta name="_csrf" content="${f:h(_csrf.token)}"/>
-    <meta name="_csrf_header" content="${f:h(_csrf.headerName)}"/>
-    <meta name="_csrf_parameter" content="${f:h(_csrf.parameterName)}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 </head>
 <body>
@@ -45,8 +61,7 @@
                 <li class="dropdown"><a href="#"
                                         class="dropdown-toggle" data-toggle="dropdown"><span
                         class="glyphicon glyphicon-user"></span> Welcome,
-                    ${f:h(user.firstName)}
-                    ${f:h(user.lastName)} <b class="caret"></b></a>
+                    <span id="user-display-name"/><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="#users/me/form"><span
                                 class="glyphicon glyphicon-edit"></span>

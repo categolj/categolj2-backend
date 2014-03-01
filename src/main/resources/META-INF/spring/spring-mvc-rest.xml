@@ -25,12 +25,6 @@
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 
-    <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
-        <property name="dateFormat">
-            <bean class="org.codehaus.jackson.map.util.StdDateFormat"/>
-        </property>
-    </bean>
-
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
     </bean>
