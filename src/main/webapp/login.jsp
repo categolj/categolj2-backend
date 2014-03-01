@@ -68,23 +68,19 @@
 
 <div class="container">
     <form class="form-signin" role="form" method="post"
-          action='${pageContext.request.contextPath}/j_spring_security_check'>
+          action='${pageContext.request.contextPath}/login'>
         <h2 class="form-signin-heading">Please sign in</h2>
 
-        <c:if test="${param.error}">
-            <t:messagesPanel messagesType="danger"
-                             messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION"/>
+        <c:if test="${not empty param.error}">
+            <div class="alert alert-danger">
+                <p>${f:h(param.error)}</p>
+            </div>
+            <t:messagesPanel/>
         </c:if>
 
-        <input name="j_username" type="text" class="form-control" value="admin" placeholder="Username" required
+        <input name="username" type="text" class="form-control" value="admin" placeholder="Username" required
                autofocus>
-        <input name="j_password" type="password" class="form-control" value="demo" placeholder="Password" required>
-        <label class="checkbox">
-            <input type="checkbox" name="_spring_security_remember_me"> Remember me
-        </label>
-        <input type="hidden"
-               name="${f:h(_csrf.parameterName)}"
-               value="${f:h(_csrf.token)}"/>
+        <input name="password" type="password" class="form-control" value="demo" placeholder="Password" required>
         <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
     </form>
 

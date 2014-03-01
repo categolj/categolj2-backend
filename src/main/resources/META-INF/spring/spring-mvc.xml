@@ -29,10 +29,14 @@
     <!--cache-period="#{60 * 60}" />-->
     <mvc:resources mapping="/resources/**"
                    location="/resources/,classpath:META-INF/resources/"
-                   cache-period="0"/>
+                   cache-period="${resources.cache.seconds:0}"/>
 
     <!-- CategLJ2 FrontEnd support -->
-    <mvc:resources mapping="/*" location="categolj2-frontend/"
+    <mvc:resources mapping="/index.html" location="categolj2-frontend/"
+                   cache-period="604800"/>
+    <mvc:resources mapping="/js/**" location="categolj2-frontend/js/"
+                   cache-period="604800"/>
+    <mvc:resources mapping="/uikit/**" location="categolj2-frontend/uikit/"
                    cache-period="604800"/>
     <mvc:view-controller path="/" view-name="forward:/index.html"/>
 
