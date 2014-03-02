@@ -91,15 +91,19 @@ public class AuthenticationHelper {
     void writeLoginHistory(OAuth2AccessToken accessToken, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         // user
         Map<String, ?> user = (Map<String, ?>) accessToken.getAdditionalInformation().get("user");
-        String username = (String) user.get("username");
-        String firstName = (String) user.get("firstName");
-        String lastName = (String) user.get("lastName");
-        String email = (String) user.get("email");
+        if (user != null) {
+            String username = (String) user.get("username");
+            String firstName = (String) user.get("firstName");
+            String lastName = (String) user.get("lastName");
+            String email = (String) user.get("email");
 
-        LoginHistory loginHistory = createHistory(username, request);
-        loginHistoryService.save(loginHistory);
+            LoginHistory loginHistory = createHistory(username, request);
+            loginHistoryService.save(loginHistory);
 
-        saveUserInformationInCookie(username, firstName, lastName, email, response);
+            saveUserInformationInCookie(username, firstName, lastName, email, response);
+        } else {
+            logger.error("No user information! (access_token={})", accessToken);
+        }
     }
 
     void saveUserInformationInCookie(String username, String firstName, String lastName, String email,
