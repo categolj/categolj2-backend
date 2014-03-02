@@ -21,9 +21,4 @@
         <sec:anonymous enabled="false" />
     </sec:http>
     <sec:global-method-security pre-post-annotations="enabled" authentication-manager-ref="authenticationManager" />
-
-    <bean id="loginSuccessHandler" class="am.ik.categolj2.app.login.LoginSuccessHandler">
-        <property name="defaultTargetUrl" value="/admin.jsp" />
-        <property name="alwaysUseDefaultTargetUrl" value="true" />
-    </bean>
 </beans>
