@@ -14,6 +14,9 @@ public class Categolj2TokenEnhancer implements TokenEnhancer {
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+        if (authentication != null && authentication.getPrincipal() != null) {
+            return accessToken;
+        }
         Categolj2UserDetails userDetails = (Categolj2UserDetails) authentication.getPrincipal();
         DefaultOAuth2AccessToken defaultOAuth2AccessToken = (DefaultOAuth2AccessToken) accessToken;
         Map<String, Object> additionalInformation = new HashMap<>();
