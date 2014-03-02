@@ -55,10 +55,20 @@ define(function (require) {
                 return false;
             }
 
-            var token = $('meta[name=_csrf]').attr('content');
-            var param = $('meta[name=_csrf_parameter]').attr('content');
-            var data = {};
-            data[param] = token;
+            // TODO refactor
+            var cookie = _.chain(document.cookie.split(';'))
+                .map(function (x) {
+                    return $.trim(x).split('=')
+                })
+                .object()
+                .value();
+            if (_.isEmpty(cookie.CATEGOLJ2_ACCESS_TOKEN_VALUE)) {
+                location.href = "login.jsp";
+                return;
+            }
+            var accessToken = decodeURIComponent(cookie.CATEGOLJ2_ACCESS_TOKEN_VALUE);
+
+            var data = {'access_token': accessToken};
 
             this.collection.upload(this.$('#files'), {
                 data: data,
