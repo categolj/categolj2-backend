@@ -31,6 +31,9 @@
             href="resources/vendor/pagedown/demo/browser/demo.css"
             rel="stylesheet" media="screen">
     <link
+            href="resources/vendor/dynatable/jquery.dynatable.css"
+            rel="stylesheet" media="screen">
+    <link
             href="resources/app/css/app.css"
             rel="stylesheet" media="screen">
     <style>
