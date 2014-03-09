@@ -43,7 +43,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.springframework.security.oauth:spring-security-oauth2:1.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-web:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-common:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:13.0.1" level="project" />
@@ -138,9 +137,8 @@
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.23" level="project" />
     <orderEntry type="library" name="Maven: net.java.dev.rome:rome:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: jdom:jdom:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.webjars:marked:0.2.9" level="project" />
-    <orderEntry type="library" name="Maven: am.ik.aws:aws-apa:0.9.4" level="project" />
-    <orderEntry type="library" name="Maven: am.ik.yalf:yalf:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: am.ik.aws:aws-apa:0.9.5" level="project" />
+    <orderEntry type="library" name="Maven: am.ik.marked4j:marked4j:0.9.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.12.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-servlet-api:7.0.40" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-jsp-api:7.0.40" level="project" />
