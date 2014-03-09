@@ -40,6 +40,7 @@ require.config({
                 'jquery'
             ]
         },
+        'dynatable': ['jquery'],
         'backbone.stickit': ['backbone'],
         bootstrap: ['jquery']
     },
@@ -56,7 +57,8 @@ require.config({
         'pagedown.editor': 'vendor/pagedown/Markdown.Editor',
         'jquery.iframe-transport': 'vendor/jquery.iframe-transport/jquery.iframe-transport',
         bootstrap: 'vendor/bootstrap/dist/js/bootstrap.min',
-        text: 'vendor/requirejs-text/text'
+        text: 'vendor/requirejs-text/text',
+        dynatable: 'vendor/dynatable/jquery.dynatable'
     }
 });
 

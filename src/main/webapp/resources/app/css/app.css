@@ -34,3 +34,8 @@ ul.autocomplete li a {
     color: #3d3d3d;
     text-decoration: none;
 }
+
+.dynatable th {
+    background: #006a72;
+    text-align: center;
+}
