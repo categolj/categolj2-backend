@@ -48,14 +48,6 @@
             <id>terasoluna-gfw-3rdparty</id>
             <url>http://repo.terasoluna.org/nexus/content/repositories/terasoluna-gfw-3rdparty/</url>
         </repository>
-        <repository>
-            <id>making-dropbox-releases</id>
-            <name>making's Maven Release Repository</name>
-            <url>http://dl.dropbox.com/u/342817/maven/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -149,14 +141,14 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>marked</artifactId>
-            <version>0.2.9</version>
-        </dependency>
-        <dependency>
             <groupId>am.ik.aws</groupId>
             <artifactId>aws-apa</artifactId>
-            <version>0.9.4</version>
+            <version>0.9.5</version>
+        </dependency>
+        <dependency>
+            <groupId>am.ik.marked4j</groupId>
+            <artifactId>marked4j</artifactId>
+            <version>0.9.0</version>
         </dependency>
 
         <dependency>
