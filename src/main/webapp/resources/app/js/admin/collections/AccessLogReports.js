@@ -6,6 +6,9 @@ define(function (require) {
         model: AccessLogReport,
         url: function () {
             return 'api/v1/accesslogreports';
+        },
+        comparator: function (a, b) {
+            return a.get('count') > b.get('count') ? -1 : 1;
         }
     });
 });

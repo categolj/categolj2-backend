@@ -7,6 +7,9 @@ define(function (require) {
         model: AccessLog,
         url: function () {
             return 'api/v1/accesslogs';
+        },
+        comparator: function (a, b) {
+            return a.get('accessDate') > b.get('accessDate') ? -1 : 1;
         }
     }, Page));
 });
