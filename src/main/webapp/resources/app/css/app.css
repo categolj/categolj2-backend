@@ -39,3 +39,7 @@ th.dynatable-head {
     background: #006a72;
     text-align: center;
 }
+
+.dynatable td {
+    font-size: small;
+}

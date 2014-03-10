@@ -10,6 +10,20 @@ define(function (require) {
         },
         comparator: function (a, b) {
             return a.get('accessDate') > b.get('accessDate') ? -1 : 1;
+        },
+        deleteByRemoteAddress: function (remoteAddress) {
+            var opts = {
+                url: this.url() + '?remoteAddress=' + remoteAddress,
+                validate: false
+            };
+            return Backbone.sync('delete', new Backbone.Model(), opts)
+                .success(_.bind(function () {
+                    this.remove(this.where({
+                        remoteAddress: remoteAddress
+                    }));
+                    console.log(this);
+                    this.trigger('sync');
+                }, this));
         }
     }, Page));
 });
