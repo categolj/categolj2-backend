@@ -18,6 +18,7 @@
         <org.hibernate.version>4.3.1.Final</org.hibernate.version>
         <org.springframework-version>4.0.1.RELEASE</org.springframework-version>
         <org.springframework.security.version>3.2.0.RELEASE</org.springframework.security.version>
+        <tomcat.version>7.0.53</tomcat.version>
     </properties>
 
     <repositories>
@@ -58,7 +59,7 @@
         </dependency>
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-security-web</artifactId>
+            <artifactId>terasoluna-gfw-security-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.terasoluna.gfw</groupId>
@@ -100,6 +101,15 @@
                     <artifactId>hibernate-jpa-2.0-api</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
         </dependency>
 
         <dependency>
@@ -162,13 +172,13 @@
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-servlet-api</artifactId>
-            <version>7.0.40</version>
+            <version>${tomcat.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jsp-api</artifactId>
-            <version>7.0.40</version>
+            <version>${tomcat.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -177,4 +187,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 </project>
