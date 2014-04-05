@@ -15,40 +15,6 @@
                   set-dates="false"/>
     <bean id="auditAwareBean" class="am.ik.categolj2.domain.AuditAwareBean"></bean>
 
-    <bean id="jpaVendorAdapter"
-          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="showSql" value="false"/>
-        <property name="database" value="${database}"/>
-    </bean>
-
-    <bean
-            class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-            id="entityManagerFactory">
-        <property name="packagesToScan" value="am.ik.categolj2.domain.model"/>
-        <property name="dataSource" ref="dataSource"/>
-        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
-        <property name="mappingResources" value="META-INF/orm.xml"/>
-        <property name="jpaPropertyMap">
-            <util:map>
-                <entry key="hibernate.hbm2ddl.auto" value="${hibernate.hbm2ddl.auto}"/>
-                <entry key="hibernate.ejb.naming_strategy"
-                       value="org.hibernate.cfg.ImprovedNamingStrategy"/>
-                <entry key="hibernate.connection.charSet" value="UTF-8"/>
-                <entry key="hibernate.show_sql" value="false"/>
-                <entry key="hibernate.format_sql" value="false"/>
-                <entry key="hibernate.use_sql_comments" value="true"/>
-                <entry key="hibernate.jdbc.batch_size" value="30"/>
-                <entry key="hibernate.jdbc.fetch_size" value="100"/>
-                <entry key="hibernate.search.default.directory_provider"
-                       value="filesystem"/>
-                <entry key="hibernate.search.default.indexBase"
-                       value="/tmp/lucene"/>
-                <!--<entry key="hibernate.search.model_mapping" value="am.ik.categolj2.infra.search.SearchMappingFactory"/>-->
-                <entry key="hibernate.search.analyzer" value="org.apache.lucene.analysis.cjk.CJKAnalyzer"/>
-            </util:map>
-        </property>
-    </bean>
-
     <!-- Amazon Product Advertising API -->
     <bean id="awsApaRequester" class="am.ik.aws.apa.AwsApaRequesterImpl">
         <constructor-arg index="0" value="${aws.endpoint}"/>
