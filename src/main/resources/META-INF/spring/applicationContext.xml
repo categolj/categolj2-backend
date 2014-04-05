@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:aop="http://www.springframework.org/schema/aop"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <import resource="classpath:/META-INF/spring/categolj2-domain.xml" />
+    <bean class="am.ik.categolj2.infra.logging.PidSetter"/>
 
-    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    <import resource="classpath:/META-INF/spring/categolj2-domain.xml"/>
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <context:property-placeholder
-        location="classpath*:/META-INF/spring/*.properties" />
+            location="classpath*:/META-INF/spring/*.properties"/>
 
     <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
         <property name="mappingFiles"
-            value="classpath*:/META-INF/dozer/**/*-mapping.xml" />
+                  value="classpath*:/META-INF/dozer/**/*-mapping.xml"/>
     </bean>
 
     <!-- Message -->
     <bean id="messageSource"
-        class="org.springframework.context.support.ResourceBundleMessageSource">
+          class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
                 <value>i18n/application-messages</value>
@@ -30,27 +33,27 @@
 
     <!-- Exception Code Resolver. -->
     <bean id="exceptionCodeResolver"
-        class="org.terasoluna.gfw.common.exception.SimpleMappingExceptionCodeResolver">
+          class="org.terasoluna.gfw.common.exception.SimpleMappingExceptionCodeResolver">
         <!-- Setting and Customization by project. -->
         <property name="exceptionMappings">
             <map>
-                <entry key="ResourceNotFoundException" value="e.xx.fw.5001" />
-                <entry key="BusinessException" value="e.xx.fw.8001" />
+                <entry key="ResourceNotFoundException" value="e.xx.fw.5001"/>
+                <entry key="BusinessException" value="e.xx.fw.8001"/>
             </map>
         </property>
-        <property name="defaultExceptionCode" value="e.xx.fw.9001" />
+        <property name="defaultExceptionCode" value="e.xx.fw.9001"/>
     </bean>
 
     <!-- Exception Logger. -->
     <bean id="exceptionLogger"
-        class="org.terasoluna.gfw.common.exception.ExceptionLogger">
-        <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
+          class="org.terasoluna.gfw.common.exception.ExceptionLogger">
+        <property name="exceptionCodeResolver" ref="exceptionCodeResolver"/>
     </bean>
 
     <!-- Filter. -->
     <bean id="exceptionLoggingFilter"
-        class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter" >
-        <property name="exceptionLogger" ref="exceptionLogger" />
+          class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter">
+        <property name="exceptionLogger" ref="exceptionLogger"/>
     </bean>
 
     <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
@@ -58,6 +61,14 @@
             <bean class="org.codehaus.jackson.map.util.StdDateFormat"/>
         </property>
     </bean>
+
+    <!-- Enable handling of java.util.logging through SLF4J -->
+    <bean id="slf4JBridgeHandler" class="org.slf4j.bridge.SLF4JBridgeHandler"
+          init-method="removeHandlersForRootLogger"/>
+    <bean class="org.slf4j.bridge.SLF4JBridgeHandler"
+          init-method="install"
+          depends-on="slf4JBridgeHandler"/>
+
 
     <bean class="org.springframework.web.client.RestTemplate"></bean>
 </beans>
