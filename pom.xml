@@ -215,7 +215,6 @@
                         <phase>package</phase>
                         <configuration>
                             <path>/</path>
-                            <uriEncoding>UTF-8</uriEncoding>
                             <connectorHttpProtocol>org.apache.coyote.http11.Http11NioProtocol</connectorHttpProtocol>
                             <finalName>${project.artifactId}.jar</finalName>
                         </configuration>
