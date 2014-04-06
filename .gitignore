@@ -12,3 +12,4 @@ mecab-ipadic*
 .idea
 .DS_Store
 entry.json
+gc.log*

@@ -3,7 +3,7 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
+            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{PID}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
         </encoder>
     </appender>
 
@@ -18,7 +18,7 @@
         </rollingPolicy>
         <encoder>
             <charset>UTF-8</charset>
-            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
+            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{PID}\\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
         </encoder>
     </appender>
 
@@ -33,7 +33,7 @@
         </rollingPolicy>
         <encoder>
             <charset>UTF-8</charset>
-            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tX-Track:%X{X-Track}\tlevel:%-5level\tmessage:%msg%n]]></pattern>
+            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{PID}\\tX-Track:%X{X-Track}\tlevel:%-5level\tmessage:%msg%n]]></pattern>
         </encoder>
     </appender>
 
