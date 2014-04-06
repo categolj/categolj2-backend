@@ -1,5 +1,7 @@
 # CategolJ2 Backend
 
+[![Build Status](https://travis-ci.org/making/categolj2-backend.svg)](https://travis-ci.org/making/categolj2-backend)
+
 CategoljJ2 is a micro blog system. This backend provides REST API for blog system and admin console to manage these data. You can create any blog frontend using this APIs ;)
 
 The following technologies are used.
