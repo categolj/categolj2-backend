@@ -68,6 +68,10 @@ public class AuthenticationHelper {
         return new HttpEntity<>(params, headers);
     }
 
+    int getRefreshTokenMaxAge(OAuth2AccessToken accessToken) {
+        return accessToken.getExpiresIn() * 10 /* FIXME */;
+    }
+
     void saveAccessTokenInCookie(OAuth2AccessToken accessToken, HttpServletResponse response) throws UnsupportedEncodingException {
         Cookie accessTokenValueCookie = new Cookie(Categolj2Cookies.ACCESS_TOKEN_VALUE_COOKIE,
                 URLEncoder.encode(accessToken.getValue(), "UTF-8"));
@@ -83,6 +87,7 @@ public class AuthenticationHelper {
         if (refreshToken != null) {
             Cookie refreshTokenCookie = new Cookie(Categolj2Cookies.REFRESH_TOKEN_VALUE_COOKIE,
                     URLEncoder.encode(refreshToken.getValue(), "UTF-8"));
+            refreshTokenCookie.setMaxAge(getRefreshTokenMaxAge(accessToken));
             response.addCookie(refreshTokenCookie);
         }
     }
@@ -115,13 +120,13 @@ public class AuthenticationHelper {
             LoginHistory loginHistory = createHistory(username, request);
             loginHistoryService.save(loginHistory);
 
-            saveUserInformationInCookie(username, firstName, lastName, email, response);
+            saveUserInformationInCookie(username, firstName, lastName, email, accessToken, response);
         } else {
             logger.error("No user information! (access_token={})", accessToken);
         }
     }
 
-    void saveUserInformationInCookie(String username, String firstName, String lastName, String email,
+    void saveUserInformationInCookie(String username, String firstName, String lastName, String email, OAuth2AccessToken accessToken,
                                      HttpServletResponse response) throws UnsupportedEncodingException {
         String json = String.format("{\"username\":\"%s\"," +
                 "\"firstName\":\"%s\"," +
@@ -129,6 +134,7 @@ public class AuthenticationHelper {
                 "\"email\":\"%s\"}", username, firstName, lastName, email);
         Cookie cookie = new Cookie(Categolj2Cookies.USER_COOKIE,
                 URLEncoder.encode(json, "UTF-8"));
+        cookie.setMaxAge(getRefreshTokenMaxAge(accessToken));
         response.addCookie(cookie);
     }
 
