@@ -92,18 +92,6 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>postgres</id>
-            <properties>
-                <database>POSTGRES</database>
-            </properties>
-        </profile>
-        <profile>
-            <id>oracle</id>
-            <properties>
-                <database>ORACLE</database>
-            </properties>
-        </profile>
     </profiles>
 
 
