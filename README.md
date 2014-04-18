@@ -58,9 +58,9 @@ These are options of [tomcat-maven-plugin](http://tomcat.apache.org/maven-plugin
 
 access
 
-* Backend http://localhost:8080/admin.jsp
+* Backend [http://localhost:8080/admin.jsp](http://localhost:8080/admin.jsp)
   * login with initial account (admin/demo)
-* Sample frontend http://localhost:8080
+* Sample frontend [http://localhost:8080](http://localhost:8080)
 
 
 CategoLJ2 supports H2 and MySQL and embedded H2 is used as default.
@@ -146,6 +146,8 @@ HTML5 `multiple` attribute is supported.
 You can insert book link using Amazon Product API.
 
 ![Amazon search][6]
+
+run with `-D aws.accesskey.id=<Your Accesskey ID for AWS> -D aws.secret.accesskey=<Your Secret Accesskey for AWS> -D aws.associate.tag=<Your Associate Tag>`
 
 #### Entry search
 Full text search is available.
