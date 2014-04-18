@@ -13,8 +13,67 @@ The following technologies are used.
 * Spring Data JPA
 * JPA 2.1
 * Hibernate Search
+* Flyway
 * Backbone.js
 * ...
+
+## Quick launch
+
+Download categolj2-backend.jar from [release page](https://github.com/making/categolj2-backend/releases).
+This jar is executable becaseuse it includes an embedded Tomcat7.
+
+Options are following:
+
+    $ java -jar categolj2-backend.jar -help
+    usage: java -jar [path to your exec war jar]
+     -ajpPort <ajpPort>                     ajp port to use
+     -clientAuth                            enable client authentication for
+                                            https
+     -D <arg>                               key=value
+     -extractDirectory <extractDirectory>   path to extract war content,
+                                            default value: .extract
+     -h,--help                              help
+     -httpPort <httpPort>                   http port to use
+     -httpProtocol <httpProtocol>           http protocol to use: HTTP/1.1 or
+                                            org.apache.coyote.http11.Http11Nio
+                                            Protocol
+     -httpsPort <httpsPort>                 https port to use
+     -keyAlias <keyAlias>                   alias from keystore for ssl
+     -loggerName <loggerName>               logger to use: slf4j to use slf4j
+                                            bridge on top of jul
+     -obfuscate <password>                  obfuscate the password and exit
+     -resetExtract                          clean previous extract directory
+     -serverXmlPath <serverXmlPath>         server.xml to use, optional
+     -uriEncoding <uriEncoding>             connector uriEncoding default
+                                            ISO-8859-1
+     -X,--debug                             debug
+
+These are options of [tomcat-maven-plugin](http://tomcat.apache.org/maven-plugin-2.2/executable-war-jar.html)
+
+Note that CategoLJ2 requires Java8.
+
+### Sample
+
+    $ java -Xms512m -Xmx1g -jar categolj2-backend.jar -httpPort 8080
+
+access
+
+* Backend http://localhost:8080/admin.jsp
+  * login with initial account (admin/demo)
+* Sample frontend http://localhost:8080
+
+
+CategoLJ2 supports H2 and MySQL and embedded H2 is used as default.
+
+You can change H2 data location as following:
+
+    $ java -Xms512m -Xmx1g -jar categolj2-backend.jar -httpPort 8080 -D categolj2.h2.datadir=./foobar
+
+When you would like to use MySQL then:
+
+    $ java -Xms512m -Xmx1g -jar categolj2-backend.jar -httpPort 8080 -D database=MYSQL -D database.driverClassName=com.mysql.jdbc.Driver -D database.url=jdbc:mysql://localhost:3306/categolj2?zeroDateTimeBehavior=convertToNull -D database.username=root -D database.password=password
+
+In this case, you have to run `create database categolj2` using `mysql` command in advance.
 
 ## APIs
 
