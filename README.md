@@ -48,9 +48,9 @@ Options are following:
                                             ISO-8859-1
      -X,--debug                             debug
 
-These are options of [tomcat-maven-plugin](http://tomcat.apache.org/maven-plugin-2.2/executable-war-jar.html)
+These are options of [tomcat-maven-plugin](http://tomcat.apache.org/maven-plugin-2.2/executable-war-jar.html).
 
-Note that CategoLJ2 requires Java8.
+**Note that CategoLJ2 requires Java8**.
 
 ### Sample
 
