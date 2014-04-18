@@ -30,6 +30,18 @@
         </fileset>
       </configuration>
     </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="" />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactory" value="dataSource" />
+          <factory-entry name="gen-ddl-ORACLE" />
+          <factory-entry name="gen-ddl-POSTGRES" />
+        </datasource-mapping>
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -43,6 +55,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.googlecode.flyway:flyway-core:2.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-web:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-common:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:13.0.1" level="project" />
@@ -140,10 +153,27 @@
     <orderEntry type="library" name="Maven: am.ik.aws:aws-apa:0.9.5" level="project" />
     <orderEntry type="library" name="Maven: am.ik.marked4j:marked4j:0.9.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.12.2" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.flyway:flyway-core:2.3.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-servlet-api:7.0.53" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-jsp-api:7.0.53" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:tomcat-el-api:7.0.53" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:4.0.1.RELEASE" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hibernate:hibernate-tools:4.3.1.CR1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: javax.transaction:jta:1.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: ant:ant:1.6.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: freemarker:freemarker:2.3.8" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hibernate:jtidy:r8-20060801" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.tycho:org.eclipse.jdt.core:3.9.1.v20130905-0837" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse:text:3.3.0-v20070606-0010" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.core:commands:3.3.0-I20070605-0010" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.equinox:common:3.6.200-v20130402-1505" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.core:runtime:3.9.0-v20130326-1255" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse:osgi:3.9.1-v20140110-1610" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.core:jobs:3.5.300-v20130429-1813" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.equinox:registry:3.5.301-v20130717-1549" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.equinox:preferences:3.5.100-v20130422-1538" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.core:contenttype:3.4.200-v20130326-1255" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.equinox:app:1.3.100-v20130327-1442" level="project" />
   </component>
 </module>
 

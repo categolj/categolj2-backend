@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="gen-ddl-MYSQL"
+                      transaction-type="RESOURCE_LOCAL">
+        <properties>
+            <property name="hibernate.ejb.naming_strategy"
+                      value="org.hibernate.cfg.ImprovedNamingStrategy"></property>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"></property>
+        </properties>
+    </persistence-unit>
+    <persistence-unit name="gen-ddl-H2"
+                      transaction-type="RESOURCE_LOCAL">
+        <properties>
+            <property name="hibernate.ejb.naming_strategy"
+                      value="org.hibernate.cfg.ImprovedNamingStrategy"></property>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"></property>
+        </properties>
+    </persistence-unit>
+</persistence>
