@@ -13,3 +13,5 @@ mecab-ipadic*
 .DS_Store
 entry.json
 gc.log*
+.extract
+am.ik.categolj2.domain.model.Entry

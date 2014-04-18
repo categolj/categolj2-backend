@@ -36,6 +36,8 @@
         <setting name="provider-name" value="" />
         <datasource-mapping>
           <factory-entry name="entityManagerFactory" value="dataSource" />
+          <factory-entry name="gen-ddl-H2" />
+          <factory-entry name="gen-ddl-MYSQL" />
           <factory-entry name="gen-ddl-ORACLE" />
           <factory-entry name="gen-ddl-POSTGRES" />
         </datasource-mapping>
