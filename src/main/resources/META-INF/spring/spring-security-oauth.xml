@@ -49,8 +49,12 @@
         <constructor-arg index="0" ref="clientDetails"/>
     </bean>
 
-    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore">
-        <constructor-arg index="0" ref="dataSource"/>
+    <bean id="tokenStore" class="am.ik.categolj2.infra.token.CachingTokenStore">
+        <constructor-arg index="0">
+            <bean class="org.springframework.security.oauth2.provider.token.JdbcTokenStore">
+                <constructor-arg index="0" ref="dataSource"/>
+            </bean>
+        </constructor-arg>
     </bean>
 
     <bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
