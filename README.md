@@ -6,10 +6,10 @@ CategoljJ2 is a micro blog system. This backend provides REST API for blog syste
 
 The following technologies are used.
 
-* Java8
+* Java 8
 * Spring 4
 * Spring MVC
-* Spring Security
+* Spring Security OAuth
 * Spring Data JPA
 * JPA 2.1
 * Hibernate Search
@@ -52,15 +52,18 @@ These are options of [tomcat-maven-plugin](http://tomcat.apache.org/maven-plugin
 
 **Note that CategoLJ2 requires Java8**.
 
-### Sample
+### Simple usage
 
     $ java -Xms512m -Xmx1g -jar categolj2-backend.jar -httpPort 8080
 
-access
+Access
 
-* Backend [http://localhost:8080/admin.jsp](http://localhost:8080/admin.jsp)
+* Backend 
+  * [http://localhost:8080/admin.jsp](http://localhost:8080/admin.jsp)
   * login with initial account (admin/demo)
-* Sample frontend [http://localhost:8080](http://localhost:8080)
+* Sample frontend 
+  * [http://localhost:8080](http://localhost:8080)
+  * see [Setup frontend](#setup-frontend) to customize frontend screen.
 
 
 CategoLJ2 supports H2 and MySQL and embedded H2 is used as default.
@@ -75,7 +78,7 @@ When you would like to use MySQL then:
 
 In this case, you have to run `create database categolj2` using `mysql` command in advance.
 
-## APIs
+## Backend APIs
 
 Supported REST APIs are following.
 
@@ -173,19 +176,80 @@ Inline edit is available.
 
 ![Manage links][11]
 
+## Setup frontend
+
+The following sample fronted is embedded by default:
+
+![Sample Frontend][12]
+
+You can change the frontend location with `frontend.resources.location` property like following:
+
+    $ echo -n "Hello CategoLJ2" > /tmp/index.html
+    $ java -jar categolj2-backend.jar -D frontend.resources.location=file:/tmp
+
+The following screen is displayed when you set it in this way.
+    
+![Custom Frontend][13]
+
+ Note that `frontend.resources.location` must start with `file:` prefix and an absolute path. 
+
+Be careful not to expose  "[**Path Traversal**](https://www.owasp.org/index.php/Path_Traversal)" vulnerability.
+
+When you want to revise HTML/JavaScript of the sample frontend, you extract the file as follows and  please copy these:
+
+    $ unzip categolj2-backend.jar -d tmp
+    $ unzip tmp/.war -d categolj2-backend
+    $ mv categolj2-backend/categolj2-frontend/* your-frontend-location
+
+For example, 
+
+    $ mkdir -p /tmp/frontend
+    $ mv categolj2-backend/categolj2-frontend/* /tmp/frontend/
+    $ sed -i -e "s/BLOG.IK.AM/My Blog Title/g" /tmp/frontend/index.html
+    $ java -jar categolj2-backend.jar -D frontend.resources.location=file:/tmp/frontend
+
+You can get the following screen:
+    
+![Custom Frontend][14]
+
+## Configurable properties
+
+Key | Description | Default value
+--------------- | ------------- | ----- 
+backend.resources.cache.seconds | cache lifetime of static resources (HTML/JavaScript/CSS/Image) in Backend | 604800
+frontend.resources.location | location of static resources in Frontend | categolj2-frontend
+frontend.resources.cache.seconds | cache lifetime of static resources (HTML/JavaScript/CSS/Image) in Frontend | 604800
+database | database name (H2 or MYSQL) | H2
+database.url |  url for JDBC driver| jdbc:h2:file:${categolj2.h2.datadir:/tmp}/categolj2 
+database.username | database username | sa
+database.password | database password |
+database.driverClassName | JDBC Driver class name | org.h2.Driver
+hibernate.search.default.indexBase | file path storing Iucene index | /tmp/lucene
+cp.maxActive | max active for connection pool | 96
+cp.maxIdle | max idle for connection pool | 16
+cp.minIdle | min idle for connection pool | 0
+cp.maxWait | max wait for connection pool |  60000
+aws.accesskey.id | Accesskey ID for AWS | <Your Accesskey ID for AWS>
+aws.secret.accesskey | Secret Accesskey for AWS |<Your Secret Accesskey for AWS>
+aws.endpoint | AWS endpoint| https://ecs.amazonaws.jp
+aws.associate.tag | Associate Tag for Amazon Affiliate | ikam-22
+
 
 ## License
 
 Licensed under the Apache License, Version 2.0.
 
-  [1]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-dashboadrd.png
-  [2]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-entries.png
-  [3]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-entries-form.png
-  [4]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-entries-preview.png
-  [5]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-entries-upload.png
-  [6]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-entries-amazon.png
-  [7]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-entries-search.png
-  [8]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-uploads.png
-  [9]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-users.png
-  [10]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-users-inline-edit.png
-  [11]: https://github.com/making/categolj2-backend/raw/master/screenshots/ss-links.png
+  [1]: ./screenshots/ss-dashboadrd.png
+  [2]: ./screenshots/ss-entries.png
+  [3]: ./screenshots/ss-entries-form.png
+  [4]: ./screenshots/ss-entries-preview.png
+  [5]: ./screenshots/ss-entries-upload.png
+  [6]: ./screenshots/ss-entries-amazon.png
+  [7]: ./screenshots/ss-entries-search.png
+  [8]: ./screenshots/ss-uploads.png
+  [9]: ./screenshots/ss-users.png
+  [10]: ./screenshots/ss-users-inline-edit.png
+  [11]: ./screenshots/ss-links.png
+  [12]: ./screenshots/ss-frontend.png
+  [13]: ./screenshots/ss-frontend-custom.png
+  [14]: ./screenshots/ss-frontend-custom2.png
