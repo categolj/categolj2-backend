@@ -78,6 +78,8 @@ When you would like to use MySQL then:
 
 In this case, you have to run `create database categolj2` using `mysql` command in advance.
 
+Other properties are explained in [Configurable properties](#configurable-properties).
+
 ## Backend APIs
 
 Supported REST APIs are following.
@@ -216,6 +218,9 @@ You can get the following screen:
 
 Key | Description | Default value
 --------------- | ------------- | ----- 
+log.verbose | set this property `warn` if you want to supress the output of verbose log. | 
+log.sql | set this property `debug` if you want to output SQL log. | error
+log.sql.reslt | set this property `debug` if I want to output SQL result log. | error
 backend.resources.cache.seconds | cache lifetime of static resources (HTML/JavaScript/CSS/Image) in Backend | 604800
 frontend.resources.location | location of static resources in Frontend | categolj2-frontend
 frontend.resources.cache.seconds | cache lifetime of static resources (HTML/JavaScript/CSS/Image) in Frontend | 604800
@@ -229,8 +234,8 @@ cp.maxActive | max active for connection pool | 96
 cp.maxIdle | max idle for connection pool | 16
 cp.minIdle | min idle for connection pool | 0
 cp.maxWait | max wait for connection pool |  60000
-aws.accesskey.id | Accesskey ID for AWS | <Your Accesskey ID for AWS>
-aws.secret.accesskey | Secret Accesskey for AWS |<Your Secret Accesskey for AWS>
+aws.accesskey.id | access key ID for AWS | \<Your Accesskey ID for AWS\>
+aws.secret.accesskey | secret accesskey for AWS | \<Your Secret Accesskey for AWS\>
 aws.endpoint | AWS endpoint| https://ecs.amazonaws.jp
 aws.associate.tag | Associate Tag for Amazon Affiliate | ikam-22
 
