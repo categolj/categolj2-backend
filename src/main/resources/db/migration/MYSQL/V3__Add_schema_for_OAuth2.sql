@@ -1,16 +1,16 @@
 CREATE TABLE oauth_access_token (
-  token_id          VARCHAR(256),
+  token_id          VARCHAR(255),
   token             BLOB,
-  authentication_id VARCHAR(256),
-  user_name         VARCHAR(256),
-  client_id         VARCHAR(256),
+  authentication_id VARCHAR(255),
+  user_name         VARCHAR(255),
+  client_id         VARCHAR(255),
   authentication    BLOB,
-  refresh_token     VARCHAR(256)
+  refresh_token     VARCHAR(255)
 )
   ENGINE =InnoDB;
 
 CREATE TABLE oauth_refresh_token (
-  token_id       VARCHAR(256),
+  token_id       VARCHAR(255),
   token          BLOB,
   authentication BLOB
 )
