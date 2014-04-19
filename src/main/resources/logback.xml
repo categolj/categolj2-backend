@@ -47,10 +47,10 @@
         <level value="warn" />
     </logger>
     <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor">
-        <level value="trace" />
+        <level value="${log.verbose:-trace}" />
     </logger>
     <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger">
-        <level value="info" />
+        <level value="${log.verbose:-info}" />
     </logger>
     <logger
         name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring"
@@ -64,47 +64,30 @@
         <level value="warn" />
     </logger>
     <logger name="org.springframework.security">
-        <level value="info" />
+        <level value="${log.verbose:-info}" />
     </logger>
 
     <logger name="org.springframework.web.servlet">
-        <level value="info" />
+        <level value="${log.verbose:-info}" />
     </logger>
 
     <logger name="org.springframework.data.auditing">
         <level value="debug" />
     </logger>
 
-    <!-- <logger name="org.hibernate.SQL"> -->
-    <!-- <level value="debug" /> -->
-    <!-- </logger> -->
-    <!-- <logger name="org.hibernate.type.descriptor.sql.BasicBinder"> -->
-    <!-- <level value="trace" /> -->
-    <!-- </logger> -->
-
     <logger name="org.hibernate.engine.transaction">
         <level value="warn" />
     </logger>
-
-    <!--<logger name="org.hibernate.search">-->
-        <!--<level value="debug" />-->
-    <!--</logger>-->
 
     <logger name="jdbc">
         <level value="off" />
     </logger>
     <logger name="jdbc.sqltiming">
-        <level value="error" />
+        <level value="${log.sql:-error}" />
     </logger>
     <logger name="jdbc.resultsettable">
         <level value="error" />
     </logger>
-    <!--<logger name="jdbc.resultsettable">-->
-        <!--<level value="trace" />-->
-    <!--</logger>-->
-    <!-- <logger name="org.dozer.DozerBeanMapper"> -->
-    <!-- <level value="trace" /> -->
-    <!-- </logger> -->
     <root level="warn">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="APPLICATION_LOG_FILE" />
