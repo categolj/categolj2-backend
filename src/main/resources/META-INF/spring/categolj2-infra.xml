@@ -33,6 +33,8 @@
                 <value>recentPost</value>
                 <value>link</value>
                 <value>uploadFileSummary</value>
+                <value>accessToken</value>
+                <value>accessTokenAuthentication</value>
             </list>
         </property>
     </bean>

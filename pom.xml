@@ -63,7 +63,7 @@
             <id>h2</id>
             <properties>
                 <database>H2</database>
-                <flyway.url>jdbc:h2:file:target/foobar</flyway.url>
+                <flyway.url>jdbc:h2:file:/tmp/categolj2</flyway.url>
                 <flyway.user>sa</flyway.user>
                 <flyway.password></flyway.password>
             </properties>
