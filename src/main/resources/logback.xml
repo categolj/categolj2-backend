@@ -86,7 +86,7 @@
         <level value="${log.sql:-error}" />
     </logger>
     <logger name="jdbc.resultsettable">
-        <level value="error" />
+        <level value="${log.sql.result:-error}" />
     </logger>
     <root level="warn">
         <appender-ref ref="STDOUT" />
