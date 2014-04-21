@@ -36,9 +36,24 @@
                    location="${frontend.resources.location:categolj2-frontend}/"
                    cache-period="${frontend.cache.seconds:604800}"/>
     <mvc:view-controller path="/" view-name="forward:/index.html"/>
-    <mvc:resources mapping="/**"
-                   location="${frontend.resources.location:categolj2-frontend}/"
-                   cache-period="${frontend.resources.cache.seconds:604800}"/>
+
+    <bean class="am.ik.categolj2.core.web.servlet.handler.ExcludeUrlHandlerMapping">
+        <property name="excludes">
+            <set>
+                <value>/oauth/token</value>
+            </set>
+        </property>
+        <property name="order" value="#{T(Integer).MAX_VALUE - 1}"/>
+        <property name="urlMap">
+            <map>
+                <entry key="/**" value-ref="resourceHttpRequestHandler"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="resourceHttpRequestHandler" class="org.springframework.web.servlet.resource.ResourceHttpRequestHandler">
+        <property name="locations" value="${frontend.resources.location:categolj2-frontend}/"/>
+        <property name="cacheSeconds" value="${frontend.resources.cache.seconds:604800}"/>
+    </bean>
 
     <mvc:interceptors>
         <mvc:interceptor>
