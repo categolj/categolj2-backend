@@ -9,31 +9,16 @@
 
     <appender name="APPLICATION_LOG_FILE"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/projectName-application.log</file>
+        <file>${log.dir:-log}/${log.file.prefix:-categolj2}-application.log</file>
         <rollingPolicy
             class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/projectName-application-%d{yyyyMMdd}.log
+            <fileNamePattern>${log.dir:-log}/${log.file.prefix:-categolj2}-application-%d{yyyyMMdd}.log
             </fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
             <charset>UTF-8</charset>
             <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
-        </encoder>
-    </appender>
-
-    <appender name="MONITORING_LOG_FILE"
-        class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/projectName-monitoring.log</file>
-        <rollingPolicy
-            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/projectName-monitoring-%d{yyyyMMdd}.log
-            </fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tX-Track:%X{X-Track}\tlevel:%-5level\tmessage:%msg%n]]></pattern>
         </encoder>
     </appender>
 
@@ -51,12 +36,6 @@
     </logger>
     <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger">
         <level value="info" />
-    </logger>
-    <logger
-        name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring"
-        additivity="false">
-        <level value="error" />
-        <appender-ref ref="MONITORING_LOG_FILE" />
     </logger>
 
     <!-- 3rdparty Loggers -->
