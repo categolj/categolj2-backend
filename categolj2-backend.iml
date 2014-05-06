@@ -85,7 +85,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-orm:4.0.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:4.0.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:4.0.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:1.6.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:1.7.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.0.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:4.0.1.RELEASE" level="project" />
@@ -139,7 +139,7 @@
     <orderEntry type="library" name="Maven: org.jboss:jandex:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-jpa:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-entitymanager:4.3.1.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-jpa:1.4.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-jpa:1.5.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.jadira.usertype:usertype.core:3.0.0.GA" level="project" />
     <orderEntry type="library" name="Maven: org.jadira.usertype:usertype.spi:3.0.0.GA" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-taglibs:3.2.0.RELEASE" level="project" />
