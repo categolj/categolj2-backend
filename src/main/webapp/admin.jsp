@@ -4,11 +4,13 @@
 
     Cookie[] cookies = request.getCookies();
     boolean hasAccessToken = false;
-    for (Cookie cookie : cookies) {
-        if (Categolj2Cookies.ACCESS_TOKEN_VALUE_COOKIE.equals(cookie.getName())) {
-            if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
-                hasAccessToken = true;
-                break;
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if (Categolj2Cookies.ACCESS_TOKEN_VALUE_COOKIE.equals(cookie.getName())) {
+                if (cookie.getValue() != null && !cookie.getValue().isEmpty()) {
+                    hasAccessToken = true;
+                    break;
+                }
             }
         }
     }
