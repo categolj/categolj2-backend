@@ -7,10 +7,10 @@ import java.lang.management.ManagementFactory;
 public class PidSetter {
 
     public PidSetter() {
-        if (System.getProperty("PID") == null) {
+        if (System.getProperty("X-PID") == null) {
             String pid = getPid();
-            System.setProperty("PID", pid);
-            MDC.put("PID", pid);
+            System.setProperty("X-PID", pid);
+            MDC.put("X-PID", pid);
         }
     }
 

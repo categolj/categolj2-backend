@@ -4,7 +4,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
-                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{PID}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
+                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{X-PID}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
         </encoder>
     </appender>
 
@@ -20,7 +20,7 @@
         <encoder>
             <charset>UTF-8</charset>
             <pattern>
-                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{PID}\\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
+                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{X-PID}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
         </encoder>
     </appender>
 
