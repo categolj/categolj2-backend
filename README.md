@@ -220,7 +220,9 @@ Key | Description | Default value
 --------------- | ------------- | ----- 
 log.verbose | set this property `warn` if you want to supress the output of verbose log. | 
 log.sql | set this property `debug` if you want to output SQL log. | error
-log.sql.reslt | set this property `debug` if I want to output SQL result log. | error
+log.sql.result | set this property `debug` if I want to output SQL result log. | error
+log.dir | directory to output log | log
+log.file.prefix | prefix of log file | categolj2
 backend.resources.cache.seconds | cache lifetime of static resources (HTML/JavaScript/CSS/Image) in Backend | 604800
 frontend.resources.location | location of static resources in Frontend | categolj2-frontend
 frontend.resources.cache.seconds | cache lifetime of static resources (HTML/JavaScript/CSS/Image) in Frontend | 604800
