@@ -1,0 +1,2 @@
+ALTER TABLE login_history ALTER COLUMN login_agent VARCHAR(256) NOT NULL;
+ALTER TABLE access_log ALTER COLUMN user_agent VARCHAR(256) NOT NULL;

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class UserAgents {
     public static String getUserAgent(HttpServletRequest request) {
-        String userAgent = StringUtils.substring(request.getHeader(HttpHeaders.USER_AGENT), 0, 128);
+        String userAgent = StringUtils.substring(request.getHeader(HttpHeaders.USER_AGENT), 0, 256);
         return userAgent;
     }
 }
