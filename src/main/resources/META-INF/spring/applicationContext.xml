@@ -59,10 +59,15 @@
     </bean>
     <bean id="pidSetter" class="am.ik.categolj2.infra.logging.PidSetter"/>
 
-    <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
-        <property name="dateFormat">
-            <bean class="org.codehaus.jackson.map.util.StdDateFormat"/>
+    <!-- Jackson Object Mapper -->
+    <bean id="objectMapper"
+          class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+        <property name="objectMapper">
+            <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                <property name="timeZone" value="${user.timezone:JST}"/>
+            </bean>
         </property>
+        <property name="simpleDateFormat" value="yyyy-MM-dd'T'HH:mm:ss.SSSZ"/>
     </bean>
 
     <!-- Enable handling of java.util.logging through SLF4J -->
