@@ -48,6 +48,7 @@
                        value="/tmp/categolj2_test"/>
                 <!--<entry key="hibernate.search.model_mapping" value="am.ik.categolj2.infra.search.SearchMappingFactory"/>-->
                 <entry key="hibernate.search.analyzer" value="org.apache.lucene.analysis.cjk.CJKAnalyzer"/>
+                <entry key="hibernate.search.lucene_version" value="LUCENE_CURRENT"/>
             </util:map>
         </property>
     </bean>

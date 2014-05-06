@@ -16,8 +16,8 @@
     <properties>
         <java-version>1.8</java-version>
         <org.hibernate.version>4.3.1.Final</org.hibernate.version>
-        <org.springframework-version>4.0.1.RELEASE</org.springframework-version>
-        <org.springframework.security.version>3.2.0.RELEASE</org.springframework.security.version>
+        <org.springframework-version>4.0.4.RELEASE</org.springframework-version>
+        <org.springframework.security.version>3.2.3.RELEASE</org.springframework.security.version>
         <org.springframework.data.spring-data-jpa.version>1.5.2.RELEASE</org.springframework.data.spring-data-jpa.version>
         <org.springframework.data.version>1.7.2.RELEASE</org.springframework.data.version>
         <tomcat.version>7.0.53</tomcat.version>

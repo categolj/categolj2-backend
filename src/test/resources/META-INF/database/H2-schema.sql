@@ -1,0 +1,1 @@
+select 1+1 -- this is dummy sql
