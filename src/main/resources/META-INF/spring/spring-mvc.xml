@@ -152,4 +152,6 @@
         <aop:advisor advice-ref="handlerExceptionResolverLoggingInterceptor"
                      pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))"/>
     </aop:config>
+
+    <import resource="spring-boot-acutuator.xml" />
 </beans>

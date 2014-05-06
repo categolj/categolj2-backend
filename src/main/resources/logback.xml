@@ -44,6 +44,9 @@
     <logger name="org.springframework">
         <level value="warn"/>
     </logger>
+    <logger name="org.springframework.boot">
+        <level value="${log.verbose:-info}"/>
+    </logger>
     <logger name="org.springframework.security">
         <level value="${log.verbose:-info}"/>
     </logger>
