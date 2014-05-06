@@ -21,7 +21,8 @@ import am.ik.categolj2.core.web.RemoteAddresses;
 import am.ik.categolj2.core.web.UserAgents;
 import am.ik.categolj2.domain.model.LoginHistory;
 import am.ik.categolj2.domain.service.loginhistory.LoginHistoryService;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
