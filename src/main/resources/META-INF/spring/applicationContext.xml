@@ -55,6 +55,9 @@
           class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter">
         <property name="exceptionLogger" ref="exceptionLogger"/>
     </bean>
+    <bean id="pidMDCPutFilter" class="am.ik.categolj2.core.web.pid.PidMDCPutFilter" depends-on="pidSetter">
+    </bean>
+    <bean id="pidSetter" class="am.ik.categolj2.infra.logging.PidSetter"/>
 
     <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
         <property name="dateFormat">
