@@ -68,7 +68,7 @@ public class AccessLog implements Serializable {
     private String remoteAddress;
 
     @NotNull
-    @Size(min = 1, max = 128)
+    @Size(min = 1, max = 256)
     @Column(name = "USER_AGENT", length = 128)
     private String userAgent;
 

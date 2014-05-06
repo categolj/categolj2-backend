@@ -55,7 +55,7 @@ public class LoginHistory {
     private String loginHost;
 
     @NotNull
-    @Size(min = 1, max = 128)
+    @Size(min = 1, max = 256)
     @Column(name = "LOGIN_AGENT", length = 128)
     private String loginAgent;
 
