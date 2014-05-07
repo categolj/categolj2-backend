@@ -21,15 +21,11 @@
     <bean class="org.springframework.boot.actuate.endpoint.MetricsEndpoint">
         <constructor-arg>
             <bean class="org.springframework.boot.actuate.endpoint.VanillaPublicMetrics">
-                <constructor-arg>
-                    <bean class="org.springframework.boot.actuate.metrics.repository.InMemoryMetricRepository"/>
-                </constructor-arg>
+                <constructor-arg ref="metricRepository"/>
             </bean>
         </constructor-arg>
     </bean>
     <bean class="org.springframework.boot.actuate.endpoint.EnvironmentEndpoint"/>
-    <bean class="org.springframework.boot.actuate.endpoint.RequestMappingEndpoint"/>
-    <bean class="org.springframework.boot.actuate.endpoint.BeansEndpoint"/>
 
     <bean id="mvcEndpoints" class="org.springframework.boot.actuate.endpoint.mvc.MvcEndpoints"/>
 

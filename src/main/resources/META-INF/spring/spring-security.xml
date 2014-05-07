@@ -5,20 +5,21 @@
        xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-    <import resource="spring-security-oauth.xml" />
+    <import resource="spring-security-oauth.xml"/>
 
-    <sec:http pattern="/resources/**" security="none" />
-    <sec:http pattern="/admin.jsp" security="none" />
-    <sec:http pattern="/login.jsp" security="none" />
+    <sec:http pattern="/resources/**" security="none"/>
+    <sec:http pattern="/admin.jsp" security="none"/>
+    <sec:http pattern="/login.jsp" security="none"/>
     <sec:http auto-config="false" use-expressions="true"
               entry-point-ref="oauthAuthenticationEntryPoint"
               create-session="stateless"
               authentication-manager-ref="authenticationManager">
-        <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="POST" />
-        <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="PUT" />
-        <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="DELETE" />
-        <sec:custom-filter before="PRE_AUTH_FILTER" ref="oauthAuthenticationProcessingFilter" />
-        <sec:anonymous enabled="false" />
+        <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="POST"/>
+        <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="PUT"/>
+        <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="DELETE"/>
+        <sec:intercept-url pattern="/management/**" access="isAuthenticated()"/>
+        <sec:custom-filter before="PRE_AUTH_FILTER" ref="oauthAuthenticationProcessingFilter"/>
+        <sec:anonymous enabled="false"/>
     </sec:http>
-    <sec:global-method-security pre-post-annotations="enabled" authentication-manager-ref="authenticationManager" />
+    <sec:global-method-security pre-post-annotations="enabled" authentication-manager-ref="authenticationManager"/>
 </beans>
