@@ -170,6 +170,9 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.equinox:preferences:3.5.100-v20130422-1538" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.core:contenttype:3.4.200-v20130326-1255" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.equinox:app:1.3.100-v20130327-1442" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator:1.0.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:1.0.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.0.2.RELEASE" level="project" />
   </component>
 </module>
 

@@ -79,4 +79,21 @@
 
 
     <bean class="org.springframework.web.client.RestTemplate"></bean>
+
+    <!-- spring-boot-actuator -->
+    <bean id="metricRepository" class="org.springframework.boot.actuate.metrics.repository.InMemoryMetricRepository"/>
+    <bean id="counterService" class="org.springframework.boot.actuate.metrics.writer.DefaultCounterService">
+        <constructor-arg ref="metricRepository"/>
+    </bean>
+    <bean id="gaugeService" class="org.springframework.boot.actuate.metrics.writer.DefaultGaugeService">
+        <constructor-arg ref="metricRepository"/>
+    </bean>
+
+    <bean id="metricFilter" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject">
+            <bean class="org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration"/>
+        </property>
+        <property name="targetMethod" value="metricFilter"/>
+    </bean>
+
 </beans>
