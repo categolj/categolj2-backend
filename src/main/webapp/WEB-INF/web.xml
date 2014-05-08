@@ -6,6 +6,9 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <listener>
+        <listener-class>am.ik.categolj2.core.web.metrics.MetricsServletContextListener</listener-class>
+    </listener>
+    <listener>
         <listener-class>org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener</listener-class>
     </listener>
     <context-param>
@@ -97,6 +100,8 @@
     <filter-mapping>
         <filter-name>CrossOriginFilter</filter-name>
         <url-pattern>/api/v1/*</url-pattern>
+        <url-pattern>/management/*</url-pattern>
+        <url-pattern>/codahale/*</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -133,6 +138,15 @@
     <servlet-mapping>
         <servlet-name>appServlet</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>metricsServlet</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.MetricsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>metricsServlet</servlet-name>
+        <url-pattern>/codahale/metrics</url-pattern>
     </servlet-mapping>
 
     <jsp-config>
