@@ -21,7 +21,7 @@
     <bean class="org.springframework.boot.actuate.endpoint.MetricsEndpoint">
         <constructor-arg>
             <bean class="org.springframework.boot.actuate.endpoint.VanillaPublicMetrics">
-                <constructor-arg ref="metricRepository"/>
+                <constructor-arg ref="metricReader"/>
             </bean>
         </constructor-arg>
     </bean>

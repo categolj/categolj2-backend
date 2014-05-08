@@ -173,6 +173,10 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator:1.0.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:1.0.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.0.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-core:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-jvm:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-servlets:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-json:3.0.1" level="project" />
   </component>
 </module>
 

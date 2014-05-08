@@ -24,6 +24,7 @@
         <org.springframework.data.version>1.7.2.RELEASE</org.springframework.data.version>
         <tomcat.version>7.0.53</tomcat.version>
         <flyway.plugin.version>2.3</flyway.plugin.version>
+        <metrics.version>3.0.1</metrics.version>
     </properties>
 
     <profiles>
@@ -317,6 +318,28 @@
                 <exclusion>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.codahale.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>${metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codahale.metrics</groupId>
+            <artifactId>metrics-jvm</artifactId>
+            <version>${metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codahale.metrics</groupId>
+            <artifactId>metrics-servlets</artifactId>
+            <version>${metrics.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.codahale.metrics</groupId>
+                    <artifactId>metrics-healthchecks</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

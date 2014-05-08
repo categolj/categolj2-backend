@@ -18,6 +18,7 @@
         <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="PUT"/>
         <sec:intercept-url pattern="/api/**" access="isAuthenticated()" method="DELETE"/>
         <sec:intercept-url pattern="/management/**" access="isAuthenticated()"/>
+        <sec:intercept-url pattern="/codahale/**" access="isAuthenticated()"/>
         <sec:custom-filter before="PRE_AUTH_FILTER" ref="oauthAuthenticationProcessingFilter"/>
         <sec:anonymous enabled="false"/>
     </sec:http>
