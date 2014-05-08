@@ -28,6 +28,7 @@ var Router = Backbone.Router.extend({
         '?page=:page&size=:pageSize': 'showEntries',
         'entries': 'showEntries',
         'entries?page=:page&size=:pageSize': 'showEntries',
+        'entries/:id/title/:title': 'showEntry', // this is for migration from categolj-java
         'entries/:id': 'showEntry',
         'entries?q=:keyword&page=:page&size=:pageSize': 'showSearchResult',
         'entries?q=:keyword': 'showSearchResult',
@@ -48,6 +49,7 @@ var Router = Backbone.Router.extend({
         this.appView.showEntries(page, pageSize);
     },
     showEntry: function (id) {
+        console.log(id)
         this.appView.showEntry(id);
     },
     showSearchResult: function (keyword, page, pageSize) {
