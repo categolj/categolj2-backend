@@ -2,10 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:metrics="http://www.ryantenney.com/schema/metrics"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+        http://www.ryantenney.com/schema/metrics http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd">
 
     <bean class="am.ik.categolj2.infra.logging.PidSetter"/>
 
@@ -113,36 +114,19 @@
         <property name="targetMethod" value="metricFilter"/>
     </bean>
 
-    <!-- Codahole Metric -->
-    <bean id="metricRegistry" class="com.codahale.metrics.MetricRegistry"/>
+    <!-- Codahole Metrics -->
+    <metrics:metric-registry id="metricRegistry"/>
+    <metrics:health-check-registry id="healthCheckRegistry"/>
+    <metrics:annotation-driven metric-registry="metricRegistry" health-check-registry="healthCheckRegistry"
+                               proxy-target-class="true"/>
+    <metrics:register metric-registry="metricRegistry">
+        <bean metrics:name="jvm.gc" class="com.codahale.metrics.jvm.GarbageCollectorMetricSet"/>
+        <bean metrics:name="jvm.memory" class="com.codahale.metrics.jvm.MemoryUsageGaugeSet"/>
+        <bean metrics:name="jvm.thread-states" class="com.codahale.metrics.jvm.ThreadStatesGaugeSet"/>
+        <bean metrics:name="jvm.fd.usage" class="com.codahale.metrics.jvm.FileDescriptorRatioGauge"/>
+    </metrics:register>
+
     <bean id="codahaleMetricWriter" class="org.springframework.boot.actuate.metrics.writer.CodahaleMetricWriter">
         <constructor-arg ref="metricRegistry"/>
-    </bean>
-    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="targetObject" ref="metricRegistry"/>
-        <property name="targetMethod" value="registerAll"/>
-        <property name="arguments">
-            <array>
-                <bean class="com.codahale.metrics.jvm.GarbageCollectorMetricSet"/>
-            </array>
-        </property>
-    </bean>
-    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="targetObject" ref="metricRegistry"/>
-        <property name="targetMethod" value="registerAll"/>
-        <property name="arguments">
-            <array>
-                <bean class="com.codahale.metrics.jvm.MemoryUsageGaugeSet"/>
-            </array>
-        </property>
-    </bean>
-    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="targetObject" ref="metricRegistry"/>
-        <property name="targetMethod" value="registerAll"/>
-        <property name="arguments">
-            <array>
-                <bean class="com.codahale.metrics.jvm.ThreadStatesGaugeSet"/>
-            </array>
-        </property>
     </bean>
 </beans>
