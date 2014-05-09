@@ -6,7 +6,7 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <listener>
-        <listener-class>am.ik.categolj2.core.web.metrics.MetricsServletContextListener</listener-class>
+        <listener-class>com.ryantenney.metrics.spring.servlets.MetricsServletsContextListener</listener-class>
     </listener>
     <listener>
         <listener-class>org.terasoluna.gfw.web.logging.HttpSessionEventLoggingListener</listener-class>

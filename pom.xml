@@ -24,7 +24,7 @@
         <org.springframework.data.version>1.7.2.RELEASE</org.springframework.data.version>
         <tomcat.version>7.0.53</tomcat.version>
         <flyway.plugin.version>2.3</flyway.plugin.version>
-        <metrics.version>3.0.1</metrics.version>
+        <metrics.version>3.0.2</metrics.version>
     </properties>
 
     <profiles>
@@ -340,6 +340,29 @@
                 <exclusion>
                     <groupId>com.codahale.metrics</groupId>
                     <artifactId>metrics-healthchecks</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.ryantenney.metrics</groupId>
+            <artifactId>metrics-spring</artifactId>
+            <version>3.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context-support</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

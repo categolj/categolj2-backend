@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.*;
 import am.ik.categolj2.domain.service.accesslog.AccessLogService;
+import com.codahale.metrics.annotation.Timed;
 import org.dozer.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -48,6 +49,7 @@ public class EntryRestController {
     // Public API
 
     @RequestMapping(value = "entries", method = RequestMethod.GET)
+    @Timed
     public Page<EntryResource> getEntries(@PageableDefault Pageable pageable, AccessLog accessLog
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         accessLogService.save(accessLog);
@@ -56,6 +58,7 @@ public class EntryRestController {
     }
 
     @RequestMapping(value = "entries", method = RequestMethod.GET, params = "keyword")
+    @Timed
     public Page<EntryResource> searchEntries(@RequestParam("keyword") String keyword, AccessLog accessLog
             , @PageableDefault Pageable pageable
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
@@ -66,6 +69,7 @@ public class EntryRestController {
 
 
     @RequestMapping(value = "entries/{entryId}", method = RequestMethod.GET)
+    @Timed
     public EntryResource getEntry(@PathVariable("entryId") Integer entryId, AccessLog accessLog
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
         accessLogService.save(accessLog);
@@ -74,6 +78,7 @@ public class EntryRestController {
     }
 
     @RequestMapping(value = "categories/{category}/entries", method = RequestMethod.GET)
+    @Timed
     public Page<EntryResource> getEntriesByCategory(@PathVariable("category") String category, AccessLog accessLog
             , @PageableDefault Pageable pageable
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {

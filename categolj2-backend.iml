@@ -57,6 +57,13 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-core:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-jvm:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-servlets:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-json:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.ryantenney.metrics:metrics-spring:3.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-healthchecks:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-annotation:3.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-web:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.terasoluna.gfw:terasoluna-gfw-common:1.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:13.0.1" level="project" />
@@ -173,10 +180,13 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator:1.0.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:1.0.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.0.2.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-core:3.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-jvm:3.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-servlets:3.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-json:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-core:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-jvm:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-servlets:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-json:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.ryantenney.metrics:metrics-spring:3.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-healthchecks:3.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-annotation:3.0.2" level="project" />
   </component>
 </module>
 
