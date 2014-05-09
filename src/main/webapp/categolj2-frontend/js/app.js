@@ -49,7 +49,6 @@ var Router = Backbone.Router.extend({
         this.appView.showEntries(page, pageSize);
     },
     showEntry: function (id) {
-        console.log(id)
         this.appView.showEntry(id);
     },
     showSearchResult: function (keyword, page, pageSize) {
