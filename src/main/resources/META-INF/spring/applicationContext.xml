@@ -5,7 +5,6 @@
        xmlns:metrics="http://www.ryantenney.com/schema/metrics"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-
         http://www.ryantenney.com/schema/metrics http://www.ryantenney.com/schema/metrics/metrics-3.0.xsd">
 
     <bean class="am.ik.categolj2.infra.logging.PidSetter"/>
