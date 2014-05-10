@@ -70,11 +70,11 @@ CategoLJ2 supports H2 and MySQL and embedded H2 is used as default.
 
 You can change H2 data location as following:
 
-    $ java -Xms512m -Xmx1g -jar categolj2-backend.jar -httpPort 8080 -D categolj2.h2.datadir=./foobar
+    $ java -Xms512m -Xmx1g -jar categolj2-backend.jar -httpPort 8080 -Dcategolj2.h2.datadir=./foobar
 
 When you would like to use MySQL then:
 
-    $ java -Xms512m -Xmx1g -jar categolj2-backend.jar -httpPort 8080 -D database=MYSQL -D database.driverClassName=com.mysql.jdbc.Driver -D database.url=jdbc:mysql://localhost:3306/categolj2?zeroDateTimeBehavior=convertToNull -D database.username=root -D database.password=password
+    $ java -Xms512m -Xmx1g -jar categolj2-backend.jar -httpPort 8080 -Ddatabase=MYSQL -Ddatabase.driverClassName=com.mysql.jdbc.Driver -Ddatabase.url=jdbc:mysql://localhost:3306/categolj2?zeroDateTimeBehavior=convertToNull -Ddatabase.username=root -Ddatabase.password=password
 
 In this case, you have to run `create database categolj2` using `mysql` command in advance.
 
@@ -152,7 +152,7 @@ You can insert book link using Amazon Product API.
 
 ![Amazon search][6]
 
-run with `-D aws.accesskey.id=<Your Accesskey ID for AWS> -D aws.secret.accesskey=<Your Secret Accesskey for AWS> -D aws.associate.tag=<Your Associate Tag>`
+run with `-Daws.accesskey.id=<Your Accesskey ID for AWS> -Daws.secret.accesskey=<Your Secret Accesskey for AWS> -Daws.associate.tag=<Your Associate Tag>`
 
 #### Entry search
 Full text search is available.
@@ -187,7 +187,7 @@ The following sample fronted is embedded by default:
 You can change the frontend location with `frontend.resources.location` property like following:
 
     $ echo -n "Hello CategoLJ2" > /tmp/index.html
-    $ java -jar categolj2-backend.jar -D frontend.resources.location=file:/tmp
+    $ java -jar categolj2-backend.jar -Dfrontend.resources.location=file:/tmp
 
 The following screen is displayed when you set it in this way.
     
@@ -208,7 +208,7 @@ For example,
     $ mkdir -p /tmp/frontend
     $ mv categolj2-backend/categolj2-frontend/* /tmp/frontend/
     $ sed -i -e "s/BLOG.IK.AM/My Blog Title/g" /tmp/frontend/index.html
-    $ java -jar categolj2-backend.jar -D frontend.resources.location=file:/tmp/frontend
+    $ java -jar categolj2-backend.jar -Dfrontend.resources.location=file:/tmp/frontend
 
 You can get the following screen:
     
