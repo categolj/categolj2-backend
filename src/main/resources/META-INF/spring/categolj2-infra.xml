@@ -25,17 +25,4 @@
 
     <!-- Cache Abstraction -->
     <cache:annotation-driven/>
-    <bean id="cacheManager" class="am.ik.categolj2.infra.cache.LoggingGuavaCacheManager">
-        <property name="cacheSpecification" value="maximumSize=10000,expireAfterWrite=3d"/>
-        <property name="cacheNames">
-            <list>
-                <value>entry</value>
-                <value>recentPost</value>
-                <value>link</value>
-                <value>uploadFileSummary</value>
-                <value>accessToken</value>
-                <value>accessTokenAuthentication</value>
-            </list>
-        </property>
-    </bean>
 </beans>

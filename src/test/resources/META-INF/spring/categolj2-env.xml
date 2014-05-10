@@ -42,19 +42,30 @@
                 <entry key="hibernate.use_sql_comments" value="true"/>
                 <entry key="hibernate.jdbc.batch_size" value="30"/>
                 <entry key="hibernate.jdbc.fetch_size" value="100"/>
-                <entry key="hibernate.search.default.directory_provider"
-                       value="filesystem"/>
-                <entry key="hibernate.search.default.indexBase"
-                       value="/tmp/categolj2_test"/>
+                <entry key="hibernate.search.default.directory_provider" value="ram"/>
                 <!--<entry key="hibernate.search.model_mapping" value="am.ik.categolj2.infra.search.SearchMappingFactory"/>-->
                 <entry key="hibernate.search.analyzer" value="org.apache.lucene.analysis.cjk.CJKAnalyzer"/>
-                <entry key="hibernate.search.lucene_version" value="LUCENE_CURRENT"/>
+                <entry key="hibernate.search.lucene_version" value="LUCENE_36"/>
             </util:map>
         </property>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="cacheManager" class="am.ik.categolj2.infra.cache.LoggingGuavaCacheManager">
+        <property name="cacheSpecification" value="maximumSize=10000,expireAfterWrite=3d"/>
+        <property name="cacheNames">
+            <list>
+                <value>entry</value>
+                <value>recentPost</value>
+                <value>link</value>
+                <value>uploadFileSummary</value>
+                <value>accessToken</value>
+                <value>accessTokenAuthentication</value>
+            </list>
+        </property>
     </bean>
 
     <jdbc:initialize-database>

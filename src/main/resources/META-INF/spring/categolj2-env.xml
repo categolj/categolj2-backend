@@ -2,9 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:hz="http://www.hazelcast.com/schema/spring"
        xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.hazelcast.com/schema/spring http://www.hazelcast.com/schema/spring/hazelcast-spring-3.2.xsd">
 
     <bean id="dateFactory" class="org.terasoluna.gfw.common.date.DefaultDateFactory"/>
 
@@ -26,8 +28,8 @@
     </bean>
 
     <bean id="flyway" class="com.googlecode.flyway.core.Flyway" init-method="migrate">
-        <property name="dataSource" ref="dataSource" />
-        <property name="locations" value="db/migration/${database}" />
+        <property name="dataSource" ref="dataSource"/>
+        <property name="locations" value="db/migration/${database}"/>
     </bean>
 
     <bean id="jpaVendorAdapter"
@@ -56,12 +58,14 @@
                 <entry key="hibernate.jdbc.batch_size" value="30"/>
                 <entry key="hibernate.jdbc.fetch_size" value="100"/>
                 <entry key="hibernate.search.default.directory_provider"
-                       value="filesystem"/>
+                       value="${hibernate.search.default.directory_provider:filesystem}"/>
                 <entry key="hibernate.search.default.indexBase"
                        value="${hibernate.search.default.indexBase:/tmp/lucene}"/>
+                <entry key="hibernate.search.default.locking_strategy"
+                       value="${hibernate.search.default.locking_strategy:single}"/>
                 <!--<entry key="hibernate.search.model_mapping" value="am.ik.categolj2.infra.search.SearchMappingFactory"/>-->
                 <entry key="hibernate.search.analyzer" value="org.apache.lucene.analysis.cjk.CJKAnalyzer"/>
-                <entry key="hibernate.search.lucene_version" value="LUCENE_CURRENT" />
+                <entry key="hibernate.search.lucene_version" value="LUCENE_36"/>
             </util:map>
         </property>
     </bean>
@@ -70,10 +74,48 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <!--<jdbc:initialize-database>-->
-        <!--<jdbc:script-->
-                <!--location="classpath:/META-INF/database/${database}-schema.sql"/>-->
-        <!--<jdbc:script-->
-                <!--location="classpath:/META-INF/database/${database}-dataload.sql"/>-->
-    <!--</jdbc:initialize-database>-->
+    <beans profile="cache.hazelcast">
+        <bean id="cacheManager" class="com.hazelcast.spring.cache.HazelcastCacheManager">
+            <constructor-arg ref="hazelcastInstance"/>
+        </bean>
+
+        <!-- Hazelcast -->
+        <hz:hazelcast id="hazelcastInstance">
+            <hz:config>
+                <hz:group name="${hazelcast.group.name:dev}" password="${hazelcast.group.password:password}"/>
+                <hz:properties>
+                    <hz:property name="hazelcast.jmx">${hazelcast.jmx:true}</hz:property>
+                    <hz:property name="hazelcast.logging.type">slf4j</hz:property>
+                </hz:properties>
+                <hz:network port="${hazelcast.port:5701}" port-auto-increment="true">
+                    <hz:join>
+                        <hz:multicast enabled="true"
+                                      multicast-group="${hazelcast.multicast.group:224.2.2.3}"
+                                      multicast-port="${hazelcast.multicast.port:54327}"/>
+                    </hz:join>
+                </hz:network>
+                <hz:map name="categolj" backup-count="${hazelcast.backup-count:1}">
+                    <hz:near-cache max-size="${hazelcast.near-cache.max-size:5000}"
+                                   max-idle-seconds="#{1 * 24 * 60 * 60}"
+                                   eviction-policy="LRU"
+                                   cache-local-entries="true"/>
+                </hz:map>
+            </hz:config>
+        </hz:hazelcast>
+    </beans>
+    <beans profile="cache.guava">
+        <bean id="cacheManager" class="am.ik.categolj2.infra.cache.LoggingGuavaCacheManager">
+            <property name="cacheSpecification" value="maximumSize=10000,expireAfterWrite=3d"/>
+            <property name="cacheNames">
+                <list>
+                    <value>entry</value>
+                    <value>recentPost</value>
+                    <value>link</value>
+                    <value>uploadFileSummary</value>
+                    <value>accessToken</value>
+                    <value>accessTokenAuthentication</value>
+                </list>
+            </property>
+        </bean>
+    </beans>
 </beans>

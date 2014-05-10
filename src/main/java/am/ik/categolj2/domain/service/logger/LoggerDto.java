@@ -19,12 +19,15 @@ import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
+import java.io.Serializable;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class LoggerDto {
+public class LoggerDto implements Serializable {
+    private static final long serialVersionUID = 1L;
     @NotEmpty
     private String name;
     @NotEmpty

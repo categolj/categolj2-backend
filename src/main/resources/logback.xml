@@ -63,6 +63,10 @@
         <level value="warn"/>
     </logger>
 
+    <logger name="com.hazelcast">
+        <level value="${log.verbose:-info}"/>
+    </logger>
+
     <logger name="jdbc">
         <level value="off"/>
     </logger>

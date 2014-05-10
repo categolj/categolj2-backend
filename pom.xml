@@ -25,6 +25,7 @@
         <tomcat.version>7.0.53</tomcat.version>
         <flyway.plugin.version>2.3</flyway.plugin.version>
         <metrics.version>3.0.2</metrics.version>
+        <hazelcast.version>3.2</hazelcast.version>
     </properties>
 
     <profiles>
@@ -276,6 +277,17 @@
             <groupId>com.googlecode.flyway</groupId>
             <artifactId>flyway-core</artifactId>
             <version>2.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>${hazelcast.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-spring</artifactId>
+            <version>${hazelcast.version}</version>
         </dependency>
 
         <!-- Servlet API/ JSP API -->

@@ -21,13 +21,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDto {
+public class CategoryDto implements Serializable {
+    private static final long serialVersionUID = 1L;
     private List<String> categoryName;
 
     public CategoryDto(Categories categories) {

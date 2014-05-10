@@ -20,9 +20,12 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
-public class UploadFileSummary {
+public class UploadFileSummary implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String fileId;
     private String fileName;
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
