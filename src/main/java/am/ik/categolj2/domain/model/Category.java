@@ -26,6 +26,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,7 +36,8 @@ import lombok.ToString;
 @Table(name = "CATEGORY", indexes = {
         @Index(columnList = "CATEGORY_NAME")
 })
-public class Category implements Comparable<Category> {
+public class Category implements Comparable<Category>, Serializable {
+    private static final long serialVersionUID = 1L;
     @EmbeddedId
     @JsonIgnore
     private CategoryPK categoryPK;

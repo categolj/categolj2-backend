@@ -7,21 +7,6 @@
         </encoder>
     </appender>
 
-    <appender name="APPLICATION_LOG_FILE"
-        class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.dir:-log}/${log.file.prefix:-categolj2}-application.log</file>
-        <rollingPolicy
-            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.dir:-log}/${log.file.prefix:-categolj2}-application-%d{yyyyMMdd}.log
-            </fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
-        </encoder>
-    </appender>
-
     <!-- Application Loggers -->
     <logger name="am.ik.categolj2">
         <level value="warn" />
@@ -86,7 +71,6 @@
     <!-- </logger> -->
     <root level="warn">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="APPLICATION_LOG_FILE" />
     </root>
 
 </configuration>
