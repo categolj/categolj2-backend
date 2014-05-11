@@ -263,7 +263,7 @@
         <dependency>
             <groupId>am.ik.marked4j</groupId>
             <artifactId>marked4j</artifactId>
-            <version>0.9.0</version>
+            <version>0.9.1</version>
         </dependency>
 
         <dependency>
