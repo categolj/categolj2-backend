@@ -63,9 +63,7 @@ define(function (require) {
                 validate: false, // because password in response body is null
                 success: _.bind(this._resetModel, this),
                 error: _.bind(function (model, response) {
-                    if (response.responseJSON.details) {
-                        this.showErrors(response.responseJSON.details);
-                    }
+                    this.showErrors(response.responseJSON);
                 }, this)
             });
         },

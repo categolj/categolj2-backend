@@ -16,12 +16,17 @@
 package am.ik.categolj2.domain.service.book;
 
 import am.ik.aws.apa.AwsApaRequester;
-import am.ik.aws.apa.jaxws.*;
+import am.ik.aws.apa.jaxws.Image;
+import am.ik.aws.apa.jaxws.ItemAttributes;
+import am.ik.aws.apa.jaxws.ItemSearchRequest;
+import am.ik.aws.apa.jaxws.ItemSearchResponse;
+import am.ik.categolj2.core.message.MessageKeys;
 import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.exception.SystemException;
 
 import javax.inject.Inject;
 import javax.xml.ws.Response;
+import javax.xml.ws.WebServiceException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -76,8 +81,8 @@ public class BookServiceImpl implements BookService {
 
             books.addAll(reseponseToBooks(responseForBooks.get()));
             books.addAll(reseponseToBooks(responseForForeignBooks.get()));
-        } catch (ExecutionException | InterruptedException e) {
-            throw new SystemException("Search API execution failed", e);
+        } catch (ExecutionException | InterruptedException | WebServiceException  e) {
+            throw new SystemException(MessageKeys.E_CT_BO_9501, e);
         }
         return books;
     }
@@ -99,8 +104,8 @@ public class BookServiceImpl implements BookService {
 
             books.addAll(reseponseToBooks(responseForBooks.get()));
             books.addAll(reseponseToBooks(responseForForeignBooks.get()));
-        } catch (ExecutionException | InterruptedException e) {
-            throw new SystemException("Search API execution failed", e);
+        } catch (ExecutionException | InterruptedException | WebServiceException e) {
+            throw new SystemException(MessageKeys.E_CT_BO_9501, e);
         }
         return books;
     }

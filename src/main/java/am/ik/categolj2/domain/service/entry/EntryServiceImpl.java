@@ -15,12 +15,14 @@
  */
 package am.ik.categolj2.domain.service.entry;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import am.ik.categolj2.core.logger.LogManager;
+import am.ik.categolj2.core.message.MessageKeys;
+import am.ik.categolj2.domain.model.Category;
+import am.ik.categolj2.domain.model.Entry;
+import am.ik.categolj2.domain.model.EntryHistory;
+import am.ik.categolj2.domain.repository.category.CategoryRepository;
+import am.ik.categolj2.domain.repository.entry.EntryHistoryRepository;
+import am.ik.categolj2.domain.repository.entry.EntryRepository;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import org.dozer.Mapper;
@@ -36,13 +38,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.terasoluna.gfw.common.date.DateFactory;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
+import org.terasoluna.gfw.common.message.ResultMessages;
 
-import am.ik.categolj2.domain.model.Category;
-import am.ik.categolj2.domain.model.Entry;
-import am.ik.categolj2.domain.model.EntryHistory;
-import am.ik.categolj2.domain.repository.category.CategoryRepository;
-import am.ik.categolj2.domain.repository.entry.EntryHistoryRepository;
-import am.ik.categolj2.domain.repository.entry.EntryRepository;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EntryServiceImpl implements EntryService {
@@ -63,8 +63,9 @@ public class EntryServiceImpl implements EntryService {
     public Entry findOne(Integer entryId) {
         Entry entry = entryRepository.findDetails(entryId);
         if (entry == null) {
-            throw new ResourceNotFoundException(
-                    "The request entry is not found. (entryId=" + entryId + ")");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_EN_8201, entryId);
+            throw new ResourceNotFoundException(messages);
         }
         return entry;
     }
@@ -73,8 +74,9 @@ public class EntryServiceImpl implements EntryService {
     public Entry findOnePublished(Integer entryId) {
         Entry entry = entryRepository.findDetailsPublished(entryId);
         if (entry == null) {
-            throw new ResourceNotFoundException(
-                    "The request entry is not found. (entryId=" + entryId + ")");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_EN_8201, entryId);
+            throw new ResourceNotFoundException(messages);
         }
         return entry;
     }

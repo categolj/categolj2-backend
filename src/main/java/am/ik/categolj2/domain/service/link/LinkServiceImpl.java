@@ -16,6 +16,7 @@
 package am.ik.categolj2.domain.service.link;
 
 
+import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.domain.model.Link;
 import am.ik.categolj2.domain.repository.link.LinkRepository;
 import org.dozer.Mapper;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.date.DateFactory;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
+import org.terasoluna.gfw.common.message.ResultMessages;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -43,8 +45,9 @@ public class LinkServiceImpl implements LinkService {
     public Link findOne(String url) {
         Link link = linkRepository.findOne(url);
         if (link == null) {
-            throw new ResourceNotFoundException("link is not found. [url="
-                    + url + "]");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_LN_8301, url);
+            throw new ResourceNotFoundException(messages);
         }
         return link;
     }
