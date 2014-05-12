@@ -5,7 +5,7 @@
     <groupId>am.ik.categolj2</groupId>
     <artifactId>categolj2-backend</artifactId>
     <packaging>war</packaging>
-    <version>0.11.1-SNAPSHOT</version>
+    <version>0.11.1</version>
     <description>CategoLJ2 (REST API Server)</description>
     <parent>
         <groupId>org.terasoluna.gfw</groupId>
