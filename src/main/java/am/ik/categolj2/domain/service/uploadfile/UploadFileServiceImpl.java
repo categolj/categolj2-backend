@@ -15,6 +15,7 @@
  */
 package am.ik.categolj2.domain.service.uploadfile;
 
+import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.domain.model.UploadFile;
 import am.ik.categolj2.domain.repository.uploadfile.UploadFileRepository;
 import am.ik.categolj2.domain.repository.uploadfile.UploadFileSummary;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.date.DateFactory;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
+import org.terasoluna.gfw.common.message.ResultMessages;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -42,8 +44,9 @@ public class UploadFileServiceImpl implements UploadFileService {
     public UploadFile findOne(String fileId) {
         UploadFile uploadFile = uploadFileRepository.findOne(fileId);
         if (uploadFile == null) {
-            throw new ResourceNotFoundException("file is not found. [fileId="
-                    + fileId + "]");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_UF_8401, fileId);
+            throw new ResourceNotFoundException(messages);
         }
         return uploadFile;
     }
@@ -53,8 +56,9 @@ public class UploadFileServiceImpl implements UploadFileService {
     public UploadFileSummary findOneSummary(String fileId) {
         UploadFileSummary summary = uploadFileRepository.findOneSummary(fileId);
         if (summary == null) {
-            throw new ResourceNotFoundException("file is not found. [fileId="
-                    + fileId + "]");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_UF_8401, fileId);
+            throw new ResourceNotFoundException(messages);
         }
         return summary;
     }

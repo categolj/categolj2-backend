@@ -35,7 +35,7 @@ define(function (require) {
                 this.model.destroy({wait: true})
                     .success(_.bind(this.remove, this))
                     .fail(_.bind(function (response) {
-                        this.showErrors(response.responseJSON.details);
+                        this.showErrors(response.responseJSON);
                     }, this));
             }
             return false;

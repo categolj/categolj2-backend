@@ -37,11 +37,23 @@
         <!-- Setting and Customization by project. -->
         <property name="exceptionMappings">
             <map>
-                <entry key="ResourceNotFoundException" value="e.xx.fw.5001"/>
-                <entry key="BusinessException" value="e.xx.fw.8001"/>
+                <entry key="ResourceNotFoundException" value="e.ct.fw.5001"/>
+                <entry key="HttpRequestMethodNotSupportedException" value="e.ct.fw.6001"/>
+                <entry key="MediaTypeNotAcceptableException" value="e.ct.fw.6002"/>
+                <entry key="HttpMediaTypeNotSupportedException" value="e.ct.fw.6003"/>
+                <entry key="MethodArgumentNotValidException" value="e.ct.fw.7001"/>
+                <entry key="BindException" value="e.ct.fw.7002"/>
+                <entry key="JsonParseException" value="e.ct.fw.7003"/>
+                <entry key="UnrecognizedPropertyException" value="e.ct.fw.7004"/>
+                <entry key="JsonMappingException" value="e.ct.fw.7005"/>
+                <entry key="TypeMismatchException" value="e.ct.fw.7006"/>
+                <entry key="BusinessException" value="e.ct.fw.8001"/>
+                <entry key="OptimisticLockingFailureException" value="e.ct.fw.8002"/>
+                <entry key="PessimisticLockingFailureException" value="e.ct.fw.8002"/>
+                <entry key="DataAccessException" value="e.ct.fw.9002"/>
             </map>
         </property>
-        <property name="defaultExceptionCode" value="e.xx.fw.9001"/>
+        <property name="defaultExceptionCode" value="e.ct.fw.9001"/>
     </bean>
 
     <!-- Exception Logger. -->

@@ -48,9 +48,7 @@ define(function (require) {
             this.collection.create(this.model, {
                 success: _.bind(this._resetModel, this),
                 error: _.bind(function (model, response) {
-                    if (response.responseJSON.details) {
-                        this.showErrors(response.responseJSON.details);
-                    }
+                    this.showErrors(response.responseJSON);
                 }, this)
             });
         },

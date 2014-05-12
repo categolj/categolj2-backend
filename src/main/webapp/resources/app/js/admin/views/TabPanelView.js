@@ -35,9 +35,9 @@ define(function (require) {
             this.bodyView = bodyView;
             return this;
         },
-        showExceptionMessage: function (detail) {
-            var message = detail.message;
-            this.alertPanel.showMessage(message);
+        showExceptionMessage: function (error) {
+            var message = error.message;
+            this.alertPanel.showMessage('[' + error.code + '] ' + message);
         }
     });
 });

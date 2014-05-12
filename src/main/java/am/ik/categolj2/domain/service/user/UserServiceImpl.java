@@ -15,11 +15,11 @@
  */
 package am.ik.categolj2.domain.service.user;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.inject.Inject;
-
+import am.ik.categolj2.core.message.MessageKeys;
+import am.ik.categolj2.domain.model.Role;
+import am.ik.categolj2.domain.model.User;
+import am.ik.categolj2.domain.repository.role.RoleRepository;
+import am.ik.categolj2.domain.repository.user.UserRepository;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
@@ -31,11 +31,11 @@ import org.springframework.util.Assert;
 import org.terasoluna.gfw.common.date.DateFactory;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
+import org.terasoluna.gfw.common.message.ResultMessages;
 
-import am.ik.categolj2.domain.model.Role;
-import am.ik.categolj2.domain.model.User;
-import am.ik.categolj2.domain.repository.role.RoleRepository;
-import am.ik.categolj2.domain.repository.user.UserRepository;
+import javax.inject.Inject;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -54,8 +54,9 @@ public class UserServiceImpl implements UserService {
     public User findOne(String username) {
         User user = userRepository.findDetails(username);
         if (user == null) {
-            throw new ResourceNotFoundException("user is not found. [username="
-                    + username + "]");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8101, username);
+            throw new ResourceNotFoundException(messages);
         }
         return user;
     }
@@ -67,9 +68,9 @@ public class UserServiceImpl implements UserService {
             user = userRepository.findDetails(usernameOrEmail);
         }
         if (user == null) {
-            throw new ResourceNotFoundException(
-                    "The given username (or email) is not found. [username="
-                            + usernameOrEmail + "]");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8102, usernameOrEmail);
+            throw new ResourceNotFoundException(messages);
         }
         return user;
     }
@@ -86,15 +87,16 @@ public class UserServiceImpl implements UserService {
 
         String username = user.getUsername();
         if (userRepository.exists(username)) {
-            throw new BusinessException(
-                    "The given username is already used. [username=" + username
-                            + "]");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8103, username);
+            throw new BusinessException(messages);
         }
 
         String email = user.getEmail();
         if (userRepository.countByEmail(email) > 0) {
-            throw new BusinessException(
-                    "The given email is already used. [email=" + email + "]");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8104, email);
+            throw new BusinessException(messages);
         }
 
         // check roles
@@ -144,16 +146,17 @@ public class UserServiceImpl implements UserService {
 
         // check the given user is existing
         if (!userRepository.exists(username)) {
-            throw new BusinessException(
-                    "The given user does not exist. [username=" + username
-                            + "]");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8105, username);
+            throw new BusinessException(messages);
         }
 
         // check the given email is not used by others
         long countUsingEmail = userRepository.countByEmailOtherThanMe(email, username);
         if (countUsingEmail > 0) {
-            throw new BusinessException(
-                    "The given email is already used. [email=" + email + "]");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8104, email);
+            throw new BusinessException(messages);
         }
 
         boolean notExistAdminOtherThanMe = userRepository.countActiveAdminOtherThanMe(username) == 0;
@@ -161,15 +164,21 @@ public class UserServiceImpl implements UserService {
 
         // in case updated user is not admin or removed admin role
         if (!isAdmin && notExistAdminOtherThanMe) {
-            throw new BusinessException("At least one active admin must exist!");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8106);
+            throw new BusinessException(messages);
         }
         // if single admin is to be locked.
         if (isAdmin && notExistAdminOtherThanMe && updatedUser.isLocked()) {
-            throw new BusinessException("At least one unlocked admin must exist!");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8107);
+            throw new BusinessException(messages);
         }
         // if single admin is to be disabled
         if (isAdmin && notExistAdminOtherThanMe && !updatedUser.isEnabled()) {
-            throw new BusinessException("At least one enabled admin must exist!");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8108);
+            throw new BusinessException(messages);
         }
     }
 
@@ -181,9 +190,9 @@ public class UserServiceImpl implements UserService {
                 Integer roleId = role.getRoleId();
                 Role loadedRole = roleRepository.findOne(roleId);
                 if (loadedRole == null) {
-                    throw new BusinessException(
-                            "The given role is invalid. [roleId=" + roleId
-                                    + "]");
+                    ResultMessages messages = ResultMessages.error()
+                            .add(MessageKeys.E_CT_US_8109, roleId);
+                    throw new BusinessException(messages);
                 }
                 rolesToReplace.add(loadedRole);
             }
@@ -210,7 +219,9 @@ public class UserServiceImpl implements UserService {
 
         // check admin count
         if (user.isAdmin() && userRepository.countActiveAdminOtherThanMe(username) == 0) {
-            throw new BusinessException("At least one active admin must exist!");
+            ResultMessages messages = ResultMessages.error()
+                    .add(MessageKeys.E_CT_US_8106);
+            throw new BusinessException(messages);
         }
 
         userRepository.delete(user);

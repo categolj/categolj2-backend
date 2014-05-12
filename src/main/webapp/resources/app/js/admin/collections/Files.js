@@ -28,7 +28,7 @@ define(function (require) {
             opts.success = function (files, resp, xhr) {
                 // jquery-iframe-transport cannot detect http status
                 // http://cmlenz.github.io/jquery-iframe-transport/#section-13
-                if (xhr.responseJSON.details) {
+                if (xhr.responseJSON.code) {
                     // error
                     options.error(files, xhr);
                     return;

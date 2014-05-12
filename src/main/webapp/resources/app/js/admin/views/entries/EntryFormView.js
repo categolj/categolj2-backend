@@ -153,9 +153,7 @@ define(function (require) {
                         });
                     }, this)).fail(_.bind(function (response) {
                         console.log(response);
-                        if (response.responseJSON.details) {
-                            this.showErrors(response.responseJSON.details);
-                        }
+                        this.showErrors(response.responseJSON);
                     }, this));
             }
         },
