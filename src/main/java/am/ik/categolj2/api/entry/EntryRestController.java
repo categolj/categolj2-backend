@@ -15,11 +15,10 @@
  */
 package am.ik.categolj2.api.entry;
 
-import javax.inject.Inject;
-
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.*;
-import am.ik.categolj2.domain.service.accesslog.AccessLogService;
+import am.ik.categolj2.domain.service.accesslog.AccessLogHelper;
+import am.ik.categolj2.domain.service.entry.EntryService;
 import com.codahale.metrics.annotation.Timed;
 import org.dozer.Mapper;
 import org.springframework.data.domain.Page;
@@ -31,8 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import am.ik.categolj2.domain.service.entry.EntryService;
-
+import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +40,7 @@ public class EntryRestController {
     @Inject
     EntryService entryService;
     @Inject
-    AccessLogService accessLogService;
+    AccessLogHelper accessLogHelper;
     @Inject
     Mapper beanMapper;
 
@@ -52,7 +50,7 @@ public class EntryRestController {
     @Timed
     public Page<EntryResource> getEntries(@PageableDefault Pageable pageable, AccessLog accessLog
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
-        accessLogService.save(accessLog);
+        accessLogHelper.writeIfAccessLogIsEnabled(accessLog);
         Page<Entry> page = entryService.findPagePublished(pageable);
         return toResourcePage(page, pageable, isFormatted);
     }
@@ -62,7 +60,7 @@ public class EntryRestController {
     public Page<EntryResource> searchEntries(@RequestParam("keyword") String keyword, AccessLog accessLog
             , @PageableDefault Pageable pageable
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
-        accessLogService.save(accessLog);
+        accessLogHelper.writeIfAccessLogIsEnabled(accessLog);
         Page<Entry> page = entryService.searchPagePublishedByKeyword(keyword, pageable);
         return toResourcePage(page, pageable, isFormatted);
     }
@@ -72,7 +70,7 @@ public class EntryRestController {
     @Timed
     public EntryResource getEntry(@PathVariable("entryId") Integer entryId, AccessLog accessLog
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
-        accessLogService.save(accessLog);
+        accessLogHelper.writeIfAccessLogIsEnabled(accessLog);
         Entry entry = entryService.findOnePublished(entryId);
         return toResource(entry, isFormatted);
     }
@@ -82,7 +80,7 @@ public class EntryRestController {
     public Page<EntryResource> getEntriesByCategory(@PathVariable("category") String category, AccessLog accessLog
             , @PageableDefault Pageable pageable
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
-        accessLogService.save(accessLog);
+        accessLogHelper.writeIfAccessLogIsEnabled(accessLog);
         Categories categories = Categories.fromCategory(category);
         Integer categoryOrder = categories.getCategories().size();
         String categoryName = categories.getCategories().get(categoryOrder - 1).getCategoryName();
@@ -94,7 +92,7 @@ public class EntryRestController {
     public Page<EntryResource> getEntriesByCreatedBy(@PathVariable("createdBy") String createdBy, AccessLog accessLog
             , @PageableDefault Pageable pageable
             , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
-        accessLogService.save(accessLog);
+        accessLogHelper.writeIfAccessLogIsEnabled(accessLog);
         Page<Entry> page = entryService.findPagePublishedByCreatedBy(createdBy, pageable);
         return toResourcePage(page, pageable, isFormatted);
     }

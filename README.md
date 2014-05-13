@@ -240,6 +240,7 @@ aws.accesskey.id | access key ID for AWS | \<Your Accesskey ID for AWS\>
 aws.secret.accesskey | secret accesskey for AWS | \<Your Secret Accesskey for AWS\>
 aws.endpoint | AWS endpoint| https://ecs.amazonaws.jp
 aws.associate.tag | Associate Tag for Amazon Affiliate | ikam-22
+accesslog.disabled | Disable to write access logs | false
 
 
 ## License
