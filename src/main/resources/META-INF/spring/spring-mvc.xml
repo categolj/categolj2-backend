@@ -18,6 +18,12 @@
     <metrics:annotation-driven metric-registry="metricRegistry" health-check-registry="healthCheckRegistry"
                                proxy-target-class="true"/>
     <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean
+                    class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper"/>
+            </bean>
+        </mvc:message-converters>
         <mvc:argument-resolvers>
             <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"></bean>
             <bean class="am.ik.categolj2.core.web.accesslog.AccessLogMethodArgumentResolver"></bean>
@@ -157,5 +163,5 @@
                      pointcut="execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))"/>
     </aop:config>
 
-    <import resource="spring-boot-acutuator.xml" />
+    <import resource="spring-boot-acutuator.xml"/>
 </beans>
