@@ -1,0 +1,19 @@
+<table
+        class="table table-striped table-bordered table-condensed">
+    <tr>
+        <th>Depth</th>
+        <th>Class</th>
+        <th>Method</th>
+        <th>File</th>
+        <th>Line</th>
+    </tr>
+    {{#each stackTrace}}
+        <tr>
+            <td>{{@index}}</td>
+            <td><code>{{className}}</code></td>
+            <td><code>{{methodName}}</code></td>
+            <td>{{fileName}}</td>
+            <td>{{lineNumber}}{{#if nativeMethod}} (native){{/if}}</td>
+        </tr>
+    {{/each}}
+</table>
