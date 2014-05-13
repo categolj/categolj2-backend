@@ -3,7 +3,7 @@ define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
 
-    var SystemView = require('app/js/admin/views/SystemView');
+    var SystemView = require('app/js/admin/views/system/SystemView');
 
     return Backbone.Router.extend({
         routes: {
