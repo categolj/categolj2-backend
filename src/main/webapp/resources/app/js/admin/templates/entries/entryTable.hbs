@@ -1,6 +1,15 @@
 <table class="table table-striped table-bordered table-condensed">
     <tr>
+        {{#if history}}
+        {{else}}
+            <th>Id</th>
+        {{/if}}
         <th>Title</th>
+        {{#if history}}
+        {{else}}
+            <th>Published</th>
+        {{/if}}
+        <th>Format</th>
         <th>Created date</th>
         <th>Created by</th>
         <th>Last modified date</th>
@@ -11,6 +20,12 @@
     </tr>
     {{#each content}}
         <tr>
+            {{#if ../history}}
+            {{else}}
+                <td>
+                    {{entryId}}
+                </td>
+            {{/if}}
             <td>
                 {{#if ../history}}
                     {{title}}
@@ -18,6 +33,17 @@
                     <a href="#entries/{{entryId}}">{{title}}</a>
                 {{/if}}
             </td>
+            {{#if ../history}}
+            {{else}}
+                <td>
+                    {{#if published}}
+                        <span class="label label-success">Published</span>
+                    {{else}}
+                        <span class="label label-warning">Unpublished</span>
+                    {{/if}}
+                </td>
+            {{/if}}
+            <td>{{format}}</td>
             <td>{{createdDate}}</td>
             <td>{{createdBy}}</td>
             <td>{{lastModifiedDate}}</td>
