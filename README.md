@@ -14,6 +14,7 @@ The following technologies are used.
 * JPA 2.1
 * Hibernate Search
 * Flyway
+* HikariCP
 * Backbone.js
 * ...
 
@@ -233,7 +234,6 @@ database.password | database password |
 database.driverClassName | JDBC Driver class name | org.h2.Driver
 hibernate.search.default.indexBase | file path storing Iucene index | /tmp/lucene
 cp.maxActive | max active for connection pool | 96
-cp.maxIdle | max idle for connection pool | 16
 cp.minIdle | min idle for connection pool | 0
 cp.maxWait | max wait for connection pool |  60000
 aws.accesskey.id | access key ID for AWS | \<Your Accesskey ID for AWS\>
