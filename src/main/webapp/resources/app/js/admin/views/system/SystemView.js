@@ -15,6 +15,8 @@ define(function (require) {
         template: Handlebars.compile(systemInfo),
         threadDumpTemplate: Handlebars.compile(threadDump),
         events: {
+            'click #reload-system-info': 'render',
+            'click #reload-thread-dump': 'threadDump'
         },
 
         initialize: function () {
