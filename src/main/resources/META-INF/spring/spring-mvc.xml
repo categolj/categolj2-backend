@@ -40,6 +40,9 @@
     <mvc:resources mapping="/resources/**"
                    location="/resources/,classpath:META-INF/resources/"
                    cache-period="${backend.resources.cache.seconds:604800}"/>
+    <mvc:resources mapping="/favicon.ico"
+                   location="/resources/favicon.ico"
+                   cache-period="${backend.resources.cache.seconds:604800}"/>
 
     <!-- CategLJ2 FrontEnd support -->
     <mvc:resources mapping="/index.html"

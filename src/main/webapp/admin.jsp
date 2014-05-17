@@ -38,6 +38,8 @@
     <link
             href="resources/app/css/app.css"
             rel="stylesheet" media="screen">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon"/>
+    <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
     <style>
         body {
             padding-top: 70px;
