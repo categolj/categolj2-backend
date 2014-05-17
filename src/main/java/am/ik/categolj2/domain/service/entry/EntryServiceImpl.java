@@ -71,6 +71,7 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    @Cacheable("entry")
     public Entry findOnePublished(Integer entryId) {
         Entry entry = entryRepository.findDetailsPublished(entryId);
         if (entry == null) {
