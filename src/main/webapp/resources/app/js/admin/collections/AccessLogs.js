@@ -21,7 +21,6 @@ define(function (require) {
                     this.remove(this.where({
                         remoteAddress: remoteAddress
                     }));
-                    console.log(this);
                     this.trigger('sync');
                 }, this));
         }
