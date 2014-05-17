@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:hz="http://www.hazelcast.com/schema/spring"
-       xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       xsi:schemaLocation="http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.hazelcast.com/schema/spring http://www.hazelcast.com/schema/spring/hazelcast-spring-3.2.xsd">
 
     <bean id="dateFactory" class="org.terasoluna.gfw.common.date.DefaultDateFactory"/>
 
-    <bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          destroy-method="close">
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <property name="driverClassName" value="${database.driverClassName}"/>
-        <property name="url" value="${database.url}"/>
+        <property name="jdbcUrl" value="${database.url}"/>
         <property name="username" value="${database.username}"/>
         <property name="password" value="${database.password}"/>
-        <property name="defaultAutoCommit" value="false"/>
-        <property name="maxActive" value="${cp.maxActive}"/>
-        <property name="maxIdle" value="${cp.maxIdle}"/>
-        <property name="minIdle" value="${cp.minIdle}"/>
-        <property name="maxWait" value="${cp.maxWait}"/>
+        <property name="autoCommit" value="false"/>
+        <property name="maximumPoolSize" value="${cp.maxActive}"/>
+        <property name="minimumIdle" value="${cp.minIdle}"/>
+        <property name="maxLifetime" value="${cp.maxWait}"/>
+        <property name="jdbc4ConnectionTest" value="true"/>
+    </bean>
+
+    <bean id="realDataSource" class="com.zaxxer.hikari.HikariDataSource"
+          destroy-method="close">
+        <constructor-arg ref="hikariConfig"/>
     </bean>
 
     <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
