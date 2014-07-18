@@ -29,6 +29,10 @@
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="0"/>
+    </bean>
+
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
     </bean>
