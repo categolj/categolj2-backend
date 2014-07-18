@@ -71,10 +71,8 @@ public class EntryPdfView extends AbstractPdfView {
                 "<tr><th bgcolor='#eee'>Updated at</th><td colspan='2'>" + entry.getLastModifiedDate() + "</td>" +
                 "<th bgcolor='#eee'>Updated by</th><td colspan='2'>" + entry.getLastModifiedBy() + "</td></tr>" +
                 "<tr><th bgcolor='#eee'>Orininal URL</th><td colspan='5'><a href=\"" + url + "\">" + url + "</a></td></tr>" +
-                "<tr><th bgcolor='#eee' colspan='6'>Contents</th></tr>" +
-                "<tr><td colspan='6'>" + format.format(entry.getContents()) +
-                "</td></tr>" +
                 "</table>" +
+                format.format(entry.getContents())  +
                 "</body></html>";
         String body = RERATIVE_LINK_PATH.matcher(html).replaceAll("src='" + base + "/api/$1/files/$2/$3.$4'");
         HTMLWorker htmlWorker = new HTMLWorker(document);
