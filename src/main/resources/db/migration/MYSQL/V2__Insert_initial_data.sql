@@ -16,10 +16,10 @@ VALUES ('http://twitter.com', 'Twitter', 0, now(), 'admin', now(), 'admin');
 
 INSERT INTO entry (version, created_by, created_date, last_modified_by, last_modified_date, contents, format, published, title)
 VALUES (0, 'admin', now(), 'admin', now(), '* aa\n* bb\n* cc', 'md', 1, 'This is a sample contents');
-INSERT INTO category (category_name, category_order, entry_id) VALUES ('Contents', 1, (SELECT entry_id FROM entry WHERE title = 'This is a sample contents'));
-INSERT INTO category (category_name, category_order, entry_id) VALUES ('Sample', 2, (SELECT entry_id FROM entry WHERE title = 'This is a sample contents'));
+INSERT INTO category (category_name, category_order, entry_id) VALUES ('Contents', 1, (SELECT entry_id FROM entry WHERE title = 'This is a sample contents' LIMIT 1));
+INSERT INTO category (category_name, category_order, entry_id) VALUES ('Sample', 2, (SELECT entry_id FROM entry WHERE title = 'This is a sample contents' LIMIT 1));
 
 INSERT INTO entry (version, created_by, created_date, last_modified_by, last_modified_date, contents, format, published, title)
 VALUES (0, 'admin', now(), 'admin', now(), 'Code sample\n\n    console.log("hello world!");', 'md', 0, 'Here we go!');
-INSERT INTO category (category_name, category_order, entry_id) VALUES ('Contents', 1, (SELECT entry_id FROM entry WHERE title = 'Here we go!'));
-INSERT INTO category (category_name, category_order, entry_id) VALUES ('Sample', 2, (SELECT entry_id FROM entry WHERE title = 'Here we go!'));
+INSERT INTO category (category_name, category_order, entry_id) VALUES ('Contents', 1, (SELECT entry_id FROM entry WHERE title = 'Here we go!' LIMIT 1));
+INSERT INTO category (category_name, category_order, entry_id) VALUES ('Sample', 2, (SELECT entry_id FROM entry WHERE title = 'Here we go!' LIMIT 1));
