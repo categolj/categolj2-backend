@@ -9,18 +9,6 @@
 
     <bean id="dateFactory" class="org.terasoluna.gfw.common.date.DefaultDateFactory"/>
 
-    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-        <property name="driverClassName" value="${database.driverClassName}"/>
-        <property name="jdbcUrl" value="${database.url}"/>
-        <property name="username" value="${database.username}"/>
-        <property name="password" value="${database.password}"/>
-        <property name="autoCommit" value="false"/>
-        <property name="maximumPoolSize" value="${cp.maxActive}"/>
-        <property name="minimumIdle" value="${cp.minIdle}"/>
-        <property name="maxLifetime" value="${cp.maxWait}"/>
-        <property name="jdbc4ConnectionTest" value="true"/>
-    </bean>
-
     <bean id="realDataSource" class="com.zaxxer.hikari.HikariDataSource"
           destroy-method="close">
         <constructor-arg ref="hikariConfig"/>
@@ -76,7 +64,36 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
-
+    <beans profile="db.property">
+        <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+            <property name="driverClassName" value="${database.driverClassName}"/>
+            <property name="jdbcUrl" value="${database.url}"/>
+            <property name="username" value="${database.username}"/>
+            <property name="password" value="${database.password}"/>
+            <property name="autoCommit" value="false"/>
+            <property name="maximumPoolSize" value="${cp.maxActive}"/>
+            <property name="minimumIdle" value="${cp.minIdle}"/>
+            <property name="maxLifetime" value="${cp.maxWait}"/>
+            <property name="jdbc4ConnectionTest" value="true"/>
+        </bean>
+    </beans>
+    <beans profile="db.urlstring">
+        <bean id="urlString" class="am.ik.categolj2.infra.db.UrlStringDevider">
+            <constructor-arg index="0" value="#{systemEnvironment['CLEARDB_DATABASE_URL']}"/>
+            <constructor-arg index="1" value="zeroDateTimeBehavior=convertToNull"/>
+        </bean>
+        <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig" depends-on="urlString">
+            <property name="driverClassName" value="${database.driverClassName}"/>
+            <property name="jdbcUrl" value="#{@urlString.url}"/>
+            <property name="username" value="#{@urlString.username}"/>
+            <property name="password" value="#{@urlString.password}"/>
+            <property name="autoCommit" value="false"/>
+            <property name="maximumPoolSize" value="${cp.maxActive}"/>
+            <property name="minimumIdle" value="${cp.minIdle}"/>
+            <property name="maxLifetime" value="${cp.maxWait}"/>
+            <property name="jdbc4ConnectionTest" value="true"/>
+        </bean>
+    </beans>
     <beans profile="cache.hazelcast">
         <bean id="cacheManager" class="com.hazelcast.spring.cache.HazelcastCacheManager">
             <constructor-arg ref="hazelcastInstance"/>

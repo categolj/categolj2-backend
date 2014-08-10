@@ -21,7 +21,7 @@
     </context-param>
     <context-param>
         <param-name>spring.profiles.default</param-name>
-        <param-value>cache.hazelcast</param-value>
+        <param-value>cache.hazelcast,db.property</param-value>
     </context-param>
     <filter>
         <filter-name>metricFilter</filter-name>
