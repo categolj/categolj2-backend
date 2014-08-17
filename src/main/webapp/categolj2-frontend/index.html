@@ -74,7 +74,7 @@
         <h3 class="uk-article-title"><a href="#/entries/{{entryId}}" class="entry-title">{{title}}</a></h3>
 
         <p class="uk-article-meta">updated at {{lastModifiedDate}} created by <a href="#/users/{{createdBy}}/entries">{{createdBy}}</a>
-            &nbsp; category: {{categoryLink categoryName}}</p>
+            &nbsp; category: {{categoryLink categoryName}} <a href="/api/v1/entries/{{entryId}}.pdf" class="uk-button uk-button-mini uk-float-right">Download PDF</a></p>
 
         <p class="uk-article-lead">
             {{#if render}}
