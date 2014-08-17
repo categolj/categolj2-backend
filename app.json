@@ -1,0 +1,9 @@
+{
+    "name": "CategoLJ2 Backend",
+    "description": "Simple and Portable RESTfull Blog System",
+    "repository": "https://github.com/making/categolj2-backend",
+    "logo": "https://node-js-sample.herokuapp.com/node.svg",
+    "addons": [
+        "cleardb:ignite"
+    ]
+}

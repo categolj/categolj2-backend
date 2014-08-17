@@ -18,7 +18,17 @@ The following technologies are used.
 * Backbone.js
 * ...
 
-## Quick launch
+## Heroku Button
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/making/categolj2-backend/tree/heroku-button)
+
+Heroku button is supported!!
+This is just alpha version. Currently, there are some restrictions... 
+
+* Japanese is unavailable.
+* `EDITOR` role is unavailable.
+ 
+## Normal launch
 
 Download categolj2-backend.jar from [release page](https://github.com/making/categolj2-backend/releases).
 This jar is executable becaseuse it includes an embedded Tomcat7.
