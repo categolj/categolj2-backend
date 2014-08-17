@@ -20,7 +20,7 @@ The following technologies are used.
 
 ## Heroku Button
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/making/categolj2-backend/tree/heroku-button)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 Heroku button is supported!!
 This is just alpha version. Currently, there are some restrictions... 
