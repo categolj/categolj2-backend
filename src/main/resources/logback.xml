@@ -1,84 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>
-                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{X-PID}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
-        </encoder>
-    </appender>
-
-    <appender name="APPLICATION_LOG_FILE"
-              class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.dir:-log}/${log.file.prefix:-categolj2}-application.log</file>
-        <rollingPolicy
-                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.dir:-log}/${log.file.prefix:-categolj2}-application-%d{yyyyMMdd}.log
-            </fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <charset>UTF-8</charset>
-            <pattern>
-                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{X-PID}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
-        </encoder>
-    </appender>
-
-    <!-- Application Loggers -->
-    <logger name="am.ik.categolj2">
-        <level value="warn"/>
-    </logger>
-
-    <!-- TERASOLUNA -->
-    <logger name="org.terasoluna.gfw">
-        <level value="warn"/>
-    </logger>
-    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor">
-        <level value="${log.verbose:-trace}"/>
-    </logger>
-    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-
-    <!-- 3rdparty Loggers -->
-    <logger name="org.springframework">
-        <level value="warn"/>
-    </logger>
-    <logger name="org.springframework.boot">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-    <logger name="org.springframework.security">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-
-    <logger name="org.springframework.web.servlet">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-
-    <logger name="org.springframework.data.auditing">
-        <level value="debug"/>
-    </logger>
-
-    <logger name="org.hibernate.engine.transaction">
-        <level value="warn"/>
-    </logger>
-
-    <logger name="com.hazelcast">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-
-    <logger name="jdbc">
-        <level value="off"/>
-    </logger>
-    <logger name="jdbc.sqltiming">
-        <level value="${log.sql:-error}"/>
-    </logger>
-    <logger name="jdbc.resultsettable">
-        <level value="${log.sql.result:-error}"/>
-    </logger>
-    <root level="warn">
-        <appender-ref ref="STDOUT"/>
-        <appender-ref ref="APPLICATION_LOG_FILE"/>
-    </root>
-
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <logger name="jdbc" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    <logger name="jdbc.resultsettable" level="ERROR"/>
+    <logger name="org.hibernate" level="WARN"/>
 </configuration>

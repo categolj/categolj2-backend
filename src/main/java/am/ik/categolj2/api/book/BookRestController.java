@@ -15,6 +15,7 @@
  */
 package am.ik.categolj2.api.book;
 
+import am.ik.categolj2.App;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.service.book.BookDto;
 import am.ik.categolj2.domain.service.book.BookService;
@@ -27,7 +28,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @RestController
-@RequestMapping("books")
+@RequestMapping("api/" + App.API_VERSION + "/books")
 public class BookRestController {
     @Inject
     BookService bookService;

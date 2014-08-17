@@ -15,6 +15,7 @@
  */
 package am.ik.categolj2.api.link;
 
+import am.ik.categolj2.App;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.Link;
 import am.ik.categolj2.domain.service.link.LinkService;
@@ -32,7 +33,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("links")
+@RequestMapping("api/" + App.API_VERSION + "/links")
 public class LinkRestController {
     @Inject
     LinkService linkService;

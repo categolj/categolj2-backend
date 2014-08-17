@@ -34,7 +34,7 @@ import am.ik.categolj2.domain.model.Entry;
 
 public class StringToCategoryListConverterTest {
 	DozerBeanMapper beanMapper = new DozerBeanMapper(
-			Arrays.asList("META-INF/dozer/api-mapping.xml"));
+			Arrays.asList("dozer/api-mapping.xml"));
 
 	@Before
 	public void setUp() throws Exception {

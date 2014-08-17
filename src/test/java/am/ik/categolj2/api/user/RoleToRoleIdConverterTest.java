@@ -39,8 +39,8 @@ public class RoleToRoleIdConverterTest {
     public void setUp() throws Exception {
         DozerBeanMapperFactoryBean factoryBean = new DozerBeanMapperFactoryBean();
         factoryBean.setMappingFiles(new Resource[]{
-                new ClassPathResource("META-INF/dozer/global-mapping.xml"),
-                new ClassPathResource("META-INF/dozer/api-mapping.xml")});
+                new ClassPathResource("dozer/global-mapping.xml"),
+                new ClassPathResource("dozer/api-mapping.xml")});
         factoryBean.afterPropertiesSet();
         mapper = (Mapper) factoryBean.getObject();
     }

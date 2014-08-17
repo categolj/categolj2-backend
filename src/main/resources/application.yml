@@ -1,0 +1,23 @@
+categolj2:
+  url: http://blog.ik.am
+  title: BLOG.IK.AM
+  description: making's memo
+  db: H2
+  filedownload.cache.seconds: 345600 # 60 * 60 * 24 * 4
+
+aws:
+  accesskey.id: <Your Accesskey ID for AWS>
+  secret.accesskey: <Your Secret Accesskey for AWS>
+  endpoint: https://ecs.amazonaws.jp
+  associate.tag: ikam-22
+
+spring:
+  main:
+    show-banner: false
+  jpa:
+    hibernate.ddl-auto: validate
+  datasource:
+    url: jdbc:h2:file:${categolj2.h2.datadir:/tmp}/categolj2
+
+flyway.locations: classpath:db/migration/${categolj2.db:H2}
+security.basic.enabled: false

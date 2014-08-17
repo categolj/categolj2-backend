@@ -18,7 +18,7 @@
 
     <bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
         <property name="mappingFiles"
-                  value="classpath*:/META-INF/dozer/**/*-mapping.xml"/>
+                  value="classpath*:/dozer/**/*-mapping.xml"/>
     </bean>
 
     <!-- Message -->
@@ -26,7 +26,7 @@
           class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
-                <value>i18n/application-messages</value>
+                <value>application-messages</value>
             </list>
         </property>
     </bean>
