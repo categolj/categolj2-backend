@@ -15,7 +15,7 @@
  */
 package am.ik.categolj2.api.file;
 
-import am.ik.categolj2.App;
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.api.MediaTypeResolver;
 import am.ik.categolj2.domain.model.UploadFile;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/" + App.API_VERSION + "/files")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/files")
 public class FileRestController {
     @Inject
     UploadFileService uploadFileService;

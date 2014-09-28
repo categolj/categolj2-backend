@@ -15,7 +15,7 @@
  */
 package am.ik.categolj2.api.loginhistory;
 
-import am.ik.categolj2.App;
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.LoginHistory;
 import am.ik.categolj2.domain.service.loginhistory.LoginHistoryService;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 
 @RestController
-@RequestMapping("api/" + App.API_VERSION + "/loginhistories")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/loginhistories")
 public class LoginHistoryRestController {
 
     @Inject

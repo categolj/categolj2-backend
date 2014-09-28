@@ -28,7 +28,7 @@ import org.terasoluna.gfw.common.exception.ResultMessagesNotificationException;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "am.ik.categolj2.api")
 public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger logger = LogManager.getLogger();
 

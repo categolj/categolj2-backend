@@ -3,6 +3,6 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <logger name="jdbc" level="OFF"/>
     <logger name="jdbc.sqltiming" level="DEBUG"/>
-    <logger name="jdbc.resultsettable" level="ERROR"/>
+    <logger name="jdbc.resultsettable" level="DEBUG"/>
     <logger name="org.hibernate" level="WARN"/>
 </configuration>

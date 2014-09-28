@@ -51,10 +51,15 @@ public class AuthenticationController {
     @Inject
     AuthenticationHelper authenticationHelper;
 
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    String loginForm() {
+        return "login";
+    }
+
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password,
-                        UriComponentsBuilder builder, RedirectAttributes attributes,
-                        HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String login(@RequestParam("username") String username, @RequestParam("password") String password,
+                 UriComponentsBuilder builder, RedirectAttributes attributes,
+                 HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("attempt to login (username={})", username);
         String tokenEndpoint = builder.path("oauth/token").build().toUriString();
         HttpEntity<MultiValueMap<String, Object>> ropRequest = authenticationHelper.createRopRequest(username, password);
@@ -65,15 +70,15 @@ public class AuthenticationController {
             authenticationHelper.writeLoginHistory(accessToken, request, response);
         } catch (HttpStatusCodeException e) {
             authenticationHelper.handleHttpStatusCodeException(e, attributes);
-            return "redirect:/login.jsp";
+            return "redirect:/login";
         }
-        return "redirect:/admin.jsp";
+        return "redirect:/admin";
     }
 
     @RequestMapping("logout")
-    public String logout(@CookieValue(value = Categolj2Cookies.ACCESS_TOKEN_VALUE_COOKIE, required = false) String accessTokenValue,
-                         @CookieValue(value = Categolj2Cookies.REFRESH_TOKEN_VALUE_COOKIE, required = false) String refreshTokenValue,
-                         HttpServletResponse response) throws IOException {
+    String logout(@CookieValue(value = Categolj2Cookies.ACCESS_TOKEN_VALUE_COOKIE, required = false) String accessTokenValue,
+                  @CookieValue(value = Categolj2Cookies.REFRESH_TOKEN_VALUE_COOKIE, required = false) String refreshTokenValue,
+                  HttpServletResponse response) throws IOException {
         logger.debug("remove token {}", accessTokenValue);
 
         if (!Strings.isNullOrEmpty(refreshTokenValue)) {
@@ -84,7 +89,7 @@ public class AuthenticationController {
             tokenServices.revokeToken(accessTokenValue);
         }
         authenticationHelper.removeCookie("JSESSIONID", response);
-        return "redirect:/login.jsp";
+        return "redirect:/login";
     }
 
 

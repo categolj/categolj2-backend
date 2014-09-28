@@ -15,7 +15,7 @@
  */
 package am.ik.categolj2.api.user;
 
-import am.ik.categolj2.App;
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.User;
 import am.ik.categolj2.domain.service.user.UserService;
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/" + App.API_VERSION + "/users")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/users")
 public class UserRestController {
     @Inject
     UserService userService;

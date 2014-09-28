@@ -15,7 +15,7 @@
  */
 package am.ik.categolj2.api.entry;
 
-import am.ik.categolj2.App;
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.*;
 import am.ik.categolj2.domain.service.accesslog.AccessLogHelper;
@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/" + App.API_VERSION)
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION)
 public class EntryRestController {
     @Inject
     EntryService entryService;

@@ -1,12 +1,19 @@
 /*
 
-Brown Paper style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
+School Book style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
 
 */
 
 .hljs {
-  display: block; padding: 0.5em;
-  background:#b7a68e url(./brown_papersq.png);
+  display: block; padding: 15px 0.5em 0.5em 30px;
+  font-size: 11px !important;
+  line-height:16px !important;
+}
+
+pre{
+  background:#f6f6ae url(school_book.png);
+  border-top: solid 2px #d2e8b9;
+  border-bottom: solid 1px #d2e8b9;
 }
 
 .hljs-keyword,
@@ -17,9 +24,7 @@ Brown Paper style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
 .lisp .hljs-title,
 .clojure .hljs-built_in,
 .nginx .hljs-title,
-.tex .hljs-special,
-.hljs-request,
-.hljs-status {
+.tex .hljs-special {
   color:#005599;
   font-weight:bold;
 }
@@ -27,7 +32,7 @@ Brown Paper style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
 .hljs,
 .hljs-subst,
 .hljs-tag .hljs-keyword {
-  color: #363C69;
+  color: #3E5915;
 }
 
 .hljs-string,
@@ -57,7 +62,9 @@ Brown Paper style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
 .hljs-envvar,
 .apache .hljs-tag,
 .apache .hljs-cbracket,
-.tex .hljs-number {
+.nginx .hljs-built_in,
+.tex .hljs-command,
+.coffeescript .hljs-attribute {
   color: #2C009F;
 }
 
@@ -69,10 +76,8 @@ Brown Paper style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
 .hljs-doctype,
 .hljs-deletion,
 .hljs-shebang,
-.apache .hljs-sqbracket,
-.nginx .hljs-built_in,
-.tex .hljs-formula {
-  color: #802022;
+.apache .hljs-sqbracket {
+  color: #E60415;
 }
 
 .hljs-keyword,
@@ -85,12 +90,15 @@ Brown Paper style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
 .sql .hljs-aggregate,
 .rsl .hljs-built_in,
 .smalltalk .hljs-class,
+.xml .hljs-tag .hljs-title,
 .diff .hljs-header,
 .hljs-chunk,
 .hljs-winutils,
 .bash .hljs-variable,
 .apache .hljs-tag,
-.tex .hljs-command {
+.tex .hljs-command,
+.hljs-request,
+.hljs-status {
   font-weight: bold;
 }
 
@@ -101,5 +109,5 @@ Brown Paper style from goldblog.com.ua (c) Zaripov Yura <yur4ik7@ukr.net>
 .xml .vbscript,
 .xml .css,
 .xml .hljs-cdata {
-  opacity: 0.8;
+  opacity: 0.5;
 }

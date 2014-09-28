@@ -15,7 +15,7 @@
  */
 package am.ik.categolj2.api.recentpost;
 
-import am.ik.categolj2.App;
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.domain.model.Entry;
 import am.ik.categolj2.domain.service.entry.EntryService;
 import org.dozer.Mapper;
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/" + App.API_VERSION + "/recentposts")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/recentposts")
 public class RecentPostRestController {
     @Inject
     EntryService entryService;

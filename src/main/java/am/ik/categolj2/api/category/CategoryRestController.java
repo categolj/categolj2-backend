@@ -15,7 +15,7 @@
  */
 package am.ik.categolj2.api.category;
 
-import am.ik.categolj2.App;
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.AccessLog;
 import am.ik.categolj2.domain.service.accesslog.AccessLogHelper;
@@ -30,7 +30,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/" + App.API_VERSION + "/categories")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/categories")
 public class CategoryRestController {
     @Inject
     CategoryService categoryService;

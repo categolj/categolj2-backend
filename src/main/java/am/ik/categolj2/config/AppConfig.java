@@ -1,6 +1,9 @@
 package am.ik.categolj2.config;
 
 import am.ik.categolj2.core.message.MessageKeys;
+import am.ik.categolj2.domain.model.EntryFormat;
+import am.ik.categolj2.infra.codelist.EnumCodeList;
+import ch.qos.logback.classic.Level;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
@@ -8,6 +11,8 @@ import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourceArrayPropertyEditor;
 import org.springframework.dao.DataAccessException;
@@ -22,12 +27,14 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.client.RestTemplate;
+import org.terasoluna.gfw.common.codelist.CodeList;
+import org.terasoluna.gfw.common.codelist.SimpleMapCodeList;
 import org.terasoluna.gfw.common.date.DateFactory;
 import org.terasoluna.gfw.common.date.DefaultDateFactory;
-import org.terasoluna.gfw.common.exception.BusinessException;
-import org.terasoluna.gfw.common.exception.ExceptionCodeResolver;
-import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
-import org.terasoluna.gfw.common.exception.SimpleMappingExceptionCodeResolver;
+import org.terasoluna.gfw.common.exception.*;
+import org.terasoluna.gfw.web.exception.ExceptionLoggingFilter;
+import org.terasoluna.gfw.web.logging.mdc.MDCClearFilter;
+import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 
 import java.util.LinkedHashMap;
 
@@ -88,4 +95,53 @@ public class AppConfig {
         }});
         return exceptionCodeResolver;
     }
+
+    @Bean
+    ExceptionLogger exceptionLogger() {
+        ExceptionLogger exceptionLogger = new ExceptionLogger();
+        exceptionLogger.setExceptionCodeResolver(exceptionCodeResolver());
+        return exceptionLogger;
+    }
+
+    @Bean
+    ExceptionLoggingFilter exceptionLoggingFilter() {
+        ExceptionLoggingFilter exceptionLoggingFilter = new ExceptionLoggingFilter();
+        exceptionLoggingFilter.setExceptionLogger(exceptionLogger());
+        return exceptionLoggingFilter;
+    }
+
+    @Order(Ordered.HIGHEST_PRECEDENCE + 3)
+    @Bean
+    XTrackMDCPutFilter xTrackMDCPutFilter() {
+        return new XTrackMDCPutFilter();
+    }
+
+    @Order(Ordered.HIGHEST_PRECEDENCE + 2)
+    @Bean
+    MDCClearFilter mdcClearFilter() {
+        return new MDCClearFilter();
+    }
+
+    // Codelist
+    @Bean(name = "CL_FORMAT")
+    CodeList formatCodeList() {
+        EnumCodeList codeList = new EnumCodeList();
+        codeList.setEnumClass(EntryFormat.class);
+        return codeList;
+    }
+
+    @Bean(name = "CL_LOGGER_LEVEL")
+    CodeList loggerLevelCodeList() {
+        SimpleMapCodeList codeList = new SimpleMapCodeList();
+        codeList.setMap(new LinkedHashMap<String, String>() {{
+            put(Level.OFF.toString(), Level.OFF.toString());
+            put(Level.ERROR.toString(), Level.ERROR.toString());
+            put(Level.WARN.toString(), Level.WARN.toString());
+            put(Level.INFO.toString(), Level.INFO.toString());
+            put(Level.DEBUG.toString(), Level.DEBUG.toString());
+            put(Level.TRACE.toString(), Level.TRACE.toString());
+        }});
+        return codeList;
+    }
+
 }

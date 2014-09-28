@@ -1,7 +1,7 @@
 package am.ik.categolj2.api.entry;
 
 
-import am.ik.categolj2.App;
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.domain.model.AccessLog;
 import am.ik.categolj2.domain.model.Entry;
 import am.ik.categolj2.domain.service.accesslog.AccessLogHelper;
@@ -16,7 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 
-@RequestMapping("api/" + App.API_VERSION)
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION)
 @Controller
 public class EntryPdfController {
     @Inject

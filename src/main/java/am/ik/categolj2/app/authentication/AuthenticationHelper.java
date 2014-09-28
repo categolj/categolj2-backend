@@ -16,12 +16,15 @@
 package am.ik.categolj2.app.authentication;
 
 import am.ik.categolj2.app.Categolj2Cookies;
+import am.ik.categolj2.config.OAuth2AdminClientProperties;
 import am.ik.categolj2.core.logger.LogManager;
 import am.ik.categolj2.core.web.RemoteAddresses;
 import am.ik.categolj2.core.web.UserAgents;
 import am.ik.categolj2.domain.model.LoginHistory;
 import am.ik.categolj2.domain.service.loginhistory.LoginHistoryService;
-
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.springframework.http.HttpEntity;
@@ -44,6 +47,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Map;
 
 @Component
@@ -56,16 +61,20 @@ public class AuthenticationHelper {
     DateFactory dateFactory;
     @Inject
     ObjectMapper objectMapper;
+    @Inject
+    OAuth2AdminClientProperties adminClientProperties;
 
     HttpEntity<MultiValueMap<String, Object>> createRopRequest(String username, String password) {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("username", username);
         params.add("password", password);
-        params.add("client_id", "categolj2-admin");
-        params.add("client_secret", "categolj2-secret");
         params.add("grant_type", "password");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        byte[] clientInfo = (adminClientProperties.getClientId() + ":" + adminClientProperties.getClientSecret())
+                .getBytes(StandardCharsets.UTF_8);
+        String basic = new String(Base64.getEncoder().encode(clientInfo), StandardCharsets.UTF_8);
+        headers.set(com.google.common.net.HttpHeaders.AUTHORIZATION, "Basic " + basic);
         return new HttpEntity<>(params, headers);
     }
 
@@ -129,14 +138,15 @@ public class AuthenticationHelper {
 
     void saveUserInformationInCookie(String username, String firstName, String lastName, String email, OAuth2AccessToken accessToken,
                                      HttpServletResponse response) throws UnsupportedEncodingException {
-        String json = String.format("{\"username\":\"%s\"," +
-                "\"firstName\":\"%s\"," +
-                "\"lastName\":\"%s\"," +
-                "\"email\":\"%s\"}", username, firstName, lastName, email);
-        Cookie cookie = new Cookie(Categolj2Cookies.USER_COOKIE,
-                URLEncoder.encode(json, "UTF-8"));
-        cookie.setMaxAge(getRefreshTokenMaxAge(accessToken));
-        response.addCookie(cookie);
+        try {
+            Cookie cookie = new Cookie(Categolj2Cookies.USER_COOKIE,
+                    objectMapper.writeValueAsString(new UserInfo(username, firstName, lastName, email)));
+
+            cookie.setMaxAge(getRefreshTokenMaxAge(accessToken));
+            response.addCookie(cookie);
+        } catch (JsonProcessingException e) {
+            logger.error("JSON conversion failed!", e);
+        }
     }
 
 
@@ -155,9 +165,13 @@ public class AuthenticationHelper {
                     e.getMessage(),
                     e.getResponseHeaders().get("X-Track"));
         }
-        OAuth2Exception oAuth2Exception = objectMapper.readValue(e.getResponseBodyAsByteArray(),
-                OAuth2Exception.class);
-        attributes.addAttribute("error", oAuth2Exception.getMessage());
+        try {
+            OAuth2Exception oAuth2Exception = objectMapper.readValue(e.getResponseBodyAsByteArray(),
+                    OAuth2Exception.class);
+            attributes.addAttribute("error", oAuth2Exception.getMessage());
+        } catch (JsonMappingException | JsonParseException ex) {
+            attributes.addAttribute("error", e.getMessage());
+        }
     }
 
 

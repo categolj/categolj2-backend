@@ -74,7 +74,7 @@ define(function (require) {
         .value();
 
     if (_.isEmpty(cookie.CATEGOLJ2_ACCESS_TOKEN_VALUE)) {
-        location.href = "login.jsp";
+        location.href = "login";
         return;
     }
 

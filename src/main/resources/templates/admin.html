@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Admin Console</title>
+    <link
+            th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap.min.css}"
+            rel="stylesheet" media="screen"/>
+    <link
+            th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}"
+            rel="stylesheet" media="screen"/>
+    <link
+            th:href="@{/resources/vendor/pagedown/demo/browser/demo.css}"
+            rel="stylesheet" media="screen"/>
+    <link
+            th:href="@{/resources/vendor/dynatable/jquery.dynatable.css}"
+            rel="stylesheet" media="screen"/>
+    <link
+            th:href="@{/resources/app/css/app.css}"
+            rel="stylesheet" media="screen"/>
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon"/>
+    <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon"/>
+    <style>
+        body {
+            padding-top: 70px;
+        }
+    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+                    data-toggle="collapse"
+                    data-target=".navbar-collapse">
+                <span class="icon-bar"></span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" th:href="@{/admin}">Admin Console</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav pull-right">
+                <li class="nav-divider"></li>
+                <li class="dropdown"><a href="#"
+                                        class="dropdown-toggle" data-toggle="dropdown"><span
+                        class="glyphicon glyphicon-user"></span> Welcome,
+                    <span id="user-display-name" sec:authentication="principal.user.username"></span><b
+                            class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#users/me/form"><span
+                                class="glyphicon glyphicon-edit"></span>
+                            Change information (not implemented yet)</a></li>
+                        <li><a
+                                th:href="@{/logout}"><span
+                                class="glyphicon glyphicon-off"></span>
+                            Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</div>
+<div class="container" style="width: 100%">
+    <div class="row">
+        <div class="col col-sm-2">
+            <div id="nav-item-list"></div>
+        </div>
+        <div class="col col-sm-10">
+            <div class="tab-content"></div>
+        </div>
+    </div>
+</div>
+<script data-main="resources/app/js/admin/main" th:src="@{/resources/vendor/requirejs/require.js}"></script>
+</body>
+</html>
