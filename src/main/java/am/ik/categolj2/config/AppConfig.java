@@ -1,6 +1,7 @@
 package am.ik.categolj2.config;
 
 import am.ik.categolj2.core.message.MessageKeys;
+import am.ik.categolj2.core.web.cors.CrossOriginFilter;
 import am.ik.categolj2.domain.model.EntryFormat;
 import am.ik.categolj2.infra.codelist.EnumCodeList;
 import ch.qos.logback.classic.Level;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -27,6 +29,7 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.terasoluna.gfw.common.codelist.CodeList;
 import org.terasoluna.gfw.common.codelist.SimpleMapCodeList;
 import org.terasoluna.gfw.common.date.DateFactory;
@@ -97,6 +100,14 @@ public class AppConfig {
     }
 
     @Bean
+    CharacterEncodingFilter characterEncodingFilter() {
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+        return filter;
+    }
+
+    @Bean
     ExceptionLogger exceptionLogger() {
         ExceptionLogger exceptionLogger = new ExceptionLogger();
         exceptionLogger.setExceptionCodeResolver(exceptionCodeResolver());
@@ -120,6 +131,17 @@ public class AppConfig {
     @Bean
     MDCClearFilter mdcClearFilter() {
         return new MDCClearFilter();
+    }
+
+    @Bean
+    FilterRegistrationBean crossOriginFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new CrossOriginFilter());
+        filterRegistrationBean.addUrlPatterns(
+                "/api/v1/*",
+                "/management/*",
+                "/codahale/*");
+        return filterRegistrationBean;
     }
 
     // Codelist

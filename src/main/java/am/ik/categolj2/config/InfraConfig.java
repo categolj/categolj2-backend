@@ -2,54 +2,78 @@ package am.ik.categolj2.config;
 
 import am.ik.aws.apa.AwsApaRequester;
 import am.ik.aws.apa.AwsApaRequesterImpl;
+import am.ik.categolj2.infra.db.UrlStringDevider;
 import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 @Configuration
 public class InfraConfig {
-    @Inject
-    DataSourceProperties dataSourceProperties;
-    DataSource dataSource;
 
-    @Bean
-    DataSource realDataSource() throws URISyntaxException {
-        String url;
-        String username;
-        String password;
+    @Configuration
+    @Profile("db.property")
+    public static class PropertyDbConfiguration {
+        @Inject
+        DataSourceProperties dataSourceProperties;
+        DataSource dataSource;
 
-        String databaseUrl = System.getenv("DATABASE_URL");
-        if (databaseUrl != null) {
-            URI dbUri = new URI(databaseUrl);
-            url = "jdbc:postgresql://" + dbUri.getHost() + ":" + dbUri.getPort() + dbUri.getPath();
-            username = dbUri.getUserInfo().split(":")[0];
-            password = dbUri.getUserInfo().split(":")[1];
-        } else {
-            url = this.dataSourceProperties.getUrl();
-            username = this.dataSourceProperties.getUsername();
-            password = this.dataSourceProperties.getPassword();
+        @Bean
+        DataSource realDataSource() throws URISyntaxException {
+            String url = this.dataSourceProperties.getUrl();
+            String username = this.dataSourceProperties.getUsername();
+            String password = this.dataSourceProperties.getPassword();
+
+            DataSourceBuilder factory = DataSourceBuilder
+                    .create(this.dataSourceProperties.getClassLoader())
+                    .url(url)
+                    .username(username)
+                    .password(password);
+            this.dataSource = factory.build();
+            return this.dataSource;
         }
 
-        DataSourceBuilder factory = DataSourceBuilder
-                .create(this.dataSourceProperties.getClassLoader())
-                .url(url)
-                .username(username)
-                .password(password);
-        this.dataSource = factory.build();
-        return this.dataSource;
+        @Bean
+        DataSource dataSource() {
+            return new DataSourceSpy(this.dataSource);
+        }
     }
 
-    @Bean
-    DataSource dataSource() {
-        return new DataSourceSpy(this.dataSource);
+
+    @Configuration
+    @Profile("db.urlstring")
+    public static class UrlStringDbConfiguration {
+        DataSource dataSource;
+
+        @Bean
+        DataSource realDataSource() throws URISyntaxException {
+            UrlStringDevider urlStringDevider = new UrlStringDevider(
+                    System.getenv("CLEARDB_DATABASE_URL"),
+                    "zeroDateTimeBehavior=convertToNull");
+            String url = urlStringDevider.getUrl();
+            String username = urlStringDevider.getUsername();
+            String password = urlStringDevider.getPassword();
+
+            DataSourceBuilder factory = DataSourceBuilder
+                    .create()
+                    .url(url)
+                    .username(username)
+                    .password(password);
+            this.dataSource = factory.build();
+            return this.dataSource;
+        }
+
+        @Bean
+        DataSource dataSource() {
+            return new DataSourceSpy(this.dataSource);
+        }
     }
 
     @Bean
@@ -59,4 +83,5 @@ public class InfraConfig {
                                  @Value("${aws.associate.tag}") String associateTag) {
         return new AwsApaRequesterImpl(endPoint, accessKeyId, secretAccessKey, associateTag);
     }
+
 }

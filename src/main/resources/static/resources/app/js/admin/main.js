@@ -124,7 +124,7 @@ define(function (require) {
 
     $(document).ready(function () {
         $('body').append(spinView.render().$el);
-        var user = JSON.parse(decodeURIComponent(cookie.CATEGOLJ2_USER));
+        var user = JSON.parse(JSON.parse(decodeURIComponent(cookie.CATEGOLJ2_USER)));
         $('#user-display-name').text(user.firstName + ' ' + user.lastName);
 
         // Global validation configuration
