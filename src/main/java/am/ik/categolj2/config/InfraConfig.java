@@ -2,6 +2,7 @@ package am.ik.categolj2.config;
 
 import am.ik.aws.apa.AwsApaRequester;
 import am.ik.aws.apa.AwsApaRequesterImpl;
+import am.ik.categolj2.domain.AuditAwareBean;
 import am.ik.categolj2.infra.db.UrlStringDevider;
 import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,13 +11,20 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.net.URISyntaxException;
 
 @Configuration
+@EnableJpaAuditing(setDates = false)
 public class InfraConfig {
+
+    @Bean
+    AuditAwareBean auditAwareBean() {
+        return new AuditAwareBean();
+    }
 
     @Configuration
     @Profile("db.property")
