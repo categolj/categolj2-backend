@@ -26,6 +26,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindException;
@@ -48,6 +49,7 @@ import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 import java.util.LinkedHashMap;
 
 @Configuration
+@EnableScheduling
 public class AppConfig {
 
     @Bean
@@ -161,6 +163,28 @@ public class AppConfig {
         exceptionLoggingFilter.setExceptionLogger(exceptionLogger());
         return exceptionLoggingFilter;
     }
+
+//    @Bean
+//    SystemExceptionResolver systemExceptionResolver() {
+//        SystemExceptionResolver systemExceptionResolver = new SystemExceptionResolver();
+//        systemExceptionResolver.setExceptionCodeResolver(exceptionCodeResolver());
+//        systemExceptionResolver.setOrder(3);
+//        systemExceptionResolver.setExceptionMappings(new Properties() {{
+//            put("ResourceNotFoundException", "common/error/resourceNotFoundError");
+//            put("BusinessException", "common/error/businessError");
+//            put("InvalidTransactionTokenException", "common/error/transactionTokenError");
+//            put(".DataAccessException", "common/error/dataAccessError");
+//        }});
+//        systemExceptionResolver.setStatusCodes(new Properties() {{
+//            put("common/error/resourceNotFoundError", "404");
+//            put("common/error/businessError", "409");
+//            put("common/error/transactionTokenError", "409");
+//            put("common/error/dataAccessError", "500");
+//        }});
+//        systemExceptionResolver.setDefaultErrorView("common/error/systemError");
+//        systemExceptionResolver.setDefaultStatusCode(500);
+//        return systemExceptionResolver;
+//    }
 
     @Order(Ordered.HIGHEST_PRECEDENCE + 3)
     @Bean
