@@ -1,5 +1,6 @@
 package am.ik.categolj2.config;
 
+import am.ik.categolj2.api.MediaTypeResolver;
 import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.core.web.cors.CrossOriginFilter;
 import am.ik.categolj2.domain.model.EntryFormat;
@@ -9,6 +10,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import org.dozer.spring.DozerBeanMapperFactoryBean;
+import org.springframework.aop.Advisor;
+import org.springframework.aop.aspectj.AspectJExpressionPointcut;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +24,7 @@ import org.springframework.core.io.support.ResourceArrayPropertyEditor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.dao.PessimisticLockingFailureException;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +41,7 @@ import org.terasoluna.gfw.common.date.DateFactory;
 import org.terasoluna.gfw.common.date.DefaultDateFactory;
 import org.terasoluna.gfw.common.exception.*;
 import org.terasoluna.gfw.web.exception.ExceptionLoggingFilter;
+import org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor;
 import org.terasoluna.gfw.web.logging.mdc.MDCClearFilter;
 import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 
@@ -97,6 +103,41 @@ public class AppConfig {
             put(DataAccessException.class.getSimpleName(), MessageKeys.E_CT_FW_9002);
         }});
         return exceptionCodeResolver;
+    }
+
+    @Bean
+    MediaTypeResolver mediaTypeResolver() {
+        MediaTypeResolver mediaTypeResolver = new MediaTypeResolver(new LinkedHashMap<String, MediaType>() {{
+            put("json", MediaType.APPLICATION_JSON);
+            put("xml", MediaType.APPLICATION_XML);
+            put("gif", MediaType.IMAGE_GIF);
+            put("jpeg", MediaType.IMAGE_JPEG);
+            put("jpg", MediaType.IMAGE_JPEG);
+            put("png", MediaType.IMAGE_PNG);
+            put("html", MediaType.TEXT_HTML);
+            put("text", MediaType.TEXT_PLAIN);
+            put("xhtml", MediaType.TEXT_XML);
+        }});
+        mediaTypeResolver.setFallbackMediaType(MediaType.APPLICATION_OCTET_STREAM);
+        return mediaTypeResolver;
+    }
+
+    @Bean
+    Advisor resultMessagesLoggingAdvisor() {
+        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+        pointcut.setExpression("@within(org.springframework.stereotype.Service)");
+        ResultMessagesLoggingInterceptor interceptor = new ResultMessagesLoggingInterceptor();
+        interceptor.setExceptionLogger(exceptionLogger());
+        return new DefaultPointcutAdvisor(pointcut, interceptor);
+    }
+
+    @Bean
+    Advisor handlerExceptionResolverLoggingAdvisor() {
+        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+        pointcut.setExpression("execution(* org.springframework.web.servlet.HandlerExceptionResolver.resolveException(..))");
+        HandlerExceptionResolverLoggingInterceptor interceptor = new HandlerExceptionResolverLoggingInterceptor();
+        interceptor.setExceptionLogger(exceptionLogger());
+        return new DefaultPointcutAdvisor(pointcut, interceptor);
     }
 
     @Bean
