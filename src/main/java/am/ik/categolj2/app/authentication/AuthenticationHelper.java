@@ -118,6 +118,7 @@ public class AuthenticationHelper {
         removeCookie(Categolj2Cookies.REFRESH_TOKEN_VALUE_COOKIE, response);
     }
 
+    @SuppressWarnings("unchecked")
     void writeLoginHistory(OAuth2AccessToken accessToken, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         // user
         Map<String, ?> user = (Map<String, ?>) accessToken.getAdditionalInformation().get("user");
