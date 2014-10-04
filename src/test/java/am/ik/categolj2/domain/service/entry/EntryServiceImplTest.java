@@ -23,6 +23,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import am.ik.categolj2.App;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.junit.After;
@@ -30,6 +31,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -44,7 +47,11 @@ import am.ik.categolj2.domain.repository.category.CategoryRepository;
 import am.ik.categolj2.domain.repository.entry.EntryRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:test-context.xml" })
+@Ignore
+// TODO fix slow test
+@SpringApplicationConfiguration(classes = App.class)
+@IntegrationTest({"server.port:0",
+        "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE"})
 public class EntryServiceImplTest {
 
 	@Inject

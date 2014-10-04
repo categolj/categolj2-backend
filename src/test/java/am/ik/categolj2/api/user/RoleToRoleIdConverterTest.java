@@ -18,32 +18,22 @@ package am.ik.categolj2.api.user;
 import am.ik.categolj2.domain.model.Role;
 import am.ik.categolj2.domain.model.User;
 import com.google.common.collect.Sets;
+import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
-import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 import java.util.*;
 
-public class RoleToRoleIdConverterTest {
-    Mapper mapper;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
-    @Before
-    public void setUp() throws Exception {
-        DozerBeanMapperFactoryBean factoryBean = new DozerBeanMapperFactoryBean();
-        factoryBean.setMappingFiles(new Resource[]{
-                new ClassPathResource("META-INF/dozer/global-mapping.xml"),
-                new ClassPathResource("META-INF/dozer/api-mapping.xml")});
-        factoryBean.afterPropertiesSet();
-        mapper = (Mapper) factoryBean.getObject();
-    }
+public class RoleToRoleIdConverterTest {
+    Mapper mapper = new DozerBeanMapper(
+            Arrays.asList("dozer/global-mapping.xml",
+                    "dozer/api-mapping.xml"));
 
     @After
     public void tearDown() throws Exception {

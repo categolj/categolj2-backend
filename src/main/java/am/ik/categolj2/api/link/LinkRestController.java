@@ -15,6 +15,7 @@
  */
 package am.ik.categolj2.api.link;
 
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.Link;
 import am.ik.categolj2.domain.service.link.LinkService;
@@ -27,12 +28,11 @@ import org.springframework.web.servlet.HandlerMapping;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("links")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/links")
 public class LinkRestController {
     @Inject
     LinkService linkService;

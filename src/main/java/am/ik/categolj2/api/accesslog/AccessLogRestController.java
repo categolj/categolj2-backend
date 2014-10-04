@@ -15,6 +15,7 @@
  */
 package am.ik.categolj2.api.accesslog;
 
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.AccessLog;
 import am.ik.categolj2.domain.service.accesslog.AccessLogService;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 
 @RestController
-@RequestMapping("accesslogs")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/accesslogs")
 public class AccessLogRestController {
     @Inject
     AccessLogService accessLogService;

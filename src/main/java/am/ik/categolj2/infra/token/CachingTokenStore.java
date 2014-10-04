@@ -76,8 +76,8 @@ public class CachingTokenStore implements TokenStore {
     }
 
     @Override
-    public Collection<OAuth2AccessToken> findTokensByUserName(String userName) {
-        return delegate.findTokensByUserName(userName);
+    public Collection<OAuth2AccessToken> findTokensByClientIdAndUserName(String clientId, String userName) {
+        return delegate.findTokensByClientIdAndUserName(clientId, userName);
     }
 
     @Override

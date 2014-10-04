@@ -1,84 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(%32X{X-Track}){green} %clr(---){faint} %clr([%15.15t{14}]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex"/>
+    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
+    <property name="FILE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } %32X{X-Track} [%t] --- %-40.40logger{39} : %m%n%wex"/>
+    <property name="MONITORING_LOG_PATTERN"
+              value="date:%d{yyyy-MM-dd HH:mm:ss.SSS}\tPID:${PID:- }\tX-Track:%X{X-Track}\tlevel:%-5level\tmessage:%msg%n"/>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>
-                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{X-PID}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
         </encoder>
     </appender>
-
-    <appender name="APPLICATION_LOG_FILE"
+    <appender name="DEBUG_LEVEL_REMAPPER" class="org.springframework.boot.logging.logback.LevelRemappingAppender">
+        <destinationLogger>org.springframework.boot</destinationLogger>
+    </appender>
+    <appender name="FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.dir:-log}/${log.file.prefix:-categolj2}-application.log</file>
-        <rollingPolicy
-                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.dir:-log}/${log.file.prefix:-categolj2}-application-%d{yyyyMMdd}.log
-            </fileNamePattern>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%i</fileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+    <appender name="MONITORING_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"> <!-- (1) -->
+        <file>log/projectName-monitoring.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%i.monitoring.%d{yyyyMMdd}</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
-            <charset>UTF-8</charset>
-            <pattern>
-                <![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tpid:%-5X{X-PID}\tthread:%thread\tX-Track:%X{X-Track}\tlevel:%-5level\tlogger:%-48logger{48}\tmessage:%msg%n]]></pattern>
+            <pattern>${MONITORING_LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 
-    <!-- Application Loggers -->
-    <logger name="am.ik.categolj2">
-        <level value="warn"/>
-    </logger>
-
-    <!-- TERASOLUNA -->
-    <logger name="org.terasoluna.gfw">
-        <level value="warn"/>
-    </logger>
-    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor">
-        <level value="${log.verbose:-trace}"/>
-    </logger>
-    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-
-    <!-- 3rdparty Loggers -->
-    <logger name="org.springframework">
-        <level value="warn"/>
-    </logger>
-    <logger name="org.springframework.boot">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-    <logger name="org.springframework.security">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-
-    <logger name="org.springframework.web.servlet">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-
-    <logger name="org.springframework.data.auditing">
-        <level value="debug"/>
-    </logger>
-
-    <logger name="org.hibernate.engine.transaction">
-        <level value="warn"/>
-    </logger>
-
-    <logger name="com.hazelcast">
-        <level value="${log.verbose:-info}"/>
-    </logger>
-
-    <logger name="jdbc">
-        <level value="off"/>
-    </logger>
-    <logger name="jdbc.sqltiming">
-        <level value="${log.sql:-error}"/>
-    </logger>
-    <logger name="jdbc.resultsettable">
-        <level value="${log.sql.result:-error}"/>
-    </logger>
-    <root level="warn">
-        <appender-ref ref="STDOUT"/>
-        <appender-ref ref="APPLICATION_LOG_FILE"/>
+    <root level="${log.verbose:-INFO}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
     </root>
-
+    <logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
+    <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
+    <logger name="org.crsh.plugin" level="WARN"/>
+    <logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"/>
+    <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
+    <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
+    <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
+    <logger name="org.thymeleaf" additivity="false">
+        <appender-ref ref="DEBUG_LEVEL_REMAPPER"/>
+    </logger>
+    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" level="ERROR"
+            additivity="false">
+        <appender-ref ref="MONITORING_LOG_FILE"/>
+    </logger>
+    <logger name="jdbc" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="${log.sql:-DEBUG}"/>
+    <logger name="jdbc.resultsettable" level="${log.sql.result:-ERROR}"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="${log.verbose:-TRACE}"/>
+    <logger name="org.springframework.data.auditing" level="debug"/>
+    <logger name="com.hazelcast" level="${log.verbose:-INFO}"/>
 </configuration>

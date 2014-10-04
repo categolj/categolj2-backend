@@ -15,15 +15,21 @@
  */
 package am.ik.categolj2.domain.service.category;
 
+import am.ik.categolj2.App;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:test-context.xml" })
+// TODO fix slow test
+@SpringApplicationConfiguration(classes = App.class)
+@IntegrationTest({"server.port:0",
+        "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE"})
 public class CategoryServiceImplTest {
     @Inject
     CategoryService categoryService;

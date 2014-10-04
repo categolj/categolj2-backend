@@ -15,6 +15,7 @@
  */
 package am.ik.categolj2.api.entry;
 
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.model.Entry;
 import am.ik.categolj2.domain.model.EntryHistory;
@@ -28,7 +29,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @RestController
-@RequestMapping("entries/{entryId}/histories")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/entries/{entryId}/histories")
 public class EntryHistoryRestController {
     @Inject
     EntryService entryService;

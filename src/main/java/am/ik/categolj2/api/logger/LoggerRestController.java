@@ -15,6 +15,7 @@
  */
 package am.ik.categolj2.api.logger;
 
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.service.logger.LoggerDto;
 import am.ik.categolj2.domain.service.logger.LoggerService;
@@ -43,7 +44,7 @@ import java.util.List;
  * governing permissions and limitations under the License.
  */
 @RestController
-@RequestMapping("loggers")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/loggers")
 public class LoggerRestController {
     @Inject
     LoggerService loggerService;

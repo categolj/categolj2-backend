@@ -20,11 +20,13 @@ import javax.inject.Inject;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 
 import am.ik.categolj2.domain.model.User;
 import am.ik.categolj2.domain.service.user.UserService;
 
+@Service
 public class Categolj2UserDetailsService implements UserDetailsService {
 	@Inject
 	protected UserService userService;

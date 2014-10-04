@@ -15,6 +15,7 @@
  */
 package am.ik.categolj2.api.accesslog;
 
+import am.ik.categolj2.api.ApiVersion;
 import am.ik.categolj2.api.Categolj2Headers;
 import am.ik.categolj2.domain.repository.accesslog.AccessLogReportGroupByUri;
 import am.ik.categolj2.domain.repository.accesslog.AccessLogReportGroupByUriAndRemoteAddress;
@@ -29,7 +30,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @RestController
-@RequestMapping("accesslogreports")
+@RequestMapping("api/" + ApiVersion.CURRENT_VERSION + "/accesslogreports")
 public class AccessLogReportRestController {
     @Inject
     AccessLogService accessLogService;

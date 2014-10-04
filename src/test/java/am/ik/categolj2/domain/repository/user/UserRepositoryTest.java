@@ -20,10 +20,13 @@ import static org.hamcrest.CoreMatchers.*;
 
 import javax.inject.Inject;
 
+import am.ik.categolj2.App;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -32,7 +35,10 @@ import org.springframework.transaction.annotation.Transactional;
 import am.ik.categolj2.domain.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-context.xml"})
+// TODO fix slow test
+@SpringApplicationConfiguration(classes = App.class)
+@IntegrationTest({"server.port:0",
+        "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE"})
 public class UserRepositoryTest {
     DateTime now = new DateTime();
     @Inject

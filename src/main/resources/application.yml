@@ -1,0 +1,52 @@
+categolj2:
+  url: http://blog.ik.am
+  title: BLOG.IK.AM
+  description: making's memo
+  db: H2
+  filedownload.cache.seconds: 345600 # 60 * 60 * 24 * 4
+  admin:
+    clientId: categolj2-admin
+    clientSecret: categolj2-secret
+
+aws:
+  accesskey.id: <Your Accesskey ID for AWS>
+  secret.accesskey: <Your Secret Accesskey for AWS>
+  endpoint: https://ecs.amazonaws.jp
+  associate.tag: ikam-22
+
+spring:
+  profiles:
+    active: cache.guava,db.property
+  main:
+    show-banner: false
+  jpa:
+    hibernate.ddl-auto: validate
+    properties:
+      hibernate:
+        use_sql_comments: true
+        connection.charSet: UTF-8
+        jdbc:
+          batch_size: 30
+          fetch_size: 100
+        search:
+          default:
+            directory_provider: ${hibernate.search.default.directory_provider:filesystem}
+            indexBase: ${hibernate.search.default.indexBase:/tmp/lucene}
+            locking_strategy: ${hibernate.search.default.locking_strategy:single}
+          analyzer: org.apache.lucene.analysis.cjk.CJKAnalyzer
+          lucene_version: LUCENE_36
+  datasource:
+    url: jdbc:h2:file:${categolj2.h2.datadir:/tmp}/categolj2
+  thymeleaf.cache: false
+  resources:
+    cachePeriod: 604800
+
+multipart:
+  maxFileSize: 50Mb
+  maxRequestSize: 256Mb
+  fileSizeThreshold: 0
+
+management.contextPath: /management
+
+flyway.locations: classpath:db/migration/${categolj2.db:H2}
+security.basic.enabled: false
