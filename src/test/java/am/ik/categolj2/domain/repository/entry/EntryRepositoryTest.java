@@ -23,9 +23,12 @@ import java.util.TreeSet;
 
 import javax.inject.Inject;
 
+import am.ik.categolj2.App;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
@@ -39,7 +42,10 @@ import am.ik.categolj2.domain.repository.category.CategoryRepository;
 import am.ik.categolj2.domain.repository.user.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-context.xml"})
+// TODO fix slow test
+@SpringApplicationConfiguration(classes = App.class)
+@IntegrationTest({"server.port:0",
+        "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE"})
 public class EntryRepositoryTest {
 
     @Inject

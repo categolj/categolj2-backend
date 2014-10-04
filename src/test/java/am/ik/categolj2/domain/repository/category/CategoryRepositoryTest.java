@@ -15,22 +15,22 @@
  */
 package am.ik.categolj2.domain.repository.category;
 
-import static org.junit.Assert.*;
-
+import am.ik.categolj2.App;
+import am.ik.categolj2.domain.repository.entry.EntryRepository;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.terasoluna.gfw.common.query.QueryEscapeUtils;
 
 import javax.inject.Inject;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
-
-import am.ik.categolj2.domain.repository.entry.EntryRepository;
-import org.terasoluna.gfw.common.query.QueryEscapeUtils;
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-context.xml"})
+// TODO fix slow test
+@SpringApplicationConfiguration(classes = App.class)
+@IntegrationTest({"server.port:0",
+        "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE"})
 public class CategoryRepositoryTest {
     @Inject
     CategoryRepository categoryRepository;
