@@ -16,7 +16,7 @@ aws:
 
 spring:
   profiles:
-    active: cache.hazelcast,db.property
+    active: cache.guava,db.property
   main:
     show-banner: false
   jpa:
