@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>am.ik.categolj2</groupId>
     <artifactId>categolj2-backend</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <description>CategoLJ2 (REST API Server)</description>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.1.5.RELEASE</version>
+        <version>1.1.7.RELEASE</version>
     </parent>
 
     <properties>
@@ -18,7 +18,7 @@
         <start-class>am.ik.categolj2.App</start-class>
         <com.lowagie.itext.version>4.2.1</com.lowagie.itext.version>
         <com.itextpdf.itext-asian.version>5.2.0</com.itextpdf.itext-asian.version>
-        <terasoluna.version>1.0.0.RELEASE</terasoluna.version>
+        <terasoluna.version>1.0.1.RELEASE</terasoluna.version>
         <hazelcast.version>3.2</hazelcast.version>
         <dozer.version>5.5.1</dozer.version>
         <flyway.plugin.version>2.3</flyway.plugin.version>
@@ -366,6 +366,10 @@
                         <version>1.2.0.RELEASE</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
