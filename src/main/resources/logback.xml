@@ -6,7 +6,8 @@
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
     <property name="FILE_LOG_PATTERN"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } %32X{X-Track} [%t] --- %-40.40logger{39} : %m%n%wex"/>
-
+    <property name="MONITORING_LOG_PATTERN"
+              value="date:%d{yyyy-MM-dd HH:mm:ss.SSS}\tPID:${PID:- }\tX-Track:%X{X-Track}\tlevel:%-5level\tmessage:%msg%n"/>
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wex"
                     converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
@@ -33,8 +34,18 @@
             <MaxFileSize>10MB</MaxFileSize>
         </triggeringPolicy>
     </appender>
+    <appender name="MONITORING_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"> <!-- (1) -->
+        <file>log/projectName-monitoring.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%i.monitoring.%d{yyyyMMdd}</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${MONITORING_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
 
-    <root level="INFO">
+    <root level="${log.verbose:-INFO}">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>
@@ -48,8 +59,15 @@
     <logger name="org.thymeleaf" additivity="false">
         <appender-ref ref="DEBUG_LEVEL_REMAPPER"/>
     </logger>
+    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" level="ERROR"
+            additivity="false">
+        <appender-ref ref="MONITORING_LOG_FILE"/>
+    </logger>
     <logger name="jdbc" level="OFF"/>
-    <logger name="jdbc.sqltiming" level="DEBUG"/>
-    <logger name="jdbc.resultsettable" level="DEBUG"/>
+    <logger name="jdbc.sqltiming" level="${log.sql:-DEBUG}"/>
+    <logger name="jdbc.resultsettable" level="${log.sql.result:-ERROR}"/>
     <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="${log.verbose:-TRACE}"/>
+    <logger name="org.springframework.data.auditing" level="debug"/>
+    <logger name="com.hazelcast" level="${log.verbose:-INFO}"/>
 </configuration>
