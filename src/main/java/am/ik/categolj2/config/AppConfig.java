@@ -26,7 +26,7 @@ import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindException;
@@ -49,7 +49,7 @@ import org.terasoluna.gfw.web.logging.mdc.XTrackMDCPutFilter;
 import java.util.LinkedHashMap;
 
 @Configuration
-@EnableScheduling
+@EnableAsync
 public class AppConfig {
 
     @Bean
