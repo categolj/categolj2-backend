@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/categolj2-backend.jar -httpPort=$PORT -Dfile.encoding=UTF-8 -Duser.timezone=JST -Dspring.profiles.active=db.urlstring,cache.guava -Dlog.verbose=warn -Ddatabase=MYSQL -Ddatabase.driverClassName=com.mysql.jdbc.Driver
+web: java $JAVA_OPTS -Dfile.encoding=UTF-8 -Duser.timezone=JST -jar target/categolj2-backend.jar --server.port=$PORT --spring.profiles.active=db.urlstring,cache.guava --log.verbose=warn --spring.thymeleaf.cache=true --spring.jpa.database=MYSQL -spring.datasource.driverClassName=com.mysql.jdbc.Driver
