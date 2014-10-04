@@ -1,0 +1,134 @@
+#!/bin/sh
+#
+#     Statup script for Spring Boot App
+#     Copyright (C) 2014  Toshiaki Maki
+#     Copyright (C) 2007  Pascal Bleser
+#
+#     This library is free software; you can redistribute it and/or modify it
+#     under the terms of the GNU Lesser General Public License as published by
+#     the Free Software Foundation; either version 2.1 of the License, or (at
+#     your option) any later version.
+#
+#     This library is distributed in the hope that it will be useful, but
+#     WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#     Lesser General Public License for more details.
+#
+#     You should have received a copy of the GNU Lesser General Public
+#     License along with this library; if not, write to the Free Software
+#     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
+#     USA.
+#
+### BEGIN INIT INFO
+# Provides:          categolj2
+# Required-Start:    $local_fs $remote_fs $network $time $named
+# Should-Start: $time sendmail
+# Required-Stop:     $local_fs $remote_fs $network $time $named
+# Should-Stop: $time sendmail
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 6
+# Short-Description: Spring Boot App Server
+# Description:       Start the Spring Boot App Server
+### END INIT INFO
+
+# Check for missing binaries (stale symlinks should not happen)
+APP_NAME=categolj2
+APP_USER=categolj2
+APP_HOME="/opt/${APP_NAME}"
+APP_JAR="${APP_HOME}/${APP_NAME}.jar"
+APP_TMP="${APP_HOME}/tmp"
+test -r "$APP_JAR" || { echo "$APP_JAR not installed";
+    if [ "$1" = "stop" ]; then exit 0;
+        else exit 5; fi; }
+
+# Check for existence of needed config file and read it
+APP_CONFIG=/etc/sysconfig/${APP_NAME}
+test -e "$APP_CONFIG" || { echo "$APP_CONFIG not existing";
+    if [ "$1" = "stop" ]; then exit 0;
+        else exit 6; fi; }
+test -r "$APP_CONFIG" || { echo "$APP_CONFIG not readable. Perhaps you forgot 'sudo'?";
+    if [ "$1" = "stop" ]; then exit 0;
+        else exit 6; fi; }
+
+APP_PID_FILE="/var/run/${APP_NAME}.pid"
+
+# Source function library.
+. /etc/init.d/functions
+
+# Read config
+[ -f "$APP_CONFIG" ] && . "$APP_CONFIG"
+
+# Search usable Java. We do this because various reports indicated
+for candidate in  /etc/alternatives/java /usr/bin/java
+do
+  [ -x "$APP_JAVA_CMD" ] && break
+  APP_JAVA_CMD="$candidate"
+done
+
+if [ ! -d /var/log/${APP_NAME} ];then
+    mkdir -p /var/log/${APP_NAME}
+fi
+
+APP_JAVA_OPTIONS="$APP_JAVA_OPTIONS -Djava.io.tmpdir=$APP_TMP"
+
+JAVA_CMD="$APP_JAVA_CMD $APP_JAVA_OPTIONS -jar $APP_JAR"
+PARAMS=""
+[ -n "$APP_PORT" ] && PARAMS="$PARAMS --server.port=$APP_PORT"
+[ -n "$APP_ARGS" ] && PARAMS="$PARAMS $APP_ARGS"
+
+RETVAL=0
+
+case "$1" in
+    start)
+        echo -n "Starting ${APP_NAME} "
+        sudo -u $APP_USER nohup $JAVA_CMD $PARAMS < /dev/null > /var/log/${APP_NAME}/${APP_NAME}.log 2>&1 &
+        pid=$!
+        echo $pid > "$APP_PID_FILE"
+        success
+        echo
+        ;;
+    stop)
+        echo -n "Shutting down ${APP_NAME} "
+        killproc ${APP_NAME}
+        RETVAL=$?
+        echo
+        ;;
+    try-restart|condrestart)
+        if test "$1" = "condrestart"; then
+            echo "${attn} Use try-restart ${done}(LSB)${attn} rather than condrestart ${warn}(RH)${norm}"
+            fi
+        $0 status
+        if test $? = 0; then
+            $0 restart
+            else
+            : # Not running is not a failure.
+            fi
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    force-reload)
+        echo -n "Reload service ${APP_NAME} "
+        $0 try-restart
+        ;;
+    reload)
+        $0 restart
+        ;;
+    status)
+        status ${APP_NAME}
+        RETVAL=$?
+        ;;
+    probe)
+        ## Optional: Probe for the necessity of a reload, print out the
+        ## argument to this init script which is required for a reload.
+        ## Note: probe is not (yet) part of LSB (as of 1.9)
+
+        test "$APP_CONFIG" -nt "$APP_PID_FILE" && echo reload
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status|try-restart|restart|force-reload|reload|probe}"
+        exit 1
+        ;;
+esac
+exit $RETVAL

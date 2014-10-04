@@ -22,18 +22,19 @@ spring:
   jpa:
     hibernate.ddl-auto: validate
     properties:
-      hibernate.use_sql_comments: true
-      connection.charSet: UTF-8
-      jdbc:
-        batch_size: 30
-        fetch_size: 100
-      search:
-        default:
-          directory_provider: ${hibernate.search.default.directory_provider:filesystem}
-          indexBase: ${hibernate.search.default.indexBase:/tmp/lucene}
-          locking_strategy: ${hibernate.search.default.locking_strategy:single}
-        analyzer: org.apache.lucene.analysis.cjk.CJKAnalyzer
-        lucene_version: LUCENE_36
+      hibernate:
+        use_sql_comments: true
+        connection.charSet: UTF-8
+        jdbc:
+          batch_size: 30
+          fetch_size: 100
+        search:
+          default:
+            directory_provider: ${hibernate.search.default.directory_provider:filesystem}
+            indexBase: ${hibernate.search.default.indexBase:/tmp/lucene}
+            locking_strategy: ${hibernate.search.default.locking_strategy:single}
+          analyzer: org.apache.lucene.analysis.cjk.CJKAnalyzer
+          lucene_version: LUCENE_36
   datasource:
     url: jdbc:h2:file:${categolj2.h2.datadir:/tmp}/categolj2
   thymeleaf.cache: false
