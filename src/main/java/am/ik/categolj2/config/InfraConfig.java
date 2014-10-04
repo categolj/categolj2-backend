@@ -5,7 +5,10 @@ import am.ik.aws.apa.AwsApaRequesterImpl;
 import am.ik.categolj2.domain.AuditAwareBean;
 import am.ik.categolj2.infra.db.UrlStringDevider;
 import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
+import org.flywaydb.core.Flyway;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
@@ -82,6 +85,24 @@ public class InfraConfig {
         DataSource dataSource() {
             return new DataSourceSpy(this.dataSource);
         }
+    }
+
+    @Bean
+    BeanPostProcessor flywayBeanPostProcessor() {
+        return new BeanPostProcessor() {
+            @Override
+            public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+                if (bean instanceof Flyway) {
+                    ((Flyway) bean).setValidateOnMigrate(false);
+                }
+                return bean;
+            }
+
+            @Override
+            public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+                return bean;
+            }
+        };
     }
 
     @Bean
