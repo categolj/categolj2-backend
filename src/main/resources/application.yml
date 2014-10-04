@@ -40,6 +40,11 @@ spring:
   resources:
     cachePeriod: 604800
 
+multipart:
+  maxFileSize: 50Mb
+  maxRequestSize: 256Mb
+  fileSizeThreshold: 0
+
 management.contextPath: /management
 
 flyway.locations: classpath:db/migration/${categolj2.db:H2}
