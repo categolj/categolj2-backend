@@ -46,7 +46,9 @@ multipart:
   maxRequestSize: 256Mb
   fileSizeThreshold: 0
 
-management.contextPath: /management
+management:
+  contextPath: /management
+  address: 127.0.0.1
 
 flyway.locations: classpath:db/migration/${categolj2.db:H2}
 security.basic.enabled: false
