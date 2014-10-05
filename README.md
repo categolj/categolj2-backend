@@ -175,14 +175,16 @@ The following sample fronted is embedded by default:
 Key | Description | Default value
 --------------- | ------------- | ----- 
 log.verbose | set this property `warn` if you want to supress the output of verbose log. | 
-log.sql | set this property `debug` if you want to output SQL log. | error
-log.sql.result | set this property `debug` if I want to output SQL result log. | error
+logging.level.jdbc.sqltiming | set this property `debug` if you want to output SQL log. | error
+logging.level.jdbc.resultsettable | set this property `debug` if I want to output SQL result log. | error
 hibernate.search.default.indexBase | file path storing Iucene index | /tmp/lucene
 aws.accesskey.id | access key ID for AWS | \<Your Accesskey ID for AWS\>
 aws.secret.accesskey | secret accesskey for AWS | \<Your Secret Accesskey for AWS\>
 aws.endpoint | AWS endpoint| https://ecs.amazonaws.jp
 aws.associate.tag | Associate Tag for Amazon Affiliate | ikam-22
 accesslog.disabled | Disable to write access logs | false
+
+To change default log level, run with like `-Dlog.verbose=WARN`.
 
 See also Spring Boot's [common application properties](http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
 
