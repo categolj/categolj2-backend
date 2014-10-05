@@ -91,6 +91,14 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-continuation:8.1.15.v20140411" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-http:8.1.15.v20140411" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:8.1.15.v20140411" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-jsp:8.1.15.v20140411" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:javax.servlet.jsp:2.2.0.v201112011158" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:org.apache.jasper.glassfish:2.2.2.v201112011158" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:javax.servlet.jsp.jstl:1.2.0.v201105211821" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:org.apache.taglibs.standard.glassfish:1.2.0.v201112081803" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:javax.el:2.2.0.v201108011116" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:com.sun.el:2.2.0.v201108011116" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty.orbit:org.eclipse.jdt.core:3.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:1.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf-spring4:2.1.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf:2.1.3.RELEASE" level="project" />
@@ -175,6 +183,16 @@
     <orderEntry type="library" name="Maven: com.ryantenney.metrics:metrics-spring:3.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-healthchecks:3.0.2" level="project" />
     <orderEntry type="library" name="Maven: com.codahale.metrics:metrics-annotation:3.0.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.jayway.restassured:rest-assured:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy:2.3.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy-xml:2.3.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.ccil.cowan.tagsoup:tagsoup:1.2.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.jayway.restassured:json-path:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy-json:2.3.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.jayway.restassured:rest-assured-common:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.jayway.restassured:xml-path:2.3.3" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.scribe:scribe:1.3.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.assertj:assertj-core:1.7.0" level="project" />
   </component>
 </module>
 

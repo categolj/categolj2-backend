@@ -15,26 +15,27 @@
  */
 package am.ik.categolj2.domain.repository.user;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-
-import javax.inject.Inject;
-
 import am.ik.categolj2.App;
+import am.ik.categolj2.domain.model.User;
 import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import am.ik.categolj2.domain.model.User;
+import javax.inject.Inject;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@Ignore
 // TODO fix slow test
 @SpringApplicationConfiguration(classes = App.class)
 @IntegrationTest({"server.port:0",
