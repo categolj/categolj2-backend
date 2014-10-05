@@ -34,10 +34,10 @@
             <MaxFileSize>10MB</MaxFileSize>
         </triggeringPolicy>
     </appender>
-    <appender name="MONITORING_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"> <!-- (1) -->
-        <file>log/projectName-monitoring.log</file>
+    <appender name="MONITORING_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}.monitoring.%d{yyyyMMdd}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FILE}.%i.monitoring.%d{yyyyMMdd}</fileNamePattern>
+            <fileNamePattern>${LOG_FILE}.monitoring.%d{yyyyMMdd}.%i</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
