@@ -25,17 +25,20 @@ import com.codahale.metrics.annotation.Timed;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class FeedController {
     @Inject
     EntryService entryService;
+    @Inject
+    RssEntryFeedView rssEntryFeedView;
 
     @RequestMapping({"/feed", "/rss"})
     @Timed
-    public String feed(Model model) {
+    public ModelAndView feed(Model model) {
         List<Entry> entries = entryService.findAllPublishedUpdatedRecently();
         model.addAttribute("entries", new FeedEntries(entries));
-        return "rssEntryFeedView";
+        return new ModelAndView(rssEntryFeedView, model.asMap());
     }
 }
