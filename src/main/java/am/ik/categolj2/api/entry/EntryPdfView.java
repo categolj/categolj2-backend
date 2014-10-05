@@ -63,6 +63,8 @@ public class EntryPdfView extends AbstractPdfView {
         String url = (frontEndEntryPathPrependHost ? base : "") + frontEndEntryPathPrefix + entry.getEntryId();
         String html = "<html>" +
                 "<body style='font-size:8px;'> " +
+                "<h1>" + entry.getTitle() + "</h1>" +
+                "<br>"+
                 "<table border='1'>" +
                 "<tr><th bgcolor='#eee'>Title</th><td colspan='5'>" + entry.getTitle() + "</td></tr>" +
                 "<tr><th bgcolor='#eee'>Category</th><td colspan='5'>" + Categories.toString(entry.getCategory()) + "</td></tr>" +
@@ -72,7 +74,7 @@ public class EntryPdfView extends AbstractPdfView {
                 "<th bgcolor='#eee'>Updated by</th><td colspan='2'>" + entry.getLastModifiedBy() + "</td></tr>" +
                 "<tr><th bgcolor='#eee'>Orininal URL</th><td colspan='5'><a href=\"" + url + "\">" + url + "</a></td></tr>" +
                 "</table>" +
-                format.format(entry.getContents())  +
+                format.format(entry.getContents()) +
                 "</body></html>";
         String body = RERATIVE_LINK_PATH.matcher(html).replaceAll("src='" + base + "/api/$1/files/$2/$3.$4'");
         HTMLWorker htmlWorker = new HTMLWorker(document);
