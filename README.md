@@ -7,7 +7,7 @@ CategoljJ2 is a micro blog system. This backend provides REST API for blog syste
 The following technologies are used.
 
 * Java 8
-* Spring Boot
+* Spring Boot (0.20.0+)
   * Spring 4
   * Spring MVC
   * Spring Security OAuth
@@ -33,7 +33,7 @@ This is just alpha version. Currently, there are some restrictions...
  
 ## Normal launch
 
-Download categolj2-backend.jar from [release page](https://github.com/making/categolj2-backend/releases).
+Download categolj2-backend.jar (0.20.0+) from [release page](https://github.com/making/categolj2-backend/releases).
 This jar is executable by Spring Boot.
 
 **Note that CategoLJ2 requires Java8**.
