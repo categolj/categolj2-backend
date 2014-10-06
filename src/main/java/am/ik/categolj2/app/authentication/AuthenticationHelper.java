@@ -64,7 +64,7 @@ public class AuthenticationHelper {
     @Inject
     OAuth2AdminClientProperties adminClientProperties;
 
-    HttpEntity<MultiValueMap<String, Object>> createRopRequest(String username, String password) {
+    public HttpEntity<MultiValueMap<String, Object>> createRopRequest(String username, String password) {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.add("username", username);
         params.add("password", password);

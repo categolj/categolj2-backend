@@ -29,7 +29,20 @@ import javax.inject.Inject;
 // TODO fix slow test
 @SpringApplicationConfiguration(classes = App.class)
 @IntegrationTest({"server.port:0",
-        "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE"})
+        "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE",
+        "flyway.enabled:false",
+        "spring.jpa.hibernate.generate-ddl:true",
+        "spring.jpa.hibernate.ddl-auto:create-drop",
+        "endpoints.autoconfig.enabled:false",
+        "endpoints.beans.enabled:false",
+        "endpoints.configprops.enabled:false",
+        "endpoints.dump.enabled:false",
+        "endpoints.env.enabled:false",
+        "endpoints.health.enabled:false",
+        "endpoints.metrics.enabled:false",
+        "endpoints.shutdown.enabled:false",
+        "endpoints.trace.enabled:false",
+        "endpoints.jmx.enabled:false"})
 public class CategoryServiceImplTest {
     @Inject
     CategoryService categoryService;

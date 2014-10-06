@@ -8,7 +8,9 @@ import am.ik.categolj2.infra.codelist.EnumCodeList;
 import ch.qos.logback.classic.Level;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
@@ -25,7 +27,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -70,14 +71,23 @@ public class AppConfig {
     RestTemplate restTemplate() {
         return new RestTemplate();
     }
+//
+//    @Bean
+//    Jackson2ObjectMapperFactoryBean objectMapper() {
+//        Jackson2ObjectMapperFactoryBean factoryBean = new Jackson2ObjectMapperFactoryBean();
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        factoryBean.setObjectMapper(objectMapper);
+//        factoryBean.setSimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+//        return factoryBean;
+//    }
 
     @Bean
-    Jackson2ObjectMapperFactoryBean objectMapper() {
-        Jackson2ObjectMapperFactoryBean factoryBean = new Jackson2ObjectMapperFactoryBean();
+    ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        factoryBean.setObjectMapper(objectMapper);
-        factoryBean.setSimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        return factoryBean;
+        // customize
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.registerModule(new JodaModule());
+        return objectMapper;
     }
 
     @Bean

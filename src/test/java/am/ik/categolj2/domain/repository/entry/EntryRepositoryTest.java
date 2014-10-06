@@ -25,6 +25,7 @@ import javax.inject.Inject;
 
 import am.ik.categolj2.App;
 import org.joda.time.DateTime;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -42,6 +43,7 @@ import am.ik.categolj2.domain.repository.category.CategoryRepository;
 import am.ik.categolj2.domain.repository.user.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@Ignore
 // TODO fix slow test
 @SpringApplicationConfiguration(classes = App.class)
 @IntegrationTest({"server.port:0",
