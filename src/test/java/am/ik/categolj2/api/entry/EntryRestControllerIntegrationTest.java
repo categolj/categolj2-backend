@@ -490,8 +490,8 @@ public class EntryRestControllerIntegrationTest {
                 null,
                 null,
                 null,
-                user,
-                user);
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
 
         Response response = given()
                 .header("X-Admin", "true")
@@ -529,13 +529,394 @@ public class EntryRestControllerIntegrationTest {
                 .body("lastModifiedBy", is(target.getLastModifiedBy()));
     }
 
-    @Test
-    public void testUpdateEntryInAdmin() throws Exception {
 
+    @Test
+    public void testUpdateEntryInAdmin_CHANGE_TITLE() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.setTitle("Title is changed!");
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
+
+    @Test
+    public void testUpdateEntryInAdmin_CHANGE_CONTENTS() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.setContents("**Contents are changed!**");
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
+
+    @Test
+    public void testUpdateEntryInAdmin_CHANGE_FORMAT_AND_CONTENTS() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.setFormat("html");
+        target.setContents("<strong>Contents are changed!</strong>");
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
+
+
+    @Test
+    public void testUpdateEntryInAdmin_ADD_CATEGORY() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.setCategory(Categories.fromCategory("aa::bb::cc::dd").getCategories());
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
+
+    @Test
+    public void testUpdateEntryInAdmin_REDUCE_CATEGORY() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.setCategory(Categories.fromCategory("aa::bb").getCategories());
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
+
+    @Test
+    public void testUpdateEntryInAdmin_REPLACE_CATEGORY() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.setCategory(Categories.fromCategory("xx:yy:zz").getCategories());
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
     }
 
     @Test
     public void testDeleteEntryInAdmin() throws Exception {
-
+        Integer id = entry2.getId();
+        String accessToken = getAccessToken("admin", "demo");
+        given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .log().all()
+                .when()
+                .delete("/api/v1/entries/{id}", id)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.NO_CONTENT.value());
+        when()
+                .get("/api/v1/entries/{id}", id)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .body("code", is(MessageKeys.E_CT_EN_8201))
+                .body("message", is(String.format("The requested entry is not found. [entryId=" + id + "]")));
     }
 }
