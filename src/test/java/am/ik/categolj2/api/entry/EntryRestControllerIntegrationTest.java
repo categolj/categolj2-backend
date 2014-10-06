@@ -842,7 +842,7 @@ public class EntryRestControllerIntegrationTest {
         String user = "admin";
         String accessToken = getAccessToken(user, "demo");
         Entry target = entry1;
-        target.setCategory(Categories.fromCategory("xx:yy:zz").getCategories());
+        target.setCategory(Categories.fromCategory("xx::yy::zz").getCategories());
         target.setLastModifiedBy(user);
 
         EntryResource input = new EntryResource(null,
