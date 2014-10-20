@@ -2,7 +2,7 @@ package am.ik.categolj2.config;
 
 import am.ik.categolj2.infra.cache.LoggingGuavaCacheManager;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurer;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleKeyGenerator;
@@ -15,7 +15,7 @@ import java.util.Arrays;
 @Configuration
 @EnableCaching
 @Profile("cache.guava")
-public class GuavaCacheConfiguration implements CachingConfigurer {
+public class GuavaCacheConfiguration extends CachingConfigurerSupport {
     @Bean
     @Override
     public CacheManager cacheManager() {
