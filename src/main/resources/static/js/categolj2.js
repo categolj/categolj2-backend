@@ -27,8 +27,8 @@ function appendPageAndSize(target, page, pageSize) {
 // Pageable object
 categolj2.Pageable = {
     parse: function (response) {
-        this.firstPage = response.firstPage;
-        this.lastPage = response.lastPage;
+        this.firstPage = response.first;
+        this.lastPage = response.last;
         this.totalElements = response.totalElements;
         this.totalPages = response.totalPages;
         return response.content;

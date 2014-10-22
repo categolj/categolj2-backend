@@ -5,7 +5,7 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurer;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.interceptor.SimpleKeyGenerator;
@@ -21,7 +21,7 @@ import java.util.Properties;
 @Configuration
 @EnableCaching
 @Profile("cache.hazelcast")
-public class HazelcastCacheConfiguration implements CachingConfigurer {
+public class HazelcastCacheConfiguration extends CachingConfigurerSupport {
     @Inject
     HazelcastProperties hazelcastProperties;
 

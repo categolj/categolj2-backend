@@ -68,4 +68,10 @@ public class LoggingCacheAdaptor implements Cache {
         logger.debug("[{}]\tclear", name);
         targetCache.clear();
     }
+
+    @Override
+    public ValueWrapper putIfAbsent(Object key, Object value) {
+        logger.debug("[{}]\tputIfAbsent key={}", name, key);
+        return targetCache.putIfAbsent(key, value);
+    }
 }

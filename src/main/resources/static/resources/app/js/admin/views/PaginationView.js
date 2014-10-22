@@ -45,10 +45,10 @@ define(function (require) {
         _buildAttributes: function () {
             var collection = this.collection,
                 attributes = {
-                    firstPageEnabled: !collection.firstPage,
-                    firstPageDisabled: collection.firstPage,
-                    lastPageEnabled: !collection.lastPage,
-                    lastPageDisabled: collection.lastPage
+                    firstPageEnabled: !collection.first,
+                    firstPageDisabled: collection.first,
+                    lastPageEnabled: !collection.last,
+                    lastPageDisabled: collection.last
                 },
                 beginAndEnd = this._calcBeginAndEnd();
             attributes.links = [];
