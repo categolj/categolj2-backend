@@ -10,8 +10,13 @@ import am.ik.categolj2.domain.repository.user.UserRepository;
 import am.ik.marked4j.MarkedBuilder;
 import com.google.common.collect.Sets;
 import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.config.RestAssuredConfig;
+import com.jayway.restassured.config.SSLConfig;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
+import org.apache.http.conn.ssl.SSLContexts;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -31,6 +36,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.net.ssl.SSLContext;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -76,6 +82,7 @@ public class EntryRestControllerIntegrationTest {
     AuthenticationHelper authenticationHelper;
     @Autowired
     RestTemplate restTemplate;
+    SSLSocketFactory sockectFactory;
 
     User admin;
     User editor;
@@ -91,6 +98,9 @@ public class EntryRestControllerIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
+        SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, new TrustSelfSignedStrategy()).useTLS().build();
+        sockectFactory = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+
         // clean data
         entryRepository.deleteAll();
         userRepository.deleteAll();
@@ -157,11 +167,13 @@ public class EntryRestControllerIntegrationTest {
         entryRepository.save(Arrays.asList(entry1, entry2, entry3, entry4, entry5));
 
         RestAssured.port = port;
+        RestAssured.baseURI = "https://localhost";
+        RestAssured.config = RestAssuredConfig.newConfig().sslConfig(new SSLConfig().sslSocketFactory(sockectFactory));
     }
 
     String getAccessToken(String username, String password) throws Exception {
         HttpEntity<MultiValueMap<String, Object>> ropRequest = authenticationHelper.createRopRequest(username, password);
-        ResponseEntity<OAuth2AccessToken> result = restTemplate.postForEntity("http://localhost:" + port + "/oauth/token", ropRequest, OAuth2AccessToken.class);
+        ResponseEntity<OAuth2AccessToken> result = restTemplate.postForEntity(RestAssured.baseURI + ":" + port + "/oauth/token", ropRequest, OAuth2AccessToken.class);
         return result.getBody().getValue();
     }
 
