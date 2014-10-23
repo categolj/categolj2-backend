@@ -55,6 +55,6 @@ security.basic.enabled: false
 server:
   port: 8443
   ssl:
-    key-store: server.jks
+    key-store: classpath:server.jks
     key-store-password: letmein
     key-password: changeme
