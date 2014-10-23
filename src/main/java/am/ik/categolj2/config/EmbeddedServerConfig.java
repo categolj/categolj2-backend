@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties("server.http")
+@ConfigurationProperties("server-http")
 @Data
 public class EmbeddedServerConfig {
     private int port = 8080;
