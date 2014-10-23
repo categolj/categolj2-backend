@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class EmbeddedServerConfig {
     private int port = 8080;
-    private String host = "localhost";
+    private String host;
 
     @Bean
     EmbeddedServletContainerFactory servletContainer() {
