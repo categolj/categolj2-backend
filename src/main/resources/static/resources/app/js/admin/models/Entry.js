@@ -1,7 +1,6 @@
 define(function (require) {
     var Backbone = require('backbone');
     var marked = require('marked');
-    require('asciidoctor-core');
 
     return Backbone.Model.extend({
         idAttribute: 'id',
@@ -28,7 +27,7 @@ define(function (require) {
         },
         parse: function (response) {
             if (response.category && !response.categoryString) {
-                var categoryString = _.map(response.category, function (c) {
+                var categoryString = _.map(response.category,function (c) {
                     return c.categoryName;
                 }).join('::');
                 response.categoryString = categoryString;
@@ -42,11 +41,6 @@ define(function (require) {
                     case 'md':
                     {
                         body = marked(this.get('contents'));
-                        break;
-                    }
-                    case 'asciidoc':
-                    {
-                        body = Opal.Asciidoctor.$convert(this.get('contents'));
                         break;
                     }
                     case 'rst':

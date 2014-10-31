@@ -42,8 +42,7 @@ require.config({
         },
         'dynatable': ['jquery'],
         'backbone.stickit': ['backbone'],
-        bootstrap: ['jquery'],
-        'asciidoctor-core': ['opal']
+        bootstrap: ['jquery']
     },
     paths: {
         jquery: 'vendor/jquery/jquery.min',
@@ -59,9 +58,7 @@ require.config({
         'jquery.iframe-transport': 'vendor/jquery.iframe-transport/jquery.iframe-transport',
         bootstrap: 'vendor/bootstrap/dist/js/bootstrap.min',
         text: 'vendor/requirejs-text/text',
-        dynatable: 'vendor/dynatable/jquery.dynatable',
-        'asciidoctor-core': 'vendor/asciidoctor.js/dist/asciidoctor-core.min',
-        opal: 'vendor/opal/opal/current/opal.min'
+        dynatable: 'vendor/dynatable/jquery.dynatable'
     }
 });
 
