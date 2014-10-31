@@ -161,8 +161,6 @@
     <orderEntry type="library" name="Maven: jdom:jdom:1.0" level="project" />
     <orderEntry type="library" name="Maven: am.ik.aws:aws-apa:0.9.5" level="project" />
     <orderEntry type="library" name="Maven: am.ik.marked4j:marked4j:0.9.1" level="project" />
-    <orderEntry type="library" name="Maven: org.asciidoctor:asciidoctorj:1.5.1" level="project" />
-    <orderEntry type="library" name="Maven: org.jruby:jruby-complete:1.7.9" level="project" />
     <orderEntry type="library" name="Maven: com.lowagie:itext:4.2.1" level="project" />
     <orderEntry type="library" name="Maven: com.itextpdf:itext-asian:5.2.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.12.2" level="project" />

@@ -18,9 +18,6 @@ package am.ik.categolj2.domain.model;
 import am.ik.categolj2.infra.codelist.CodeListItem;
 import am.ik.marked4j.Marked;
 import am.ik.marked4j.MarkedBuilder;
-import org.asciidoctor.Asciidoctor;
-
-import java.util.Collections;
 
 public enum EntryFormat implements CodeListItem {
     MD("markdown") {
@@ -29,14 +26,6 @@ public enum EntryFormat implements CodeListItem {
         @Override
         public String format(String contents) {
             return marked.marked(contents);
-        }
-    },
-    ASCIIDOC("asciidoc") {
-        final Asciidoctor asciidoctor = Asciidoctor.Factory.create();
-
-        @Override
-        public String format(String contents) {
-            return asciidoctor.render(contents, Collections.emptyMap());
         }
     }, HTML("html") {
         @Override
