@@ -37,7 +37,6 @@ public class MetricConfig extends MetricsConfigurerAdapter {
         metricRegistry.register("jvm.memory", new MemoryUsageGaugeSet());
         metricRegistry.register("jvm.threads", new ThreadStatesGaugeSet());
         metricRegistry.register("jvm.files", new FileDescriptorRatioGauge());
-        metricRegistry.register("jvm.buffers", new BufferPoolMetricSet(ManagementFactory.getPlatformMBeanServer()));
         return metricRegistry;
     }
 
