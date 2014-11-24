@@ -42,6 +42,24 @@ This jar is executable by Spring Boot.
 
     $ java -Xms512m -Xmx1g -jar categolj2-backend.jar --server.port 8080
 
+### Docker Support
+
+    * If Docker is not installed follow this: https://docs.docker.com/installation/
+
+    * Build Application
+        ```sh
+        cd categolj2-backend
+        mvn clean install
+        cd target
+        docker build -t categolj2-backend .
+        ```
+
+    * Deploy to Docker Container
+        ```sh
+        docker images # List all Docker images
+        docker run -p 8080:8080 <image id>
+        ```
+
 Access
 
 * Backend 
