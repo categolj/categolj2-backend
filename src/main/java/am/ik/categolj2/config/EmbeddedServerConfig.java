@@ -2,10 +2,8 @@ package am.ik.categolj2.config;
 
 import lombok.Data;
 import org.eclipse.jetty.server.Connector;
-import org.eclipse.jetty.server.HttpConfiguration;
-import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.Ssl;
@@ -30,20 +28,15 @@ public class EmbeddedServerConfig {
                 factory.addExcludeProtocols("SSLv2Hello", "SSLv3");
             }
         };
-        jetty.addServerCustomizers(server -> server.addConnector(createHttpConnector(server)));
+        jetty.addServerCustomizers(server -> server.addConnector(createSslConnector(server)));
         return jetty;
     }
 
-    Connector createHttpConnector(Server server) {
-        HttpConfiguration config = new HttpConfiguration();
-        config.setOutputBufferSize(32768);
-        config.setRequestHeaderSize(8192);
-        config.setResponseHeaderSize(8192);
-        ServerConnector http = new ServerConnector(server,new HttpConnectionFactory(config));
-        http.setHost(host);
-        http.setPort(port);
-        http.setIdleTimeout(30000);
-        server.addConnector(http);
-        return http;
+    Connector createSslConnector(Server server) {
+        Connector connector = new SelectChannelConnector();
+        connector.setHost(host);
+        connector.setPort(port);
+        server.addConnector(connector);
+        return connector;
     }
 }
