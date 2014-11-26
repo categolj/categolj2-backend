@@ -14,3 +14,4 @@ entry.json
 gc.log*
 .extract
 am.ik.categolj2.domain.model.Entry
+*.iml
