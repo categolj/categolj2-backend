@@ -21,15 +21,6 @@ The following technologies are used.
 * Backbone.js
 * ...
 
-## Heroku Button
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-Heroku button is supported!!
-This is just alpha version. Currently, there are some restrictions... 
-
-* Japanese is unavailable.
-* `EDITOR` role is unavailable.
  
 ## Normal launch
 
@@ -41,24 +32,6 @@ This jar is executable by Spring Boot.
 ### Simple usage
 
     $ java -Xms512m -Xmx1g -jar categolj2-backend.jar --server.port 8080
-
-### Docker Support
-
-* If Docker is not installed follow this: https://docs.docker.com/installation/
-
-* Build Application
-```sh
-cd categolj2-backend
-mvn clean install
-cd target
-docker build -t categolj2-backend .
-```
-
-* Deploy to Docker Container
-```sh
-docker images # List all Docker images
-docker run -p 8080:8080 <image id>
-```
 
 Access
 
@@ -83,6 +56,35 @@ When you would like to use MySQL then:
 In this case, you have to run `create database categolj2` using `mysql` command in advance.
 
 Other properties are explained in [Configurable properties](#configurable-properties).
+
+
+## Docker Support
+
+If Docker is not installed follow this: https://docs.docker.com/installation/
+
+* Build Application
+ ```sh
+ cd categolj2-backend
+ mvn clean install
+ cd target
+ docker build -t categolj2-backend .
+ ```
+
+* Deploy to Docker Container
+ ```sh
+ docker images # List all Docker images
+ docker run -p 8080:8080 <image id>
+ ```
+
+## Heroku Button (Unstable)
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+Heroku button is supported!!
+This is just alpha version. Currently, there are some restrictions... 
+
+* Japanese is unavailable.
+* `EDITOR` role is unavailable.
 
 ## Backend APIs
 
