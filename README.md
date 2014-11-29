@@ -58,14 +58,14 @@ In this case, you have to run `create database categolj2` using `mysql` command 
 Other properties are explained in [Configurable properties](#configurable-properties).
 
 
-## Docker Support
+## Experimental Docker Support
 
 If Docker is not installed follow this: https://docs.docker.com/installation/
 
 * Build Application
  ```sh
  cd categolj2-backend
- mvn clean install
+ mvn clean package
  cd target
  docker build -t categolj2-backend .
  ```
@@ -73,7 +73,7 @@ If Docker is not installed follow this: https://docs.docker.com/installation/
 * Deploy to Docker Container
  ```sh
  docker images # List all Docker images
- docker run -p 8080:8080 <image id>
+ docker run -p 8080:8080 -p 8443:8443 <image id>
  ```
 
 ## Heroku Button (Unstable)
