@@ -63,6 +63,7 @@ If Docker is not installed follow this: https://docs.docker.com/installation/
 * Build Application
  ```sh
  cd categolj2-backend
+ mvn clean install -f frontend/pom.xml
  mvn clean package
  cd target
  docker build -t categolj2-backend .
@@ -200,7 +201,7 @@ $ find .
 ./static/index.html
 ```
 
-You can find the following log which tells your own welcome page was picked.
+After run `java -jar categolj2-backend.jar`, you can find the following log which tells your own welcome page was picked.
 
 ``` bash
 2014-12-20 20:48:13.126  INFO                                    --- [           main] o.s.w.s.c.a.WebMvcConfigurerAdapter      : Adding welcome page: file:/xxx/yyy/zzz/static/index.html
@@ -210,7 +211,8 @@ You can reuse embedded frontend. Embedded html/css/javascript are zipped in `cat
 
 ``` bash
 $ unzip -d foo categol2-backend.jar
-$ cp -r foo/static .
+$ unzip -d bar foo/lib/categolj2-embedded-frontend*
+$ cp -r bar/static .
 ```
 
 ## Configurable properties

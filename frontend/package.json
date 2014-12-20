@@ -1,0 +1,29 @@
+{
+    "name": "example",
+    "version": "0.0.1",
+    "devDependencies": {
+        "gulp": "*",
+        "gulp-concat": "*",
+        "gulp-flatten": "*",
+        "gulp-rename": "*",
+        "gulp-uglify": "*",
+        "gulp-minify-css": "*",
+        "gulp-imagemin": "*",
+        "gulp-sourcemaps": "*",
+        "gulp-ng-annotate": "*",
+        "gulp-filter": "*",
+        "main-bower-files": "*",
+        "gulp-karma": "*",
+        "gulp-connect": "*",
+        "gulp-jshint": "*",
+        "del": "*"
+    },
+    "directories": {
+        "test": "test"
+    }
+    ,
+    "scripts": {
+        "prepublish": "bower install --config.interactive=false",
+        "build": "gulp build"
+    }
+}
