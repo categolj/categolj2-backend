@@ -19,6 +19,8 @@ spring:
     active: cache.guava,db.property
   main:
     show-banner: false
+  jmx:
+    enabled: false
   jpa:
     hibernate.ddl-auto: validate
     properties:
