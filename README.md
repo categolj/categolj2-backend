@@ -7,16 +7,14 @@ CategoljJ2 is a micro blog system. This backend provides REST API for blog syste
 The following technologies are used.
 
 * Java 8
-* Spring Boot (0.20.0+)
-  * Spring 4
+* Spring Boot 1.2
+  * Spring 4.1
   * Spring MVC
   * Spring Security OAuth
   * Spring Data JPA
   * JPA 2.1
   * Flyway
-  * HikariCP
   * ThymeLeaf
-  * Codahale Metrics
 * Hibernate Search
 * Backbone.js
 * ...
