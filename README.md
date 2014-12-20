@@ -192,10 +192,10 @@ The following sample fronted is embedded by default:
 
 Key | Description | Default value
 --------------- | ------------- | ----- 
-log.verbose | set this property `warn` if you want to supress the output of verbose log. | 
-logging.level.jdbc.sqltiming | set this property `debug` if you want to output SQL log. | error
-logging.level.jdbc.resultsettable | set this property `debug` if I want to output SQL result log. | error
-hibernate.search.default.indexBase | file path storing Iucene index | /tmp/lucene
+log.verbose | set this property `warn` if you want to suppress the output of verbose log. |
+log.sql | set this property `warn` if you want to suppress SQL log. | debug
+log.sql.result | set this property `debug` if I want to output SQL result log. | error
+hibernate.search.default.indexBase | file path storing Lucene index | /tmp/lucene
 aws.accesskey.id | access key ID for AWS | \<Your Accesskey ID for AWS\>
 aws.secret.accesskey | secret accesskey for AWS | \<Your Secret Accesskey for AWS\>
 aws.endpoint | AWS endpoint| https://ecs.amazonaws.jp
