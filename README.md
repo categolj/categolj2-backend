@@ -188,6 +188,31 @@ The following sample fronted is embedded by default:
 
 ![Sample Frontend][12]
 
+You can use your own frontend.
+
+Create `static/index.html` at the same directory with `categol2-backend.jar` like bellow:
+
+``` bash
+$ find .
+.
+./categolj2-backend.jar
+./static
+./static/index.html
+```
+
+You can find the following log which tells your own welcome page was picked.
+
+``` bash
+2014-12-20 20:48:13.126  INFO                                    --- [           main] o.s.w.s.c.a.WebMvcConfigurerAdapter      : Adding welcome page: file:/xxx/yyy/zzz/static/index.html
+```
+
+You can reuse embedded frontend. Embedded html/css/javascript are zipped in `categol2-backend.jar`.
+
+``` bash
+$ unzip -d foo categol2-backend.jar
+$ cp -r foo/static .
+```
+
 ## Configurable properties
 
 Key | Description | Default value
