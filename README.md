@@ -202,7 +202,7 @@ aws.endpoint | AWS endpoint| https://ecs.amazonaws.jp
 aws.associate.tag | Associate Tag for Amazon Affiliate | ikam-22
 accesslog.disabled | Disable to write access logs | false
 
-To change default log level, run with like `-Dlog.verbose=WARN`.
+If you want suppress debug logs, run with like `--log.verbose=warn --log.sql=warn`.
 
 See also Spring Boot's [common application properties](http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
 
