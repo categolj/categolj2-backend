@@ -220,8 +220,7 @@ public class AppConfig {
         filterRegistrationBean.setFilter(new CrossOriginFilter());
         filterRegistrationBean.addUrlPatterns(
                 "/api/v1/*",
-                "/management/*",
-                "/codahale/*");
+                "/management/*");
         return filterRegistrationBean;
     }
 

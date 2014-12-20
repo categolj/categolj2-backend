@@ -21,7 +21,6 @@ import javax.inject.Inject;
 
 import am.ik.categolj2.domain.model.Entry;
 import am.ik.categolj2.domain.service.entry.EntryService;
-import com.codahale.metrics.annotation.Timed;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,6 @@ public class FeedController {
     RssEntryFeedView rssEntryFeedView;
 
     @RequestMapping({"/feed", "/rss"})
-    @Timed
     public ModelAndView feed(Model model) {
         List<Entry> entries = entryService.findAllPublishedUpdatedRecently();
         model.addAttribute("entries", new FeedEntries(entries));

@@ -47,8 +47,7 @@ public class OAuth2Config {
                     .antMatchers(HttpMethod.POST, "/api/**").authenticated()
                     .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
                     .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
-                    .antMatchers("/management/**").authenticated()
-                    .antMatchers("/codahale/**").authenticated();
+                    .antMatchers("/management/**").authenticated();
             http.requiresChannel()
                     .antMatchers("/login**").requiresSecure();
             http.headers().disable();
