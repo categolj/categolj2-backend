@@ -16,6 +16,8 @@
 package am.ik.categolj2.domain.repository.entry;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.function.Function;
 
 import javax.annotation.PostConstruct;
@@ -40,10 +42,19 @@ import am.ik.categolj2.domain.model.Entry;
 public class EntryRepositoryImpl implements EntryRepositoryCustom {
     @PersistenceContext
     EntityManager entityManager;
+    Future<?> creatingIndex;
 
     private static final Logger logger = LogManager.getLogger();
 
     Page<Entry> searchTemplate(Pageable pageable, Function<QueryBuilder, org.apache.lucene.search.Query> queryCreator) {
+        try {
+            creatingIndex.get();
+        } catch (InterruptedException e) {
+            logger.warn("Interrupted!", e);
+            Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            logger.error("Index creation failed!!", e);
+        }
         FullTextEntityManager fullTextEntityManager = Search
                 .getFullTextEntityManager(entityManager);
         QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
@@ -91,14 +102,8 @@ public class EntryRepositoryImpl implements EntryRepositoryCustom {
     public void doIndex() {
         FullTextEntityManager fullTextEntityManager = Search
                 .getFullTextEntityManager(entityManager);
-        try {
-            logger.info("Create index...");
-            fullTextEntityManager.createIndexer().startAndWait();
-            logger.info("Created!");
-        } catch (InterruptedException e) {
-            logger.warn("Interrupted!", e);
-            Thread.currentThread().interrupt();
-        }
+        logger.info("Create index...");
+        creatingIndex = fullTextEntityManager.createIndexer().start();
     }
 
 }
