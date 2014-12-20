@@ -167,14 +167,6 @@ public class AppConfig {
     }
 
     @Bean
-    CharacterEncodingFilter characterEncodingFilter() {
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
-        return filter;
-    }
-
-    @Bean
     ExceptionLogger exceptionLogger() {
         ExceptionLogger exceptionLogger = new ExceptionLogger();
         exceptionLogger.setExceptionCodeResolver(exceptionCodeResolver());
