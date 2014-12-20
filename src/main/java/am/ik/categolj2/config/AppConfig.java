@@ -5,6 +5,7 @@ import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.core.web.cors.CrossOriginFilter;
 import am.ik.categolj2.domain.model.EntryFormat;
 import am.ik.categolj2.infra.codelist.EnumCodeList;
+import am.ik.categolj2.infra.dozer.LazyInitDozerMapper;
 import ch.qos.logback.classic.Level;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,12 +18,14 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContexts;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.dozer.Mapper;
 import org.dozer.spring.DozerBeanMapperFactoryBean;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -43,7 +46,6 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.terasoluna.gfw.common.codelist.CodeList;
 import org.terasoluna.gfw.common.codelist.SimpleMapCodeList;
 import org.terasoluna.gfw.common.date.DateFactory;
@@ -62,13 +64,23 @@ import java.util.LinkedHashMap;
 public class AppConfig {
 
     @Bean
-    DozerBeanMapperFactoryBean dozerMapper() throws Exception {
-        DozerBeanMapperFactoryBean factoryBean = new DozerBeanMapperFactoryBean();
-        ResourceArrayPropertyEditor editor = new ResourceArrayPropertyEditor();
-        editor.setAsText("classpath*:/dozer/**/*.xml");
-        factoryBean.setMappingFiles((Resource[]) editor.getValue());
-        return factoryBean;
+    Mapper dozerBeanMapper(ApplicationContext applicationContext) throws Exception {
+        return new LazyInitDozerMapper(($) -> {
+            DozerBeanMapperFactoryBean factoryBean = new DozerBeanMapperFactoryBean();
+            ResourceArrayPropertyEditor editor = new ResourceArrayPropertyEditor();
+            editor.setAsText("classpath*:/dozer/**/*.xml");
+            factoryBean.setMappingFiles((Resource[]) editor.getValue());
+            factoryBean.setApplicationContext(applicationContext);
+            try {
+                factoryBean.afterPropertiesSet();
+                return factoryBean.getObject();
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new IllegalStateException(e);
+            }
+        });
     }
+
 
     @Bean
     PasswordEncoder passwordEncoder() {
