@@ -1,6 +1,6 @@
 var categolj2 = {};
 
-categolj2.API_ROOT = 'api/v1';
+categolj2.API_ROOT = 'http://blog.ik.am/api/v1';
 categolj2.FRONTEND_ROOT = 'http://blog.ik.am/';
 categolj2.SEPARATOR = '::';
 categolj2.BLOG_TITLE = 'BLOG.IK.AM';
