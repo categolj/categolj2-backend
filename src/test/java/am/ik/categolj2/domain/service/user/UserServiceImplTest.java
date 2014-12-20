@@ -48,6 +48,7 @@ import am.ik.categolj2.domain.model.User;
 // TODO fix slow test
 @SpringApplicationConfiguration(classes = App.class)
 @IntegrationTest({"server.port:0",
+        "server-http.port:0",
         "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE"})
 public class UserServiceImplTest {
     @Inject

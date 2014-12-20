@@ -48,6 +48,7 @@ import static org.hamcrest.Matchers.is;
 @SpringApplicationConfiguration(classes = App.class)
 @WebAppConfiguration
 @IntegrationTest({"server.port:0",
+        "server-http.port:0",
         "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE",
         "flyway.enabled:false",
         "spring.jpa.hibernate.generate-ddl:true",

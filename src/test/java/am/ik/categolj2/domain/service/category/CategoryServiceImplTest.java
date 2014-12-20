@@ -29,6 +29,7 @@ import javax.inject.Inject;
 // TODO fix slow test
 @SpringApplicationConfiguration(classes = App.class)
 @IntegrationTest({"server.port:0",
+        "server-http.port:0",
         "spring.datasource.url:jdbc:h2:mem:bookmark;DB_CLOSE_ON_EXIT=FALSE",
         "flyway.enabled:false",
         "spring.jpa.hibernate.generate-ddl:true",
