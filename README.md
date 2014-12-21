@@ -63,7 +63,7 @@ If Docker is not installed follow this: https://docs.docker.com/installation/
 * Build Application
  ```sh
  cd categolj2-backend
- mvn clean install -f frontend/pom.xml
+ mvn clean install -f frontend-ui/pom.xml
  mvn clean package
  cd target
  docker build -t categolj2-backend .
@@ -211,7 +211,7 @@ You can reuse embedded frontend. Embedded html/css/javascript are zipped in `cat
 
 ``` bash
 $ unzip -d foo categol2-backend.jar
-$ unzip -d bar foo/lib/categolj2-embedded-frontend*
+$ unzip -d bar foo/lib/categolj2-embedded-frontend-ui*
 $ cp -r bar/static .
 ```
 

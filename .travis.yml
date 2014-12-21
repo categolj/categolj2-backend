@@ -1,3 +1,9 @@
 language: java
 jdk:
   - oraclejdk8
+cache:
+  directories:
+    - $HOME/.m2
+script:
+  - mvn install -f frontend-ui/pom.xml
+  - mvn test

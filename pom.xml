@@ -61,7 +61,7 @@
     <dependencies>
         <dependency>
             <groupId>am.ik.categolj2</groupId>
-            <artifactId>categolj2-embedded-frontend</artifactId>
+            <artifactId>categolj2-embedded-frontend-ui</artifactId>
             <version>0.21.0-SNAPSHOT</version>
         </dependency>
 
