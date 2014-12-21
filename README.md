@@ -64,6 +64,7 @@ If Docker is not installed follow this: https://docs.docker.com/installation/
  ```sh
  cd categolj2-backend
  mvn clean install -f frontend-ui/pom.xml -Dgpg.skip=true
+ cd backend-api
  mvn clean package
  cd target
  docker build -t categolj2-backend .
@@ -74,16 +75,6 @@ If Docker is not installed follow this: https://docs.docker.com/installation/
  docker images # List all Docker images
  docker run -p 8080:8080 -p 8443:8443 <image id>
  ```
-
-## Heroku Button (Unstable)
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-Heroku button is supported!!
-This is just alpha version. Currently, there are some restrictions... 
-
-* Japanese is unavailable.
-* `EDITOR` role is unavailable.
 
 ## Backend APIs
 
