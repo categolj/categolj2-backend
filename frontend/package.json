@@ -16,7 +16,8 @@
         "gulp-karma": "*",
         "gulp-connect": "*",
         "gulp-jshint": "*",
-        "del": "*"
+        "del": "*",
+        "bower": "*"
     },
     "directories": {
         "test": "test"
