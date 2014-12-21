@@ -5,4 +5,4 @@ cache:
   directories:
     - $HOME/.m2
 before_script:
-  - mvn install -f frontend-ui/pom.xml
+  - mvn install -f frontend-ui/pom.xml -Dgpg.skip=true
