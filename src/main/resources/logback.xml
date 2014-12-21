@@ -53,5 +53,6 @@
     <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="${log.verbose:-TRACE}"/>
     <logger name="org.springframework.data.auditing" level="debug"/>
     <logger name="com.hazelcast" level="${log.verbose:-INFO}"/>
-    <logger name="am.ik.categolj2.App" level="INFO" />
+    <logger name="am.ik.categolj2.App" level="INFO"/>
+    <logger name="org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter" level="INFO"/>
 </configuration>
