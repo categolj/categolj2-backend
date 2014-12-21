@@ -21,23 +21,34 @@
 
         .pagination li {
             display: inline;
-            font-size: small;
             margin-left: 5px;
             font-weight: bold;
+            font-size: large;
         }
 
         .pagination li > a {
             color: #222;
             font-weight: normal;
+            text-decoration: underline;
+            cursor: pointer;
         }
 
         .breadcrumb li {
             display: inline;
-            font-size: small;
+            list-style-type: none;
+            font-size: large;
         }
 
-        .breadcrumb li > a {
-            margin-left: 5px;
+        .breadcrumb li:before {
+            content: "::";
+        }
+
+        .breadcrumb li:first-child:before {
+            content: "";
+        }
+
+        .breadcrumb li a {
+            background: no-repeat center right;
         }
 
         a, a:visited, a:hover {
