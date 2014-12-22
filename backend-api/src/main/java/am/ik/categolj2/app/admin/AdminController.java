@@ -16,6 +16,6 @@ public class AdminController {
         if ("http".equalsIgnoreCase(ServletUriComponentsBuilder.fromCurrentRequest().build().getScheme())) {
             return "redirect:/login";
         }
-        return "admin";
+        return "forward:/backend-ui.html";
     }
 }
