@@ -35,7 +35,7 @@ public class CrossOriginFilter implements Filter {
                 "authorization",
                 "cache-control",
                 "content-type",
-                "if-Modified-since",
+                "if-modified-since",
                 "pragma")));
         chain.doFilter(req, res);
     }
