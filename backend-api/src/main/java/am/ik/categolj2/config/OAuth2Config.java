@@ -47,6 +47,7 @@ public class OAuth2Config {
                     .antMatchers(HttpMethod.POST, "/api/**").authenticated()
                     .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
                     .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
+                    .antMatchers(HttpMethod.OPTIONS, "/management/**").permitAll()
                     .antMatchers("/management/**").authenticated();
             http.requiresChannel()
                     .antMatchers("/login**").requiresSecure();
