@@ -15,7 +15,8 @@ gc.log*
 .extract
 am.ik.categolj2.domain.model.Entry
 *.iml
-dist
+backend-ui/dist
+frontend-ui/dist
 node
 node_modules
 bower_components
