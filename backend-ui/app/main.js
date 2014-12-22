@@ -94,7 +94,6 @@ define(function (require) {
     new AdminRouter();
 
     $(document).ajaxSend(function (e, xhr) {
-        console.log(arguments);
         xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
         xhr.setRequestHeader('X-Admin', true);
         // prevent cache
@@ -109,7 +108,6 @@ define(function (require) {
         }).on('ajaxComplete',function () {
             spinView.stop();
         }).on('ajaxError', function (event, xhr) {
-            console.log(arguments);
             var resp = xhr.responseJSON;
             if (xhr.status == 401 && resp.error == "invalid_token") {
                 // TODO refresh token
