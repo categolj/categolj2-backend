@@ -91,7 +91,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/classes/static</outputDirectory>
+                            <outputDirectory>${basedir}/target/classes/META-INF/resources</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>dist</directory>
