@@ -1,6 +1,7 @@
 define(function (require) {
     var Backbone = require('backbone');
     var EntryHistory = require('app/js/admin/models/EntryHistory');
+    var Constants = require('app/js/admin/Constants');
 
     return Backbone.Collection.extend({
         model: EntryHistory,
@@ -13,7 +14,7 @@ define(function (require) {
             }
         },
         url: function () {
-            return 'api/v1/entries/' + this.entry.id + '/histories';
+            return Constants.API_ROOT + '/entries/' + this.entry.id + '/histories';
         }
     });
 });

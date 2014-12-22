@@ -3,10 +3,11 @@ define(function (require) {
     var Backbone = require('backbone');
     var File = require('app/js/admin/models/File');
     var Page = require('app/js/admin/collections/Page');
+    var Constants = require('app/js/admin/Constants');
 
     return Backbone.Collection.extend(_.extend({
         model: File,
-        url: 'api/v1/files',
+        url: Constants.API_ROOT + '/files',
         comparator: function (a, b) {
             var isSameLastModifiedDate = a.get('lastModifiedDate') == b.get('lastModifiedDate');
             if (isSameLastModifiedDate) {

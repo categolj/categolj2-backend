@@ -1,10 +1,11 @@
 define(function (require) {
     var Backbone = require('backbone');
     var marked = require('marked');
+    var Constants = require('app/js/admin/Constants');
 
     return Backbone.Model.extend({
         idAttribute: 'id',
-        urlRoot: 'api/v1/entries',
+        urlRoot: Constants.API_ROOT + '/entries',
         defaults: {
             'format': 'md'
         },

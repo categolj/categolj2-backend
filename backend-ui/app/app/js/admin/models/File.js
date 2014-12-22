@@ -1,10 +1,11 @@
 define(function (require) {
     var Backbone = require('backbone');
     var _ = require('underscore');
+    var Constants = require('app/js/admin/Constants');
 
     return Backbone.Model.extend({
         idAttribute: 'fileId',
-        urlRoot: 'api/v1/files',
+        urlRoot: Constants.API_ROOT + '/files',
 
         url: function () {
             return this.urlRoot + '/' + this.get('fileId') + '/' + this.get('fileName');

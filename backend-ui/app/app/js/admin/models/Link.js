@@ -1,9 +1,10 @@
 define(function (require) {
     var Backbone = require('backbone');
+    var Constants = require('app/js/admin/Constants');
 
     return Backbone.Model.extend({
         idAttribute: 'id',
-        urlRoot: 'api/v1/links',
+        urlRoot: Constants.API_ROOT + '/links',
         url: function () {
             if (this.get('id')) {
                 // do not use encodeURIComponent
