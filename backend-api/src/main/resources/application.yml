@@ -60,9 +60,3 @@ server:
     key-store: classpath:server.jks
     key-store-password: letmein
     key-password: changeme
-
-info.build:
-  artifact: @project.artifactId@
-  name: @project.name@
-  description: @project.description@
-  version: @project.version@

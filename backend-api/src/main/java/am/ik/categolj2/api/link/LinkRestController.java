@@ -81,6 +81,6 @@ public class LinkRestController {
 
     String getUrl(HttpServletRequest request) {
         return ((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))
-                .replace("/links/", "");
+                .replace("/api/" + ApiVersion.CURRENT_VERSION + "/links/", "");
     }
 }

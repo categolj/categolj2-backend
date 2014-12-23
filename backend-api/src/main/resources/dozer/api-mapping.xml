@@ -25,4 +25,8 @@
             <b>password</b>
         </field-exclude>
     </mapping>
+    <mapping map-null="false" map-empty-string="false">
+        <class-a>am.ik.categolj2.domain.model.Link</class-a>
+        <class-b>am.ik.categolj2.domain.model.Link</class-b>
+    </mapping>
 </mappings> 

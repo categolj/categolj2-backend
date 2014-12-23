@@ -19,6 +19,7 @@ package am.ik.categolj2.domain.service.link;
 import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.domain.model.Link;
 import am.ik.categolj2.domain.repository.link.LinkRepository;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
 import org.springframework.cache.annotation.CacheEvict;
@@ -75,7 +76,7 @@ public class LinkServiceImpl implements LinkService {
         DateTime now = dateFactory.newDateTime();
         Link old = linkRepository.findOne(url);
         beanMapper.map(link, old);
-        link.setLastModifiedDate(now);
+        old.setLastModifiedDate(now);
         return linkRepository.save(old);
     }
 
