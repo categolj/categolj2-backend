@@ -9,6 +9,7 @@ define(function (require) {
     require('dynatable');
 
     var accesslogTable = require('text!js/admin/templates/reports/accesslogTable.hbs');
+    var Constants = require('js/admin/Constants');
 
     return Backbone.View.extend({
         template: Handlebars.compile(accesslogTable),
@@ -133,10 +134,10 @@ define(function (require) {
         },
         checkApi: function (e) {
             var $target = $(e.currentTarget),
-                url = $target.data('uri'),
+                url = $target.data('uri').replace('.pdf', ''),
                 query = $target.data('query');
             url = query ? url + '?' + query : url;
-            $.getJSON(url).success(_.bind(this.showCheckApiModal, this));
+            $.getJSON(Constants.BACKEND_HOST + url).success(_.bind(this.showCheckApiModal, this));
         },
         showCheckApiModal: function (json) {
             if (this.modalView) {
