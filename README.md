@@ -63,7 +63,8 @@ If Docker is not installed follow this: https://docs.docker.com/installation/
 * Build Application
  ```sh
  cd categolj2-backend
- mvn clean install -f frontend-ui/pom.xml -Dgpg.skip=true
+ (Optional) mvn clean install -f frontend-ui/pom.xml -Dgpg.skip=true
+ (Optional) mvn clean install -f backend-ui/pom.xml -Dgpg.skip=true
  cd backend-api
  mvn clean package
  cd target
