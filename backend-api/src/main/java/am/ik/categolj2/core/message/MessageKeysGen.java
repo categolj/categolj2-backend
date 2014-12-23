@@ -1,24 +1,23 @@
 package am.ik.categolj2.core.message;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-
 import java.io.*;
+import java.nio.file.Files;
 import java.util.regex.Pattern;
 
 public class MessageKeysGen {
     public static void main(String[] args) throws IOException {
         // message properties file
-        InputStream inputStream = new FileInputStream("src/main/resources/i18n/application-messages.properties");
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        InputStream inputStream = new FileInputStream("backend-api/src/main/resources/messages.properties");
+
         Class<?> targetClazz = MessageKeys.class;
-        File output = new File("src/main/java/"
+        File output = new File("backend-api/src/main/java/"
                 + targetClazz.getName().replaceAll(Pattern.quote("."), "/")
                 + ".java");
         System.out.println("write " + output.getAbsolutePath());
-        PrintWriter pw = new PrintWriter(FileUtils.openOutputStream(output));
 
-        try {
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+             PrintWriter pw = new PrintWriter(Files.newOutputStream(output.toPath()))) {
             pw.println("package " + targetClazz.getPackage().getName() + ";");
             pw.println("/**");
             pw.println(" * Message Id");
@@ -40,9 +39,6 @@ public class MessageKeysGen {
             }
             pw.println("}");
             pw.flush();
-        } finally {
-            IOUtils.closeQuietly(br);
-            IOUtils.closeQuietly(pw);
         }
     }
 }

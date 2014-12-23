@@ -43,9 +43,9 @@ public class MessageKeys {
     public static final String E_CT_US_8107 = "e.ct.us.8107";
     /** e.ct.us.8108=At least one enabled admin must exist! */
     public static final String E_CT_US_8108 = "e.ct.us.8108";
-    /** e.ct.us.8109=The given role is invalid. [roleId={0}] */
+    /** e.ct.us.8109=The given role is invalid. [roleId={0,number,#}] */
     public static final String E_CT_US_8109 = "e.ct.us.8109";
-    /** e.ct.en.8201=The requested entry is not found. [entryId={0}] */
+    /** e.ct.en.8201=The requested entry is not found. [entryId={0,number,#}] */
     public static final String E_CT_EN_8201 = "e.ct.en.8201";
     /** e.ct.ln.8301=The requested link is not found. [url={0}] */
     public static final String E_CT_LN_8301 = "e.ct.ln.8301";
