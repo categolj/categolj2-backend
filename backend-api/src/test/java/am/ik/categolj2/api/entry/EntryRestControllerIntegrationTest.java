@@ -238,7 +238,87 @@ public class EntryRestControllerIntegrationTest {
 
     @Test
     public void testSearchEntries() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Integer newEntryId = null;
+        {
+            Entry target = new Entry(null, "日本経済新聞", "日本経済新聞を読んでいません", "md", Categories.fromCategory("aa::bb::cc").getCategories(), true, Arrays.asList());
+            target.setCreatedBy(user);
+            target.setLastModifiedBy(user);
+            EntryResource input = new EntryResource(null,
+                    null,
+                    target.getTitle(),
+                    target.getContents(),
+                    target.getFormat(),
+                    Categories.toString(target.getCategory()),
+                    null,
+                    true,
+                    true,
+                    false,
+                    null,
+                    null,
+                    null,
+                    target.getCreatedBy(),
+                    target.getLastModifiedBy());
 
+            Response response = given()
+                    .header("X-Admin", "true")
+                    .header("Authorization", "Bearer " + accessToken)
+                    .contentType(ContentType.JSON + ";charset=UTF-8")
+                    .body(input)
+                    .log().all()
+                    .when()
+                    .post("/api/v1/entries")
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.CREATED.value())
+                    .and().extract().response();
+            newEntryId = response.path("entryId");
+        }
+        given()
+                .param("keyword", "日本")
+                .log().all()
+                .when()
+                .get("/api/v1/entries")
+                .then()
+                .log().all()
+                .body("numberOfElements", is(1))
+                .body("content[0].entryId", is(newEntryId));
+        given()
+                .param("keyword", "日本経済新聞")
+                .log().all()
+                .when()
+                .get("/api/v1/entries")
+                .then()
+                .log().all()
+                .body("numberOfElements", is(1))
+                .body("content[0].entryId", is(newEntryId));
+        given()
+                .param("keyword", "経済")
+                .log().all()
+                .when()
+                .get("/api/v1/entries")
+                .then()
+                .log().all()
+                .body("numberOfElements", is(1))
+                .body("content[0].entryId", is(newEntryId));
+        given()
+                .param("keyword", "新聞")
+                .log().all()
+                .when()
+                .get("/api/v1/entries")
+                .then()
+                .log().all()
+                .body("numberOfElements", is(1))
+                .body("content[0].entryId", is(newEntryId));
+        given()
+                .param("keyword", "本経")
+                .log().all()
+                .when()
+                .get("/api/v1/entries")
+                .then()
+                .log().all()
+                .body("numberOfElements", is(0));
     }
 
     @Test

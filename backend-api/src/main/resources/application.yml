@@ -35,8 +35,8 @@ spring:
             directory_provider: ${hibernate.search.default.directory_provider:filesystem}
             indexBase: ${hibernate.search.default.indexBase:/tmp/lucene}
             locking_strategy: ${hibernate.search.default.locking_strategy:single}
-          analyzer: org.apache.lucene.analysis.cjk.CJKAnalyzer
-          lucene_version: LUCENE_36
+          analyzer: org.apache.lucene.analysis.ja.JapaneseAnalyzer
+          lucene_version: LUCENE_4_10_2
   datasource:
     url: jdbc:h2:file:${categolj2.h2.datadir:/tmp}/categolj2
   thymeleaf.cache: false

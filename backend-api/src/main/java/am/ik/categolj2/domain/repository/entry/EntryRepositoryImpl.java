@@ -61,7 +61,7 @@ public class EntryRepositoryImpl implements EntryRepositoryCustom {
                 .buildQueryBuilder().forEntity(Entry.class).get();
 
         org.apache.lucene.search.Query query = queryCreator.apply(queryBuilder);
-        org.apache.lucene.search.Sort sort = new Sort(new SortField("lastModifiedDate", SortField.STRING_VAL, true));
+        org.apache.lucene.search.Sort sort = new Sort(new SortField("lastModifiedDate", SortField.Type.STRING_VAL, true));
         Query jpaQuery = fullTextEntityManager
                 .createFullTextQuery(query, Entry.class)
                 .setSort(sort)
