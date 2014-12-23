@@ -83,9 +83,9 @@ define(function (require) {
                 input: this.$("#categoryString"),
                 queryParameter: 'keyword',
                 model: this.categories,
-                onSelect: function (model) {
-                    console.log(model);
-                }
+                onSelect: _.bind(function (model) {
+                    this.model.set('categoryString', model.get('categoryName').join('::'));
+                }, this)
             }).render();
             return this;
         },
