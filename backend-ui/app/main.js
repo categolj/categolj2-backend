@@ -93,8 +93,8 @@ define(function (require) {
     var Backbone = require('backbone');
     Backbone.Validation = require('backbone.validation');
 
-    var AdminRouter = require('js/admin/routers/AdminRouter');
-    var SpinView = require('js/admin/views/SpinView');
+    var AdminRouter = require('js/routers/AdminRouter');
+    var SpinView = require('js/views/SpinView');
     var spinView = new SpinView();
 
     new AdminRouter();
