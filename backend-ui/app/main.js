@@ -65,6 +65,12 @@ require.config({
 define(function (require) {
     var $ = require('jquery');
     var _ = require('underscore');
+    var Handlebars = require('handlebars');
+
+    Handlebars.registerHelper('stringify', function () {
+        var obj = this;
+        return (_.isObject(obj) || _.isArray(obj)) ? JSON.stringify(this) : obj;
+    });
 
     var cookie = _.chain(document.cookie.split(';'))
         .map(function (x) {
@@ -103,9 +109,9 @@ define(function (require) {
     });
 
     $(document)
-        .on('ajaxStart',function () {
+        .on('ajaxStart', function () {
             spinView.spin();
-        }).on('ajaxComplete',function () {
+        }).on('ajaxComplete', function () {
             spinView.stop();
         }).on('ajaxError', function (event, xhr) {
             var resp = xhr.responseJSON;

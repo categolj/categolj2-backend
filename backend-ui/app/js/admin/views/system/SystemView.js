@@ -8,6 +8,7 @@ define(function (require) {
     var ThreadDumpRowView = require('js/admin/views/system/ThreadDumpRowView');
 
     var systemInfo = require('text!js/admin/templates/system/systemInfo.hbs');
+    var buildInfo = require('text!js/admin/templates/system/buildInfo.hbs');
     var threadDump = require('text!js/admin/templates/system/threadDump.hbs');
 
     var Constants = require('js/admin/Constants');
@@ -15,9 +16,11 @@ define(function (require) {
 
     return Backbone.View.extend({
         template: Handlebars.compile(systemInfo),
+        buildInfoTemplate: Handlebars.compile(buildInfo),
         threadDumpTemplate: Handlebars.compile(threadDump),
         events: {
             'click #reload-system-info': 'render',
+            'click #reload-build-info': 'buildInfo',
             'click #reload-thread-dump': 'threadDump'
         },
 
@@ -30,6 +33,16 @@ define(function (require) {
         },
         renderSystemInfo: function (env) {
             var html = this.template({env: env});
+            this.$el.html(html);
+            return this;
+        },
+        buildInfo: function () {
+            $.getJSON(Constants.MANAGEMENT_ROOT + '/info')
+                .success(_.bind(this.renderBuildInfo, this));
+            return this;
+        },
+        renderBuildInfo: function (info) {
+            var html = this.buildInfoTemplate({info: info});
             this.$el.html(html);
             return this;
         },

@@ -1,12 +1,12 @@
 <p>
-    <a id="reload-system-info" class="btn btn-info">Get system info</a>
-    <a href="#system/buildInfo" class="btn btn-info">Get build info</a>
+    <a href="#system" class="btn btn-info">Get system info</a>
+    <a id="reload-build-info" class="btn btn-info">Get build info</a>
     <a href="#system/threadDump" class="btn btn-info">Get thread dump</a>
 </p>
 
 
 <div class="table-responsive">
-    {{#each env}}
+    {{#each info}}
         <h2>{{@key}}</h2>
         <table
                 class="table table-striped table-bordered table-condensed">
@@ -18,7 +18,7 @@
             {{#each this}}
                 <tr>
                     <td>{{@key}}</td>
-                    <td style="word-wrap: break-word;word-break: break-all;">{{this}}</td>
+                    <td style="word-wrap: break-word;word-break: break-all;">{{stringify this}}</td>
                 </tr>
             {{/each}}
         </table>
