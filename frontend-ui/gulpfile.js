@@ -5,6 +5,8 @@ var debowerify = require('debowerify');
 var del = require('del');
 var minifycss = require('gulp-minify-css');
 var connect = require('gulp-connect');
+var uglify = require('gulp-uglify');
+var buffer = require('vinyl-buffer');
 
 var paths = {
     scripts: ['app/js/**/*.js'],
@@ -44,6 +46,8 @@ gulp.task('browserify', function () {
         .transform(debowerify)
         .bundle()
         .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(uglify())
         .pipe(gulp.dest(paths.target + '/js'));
 });
 
