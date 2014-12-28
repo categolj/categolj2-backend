@@ -1,18 +1,28 @@
+var model = require('./model.js');
+var view = require('./view.js');
+var Constant = require('./constants.js');
+var Backbone = require('backbone');
+var _ = require('underscore');
+var $ = require('jquery');
+var Handlebars = require('handlebars');
+
+Backbone.$ = $; // http://backbonejs.org/#Utility-Backbone-$
+
 Handlebars.registerHelper('categoryLink', function (category) {
     var ret = [], categoriesBuf = [];
     _.each(category, function (c) {
         categoriesBuf.push(_.escape(c));
-        ret.push('<a href="#/categories/' + categoriesBuf.join(categolj2.SEPARATOR) + '/entries">'
-            + _.escape(c) + '</a>');
+        ret.push('<a href="#/categories/' + categoriesBuf.join(Constant.SEPARATOR) + '/entries">'
+        + _.escape(c) + '</a>');
     });
-    return new Handlebars.SafeString(ret.join(categolj2.SEPARATOR));
+    return new Handlebars.SafeString(ret.join(Constant.SEPARATOR));
 });
 Handlebars.registerHelper('breadcrumb', function (category) {
     var ret = [], categoriesBuf = [];
     _.each(category, function (c) {
         categoriesBuf.push(_.escape(c));
-        ret.push('<li><a href="#/categories/' + categoriesBuf.join(categolj2.SEPARATOR) + '/entries">'
-            + _.escape(c) + '</a></li>');
+        ret.push('<li><a href="#/categories/' + categoriesBuf.join(Constant.SEPARATOR) + '/entries">'
+        + _.escape(c) + '</a></li>');
     });
     return new Handlebars.SafeString(ret.join(''));
 });
@@ -22,6 +32,7 @@ Handlebars.registerHelper('unescape', function (string) {
 Handlebars.registerHelper('toString', function (obj) {
     return JSON.stringify(obj);
 });
+
 var Router = Backbone.Router.extend({
     routes: {
         '': 'showEntries',
@@ -39,13 +50,18 @@ var Router = Backbone.Router.extend({
         'users/:id/entries': 'showEntriesByUser'
     },
     initialize: function () {
-        new categolj2.LoadingView();
-        this.appView = new categolj2.AppView({
+        new view.LoadingView();
+        this.appView = new view.AppView({
             el: $('#main')
         });
     },
     // delegate to appView
     showEntries: function (page, pageSize) {
+        var r = /page=([0-9]+)&size=([0-9]+)/.exec(page);
+        if (r) {
+            page = r[1];
+            pageSize = r[2];
+        }
         this.appView.showEntries(page, pageSize);
     },
     showEntry: function (id) {

@@ -1,30 +1,30 @@
 {
-    "name": "example",
-    "version": "0.0.1",
-    "devDependencies": {
-        "gulp": "*",
-        "gulp-concat": "*",
-        "gulp-flatten": "*",
-        "gulp-rename": "*",
-        "gulp-uglify": "*",
-        "gulp-minify-css": "*",
-        "gulp-imagemin": "*",
-        "gulp-sourcemaps": "*",
-        "gulp-ng-annotate": "*",
-        "gulp-filter": "*",
-        "main-bower-files": "*",
-        "gulp-karma": "*",
-        "gulp-connect": "*",
-        "gulp-jshint": "*",
-        "del": "*",
-        "bower": "*"
-    },
-    "directories": {
-        "test": "test"
-    }
-    ,
-    "scripts": {
-        "prepublish": "bower install --config.interactive=false",
-        "build": "gulp build"
-    }
+  "name": "categolj2-embedded-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/making/categolj2-backend"
+  },
+  "author": "@making",
+  "license": "Apache2",
+  "bugs": {
+    "url": "https://github.com/making/categolj2-backend/issues"
+  },
+  "homepage": "https://github.com/making/categolj2-backend",
+  "devDependencies": {
+    "browserify": "^8.0.2",
+    "debowerify": "^1.2.0",
+    "del": "^1.1.1",
+    "gulp": "^3.8.10",
+    "gulp-connect": "^2.2.0",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-uglify": "^1.0.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0"
+  }
 }
