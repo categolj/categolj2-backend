@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "app/js/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "bower install --config.interactive=false",
-    "build": "gulp build"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/making/categolj2-backend"
@@ -28,5 +23,9 @@
     "gulp-uglify": "^1.0.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0"
+  },
+  "scripts": {
+    "prepublish": "bower install --config.interactive=false",
+    "build": "gulp build"
   }
 }
