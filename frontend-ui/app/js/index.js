@@ -57,12 +57,27 @@ var Router = Backbone.Router.extend({
     },
     // delegate to appView
     showEntries: function (page, pageSize) {
-        var r = /page=([0-9]+)&size=([0-9]+)/.exec(page);
-        if (r) {
-            page = r[1];
-            pageSize = r[2];
+        var keyword;
+        var qps = /q=(.+)&page=([0-9]+)&size=([0-9]+)/.exec(page);
+        var ps = /page=([0-9]+)&size=([0-9]+)/.exec(page);
+        var q = /q=(.+)/.exec(page);
+        if (qps) {
+            keyword = qps[1];
+            page = qps[2];
+            pageSize = qps[3];
         }
-        this.appView.showEntries(page, pageSize);
+        else if (ps) {
+            page = ps[1];
+            pageSize = ps[2];
+        } else if (q) {
+            keyword = q[1];
+        }
+        // since Backbone.js 1.2(?)
+        if (keyword) {
+            this.showSearchResult(keyword, page, pageSize)
+        } else {
+            this.appView.showEntries(page, pageSize);
+        }
     },
     showEntry: function (id) {
         this.appView.showEntry(id);
