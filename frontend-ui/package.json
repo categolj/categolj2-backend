@@ -4,7 +4,9 @@
   "description": "",
   "main": "app/js/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "bower install --config.interactive=false",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
