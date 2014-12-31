@@ -5,6 +5,8 @@ cache:
   directories:
     - $HOME/.m2
 before_script:
+  - "export PATH=$PATH:`pwd`/frontend-ui/helper-scripts"
+  - echo $PATH
   - mvn install -f frontend-ui/pom.xml -Dgpg.skip=true
   - mvn install -f backend-ui/pom.xml -Dgpg.skip=true
 script:
