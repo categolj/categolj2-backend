@@ -15,34 +15,17 @@
  */
 package am.ik.categolj2.domain.model;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -87,6 +70,14 @@ public class Entry extends AbstractAuditableEntiry<Integer> {
     @OrderBy("CREATED_DATE")
     @JsonIgnore
     private List<EntryHistory> histories;
+    @ManyToMany(targetEntity = Tag.class, fetch = FetchType.LAZY
+            , cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @OrderBy("TAG_NAME")
+    @JoinTable(name = "ENTRY_TAGS",
+            joinColumns = {@JoinColumn(name = "ENTRY", referencedColumnName = "ENTRY_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "TAGS", referencedColumnName = "TAG_NAME")})
+    @Valid
+    private Set<Tag> tags;
 
     public Entry(Integer entryId, String title) {
         this.entryId = entryId;

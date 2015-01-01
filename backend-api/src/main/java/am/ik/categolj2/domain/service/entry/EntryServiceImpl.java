@@ -20,9 +20,13 @@ import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.domain.model.Category;
 import am.ik.categolj2.domain.model.Entry;
 import am.ik.categolj2.domain.model.EntryHistory;
+import am.ik.categolj2.domain.model.Tag;
 import am.ik.categolj2.domain.repository.category.CategoryRepository;
 import am.ik.categolj2.domain.repository.entry.EntryHistoryRepository;
 import am.ik.categolj2.domain.repository.entry.EntryRepository;
+import am.ik.categolj2.domain.repository.tag.TagAndEntryId;
+import am.ik.categolj2.domain.repository.tag.TagRepository;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import org.dozer.Mapper;
@@ -42,7 +46,10 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class EntryServiceImpl implements EntryService {
@@ -53,6 +60,8 @@ public class EntryServiceImpl implements EntryService {
     EntryHistoryRepository entryHistoryRepository;
     @Inject
     CategoryRepository categoryRepository;
+    @Inject
+    TagRepository tagRepository;
     @Inject
     Mapper beanMapper;
     @Inject
@@ -86,24 +95,33 @@ public class EntryServiceImpl implements EntryService {
     public Page<Entry> findPage(Pageable pageable) {
         Page<Entry> page = entryRepository
                 .findPageOrderByLastModifiedDateDesc(pageable);
-        applyCategory(page);
+        applyRelations(page);
         return page;
     }
 
-    void applyCategory(Iterable<Entry> entries) {
-        List<Integer> entryIds = new ArrayList<>();
-        for (Entry entry : entries) {
-            entryIds.add(entry.getId());
-        }
+    void applyRelations(Iterable<Entry> entries) {
+        List<Integer> entryIds = StreamSupport.stream(entries.spliterator(), false)
+                .map(Entry::getEntryId)
+                .collect(Collectors.toList());
         if (!entryIds.isEmpty()) {
+            // apply categories
             List<Category> categories = categoryRepository.findByEntryIds(entryIds);
 
-            Multimap<Integer, Category> multimap = TreeMultimap.create();
+            Multimap<Integer, Category> categoryMultimap = TreeMultimap.create();
             for (Category c : categories) {
-                multimap.put(c.getEntry().getId(), c);
+                categoryMultimap.put(c.getEntry().getId(), c);
             }
             for (Entry entry : entries) {
-                entry.setCategory(new ArrayList<>(multimap.get(entry.getId())));
+                entry.setCategory(new ArrayList<>(categoryMultimap.get(entry.getId())));
+            }
+            // apply tags
+            List<TagAndEntryId> tags = tagRepository.findByEntryIds(entryIds);
+            Multimap<Integer, Tag> tagMultimap = HashMultimap.create();
+            for (TagAndEntryId tag : tags) {
+                tagMultimap.put(tag.getEntryId(), tag.getTag());
+            }
+            for (Entry entry : entries) {
+                entry.setTags(new LinkedHashSet<>(tagMultimap.get(entry.getEntryId())));
             }
         }
     }
@@ -113,7 +131,7 @@ public class EntryServiceImpl implements EntryService {
     public Page<Entry> findPagePublished(Pageable pageable) {
         Page<Entry> page = entryRepository
                 .findPagePublishedOrderByLastModifiedDateDesc(pageable);
-        applyCategory(page);
+        applyRelations(page);
         return page;
     }
 
@@ -130,28 +148,28 @@ public class EntryServiceImpl implements EntryService {
             String categoryName, Integer categoryOrder, Pageable pageable) {
         Page<Entry> page = entryRepository.findPageDetailsPublishedByCategoryNameAndOrder(
                 categoryName, categoryOrder, pageable);
-        applyCategory(page);
+        applyRelations(page);
         return page;
     }
 
     @Override
     public Page<Entry> findPagePublishedByCreatedBy(String createdBy, Pageable pageable) {
         Page<Entry> page = entryRepository.findPagePublishedByCreatedBy(createdBy, pageable);
-        applyCategory(page);
+        applyRelations(page);
         return page;
     }
 
     @Override
     public Page<Entry> searchPageByKeyword(String keyword, Pageable pageable) {
         Page<Entry> page = entryRepository.searchPageByKeyword(keyword, pageable);
-        applyCategory(page);
+        applyRelations(page);
         return page;
     }
 
     @Override
     public Page<Entry> searchPagePublishedByKeyword(String keyword, Pageable pageable) {
         Page<Entry> page = entryRepository.searchPagePublishedByKeyword(keyword, pageable);
-        applyCategory(page);
+        applyRelations(page);
         return page;
     }
 

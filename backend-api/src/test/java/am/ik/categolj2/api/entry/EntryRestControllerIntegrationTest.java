@@ -6,6 +6,7 @@ import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.domain.model.*;
 import am.ik.categolj2.domain.repository.entry.EntryRepository;
 import am.ik.categolj2.domain.repository.role.RoleRepository;
+import am.ik.categolj2.domain.repository.tag.TagRepository;
 import am.ik.categolj2.domain.repository.user.UserRepository;
 import am.ik.marked4j.MarkedBuilder;
 import com.google.common.collect.Sets;
@@ -38,6 +39,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 import static com.jayway.restassured.RestAssured.given;
@@ -80,6 +82,8 @@ public class EntryRestControllerIntegrationTest {
     @Autowired
     RoleRepository roleRepository;
     @Autowired
+    TagRepository tagRepository;
+    @Autowired
     AuthenticationHelper authenticationHelper;
     @Autowired
     RestTemplate restTemplate;
@@ -106,6 +110,7 @@ public class EntryRestControllerIntegrationTest {
         entryRepository.deleteAll();
         userRepository.deleteAll();
         roleRepository.deleteAll();
+        tagRepository.deleteAll();
         entryRepository.flush();
 
         // initialize user
@@ -120,7 +125,7 @@ public class EntryRestControllerIntegrationTest {
         userRepository.flush();
 
         // initialize entry
-        entry1 = new Entry(null, "This is entry1!", "**Hello World1!**", "md", Arrays.asList(), true, Arrays.asList());
+        entry1 = new Entry(null, "This is entry1!", "**Hello World1!**", "md", Arrays.asList(), true, Arrays.asList(), Collections.<Tag>emptySet());
         entry1.setCreatedBy("admin");
         entry1.setCreatedDate(now);
         entry1.setLastModifiedBy("admin");
@@ -128,8 +133,9 @@ public class EntryRestControllerIntegrationTest {
         entry1 = entryRepository.saveAndFlush(entry1);
         entry1.setCategory(Categories.fromCategory("aa::bb::cc").getCategories());
         entry1.getCategory().stream().forEach(c -> c.getCategoryPK().setEntryId(entry1.getEntryId()));
+        entry1.setTags(Sets.newHashSet(new Tag("Java"), new Tag("Spring")));
 
-        entry2 = new Entry(null, "This is entry2!", "**Hello World2!**", "md", Arrays.asList(), false, Arrays.asList());
+        entry2 = new Entry(null, "This is entry2!", "**Hello World2!**", "md", Arrays.asList(), false, Arrays.asList(), Collections.<Tag>emptySet());
         entry2.setCreatedBy("admin");
         entry2.setCreatedDate(now.plus(2));
         entry2.setLastModifiedBy("admin");
@@ -137,8 +143,9 @@ public class EntryRestControllerIntegrationTest {
         entry2 = entryRepository.saveAndFlush(entry2);
         entry2.setCategory(Categories.fromCategory("aa::bb::cc").getCategories());
         entry2.getCategory().stream().forEach(c -> c.getCategoryPK().setEntryId(entry2.getEntryId()));
+        entry2.setTags(Sets.newHashSet(new Tag("Java"), new Tag("Java EE")));
 
-        entry3 = new Entry(null, "This is entry3!", "**Hello World3!**", "md", Arrays.asList(), true, Arrays.asList());
+        entry3 = new Entry(null, "This is entry3!", "**Hello World3!**", "md", Arrays.asList(), true, Arrays.asList(), Collections.<Tag>emptySet());
         entry3.setCreatedBy("editor");
         entry3.setCreatedDate(now.plus(3));
         entry3.setLastModifiedBy("editor");
@@ -147,7 +154,7 @@ public class EntryRestControllerIntegrationTest {
         entry3.setCategory(Categories.fromCategory("aa::bb::cc").getCategories());
         entry3.getCategory().stream().forEach(c -> c.getCategoryPK().setEntryId(entry3.getEntryId()));
 
-        entry4 = new Entry(null, "This is entry4!", "<h1>Hello World4!</h1>", "html", Arrays.asList(), true, Arrays.asList());
+        entry4 = new Entry(null, "This is entry4!", "<h1>Hello World4!</h1>", "html", Arrays.asList(), true, Arrays.asList(), Collections.<Tag>emptySet());
         entry4.setCreatedBy("editor");
         entry4.setCreatedDate(now.plus(4));
         entry4.setLastModifiedBy("editor");
@@ -156,7 +163,7 @@ public class EntryRestControllerIntegrationTest {
         entry4.setCategory(Categories.fromCategory("aa::bb::cc").getCategories());
         entry4.getCategory().stream().forEach(c -> c.getCategoryPK().setEntryId(entry4.getEntryId()));
 
-        entry5 = new Entry(null, "This is entry5!", "**Foo World5!**", "md", Arrays.asList(), true, Arrays.asList());
+        entry5 = new Entry(null, "This is entry5!", "**Foo World5!**", "md", Arrays.asList(), true, Arrays.asList(), Collections.<Tag>emptySet());
         entry5.setCreatedBy("editor");
         entry5.setCreatedDate(now.plus(5));
         entry5.setLastModifiedBy("editor");
@@ -229,6 +236,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("content[3].contents", is(entry1.getContents()))
                 .body("content[3].categoryName", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("content[3].categoryString", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[3].tags[0].tagName", is("Java"))
+                .body("content[3].tags[1].tagName", is("Spring"))
                 .body("content[3].published", is(entry1.isPublished()))
                 .body("content[3].createdBy", is(entry1.getCreatedBy()))
                 .body("content[3].createdDate", is(entry1.getCreatedDate().toString(datetimeFormat)))
@@ -242,7 +251,7 @@ public class EntryRestControllerIntegrationTest {
         String accessToken = getAccessToken(user, "demo");
         Integer newEntryId = null;
         {
-            Entry target = new Entry(null, "日本経済新聞", "日本経済新聞を読んでいません", "md", Categories.fromCategory("aa::bb::cc").getCategories(), true, Arrays.asList());
+            Entry target = new Entry(null, "日本経済新聞", "日本経済新聞を読んでいません", "md", Categories.fromCategory("aa::bb::cc").getCategories(), true, Arrays.asList(), Collections.<Tag>emptySet());
             target.setCreatedBy(user);
             target.setLastModifiedBy(user);
             EntryResource input = new EntryResource(null,
@@ -251,6 +260,7 @@ public class EntryRestControllerIntegrationTest {
                     target.getContents(),
                     target.getFormat(),
                     Categories.toString(target.getCategory()),
+                    Collections.emptySet(),
                     null,
                     true,
                     true,
@@ -413,6 +423,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("content[0].contents", is(entry1.getContents()))
                 .body("content[0].categoryName", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("content[0].categoryString", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[0].tags[0].tagName", is("Java"))
+                .body("content[0].tags[1].tagName", is("Spring"))
                 .body("content[0].published", is(entry1.isPublished()))
                 .body("content[0].createdBy", is(entry1.getCreatedBy()))
                 .body("content[0].createdDate", is(entry1.getCreatedDate().toString(datetimeFormat)))
@@ -514,6 +526,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("content[3].contents", is(entry2.getContents()))
                 .body("content[3].categoryName", is(entry2.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("content[3].categoryString", is(entry2.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[3].tags[0].tagName", is("Java"))
+                .body("content[3].tags[1].tagName", is("Java EE"))
                 .body("content[3].published", is(entry2.isPublished()))
                 .body("content[3].createdBy", is(entry2.getCreatedBy()))
                 .body("content[3].createdDate", is(entry2.getCreatedDate().toString(datetimeFormat)))
@@ -524,6 +538,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("content[4].contents", is(entry1.getContents()))
                 .body("content[4].categoryName", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("content[4].categoryString", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[4].tags[0].tagName", is("Java"))
+                .body("content[4].tags[1].tagName", is("Spring"))
                 .body("content[4].published", is(entry1.isPublished()))
                 .body("content[4].createdBy", is(entry1.getCreatedBy()))
                 .body("content[4].createdDate", is(entry1.getCreatedDate().toString(datetimeFormat)))
@@ -556,6 +572,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Java EE"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("createdDate", is(target.getCreatedDate().toString(datetimeFormat)))
@@ -567,7 +585,7 @@ public class EntryRestControllerIntegrationTest {
     public void testCreateEntryInAdmin() throws Exception {
         String user = "admin";
         String accessToken = getAccessToken(user, "demo");
-        Entry target = new Entry(null, "New Entry!!", "**New!!**", "md", Categories.fromCategory("aa::bb::cc").getCategories(), true, Arrays.asList());
+        Entry target = new Entry(null, "New Entry!!", "**New!!**", "md", Categories.fromCategory("aa::bb::cc").getCategories(), true, Arrays.asList(), Collections.<Tag>emptySet());
         target.setCreatedBy(user);
         target.setLastModifiedBy(user);
         EntryResource input = new EntryResource(null,
@@ -576,6 +594,7 @@ public class EntryRestControllerIntegrationTest {
                 target.getContents(),
                 target.getFormat(),
                 Categories.toString(target.getCategory()),
+                Collections.emptySet(),
                 null,
                 true,
                 true,
@@ -637,6 +656,7 @@ public class EntryRestControllerIntegrationTest {
                 target.getContents(),
                 target.getFormat(),
                 Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
                 null,
                 true,
                 true,
@@ -663,6 +683,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()))
@@ -698,6 +720,7 @@ public class EntryRestControllerIntegrationTest {
                 target.getContents(),
                 target.getFormat(),
                 Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
                 null,
                 true,
                 true,
@@ -724,6 +747,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()))
@@ -740,6 +765,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()));
@@ -760,6 +787,7 @@ public class EntryRestControllerIntegrationTest {
                 target.getContents(),
                 target.getFormat(),
                 Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
                 null,
                 true,
                 true,
@@ -786,6 +814,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()))
@@ -822,6 +852,7 @@ public class EntryRestControllerIntegrationTest {
                 target.getContents(),
                 target.getFormat(),
                 Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
                 null,
                 true,
                 true,
@@ -848,6 +879,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()))
@@ -864,6 +897,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()));
@@ -883,6 +918,7 @@ public class EntryRestControllerIntegrationTest {
                 target.getContents(),
                 target.getFormat(),
                 Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
                 null,
                 true,
                 true,
@@ -909,6 +945,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()))
@@ -925,6 +963,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()));
@@ -944,6 +984,7 @@ public class EntryRestControllerIntegrationTest {
                 target.getContents(),
                 target.getFormat(),
                 Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
                 null,
                 true,
                 true,
@@ -970,6 +1011,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()))
@@ -986,6 +1029,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("contents", is(target.getContents()))
                 .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
                 .body("published", is(target.isPublished()))
                 .body("createdBy", is(target.getCreatedBy()))
                 .body("lastModifiedBy", is(target.getLastModifiedBy()));

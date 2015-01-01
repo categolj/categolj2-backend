@@ -18,12 +18,15 @@ package am.ik.categolj2.domain.repository.entry;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.inject.Inject;
 
 import am.ik.categolj2.App;
+import am.ik.categolj2.domain.model.Tag;
+import com.google.common.collect.Sets;
 import org.joda.time.DateTime;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -68,7 +71,7 @@ public class EntryRepositoryTest {
         String user = null;
 
         Entry entry = new Entry(null, "hoge!", "日本語のサンプルです", "html", null,
-                true, null);
+                true, null, Sets.newHashSet(new Tag("Java"), new Tag("Spring Boot")));
 
         entry.setCreatedBy(user);
         entry.setCreatedDate(now);
