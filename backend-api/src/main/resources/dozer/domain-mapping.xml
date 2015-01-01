@@ -9,6 +9,10 @@
             <a>category</a>
             <b>category</b>
         </field>
+        <field relationship-type="non-cumulative" remove-orphans="true">
+            <a>tags</a>
+            <b>tags</b>
+        </field>
     </mapping>
     <mapping>
         <class-a>am.ik.categolj2.domain.model.Role</class-a>

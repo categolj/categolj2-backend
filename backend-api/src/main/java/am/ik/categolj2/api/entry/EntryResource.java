@@ -16,11 +16,11 @@
 package am.ik.categolj2.api.entry;
 
 import am.ik.categolj2.domain.model.Category;
-import am.ik.categolj2.domain.model.Tag;
 import am.ik.categolj2.domain.validation.TagName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +30,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,7 +56,7 @@ public class EntryResource implements Serializable {
     @NotNull
     private String categoryString;
     @Valid
-    private Set<TagResource> tags;
+    private Set<TagResource> tags = Sets.newTreeSet();
 
     private Long version;
 
@@ -86,9 +88,14 @@ public class EntryResource implements Serializable {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class TagResource {
+    public static class TagResource implements Comparable<TagResource> {
         @NotNull
         @TagName
         private String tagName;
+
+        @Override
+        public int compareTo(TagResource o) {
+            return Objects.compare(this, o, Comparator.comparing(TagResource::getTagName));
+        }
     }
 }

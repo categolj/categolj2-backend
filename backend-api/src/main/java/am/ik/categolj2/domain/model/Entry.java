@@ -71,7 +71,7 @@ public class Entry extends AbstractAuditableEntiry<Integer> {
     @JsonIgnore
     private List<EntryHistory> histories;
     @ManyToMany(targetEntity = Tag.class, fetch = FetchType.LAZY
-            , cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+            , cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @OrderBy("TAG_NAME")
     @JoinTable(name = "ENTRY_TAGS",
             joinColumns = {@JoinColumn(name = "ENTRY", referencedColumnName = "ENTRY_ID")},

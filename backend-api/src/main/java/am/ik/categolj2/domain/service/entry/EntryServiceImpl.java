@@ -15,7 +15,6 @@
  */
 package am.ik.categolj2.domain.service.entry;
 
-import am.ik.categolj2.core.logger.LogManager;
 import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.domain.model.Category;
 import am.ik.categolj2.domain.model.Entry;
@@ -28,10 +27,11 @@ import am.ik.categolj2.domain.repository.tag.TagAndEntryId;
 import am.ik.categolj2.domain.repository.tag.TagRepository;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import com.google.common.collect.TreeMultimap;
+import lombok.extern.slf4j.Slf4j;
 import org.dozer.Mapper;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -48,12 +48,13 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@Slf4j
 public class EntryServiceImpl implements EntryService {
-    private static final Logger logger = LogManager.getLogger();
     @Inject
     EntryRepository entryRepository;
     @Inject
@@ -180,7 +181,11 @@ public class EntryServiceImpl implements EntryService {
         Assert.notNull(entry, "entry must not be null");
         Assert.isNull(entry.getCategory(), "entry.category must be null");
         Assert.notNull(category, "category must not be null or empty");
-
+        Assert.notNull(entry.getTags(), "category must not be null");
+        // create new tags
+        tagRepository.save(entry.getTags().stream()
+                .filter(tag -> !tagRepository.exists(tag.getTagName()))
+                .collect(Collectors.toList()));
         DateTime now = dateFactory.newDateTime();
         entry.setCreatedDate(now);
         entry.setLastModifiedDate(now);
@@ -204,7 +209,7 @@ public class EntryServiceImpl implements EntryService {
         Entry entry = findOne(entryId); // old entry
 
         if (saveInHistory) {
-            logger.info("save history for entryId={}", entryId);
+            log.info("save history for entryId={}", entryId);
             EntryHistory history = beanMapper.map(entry, EntryHistory.class);
             history.setEntry(entry);
             entryHistoryRepository.save(history);
@@ -215,6 +220,8 @@ public class EntryServiceImpl implements EntryService {
             updatedEntry.setLastModifiedDate(now);
         }
 
+        Set<Tag> reduced = Sets.difference(entry.getTags(), updatedEntry.getTags());
+        houseKeepTag(reduced);
         // copy new values to entry
         beanMapper.map(updatedEntry, entry);
         entryRepository.save(entry);
@@ -226,6 +233,14 @@ public class EntryServiceImpl implements EntryService {
     @CacheEvict(value = {"recentPost", "entry"}, allEntries = true)
     public void delete(Integer entryId) {
         Entry entry = findOne(entryId);
+        houseKeepTag(entry.getTags());
         entryRepository.delete(entry);
+    }
+
+    void houseKeepTag(Set<Tag> tags) {
+        tagRepository.delete(tags.stream()
+                .filter(tag -> tagRepository.countByTagName(tag.getTagName()) == 1)
+                .peek(tag -> log.info("Delete unused tag -> {}", tag))
+                .collect(Collectors.toList()));
     }
 }

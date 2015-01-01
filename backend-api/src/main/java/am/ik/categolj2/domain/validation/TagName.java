@@ -32,7 +32,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
 @ReportAsSingleViolation
-@Pattern(regexp = "[a-zA-Z0-9\\s]+")
+@Pattern(regexp = "[a-zA-Z0-9_\\-\\.\\s]+")
 @Size(min = 1, max = 256)
 public @interface TagName {
     String message() default "tagName must be alphanumeric/space and between 1 and 255 characters";

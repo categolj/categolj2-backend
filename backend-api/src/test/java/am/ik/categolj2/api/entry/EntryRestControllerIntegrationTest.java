@@ -45,6 +45,7 @@ import java.util.stream.Collectors;
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = App.class)
@@ -641,6 +642,202 @@ public class EntryRestControllerIntegrationTest {
                 .body("lastModifiedBy", is(target.getLastModifiedBy()));
     }
 
+    @Test
+    public void testCreateEntryInAdmin_CREATE_NEW_TAGS() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = new Entry(null, "New Entry!!", "**New!!**", "md", Categories.fromCategory("aa::bb::cc").getCategories(), true, Arrays.asList(), Collections.<Tag>emptySet());
+        target.setCreatedBy(user);
+        target.setLastModifiedBy(user);
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                Sets.newHashSet(new EntryResource.TagResource("JavaScript"), new EntryResource.TagResource("Gulp"), new EntryResource.TagResource("Bower")),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .log().all()
+                .when()
+                .post("/api/v1/entries")
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Bower"))
+                .body("tags[1].tagName", is("Gulp"))
+                .body("tags[2].tagName", is("JavaScript"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+        Integer newEntryId = response.path("entryId");
+        when()
+                .get("/api/v1/entries/{id}", newEntryId)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(newEntryId))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Bower"))
+                .body("tags[1].tagName", is("Gulp"))
+                .body("tags[2].tagName", is("JavaScript"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
+
+    @Test
+    public void testCreateEntryInAdmin_USE_EXISTING_TAGS() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = new Entry(null, "New Entry!!", "**New!!**", "md", Categories.fromCategory("aa::bb::cc").getCategories(), true, Arrays.asList(), Collections.<Tag>emptySet());
+        target.setCreatedBy(user);
+        target.setLastModifiedBy(user);
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                Sets.newHashSet(new EntryResource.TagResource("Java"), new EntryResource.TagResource("Spring")),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .log().all()
+                .when()
+                .post("/api/v1/entries")
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+        Integer newEntryId = response.path("entryId");
+        when()
+                .get("/api/v1/entries/{id}", newEntryId)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(newEntryId))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
+
+    @Test
+    public void testCreateEntryInAdmin_USE_NEW_AND_EXISTING_MIXED_TAGS() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = new Entry(null, "New Entry!!", "**New!!**", "md", Categories.fromCategory("aa::bb::cc").getCategories(), true, Arrays.asList(), Collections.<Tag>emptySet());
+        target.setCreatedBy(user);
+        target.setLastModifiedBy(user);
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                Sets.newHashSet(new EntryResource.TagResource("Java"), new EntryResource.TagResource("JavaScript")),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .log().all()
+                .when()
+                .post("/api/v1/entries")
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.CREATED.value())
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("JavaScript"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+        Integer newEntryId = response.path("entryId");
+        when()
+                .get("/api/v1/entries/{id}", newEntryId)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(newEntryId))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("JavaScript"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
 
     @Test
     public void testUpdateEntryInAdmin_CHANGE_TITLE() throws Exception {
@@ -1037,6 +1234,346 @@ public class EntryRestControllerIntegrationTest {
     }
 
     @Test
+    public void testUpdateEntryInAdmin_ADD_NEW_TAG() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.getTags().add(new Tag("Spring MVC"));
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
+                .body("tags[2].tagName", is("Spring MVC"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Spring"))
+                .body("tags[2].tagName", is("Spring MVC"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
+
+    @Test
+    public void testUpdateEntryInAdmin_ADD_EXISTING_TAG() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.getTags().add(new Tag("Java EE"));
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Java EE"))
+                .body("tags[2].tagName", is("Spring"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("tags[1].tagName", is("Java EE"))
+                .body("tags[2].tagName", is("Spring"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+    }
+
+    @Test
+    public void testUpdateEntryInAdmin_REDUCE_USED_TAG() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.setTags(Sets.newHashSet(new Tag("Spring")));
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .log().all()
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Spring"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Spring"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+
+        assertThat(tagRepository.exists("Java"), is(true));
+    }
+
+    @Test
+    public void testUpdateEntryInAdmin_REDUCE_UNUSED_TAG() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.setTags(Sets.newHashSet(new Tag("Java")));
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .log().all()
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Java"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+
+        assertThat(tagRepository.exists("Spring"), is(false));
+    }
+
+    @Test
+    public void testUpdateEntryInAdmin_REPLACE_TAG() throws Exception {
+        String user = "admin";
+        String accessToken = getAccessToken(user, "demo");
+        Entry target = entry1;
+        target.setTags(Sets.newHashSet(new Tag("JavaScript"), new Tag("Angular.js")));
+        target.setLastModifiedBy(user);
+
+        EntryResource input = new EntryResource(null,
+                null,
+                target.getTitle(),
+                target.getContents(),
+                target.getFormat(),
+                Categories.toString(target.getCategory()),
+                target.getTags().stream().map(Tag::getTagName).map(EntryResource.TagResource::new).collect(Collectors.toSet()),
+                null,
+                true,
+                true,
+                false,
+                null,
+                null,
+                null,
+                target.getCreatedBy(),
+                target.getLastModifiedBy());
+
+        Response response = given()
+                .header("X-Admin", "true")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(ContentType.JSON)
+                .body(input)
+                .log().all()
+                .when()
+                .put("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Angular.js"))
+                .body("tags[1].tagName", is("JavaScript"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()))
+                .and().extract().response();
+
+        when()
+                .get("/api/v1/entries/{id}", target.getEntryId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .body("entryId", is(target.getEntryId()))
+                .body("title", is(target.getTitle()))
+                .body("format", is(target.getFormat()))
+                .body("contents", is(target.getContents()))
+                .body("categoryName", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("categoryString", is(target.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("tags[0].tagName", is("Angular.js"))
+                .body("tags[1].tagName", is("JavaScript"))
+                .body("published", is(target.isPublished()))
+                .body("createdBy", is(target.getCreatedBy()))
+                .body("lastModifiedBy", is(target.getLastModifiedBy()));
+
+        assertThat(tagRepository.exists("Java"), is(true));
+        assertThat(tagRepository.exists("Spring"), is(false));
+    }
+
+    @Test
     public void testDeleteEntryInAdmin() throws Exception {
         Integer id = entry2.getId();
         String accessToken = getAccessToken("admin", "demo");
@@ -1056,5 +1593,8 @@ public class EntryRestControllerIntegrationTest {
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .body("code", is(MessageKeys.E_CT_EN_8201))
                 .body("message", is(String.format("The requested entry is not found. [entryId=" + id + "]")));
+
+        assertThat(tagRepository.exists("Java"), is(true));
+        assertThat(tagRepository.exists("Java EE"), is(false));
     }
 }
