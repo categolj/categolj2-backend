@@ -15,15 +15,14 @@
  */
 package am.ik.categolj2.domain.service.entry;
 
-import java.util.List;
-
 import am.ik.categolj2.domain.Categolj2AuthorizeAccesses;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import am.ik.categolj2.domain.model.Category;
 import am.ik.categolj2.domain.model.Entry;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+
+import java.util.List;
 
 public interface EntryService {
 
@@ -43,6 +42,10 @@ public interface EntryService {
             String categoryName, Integer categoryOrder, Pageable pageable);
 
     Page<Entry> findPagePublishedByCreatedBy(String createdBy, Pageable pageable);
+
+    Page<Entry> findPagePublishedByTagName(String tagName, Pageable pageable);
+
+    Page<Entry> findPageByTagName(String tagName, Pageable pageable);
 
     @PreAuthorize(Categolj2AuthorizeAccesses.AUTHORIZED)
     Page<Entry> searchPageByKeyword(String keyword, Pageable pageable);

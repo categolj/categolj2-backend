@@ -161,6 +161,20 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    public Page<Entry> findPagePublishedByTagName(String tagName, Pageable pageable) {
+        Page<Entry> page = entryRepository.findPageByTags_TagNameAndPublishedTrueOrderByLastModifiedDateDesc(tagName, pageable);
+        applyRelations(page);
+        return page;
+    }
+
+    @Override
+    public Page<Entry> findPageByTagName(String tagName, Pageable pageable) {
+        Page<Entry> page = entryRepository.findPageByTags_TagNameOrderByLastModifiedDateDesc(tagName, pageable);
+        applyRelations(page);
+        return page;
+    }
+
+    @Override
     public Page<Entry> searchPageByKeyword(String keyword, Pageable pageable) {
         Page<Entry> page = entryRepository.searchPageByKeyword(keyword, pageable);
         applyRelations(page);

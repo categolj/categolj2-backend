@@ -155,6 +155,7 @@ public class EntryRestControllerIntegrationTest {
         entry3 = entryRepository.saveAndFlush(entry3);
         entry3.setCategory(Categories.fromCategory("aa::bb::cc").getCategories());
         entry3.getCategory().stream().forEach(c -> c.getCategoryPK().setEntryId(entry3.getEntryId()));
+        entry3.setTags(Sets.newHashSet(new Tag("Java"), new Tag("Java SE")));
 
         entry4 = new Entry(null, "This is entry4!", "<h1>Hello World4!</h1>", "html", Arrays.asList(), true, Arrays.asList(), Collections.<Tag>emptySet());
         entry4.setCreatedBy("editor");
@@ -228,6 +229,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("content[2].contents", is(entry3.getContents()))
                 .body("content[2].categoryName", is(entry3.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("content[2].categoryString", is(entry3.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[2].tags[0].tagName", is("Java"))
+                .body("content[2].tags[1].tagName", is("Java SE"))
                 .body("content[2].published", is(entry3.isPublished()))
                 .body("content[2].createdBy", is(entry3.getCreatedBy()))
                 .body("content[2].createdDate", is(entry3.getCreatedDate().toString(datetimeFormat)))
@@ -471,11 +474,77 @@ public class EntryRestControllerIntegrationTest {
                 .body("content[2].contents", is(entry3.getContents()))
                 .body("content[2].categoryName", is(entry3.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("content[2].categoryString", is(entry3.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[2].tags[0].tagName", is("Java"))
+                .body("content[2].tags[1].tagName", is("Java SE"))
                 .body("content[2].published", is(entry3.isPublished()))
                 .body("content[2].createdBy", is(entry3.getCreatedBy()))
                 .body("content[2].createdDate", is(entry3.getCreatedDate().toString(datetimeFormat)))
                 .body("content[2].lastModifiedBy", is(entry3.getLastModifiedBy()))
                 .body("content[2].lastModifiedDate", is(entry3.getLastModifiedDate().toString(datetimeFormat)));
+    }
+
+    @Test
+    public void testGetEntriesByTagName_Java() throws Exception {
+        String tagName = "Java";
+        when()
+                .get("/api/v1/tags/{tagName}/entries", tagName)
+                .then()
+                .log().all()
+                .body("totalElements", is(2))
+                .body("totalPages", is(1))
+                .body("first", is(true))
+                .body("last", is(true))
+                .body("numberOfElements", is(2))
+                .body("content[0].entryId", is(entry3.getEntryId()))
+                .body("content[0].title", is(entry3.getTitle()))
+                .body("content[0].contents", is(entry3.getContents()))
+                .body("content[0].categoryName", is(entry3.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("content[0].categoryString", is(entry3.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[0].tags[0].tagName", is("Java"))
+                .body("content[0].tags[1].tagName", is("Java SE"))
+                .body("content[0].published", is(entry3.isPublished()))
+                .body("content[0].createdBy", is(entry3.getCreatedBy()))
+                .body("content[0].createdDate", is(entry3.getCreatedDate().toString(datetimeFormat)))
+                .body("content[0].lastModifiedBy", is(entry3.getLastModifiedBy()))
+                .body("content[0].lastModifiedDate", is(entry3.getLastModifiedDate().toString(datetimeFormat)))
+                .body("content[1].entryId", is(entry1.getEntryId()))
+                .body("content[1].title", is(entry1.getTitle()))
+                .body("content[1].contents", is(entry1.getContents()))
+                .body("content[1].categoryName", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("content[1].categoryString", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[1].tags[0].tagName", is("Java"))
+                .body("content[1].tags[1].tagName", is("Spring"))
+                .body("content[1].published", is(entry1.isPublished()))
+                .body("content[1].createdBy", is(entry1.getCreatedBy()))
+                .body("content[1].createdDate", is(entry1.getCreatedDate().toString(datetimeFormat)))
+                .body("content[1].lastModifiedBy", is(entry1.getLastModifiedBy()))
+                .body("content[1].lastModifiedDate", is(entry1.getLastModifiedDate().toString(datetimeFormat)));
+    }
+
+    @Test
+    public void testGetEntriesByTagName_Spring() throws Exception {
+        String tagName = "Spring";
+        when()
+                .get("/api/v1/tags/{tagName}/entries", tagName)
+                .then()
+                .log().all()
+                .body("totalElements", is(1))
+                .body("totalPages", is(1))
+                .body("first", is(true))
+                .body("last", is(true))
+                .body("numberOfElements", is(1))
+                .body("content[0].entryId", is(entry1.getEntryId()))
+                .body("content[0].title", is(entry1.getTitle()))
+                .body("content[0].contents", is(entry1.getContents()))
+                .body("content[0].categoryName", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
+                .body("content[0].categoryString", is(entry1.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[0].tags[0].tagName", is("Java"))
+                .body("content[0].tags[1].tagName", is("Spring"))
+                .body("content[0].published", is(entry1.isPublished()))
+                .body("content[0].createdBy", is(entry1.getCreatedBy()))
+                .body("content[0].createdDate", is(entry1.getCreatedDate().toString(datetimeFormat)))
+                .body("content[0].lastModifiedBy", is(entry1.getLastModifiedBy()))
+                .body("content[0].lastModifiedDate", is(entry1.getLastModifiedDate().toString(datetimeFormat)));
     }
 
     @Test
@@ -518,6 +587,8 @@ public class EntryRestControllerIntegrationTest {
                 .body("content[2].contents", is(entry3.getContents()))
                 .body("content[2].categoryName", is(entry3.getCategory().stream().map(Category::getCategoryName).collect(Collectors.toList())))
                 .body("content[2].categoryString", is(entry3.getCategory().stream().map(Category::getCategoryName).collect(Collectors.joining(Categories.SEPARATOR))))
+                .body("content[2].tags[0].tagName", is("Java"))
+                .body("content[2].tags[1].tagName", is("Java SE"))
                 .body("content[2].published", is(entry3.isPublished()))
                 .body("content[2].createdBy", is(entry3.getCreatedBy()))
                 .body("content[2].createdDate", is(entry3.getCreatedDate().toString(datetimeFormat)))

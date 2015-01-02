@@ -76,4 +76,7 @@ public interface EntryRepository extends JpaRepository<Entry, Integer>,
             countQuery = "SELECT COUNT(x) FROM Entry x WHERE x.createdBy = :createdBy AND x.published = true")
     Page<Entry> findPagePublishedByCreatedBy(
             @Param("createdBy") String createdBy, Pageable pageable);
+
+    Page<Entry> findPageByTags_TagNameOrderByLastModifiedDateDesc(String tagName, Pageable pageable);
+    Page<Entry> findPageByTags_TagNameAndPublishedTrueOrderByLastModifiedDateDesc(String tagName, Pageable pageable);
 }

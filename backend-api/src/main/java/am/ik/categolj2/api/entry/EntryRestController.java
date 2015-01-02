@@ -93,6 +93,15 @@ public class EntryRestController {
         return toResourcePage(page, pageable, isFormatted);
     }
 
+    @RequestMapping(value = "tags/{tagName}/entries", method = RequestMethod.GET)
+    public Page<EntryResource> getEntriesByTagName(@PathVariable("tagName") String tagName, AccessLog accessLog
+            , @PageableDefault Pageable pageable
+            , @RequestHeader(value = Categolj2Headers.X_FORMATTED, required = false, defaultValue = "false") boolean isFormatted) {
+        accessLogHelper.writeIfAccessLogIsEnabled(accessLog);
+        Page<Entry> page = entryService.findPagePublishedByTagName(tagName, pageable);
+        return toResourcePage(page, pageable, isFormatted);
+    }
+
     // Admin API
 
     @RequestMapping(value = "entries", method = RequestMethod.GET, headers = Categolj2Headers.X_ADMIN)
