@@ -13,4 +13,9 @@ public interface TagRepository extends JpaRepository<Tag, String> {
 
     @Query("SELECT COUNT(y) FROM Tag x INNER JOIN x.entries y WHERE x.tagName = :tagName")
     long countByTagName(@Param("tagName") String tagName);
+
+    @Query("SELECT x FROM Tag x ORDER BY x.tagName")
+    List<Tag> findOrderByTagNameAsc();
+
+    List<Tag> findByTagNameStartsWithOrderByTagNameAsc(String tagName);
 }

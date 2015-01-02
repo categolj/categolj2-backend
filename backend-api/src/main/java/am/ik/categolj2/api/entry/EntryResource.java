@@ -15,8 +15,8 @@
  */
 package am.ik.categolj2.api.entry;
 
+import am.ik.categolj2.api.tag.TagResource;
 import am.ik.categolj2.domain.model.Category;
-import am.ik.categolj2.domain.validation.TagName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -30,9 +30,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -85,17 +83,4 @@ public class EntryResource implements Serializable {
         return this.categoryName;
     }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class TagResource implements Comparable<TagResource> {
-        @NotNull
-        @TagName
-        private String tagName;
-
-        @Override
-        public int compareTo(TagResource o) {
-            return Objects.compare(this, o, Comparator.comparing(TagResource::getTagName));
-        }
-    }
 }
