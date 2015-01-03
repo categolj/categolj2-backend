@@ -17,6 +17,14 @@ Handlebars.registerHelper('categoryLink', function (category) {
     });
     return new Handlebars.SafeString(ret.join(Constant.SEPARATOR));
 });
+Handlebars.registerHelper('tagsLink', function (tags) {
+    var ret = [];
+    _.each(tags, function (tag) {
+        ret.push('<a href="#/tags/' + tag.tagName + '/entries">'
+        + _.escape(tag.tagName) + '</a>');
+    });
+    return new Handlebars.SafeString(ret.join(' '));
+});
 Handlebars.registerHelper('breadcrumb', function (category) {
     var ret = [], categoriesBuf = [];
     _.each(category, function (c) {
@@ -46,7 +54,10 @@ var Router = Backbone.Router.extend({
         'categories': 'showCategories',
         'categories/:categories/entries?page=:page&size=:pageSize': 'showEntriesByCategory',
         'categories/:categories/entries': 'showEntriesByCategory',
-        'users/:id/entries?page=:page&size=:pageSize': 'showEntriesByUser',
+        'tags': 'showTags',
+        'tags/:tag/entries?page=:page&size=:pageSize': 'showEntriesByCategory',
+        'tags/:tag/entries': 'showEntriesByTag',
+        'users/:id/entries?page=:page&size=:pageSize': 'showEntriesByTag',
         'users/:id/entries': 'showEntriesByUser'
     },
     initialize: function () {
@@ -90,6 +101,12 @@ var Router = Backbone.Router.extend({
     },
     showEntriesByCategory: function (category, page, pageSize) {
         this.appView.showEntriesByCategory(category, page, pageSize);
+    },
+    showTags: function () {
+        this.appView.showTags();
+    },
+    showEntriesByTag: function (tag, page, pageSize) {
+        this.appView.showEntriesByTag(tag, page, pageSize);
     },
     showEntriesByUser: function (userId, page, pageSize) {
         this.appView.showEntriesByUser(userId, page, pageSize);

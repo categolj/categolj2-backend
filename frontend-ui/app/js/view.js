@@ -107,6 +107,26 @@ var AppView = Backbone.View.extend({
         this.$el.html(entriesView.render().el);
         scroll();
     },
+    showTags: function () {
+        var tags = new model.Tags();
+        var tagsView = new TagsView({
+            collection: tags
+        });
+
+        tags.fetch().success(_.bind(function () {
+            this.$el.html(tagsView.render().el);
+        }, this));
+        scroll();
+    },
+    showEntriesByTag: function (tag, page, pageSize) {
+        var entriesView = new EntriesByTagView({
+            tag: tag,
+            page: page,
+            pageSize: pageSize
+        });
+        this.$el.html(entriesView.render().el);
+        scroll();
+    },
     showEntriesByUser: function (userId, page, pageSize) {
         var entriesView = new EntriesByUserView({
             userId: userId,
@@ -220,6 +240,39 @@ var EntriesByCategoryView = Backbone.View.extend({
         var entries = new model.Entries(this.options);
         entries.targetUrl = Constant.API_ROOT + '/categories/' + this.options.category + '/entries';
 
+        var entriesView = new EntriesView({
+            collection: entries
+        });
+        entries.fetch().success(_.bind(function () {
+            this.$el.append(entriesView.render().el);
+        }, this));
+        return this;
+    }
+});
+
+var TagsView = Backbone.View.extend({
+    tagName: 'div',
+    template: Handlebars.compile($('#tags-tmpl').html()),
+    render: function () {
+        this.$el.html(this.template({
+            tags: this.collection.toJSON()
+        }));
+        return this;
+    }
+});
+
+var EntriesByTagView = Backbone.View.extend({
+    tagName: 'div',
+    template: Handlebars.compile($('#entries-by-tag-tmpl').html()),
+    initialize: function (options) {
+        this.options = options;
+    },
+    render: function () {
+        this.$el.append(this.template({
+            tag: this.options.tag
+        }));
+        var entries = new model.Entries(this.options);
+        entries.targetUrl = Constant.API_ROOT + '/tags/' + this.options.tag + '/entries';
         var entriesView = new EntriesView({
             collection: entries
         });
@@ -396,6 +449,8 @@ module.exports = {
     RecentPostsView: RecentPostsView,
     CategoriesView: CategoriesView,
     EntriesByCategoryView: EntriesByCategoryView,
+    TagsView: TagsView,
+    EntriesByTagView: EntriesByTagView,
     EntriesByUserView: EntriesByUserView,
     SearchFormView: SearchFormView,
     SearchResultView: SearchResultView,

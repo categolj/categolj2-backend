@@ -93,6 +93,7 @@
             <input name="q" class="search-field" type="search" placeholder="search...">
         </form>
         <a href="#/categories" class="button button-mini button-primary">All Categories</a>
+        <a href="#/tags" class="button button-mini button-primary">All Tags</a>
         </p>
     </hgroup>
 </header>
@@ -122,12 +123,13 @@
 </script>
 <script type="text/x-handlebars-template" id="entry-tmpl">
     <article class="article panel panel-box">
-        <h3 class="article-title"><a href="#/entries/{{entryId}}" class="entry-title">{{title}}</a></h3>
+        <h3 class="article-title"><a href="#/entries/{{entryId}}" class="entry-title">{{title}}</a>
+            <a href="/api/v1/entries/{{entryId}}.pdf"><img src="img/pdf.png" title="PDF Download"></a></h3>
 
         <p class="article-meta">updated at {{lastModifiedDate}} by <a href="#/users/{{lastModifiedBy}}/entries">{{lastModifiedBy}}</a>
             created at {{createdDate}} by <a href="#/users/{{createdBy}}/entries">{{createdBy}}</a><br>
-            category: {{categoryLink categoryName}}<a href="/api/v1/entries/{{entryId}}.pdf"><img src="img/pdf.png"
-                                                                                                  title="PDF Download"></a>
+            category: {{categoryLink categoryName}}<br>
+            tags: {{tagsLink tags}}
         </p>
 
         <p class="article-lead">
@@ -163,6 +165,14 @@
         {{/each}}
     </ul>
 </script>
+<script type="text/x-handlebars-template" id="tags-tmpl">
+    <h2>All Tags</h2>
+    <ul class="list list-striped">
+        {{#each tags}}
+        <li><a href="/#/tags/{{tagName}}/entries">{{tagName}}</a></li>
+        {{/each}}
+    </ul>
+</script>
 <script type="text/x-handlebars-template" id="links-tmpl">
     <h3>Links</h3>
     <ul>
@@ -176,6 +186,9 @@
 </script>
 <script type="text/x-handlebars-template" id="search-result-tmpl">
     <h2>Search for {{keyword}} ...</h2>
+</script>
+<script type="text/x-handlebars-template" id="entries-by-tag-tmpl">
+    <h2>Posts tagged with {{tag}} ...</h2>
 </script>
 <script type="text/x-handlebars-template" id="entries-by-user-tmpl">
     <h2>Posts by {{username}} ...</h2>

@@ -15,6 +15,8 @@ var RecentPost = Backbone.Model.extend({});
 
 var Category = Backbone.Model.extend({});
 
+var Tag = Backbone.Model.extend({});
+
 var Link = Backbone.Model.extend({});
 
 // Pageable object
@@ -54,6 +56,11 @@ var Categories = Backbone.Collection.extend({
     model: Category
 });
 
+var Tags = Backbone.Collection.extend({
+    url: Constant.API_ROOT + '/tags',
+    model: Tag
+});
+
 var Links = Backbone.Collection.extend({
     url: Constant.API_ROOT + '/links',
     model: Link
@@ -63,9 +70,11 @@ module.exports = {
     Entry: Entry,
     RecentPost: RecentPost,
     Category: Category,
+    Tag: Tag,
     Link: Link,
     Entries: Entries,
     RecentPosts: RecentPosts,
     Categories: Categories,
+    Tags: Tags,
     Links: Links
 };
