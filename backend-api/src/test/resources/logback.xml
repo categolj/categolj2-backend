@@ -24,7 +24,7 @@
     <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
     <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
     <logger name="jdbc" level="OFF"/>
-    <logger name="jdbc.sqltiming" level="${log.sql:-DEBUG}"/>
+    <logger name="jdbc.sqltiming" level="${log.sql:-WARN}"/>
     <logger name="jdbc.resultsettable" level="${log.sql.result:-WARN}"/>
     <logger name="org.hibernate" level="WARN"/>
     <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="${log.verbose:-TRACE}"/>
