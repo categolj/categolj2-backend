@@ -2,7 +2,7 @@ categolj2:
   url: http://blog.ik.am
   title: BLOG.IK.AM
   description: making's memo
-  db: H2
+  db: ${spring.jpa.database:H2}
   filedownload.cache.seconds: 345600 # 60 * 60 * 24 * 4
   admin:
     clientId: categolj2-admin
