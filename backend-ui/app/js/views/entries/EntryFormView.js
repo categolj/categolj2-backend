@@ -14,6 +14,7 @@ define(function (require) {
     var EntryPreviewModalView = require('js/views/entries/EntryPreviewModalView');
     var AmazonSearchView = require('js/views/entries/AmazonSearchView');
     var FileUploadView = require('js/views/entries/FileUploadView');
+    var TagInputView = require('js/views/entries/TagInputView');
     var ErrorHandler = require('js/views/ErrorHandler');
     var AutoCompleteView = require('js/views/AutoCompleteView');
 
@@ -38,6 +39,11 @@ define(function (require) {
         bindings: {
             '#title': 'title',
             '#categoryString': 'categoryString',
+            '#tags': {
+                observe: 'tags',
+                onSet: '_populateTags',
+                onGet: '_formatTags'
+            },
             '#wmd-input': 'contents',
             '#format': 'format',
             '#published': 'published',
@@ -70,7 +76,8 @@ define(function (require) {
             this.$el.empty().html(this.entryFormTemplate(
                 _.merge(this.model.toJSON(), this.templateOpts)
             ));
-
+            this.tagInputView = new TagInputView({el: this.$('#tags')});
+            this.tagInputView.render();
             Backbone.Validation.bind(this);
             this.stickit();
             if (this.entryHistories) {
@@ -100,6 +107,21 @@ define(function (require) {
             var editor = new Markdown.Editor(converter);
             editor.run();
             return this;
+        },
+        _formatTags: function (val) {
+            if (this.tagInputView && _.isEmpty(this.tagInputView.$el.tagsinput('items'))) {
+                // Reflects model to tags-input
+                _.each(val, function (x) {
+                    this.tagInputView.$el.tagsinput('add', x.tagName);
+                }, this);
+            }
+            // Formatting functionality is registered as a Handlebars 'tags' function.
+            return val;
+        },
+        _populateTags: function (val) {
+            return _.map(val.split(','), function (x) {
+                return {tagName: x.trim()}
+            });
         },
         _appendEntryHistoryTable: function () {
             this.$el.append(this.entryTableTemplate({

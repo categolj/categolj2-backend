@@ -42,7 +42,24 @@ require.config({
         },
         'dynatable': ['jquery'],
         'backbone.stickit': ['backbone'],
-        bootstrap: ['jquery']
+        bootstrap: ['jquery'],
+        'bloodhound': {
+            deps: [
+                'jquery'
+            ],
+            exports: 'Bloodhound'
+        },
+        'typeahead.jquery': {
+            deps: [
+                'bloodhound'
+            ]
+        },
+        'bootstrap-tagsinput': {
+            deps: [
+                'bootstrap',
+                'typeahead.jquery'
+            ]
+        }
     },
     paths: {
         jquery: 'vendor/jquery/jquery.min',
@@ -58,7 +75,10 @@ require.config({
         'jquery.iframe-transport': 'vendor/jquery.iframe-transport/jquery.iframe-transport',
         bootstrap: 'vendor/bootstrap/dist/js/bootstrap.min',
         text: 'vendor/requirejs-text/text',
-        dynatable: 'vendor/dynatable/jquery.dynatable'
+        dynatable: 'vendor/dynatable/jquery.dynatable',
+        'bloodhound': 'vendor/typeahead.js/dist/bloodhound.min',
+        'typeahead.jquery': 'vendor/typeahead.js/dist/typeahead.jquery.min',
+        'bootstrap-tagsinput': 'vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min'
     }
 });
 
@@ -70,6 +90,12 @@ define(function (require) {
     Handlebars.registerHelper('stringify', function () {
         var obj = this;
         return (_.isObject(obj) || _.isArray(obj)) ? JSON.stringify(this) : obj;
+    });
+
+    Handlebars.registerHelper('tags', function (tags) {
+        return new Handlebars.SafeString(_.map(tags, function (tag) {
+            return "<span class='label label-info'>" + tag.tagName + "</span>";
+        }).join(' '));
     });
 
     var cookie = _.chain(document.cookie.split(';'))
