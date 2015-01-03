@@ -55,7 +55,7 @@ var Router = Backbone.Router.extend({
         'categories/:categories/entries?page=:page&size=:pageSize': 'showEntriesByCategory',
         'categories/:categories/entries': 'showEntriesByCategory',
         'tags': 'showTags',
-        'tags/:tag/entries?page=:page&size=:pageSize': 'showEntriesByCategory',
+        'tags/:tag/entries?page=:page&size=:pageSize': 'showEntriesByTag',
         'tags/:tag/entries': 'showEntriesByTag',
         'users/:id/entries?page=:page&size=:pageSize': 'showEntriesByTag',
         'users/:id/entries': 'showEntriesByUser'
