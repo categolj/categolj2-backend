@@ -75,7 +75,7 @@ public class AuthenticationController {
         return "redirect:/admin";
     }
 
-    @RequestMapping("logout")
+    @RequestMapping({"doLogout", "dologout"})
     String logout(@CookieValue(value = Categolj2Cookies.ACCESS_TOKEN_VALUE_COOKIE, required = false) String accessTokenValue,
                   @CookieValue(value = Categolj2Cookies.REFRESH_TOKEN_VALUE_COOKIE, required = false) String refreshTokenValue,
                   HttpServletResponse response) throws IOException {
