@@ -29,7 +29,7 @@ public class EmbeddedServerConfig {
             @Override
             protected void configureSsl(SslContextFactory factory, Ssl ssl) {
                 super.configureSsl(factory, ssl);
-                factory.addExcludeProtocols("SSLv2Hello", "SSLv3");
+                factory.addExcludeProtocols("SSLv2Hello", "SSLv3", "TLSv1", "TLSv1.1");
             }
         };
         jetty.addServerCustomizers(server -> server.addConnector(createSslConnector(server)));
