@@ -76,7 +76,7 @@ public class EntryRepositoryImpl implements EntryRepositoryCustom {
 
     org.apache.lucene.search.Query createSearchQuery(String keyword, QueryBuilder queryBuilder) {
         return queryBuilder.keyword()
-                .onFields("contents", "title").matching(keyword).createQuery();
+                .onFields("contents", "title", "tags.tagName").matching(keyword).createQuery();
 
     }
 

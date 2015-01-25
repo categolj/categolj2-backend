@@ -265,7 +265,7 @@ public class EntryRestControllerIntegrationTest {
                     target.getContents(),
                     target.getFormat(),
                     Categories.toString(target.getCategory()),
-                    Collections.emptySet(),
+                    Sets.newHashSet(new TagResource("JavaScript"), new TagResource("Gulp"), new TagResource("Bower")),
                     null,
                     true,
                     true,
@@ -328,6 +328,23 @@ public class EntryRestControllerIntegrationTest {
                 .body("content[0].entryId", is(newEntryId));
         given()
                 .param("keyword", "本経")
+                .log().all()
+                .when()
+                .get("/api/v1/entries")
+                .then()
+                .log().all()
+                .body("numberOfElements", is(0));
+        given()
+                .param("keyword", "Bower")
+                .log().all()
+                .when()
+                .get("/api/v1/entries")
+                .then()
+                .log().all()
+                .body("numberOfElements", is(1))
+                .body("content[0].entryId", is(newEntryId));
+        given()
+                .param("keyword", "Tag")
                 .log().all()
                 .when()
                 .get("/api/v1/entries")
