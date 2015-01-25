@@ -323,7 +323,11 @@
             <artifactId>usertype.extended</artifactId>
             <version>3.1.0.GA</version>
         </dependency>
-
+        <dependency>
+            <groupId>is.tagomor.woothee</groupId>
+            <artifactId>woothee-java</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.bgee.log4jdbc-log4j2</groupId>
             <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
