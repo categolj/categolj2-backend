@@ -3,6 +3,8 @@ package am.ik.categolj2.domain.model;
 import am.ik.categolj2.domain.validation.TagName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,6 +25,8 @@ public class Tag implements Comparable<Tag>, Serializable {
     @NotNull
     @TagName
     @Column(name = "TAG_NAME")
+    @DocumentId(name = "id")
+    @Field
     private String tagName;
 
     @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)

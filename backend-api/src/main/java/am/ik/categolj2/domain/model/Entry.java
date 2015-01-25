@@ -76,6 +76,7 @@ public class Entry extends AbstractAuditableEntiry<Integer> {
     @JoinTable(name = "ENTRY_TAGS",
             joinColumns = {@JoinColumn(name = "ENTRY", referencedColumnName = "ENTRY_ID")},
             inverseJoinColumns = {@JoinColumn(name = "TAGS", referencedColumnName = "TAG_NAME")})
+    @IndexedEmbedded
     @Valid
     private Set<Tag> tags;
 
