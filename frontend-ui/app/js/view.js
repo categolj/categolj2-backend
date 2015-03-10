@@ -1,4 +1,4 @@
-var Constant = require('./constants.js');
+var Config = require('./config.js');
 var Util = require('./util.js');
 var model = require('./model.js');
 var Backbone = require('backbone');
@@ -69,7 +69,7 @@ var AppView = Backbone.View.extend({
             }
         }
 
-        document.title = entry.get('title') + ' - ' + Constant.BLOG_TITLE;
+        document.title = entry.get('title') + ' - ' + Config.BLOG_TITLE;
         var entryView = new EntryView({
             model: entry,
             render: true,
@@ -185,8 +185,8 @@ var EntryView = Backbone.View.extend({
     },
     render: function () {
         var attributes = {
-            frontendRoot: Constant.FRONTEND_ROOT,
-            blogTitle: Constant.BLOG_TITLE,
+            frontendRoot: Config.FRONTEND_ROOT,
+            blogTitle: Config.BLOG_TITLE,
             social: this.options.social
         };
         if (this.options.render) {
@@ -233,12 +233,12 @@ var EntriesByCategoryView = Backbone.View.extend({
         this.options = options;
     },
     render: function () {
-        var category = this.options.category.split(Constant.SEPARATOR);
+        var category = this.options.category.split(Config.SEPARATOR);
         this.$el.append(this.template({
             category: category
         }));
         var entries = new model.Entries(this.options);
-        entries.targetUrl = Constant.API_ROOT + '/categories/' + this.options.category + '/entries';
+        entries.targetUrl = Config.API_ROOT + '/categories/' + this.options.category + '/entries';
 
         var entriesView = new EntriesView({
             collection: entries
@@ -272,7 +272,7 @@ var EntriesByTagView = Backbone.View.extend({
             tag: this.options.tag
         }));
         var entries = new model.Entries(this.options);
-        entries.targetUrl = Constant.API_ROOT + '/tags/' + this.options.tag + '/entries';
+        entries.targetUrl = Config.API_ROOT + '/tags/' + this.options.tag + '/entries';
         var entriesView = new EntriesView({
             collection: entries
         });
@@ -294,7 +294,7 @@ var EntriesByUserView = Backbone.View.extend({
             username: 'User(' + this.options.userId + ')'
         }));
         var entries = new model.Entries(this.options);
-        entries.targetUrl = Constant.API_ROOT + '/users/' + this.options.userId + '/entries';
+        entries.targetUrl = Config.API_ROOT + '/users/' + this.options.userId + '/entries';
         var entriesView = new EntriesView({
             collection: entries
         });
@@ -328,7 +328,7 @@ var SearchResultView = Backbone.View.extend({
             keyword: this.options.keyword
         }));
         var entries = new model.Entries(this.options);
-        entries.targetUrl = Constant.API_ROOT + '/entries?keyword=' + encodeURIComponent(this.options.keyword);
+        entries.targetUrl = Config.API_ROOT + '/entries?keyword=' + encodeURIComponent(this.options.keyword);
         var entriesView = new EntriesView({
             collection: entries
         });

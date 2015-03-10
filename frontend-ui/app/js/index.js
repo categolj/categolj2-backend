@@ -1,6 +1,6 @@
 var model = require('./model.js');
 var view = require('./view.js');
-var Constant = require('./constants.js');
+var Config = require('./config.js');
 var Backbone = require('backbone');
 var _ = require('underscore');
 var $ = require('jquery');
@@ -12,10 +12,10 @@ Handlebars.registerHelper('categoryLink', function (category) {
     var ret = [], categoriesBuf = [];
     _.each(category, function (c) {
         categoriesBuf.push(_.escape(c));
-        ret.push('<a href="#/categories/' + categoriesBuf.join(Constant.SEPARATOR) + '/entries">'
+        ret.push('<a href="#/categories/' + categoriesBuf.join(Config.SEPARATOR) + '/entries">'
         + _.escape(c) + '</a>');
     });
-    return new Handlebars.SafeString(ret.join(Constant.SEPARATOR));
+    return new Handlebars.SafeString(ret.join(Config.SEPARATOR));
 });
 Handlebars.registerHelper('tagsLink', function (tags) {
     var ret = [];
@@ -29,7 +29,7 @@ Handlebars.registerHelper('breadcrumb', function (category) {
     var ret = [], categoriesBuf = [];
     _.each(category, function (c) {
         categoriesBuf.push(_.escape(c));
-        ret.push('<li><a href="#/categories/' + categoriesBuf.join(Constant.SEPARATOR) + '/entries">'
+        ret.push('<li><a href="#/categories/' + categoriesBuf.join(Config.SEPARATOR) + '/entries">'
         + _.escape(c) + '</a></li>');
     });
     return new Handlebars.SafeString(ret.join(''));

@@ -1,4 +1,4 @@
-var Constant = require('./constants.js');
+var Config = require('./config.js');
 var Util = require('./util.js');
 var Backbone = require('backbone');
 var _ = require('underscore');
@@ -7,7 +7,7 @@ var _ = require('underscore');
 var Entry = Backbone.Model.extend({
     idAttribute: 'entryId',
     url: function () {
-        return Constant.API_ROOT + '/entries/' + encodeURIComponent(this.id) + '';
+        return Config.API_ROOT + '/entries/' + encodeURIComponent(this.id) + '';
     }
 });
 
@@ -33,7 +33,7 @@ var Pageable = {
 // Collections
 var Entries = Backbone.Collection.extend(
     _.extend(Pageable, { // mixin
-        targetUrl: Constant.API_ROOT + '/entries',
+        targetUrl: Config.API_ROOT + '/entries',
         model: Entry,
         initialize: function (options) {
             options = _.extend({}, options);
@@ -47,22 +47,22 @@ var Entries = Backbone.Collection.extend(
     }));
 
 var RecentPosts = Backbone.Collection.extend({
-    url: Constant.API_ROOT + '/recentposts',
+    url: Config.API_ROOT + '/recentposts',
     model: RecentPost
 });
 
 var Categories = Backbone.Collection.extend({
-    url: Constant.API_ROOT + '/categories',
+    url: Config.API_ROOT + '/categories',
     model: Category
 });
 
 var Tags = Backbone.Collection.extend({
-    url: Constant.API_ROOT + '/tags',
+    url: Config.API_ROOT + '/tags',
     model: Tag
 });
 
 var Links = Backbone.Collection.extend({
-    url: Constant.API_ROOT + '/links',
+    url: Config.API_ROOT + '/links',
     model: Link
 });
 
