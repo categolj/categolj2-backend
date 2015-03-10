@@ -1,7 +1,6 @@
 var browserify = require('browserify');
 var gulp = require('gulp');
 var source = require('vinyl-source-stream');
-var debowerify = require('debowerify');
 var del = require('del');
 var minifycss = require('gulp-minify-css');
 var connect = require('gulp-connect');
@@ -43,7 +42,6 @@ gulp.task('images', function () {
 
 gulp.task('browserify', function () {
     return browserify('./app/js/index.js', {debug: true})
-        .transform(debowerify)
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
