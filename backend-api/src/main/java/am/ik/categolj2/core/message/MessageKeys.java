@@ -51,6 +51,10 @@ public class MessageKeys {
     public static final String E_CT_LN_8301 = "e.ct.ln.8301";
     /** e.ct.uf.8401=The requested file is not found. [fileId={0}] */
     public static final String E_CT_UF_8401 = "e.ct.uf.8401";
+    /** e.ct.cf.8501=The requested config is already registered. [propertyName={0}] */
+    public static final String E_CT_CF_8501 = "e.ct.cf.8501";
+    /** e.ct.cf.8502=The requested config is not found. [propertyName={0}] */
+    public static final String E_CT_CF_8502 = "e.ct.cf.8502";
     /** e.ct.fw.9001=System error occurred. */
     public static final String E_CT_FW_9001 = "e.ct.fw.9001";
     /** e.ct.fw.9002=DataAccess error occurred. */
