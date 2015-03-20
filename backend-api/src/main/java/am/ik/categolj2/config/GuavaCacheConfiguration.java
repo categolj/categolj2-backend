@@ -27,7 +27,8 @@ public class GuavaCacheConfiguration extends CachingConfigurerSupport {
                 "link",
                 "uploadFileSummary",
                 "accessToken",
-                "accessTokenAuthentication"));
+                "accessTokenAuthentication",
+                "configs"));
         return cacheManager;
     }
 
