@@ -185,7 +185,7 @@ var EntryView = Backbone.View.extend({
     },
     render: function () {
         var attributes = {
-            frontendRoot: Config.FRONTEND_ROOT,
+            frontendRoot: Config.BLOG_URL,
             blogTitle: Config.BLOG_TITLE,
             social: this.options.social
         };

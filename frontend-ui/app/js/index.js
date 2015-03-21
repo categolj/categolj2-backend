@@ -115,6 +115,11 @@ var Router = Backbone.Router.extend({
 
 var router = new Router();
 $(function () {
+    // init
+    document.getElementById('blog-title').innerHTML = ('<a href="' + Config.BLOG_URL + '">' + Config.BLOG_TITLE + '</a>');
+    document.getElementById('blog-description').innerHTML = Config.BLOG_DESCRIPTION;
+    document.title = Config.BLOG_TITLE;
+
     $(document).ajaxSend(function (e, xhr) {
         xhr.setRequestHeader('X-Formatted', true);
     });

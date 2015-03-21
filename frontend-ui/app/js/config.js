@@ -1,9 +1,8 @@
-var FRONTEND_ROOT = 'http://blog.ik.am/';
 var defaults = {
-    FRONTEND_ROOT: FRONTEND_ROOT,
+    BLOG_URL: 'http://localhost:8080',
+    BLOG_TITLE: 'Your Blog Title',
     API_ROOT: 'api/v1',
-    SEPARATOR: '::',
-    BLOG_TITLE: 'BLOG.IK.AM'
+    SEPARATOR: '::'
 };
 
 var Config;
