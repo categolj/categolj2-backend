@@ -4,6 +4,8 @@
 
 CategoljJ2 is a micro blog system. This backend provides REST API for blog system and admin console to manage these data. You can create any blog frontend using this APIs ;)
 
+![categolj](./logo.png)
+
 The following technologies are used.
 
 * Java 8
