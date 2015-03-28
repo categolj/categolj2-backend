@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="fragment" content="!">
+    <title>Loading...</title>
+    <style type="text/css">
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #000;
+            font-size: small;
+        }
+
+        article {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .pagination li {
+            display: inline;
+            margin-left: 5px;
+            font-weight: bold;
+            font-size: large;
+        }
+
+        .pagination li > a {
+            color: #000;
+            font-weight: normal;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .breadcrumb li {
+            display: inline;
+            list-style-type: none;
+            font-size: large;
+        }
+
+        .breadcrumb li:before {
+            content: "::";
+        }
+
+        .breadcrumb li:first-child:before {
+            content: "";
+        }
+
+        .breadcrumb li a {
+            background: no-repeat center right;
+        }
+
+        a, a:visited, a:hover {
+            color: #000;
+        }
+
+        pre > code {
+            font-family: "Monaco", "Courier", monospace;
+            font-size: smaller;
+        }
+
+        code {
+            font-family: "Monaco", "Courier", monospace;
+        }
+    </style>
+    <link rel="stylesheet" href="highlight/styles/github.css">
+    <link id="rss" rel="alternate" type="application/rss+xml" title="BLOG.IK.AM" href="/feed">
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon"/>
+    <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="EmvO8Tdbk_6pTA0dW3Yb9vj9lHOA6oDRZYCt6jAUwAQ"/>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+
+    </style>
+</head>
+<body>
+<header>
+    <hgroup>
+        <h1 id="blog-title">Loading...</h1>
+
+        <p id="blog-description">Loading...</p>
+
+        <div id="loading"></div>
+        <p class="view">
+
+        <form id="search-form" method="get" class="search" data-search>
+            <input name="q" class="search-field" type="search" placeholder="search...">
+        </form>
+        <a href="#/categories" class="button button-mini button-primary">All Categories</a>
+        <a href="#/tags" class="button button-mini button-primary">All Tags</a>
+        </p>
+    </hgroup>
+</header>
+<section id="main"><img src="img/ajax-loader.gif"></section>
+<aside>
+    <section id="recent-posts"><img src="img/ajax-loader.gif"></section>
+    <section id="links"><img src="img/ajax-loader.gif"></section>
+</aside>
+<footer>
+    <p>
+        <small>
+            <a href="https://github.com/making/categolj2-backend">View the Project on GitHub
+                making/categolj2-backend</a>
+        </small>
+    </p>
+</footer>
+</div>
+
+<!-- Templates -->
+<script type="text/x-handlebars-template" id="recent-posts-tmpl">
+    <h3>Recent Posts</h3>
+    <ul class="list list-line">
+        {{#each recentPosts}}
+        <li><a href="#/entries/{{entryId}}" class="entry-title">{{title}}</a></li>
+        {{/each}}
+    </ul>
+</script>
+<script type="text/x-handlebars-template" id="entry-tmpl">
+    <article class="article panel panel-box">
+        <h3 class="article-title"><a href="#/entries/{{entryId}}" class="entry-title">{{title}}</a>
+            <a href="/api/v1/entries/{{entryId}}.pdf"><img src="img/pdf.png" title="PDF Download"></a></h3>
+
+        <p class="article-meta">updated at {{lastModifiedDate}} by <a href="#/users/{{lastModifiedBy}}/entries">{{lastModifiedBy}}</a>
+            created at {{createdDate}} by <a href="#/users/{{createdBy}}/entries">{{createdBy}}</a><br>
+            category: {{categoryLink categoryName}}<br>
+            tags: {{tagsLink tags}}
+        </p>
+
+        <p class="article-lead">
+            {{#if render}}
+            {{unescape contents}}
+            {{/if}}
+            {{#if button}}
+
+        <div>
+            <button class="button button-expand" class="read-contents" data-id="{{entryId}}">Read this article
+            </button>
+        </div>
+        {{/if}}
+        </p>
+        {{#if social}}
+        <hr class="article-divider">
+        <a href="http://b.hatena.ne.jp/entry/{{frontendRoot}}/%23/entries/{{entryId}}" class="hatena-bookmark-button"
+           data-hatena-bookmark-title="{{title}} - {{blogTitle}}"
+           data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img
+                src="http://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加"
+                width="20" height="20" style="border: none;"/></a>
+        <a href="http://twitter.com/share" class="twitter-share-button"
+           data-count="horizontal" data-text="{{title}} - {{blogTitle}}"
+           data-via="making" data-url="{{frontendRoot}}/#/entries/{{entryId}}">Tweet</a>
+        {{/if}}
+    </article>
+</script>
+<script type="text/x-handlebars-template" id="categories-tmpl">
+    <h2>All Categories</h2>
+    <ul class="list list-striped">
+        {{#each categories}}
+        <li>{{categoryLink categoryName}}</li>
+        {{/each}}
+    </ul>
+</script>
+<script type="text/x-handlebars-template" id="tags-tmpl">
+    <h2>All Tags</h2>
+    <ul class="list list-striped">
+        {{#each tags}}
+        <li><a href="/#/tags/{{tagName}}/entries">{{tagName}}</a></li>
+        {{/each}}
+    </ul>
+</script>
+<script type="text/x-handlebars-template" id="links-tmpl">
+    <h3>Links</h3>
+    <ul>
+        {{#each links}}
+        <li><a href="{{url}}">{{linkName}}</a></li>
+        {{/each}}
+    </ul>
+</script>
+<script type="text/x-handlebars-template" id="category-tmpl">
+    <ul class="breadcrumb">{{breadcrumb category}}</ul>
+</script>
+<script type="text/x-handlebars-template" id="search-result-tmpl">
+    <h2>Search for {{keyword}} ...</h2>
+</script>
+<script type="text/x-handlebars-template" id="entries-by-tag-tmpl">
+    <h2>Posts tagged with {{tag}} ...</h2>
+</script>
+<script type="text/x-handlebars-template" id="entries-by-user-tmpl">
+    <h2>Posts by {{username}} ...</h2>
+</script>
+<script type="text/x-handlebars-template" id="pagination-tmpl">
+    <ul class="pagination">
+        <!-- firstPage -->
+        {{#if firstPageDisabled}}
+        <li class="disabled"><span>&lt;&lt;</span></li>
+        {{/if}}
+        {{#if firstPageEnabled}}
+        <li><a class="go-first">&lt;&lt;</a></li>
+        {{/if}}
+        <!-- links -->
+        {{#each links}}
+        {{#if active}}
+        <li class="active"><span>{{displayPage}}</span></li>
+        {{/if}}
+        {{#if inactive}}
+        <li><a class="go-to" data-page="{{page}}">{{displayPage}}</a></li>
+        {{/if}}
+        {{/each}}
+        <!-- lastPage -->
+        {{#if lastPageDisabled}}
+        <li class="disabled"><span>&gt;&gt;</span></li>
+        {{/if}}
+        {{#if lastPageEnabled}}
+        <li><a class="go-last">&gt;&gt;</a></li>
+        {{/if}}
+    </ul>
+</script>
+<script src="config.js"></script>
+<script src="js/bundle.js"></script>
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<!-- buttons -->
+<script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+        async="async"></script>
+<script type="text/javascript"
+        src="http://platform.twitter.com/widgets.js"></script>
+</body>
+</html>
