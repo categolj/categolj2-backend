@@ -1,0 +1,20 @@
+{
+  "App": {
+    "Entries": {
+      "EntryItem": {},
+      "Pager": {}
+    },
+    "Tags": {
+      "TagItem": {}
+    },
+    "Categories": {
+      "CategoryItem": {}
+    },
+    "RecentPosts": {
+      "RecentPostItem": {}
+    },
+    "Links": {
+      "LinkItem": {}
+    }
+  }
+}

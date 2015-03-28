@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Loading</title>
+    <style type="text/css">
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #000;
+            font-size: small;
+        }
+
+        article {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .pagination li {
+            display: inline;
+            margin-left: 5px;
+            font-weight: bold;
+            font-size: large;
+            padding: 10px;
+        }
+
+        .pagination li > a {
+            color: #000;
+            font-weight: normal;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .pagination li.active > a {
+            font-weight: bold;
+            text-decoration: none;
+            cursor: default;
+        }
+
+        .pagination li.disabled > a {
+            text-decoration: none;
+            cursor: not-allowed;
+        }
+
+        .breadcrumb li {
+            display: inline;
+            list-style-type: none;
+            font-size: large;
+        }
+
+        .breadcrumb li:before {
+            content: "::";
+        }
+
+        .breadcrumb li:first-child:before {
+            content: "";
+        }
+
+        .breadcrumb li a {
+            background: no-repeat center right;
+        }
+
+        a, a:visited, a:hover {
+            color: #000;
+        }
+
+        pre > code {
+            font-family: "Monaco", "Courier", monospace;
+            font-size: smaller;
+        }
+
+        code {
+            font-family: "Monaco", "Courier", monospace;
+        }
+
+        .invisible {
+            display: none;
+        }
+
+        .visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="example"></div>
+<script src="config.js"></script>
+<script src="bundle.js"></script>
+</body>
+</html>
