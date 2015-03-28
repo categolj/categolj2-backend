@@ -7,7 +7,12 @@ cache:
 before_script:
   - npm install -g bower
   - which bower
-  - mvn install -f frontend-ui/pom.xml -Dgpg.skip=true
+  - mvn install -f frontend-ui-backbonejs/pom.xml -Dgpg.skip=true
+  - npm install -g gulp
+  - pushd frontend-ui-reactjs
+  - npm install
+  - popd
+  - mvn install -f frontend-ui-reactjs/pom.xml -Dgpg.skip=true
   - mvn install -f backend-ui/pom.xml -Dgpg.skip=true
 script:
   - mvn test -f backend-api/pom.xml
