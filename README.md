@@ -18,6 +18,7 @@ The following technologies are used.
   * Flyway
   * ThymeLeaf
 * Hibernate Search
+* React.js
 * Backbone.js
 * ...
 
@@ -205,8 +206,8 @@ You can reuse embedded frontend. Embedded html/css/javascript are zipped in `cat
 
 ``` bash
 $ unzip -d foo categol2-backend.jar
-$ unzip -d bar foo/lib/categolj2-embedded-frontend-ui*
-$ cp -r bar/static .
+$ unzip -d bar foo/lib/categolj2-frontend-ui*
+$ cp -r bar/META-INF/resources static
 ```
 
 ## Configurable properties
