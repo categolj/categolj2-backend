@@ -33,14 +33,11 @@ var App = React.createClass({
                 <p>{Config.BLOG_DESCRIPTION}</p>
                 <SearchForm />
                 <Loading emitter={Emitter} defaults={true}/>
-                <ul>
-                    <li>
-                        <Link to="tags">All Tags</Link>
-                    </li>
-                    <li>
-                        <Link to="categories">All Categories</Link>
-                    </li>
-                </ul>
+                <p>
+                    <Link to="tags">All Tags</Link>
+                &nbsp;
+                    <Link to="categories">All Categories</Link>
+                </p>
                 <RouteHandler/>
                 <h3>Recent Posts</h3>
                 <RecentPosts />
