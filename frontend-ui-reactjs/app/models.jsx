@@ -4,10 +4,29 @@ var pathPrefix = require('rest/interceptor/pathPrefix');
 var template = require('rest/interceptor/template');
 var defaultRequest = require('rest/interceptor/defaultRequest');
 var Config = require('./Config.js');
+var interceptor = require('rest/interceptor');
+var EventEmitter = require('events').EventEmitter;
+
+var Emitter = new EventEmitter();
+
+var requestCount = 0;
+var emitterInterceptor = interceptor({
+    request: function (request) {
+        requestCount++;
+        Emitter.emit('request', requestCount);
+        return request;
+    },
+    response: function (response) {
+        requestCount--;
+        Emitter.emit('response', requestCount);
+        return response;
+    }
+});
 
 var client = rest.wrap(mime)
     .wrap(defaultRequest, {headers: {'X-Formatted': 'true'}})
-    .wrap(pathPrefix, {prefix: Config.BLOG_URL + '/' + Config.API_ROOT});
+    .wrap(pathPrefix, {prefix: Config.BLOG_URL + '/' + Config.API_ROOT})
+    .wrap(emitterInterceptor);
 
 
 var createBaseModel = function (path, others) {
@@ -115,5 +134,6 @@ module.exports = {
     LinksModel: LinksModel,
     EntriesModel: EntriesModel,
     TagsModel: TagsModel,
-    CategoriesModel: CategoriesModel
+    CategoriesModel: CategoriesModel,
+    Emitter: Emitter
 };

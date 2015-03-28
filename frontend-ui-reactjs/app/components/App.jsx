@@ -10,6 +10,7 @@ var Categories = require('./Categories.jsx');
 var RecentPosts = require('./RecentPosts.jsx');
 var Links = require('./Links.jsx');
 var SearchForm = require('./SearchForm.jsx');
+var Loading = require('./Loading.jsx');
 var Config = require('../Config.js');
 // Router
 var Router = require('react-router');
@@ -17,6 +18,7 @@ var DefaultRoute = Router.DefaultRoute;
 var Link = Router.Link;
 var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
+var Emitter = require('../models.jsx').Emitter;
 
 var App = React.createClass({
     mixins: [],
@@ -30,6 +32,7 @@ var App = React.createClass({
                 </h1>
                 <p>{Config.BLOG_DESCRIPTION}</p>
                 <SearchForm />
+                <Loading emitter={Emitter} defaults={true}/>
                 <ul>
                     <li>
                         <Link to="tags">All Tags</Link>
