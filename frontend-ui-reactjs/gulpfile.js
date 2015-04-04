@@ -18,7 +18,7 @@ gulp.task('browserify', function () {
 });
 
 gulp.task('html', function () {
-    return gulp.src('./assets/**/*.html')
+    return gulp.src('./assets/**/*')
         .pipe(gulp.dest('./dest'));
 });
 

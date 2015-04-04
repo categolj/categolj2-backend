@@ -9,6 +9,7 @@ var defaults = {
 var Config;
 if (!window.Config) {
     Config = {};
+    window.Config = Config;
 } else {
     Config = window.Config;
 }

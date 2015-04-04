@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Loading</title>
+    <link rel="manifest" href="manifest.json">
     <style type="text/css">
         body {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -85,7 +86,44 @@
 </head>
 <body>
 <div id="example"></div>
+<div>
+    <button id="sub">Subscript Notification</button>
+    (requires Service Worker)
+</div>
 <script src="config.js"></script>
 <script src="bundle.js"></script>
+<script src="sw.js"></script>
+<script type="application/javascript">
+    navigator.serviceWorker
+            .register('./sw.js', {scope: './'})
+            .then(function (sw) {
+                // Success!
+                console.log('Registered Service Worker!', sw);
+            }).catch(function (error) {
+                // Error...
+                console.log('Error in registration Service Worker', error);
+            });
+    document.getElementById('sub').addEventListener('click', function () {
+        navigator.serviceWorker.ready.then(function (sw) {
+            console.log(sw);
+            sw.pushManager.subscribe().then(function (sub) {
+                var req = {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        endpoint: sub.endpoint,
+                        subscriptionId: sub.subscriptionId
+                    })
+                };
+                console.log(req);
+                fetch(Config.BLOG_URL + '/notification/subscribe', req);
+            });
+
+        });
+    });
+</script>
 </body>
 </html>

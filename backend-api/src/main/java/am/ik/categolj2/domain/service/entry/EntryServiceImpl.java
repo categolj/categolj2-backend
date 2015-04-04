@@ -25,6 +25,7 @@ import am.ik.categolj2.domain.repository.entry.EntryHistoryRepository;
 import am.ik.categolj2.domain.repository.entry.EntryRepository;
 import am.ik.categolj2.domain.repository.tag.TagAndEntryId;
 import am.ik.categolj2.domain.repository.tag.TagRepository;
+import am.ik.categolj2.domain.service.notification.NotificationSharedService;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
@@ -55,6 +56,8 @@ import java.util.stream.StreamSupport;
 @Service
 @Slf4j
 public class EntryServiceImpl implements EntryService {
+    @Inject
+    NotificationSharedService notificationSharedService;
     @Inject
     EntryRepository entryRepository;
     @Inject
@@ -210,6 +213,10 @@ public class EntryServiceImpl implements EntryService {
             c.getCategoryPK().setEntryId(entryId);
         }
         entry.setCategory(category);
+
+        if (entry.isPublished()) {
+            notificationSharedService.ping();
+        }
         return entry;
     }
 
@@ -219,8 +226,8 @@ public class EntryServiceImpl implements EntryService {
     public Entry update(Integer entryId, Entry updatedEntry,
                         boolean updateLastModifiedDate, boolean saveInHistory) {
         Assert.notNull(updatedEntry, "entry must not be null");
-
         Entry entry = findOne(entryId); // old entry
+        boolean isAlreadyPublished = entry.isPublished();
 
         if (saveInHistory) {
             log.info("save history for entryId={}", entryId);
@@ -239,6 +246,10 @@ public class EntryServiceImpl implements EntryService {
         // copy new values to entry
         beanMapper.map(updatedEntry, entry);
         entryRepository.save(entry);
+
+        if (!isAlreadyPublished && entry.isPublished()) {
+            notificationSharedService.ping();
+        }
         return entry;
     }
 

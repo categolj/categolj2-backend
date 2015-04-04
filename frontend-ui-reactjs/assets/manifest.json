@@ -1,0 +1,8 @@
+{
+  "name": "Push Demo",
+  "short_name": "PD",
+  "start_url": "/index.html?homescreen=1",
+  "display": "standalone",
+  "gcm_sender_id": "949204947326",
+  "gcm_user_visible_only": true
+}
