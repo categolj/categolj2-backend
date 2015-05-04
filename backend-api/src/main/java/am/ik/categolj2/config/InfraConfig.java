@@ -37,7 +37,7 @@ public class InfraConfig {
             ds.setValidationQuery("SELECT 1");
             ds.setTestOnBorrow(true);
             ds.setTestWhileIdle(true);
-            ds.setValidationInterval((int) TimeUnit.MINUTES.toMillis(1));
+            ds.setValidationInterval(TimeUnit.MINUTES.toMillis(1));
             ds.setTimeBetweenEvictionRunsMillis((int) TimeUnit.MINUTES.toMillis(5));
             ds.setValidatorClassName(ConnectionValidator.class.getName());
         }
