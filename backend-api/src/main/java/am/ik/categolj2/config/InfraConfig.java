@@ -72,6 +72,40 @@ public class InfraConfig {
         }
     }
 
+    @Configuration
+    @Profile("db.docker")
+    public static class DockerDbConfiguration {
+        @Value("#{systemEnvironment['MYSQL_PORT_3306_TCP_ADDR']}")
+        String mysqlHost;
+        @Value("#{systemEnvironment['MYSQL_PORT_3306_TCP_PORT']}")
+        int mysqlPort;
+        @Value("${spring.datasource.database:categolj2}")
+        String database;
+        @Inject
+        DataSourceProperties dataSourceProperties;
+        DataSource dataSource;
+
+        @Bean(destroyMethod = "close")
+        DataSource realDataSource() throws URISyntaxException {
+            String url = "jdbc:mysql://" + mysqlHost + ":" + mysqlPort + "/" + database + "?zeroDateTimeBehavior=convertToNull";
+            String username = this.dataSourceProperties.getUsername();
+            String password = this.dataSourceProperties.getPassword();
+
+            DataSourceBuilder factory = DataSourceBuilder
+                    .create()
+                    .url(url)
+                    .username(username)
+                    .password(password);
+            this.dataSource = factory.build();
+            setValidationQuery(this.dataSource);
+            return this.dataSource;
+        }
+
+        @Bean
+        DataSource dataSource() {
+            return new DataSourceSpy(this.dataSource);
+        }
+    }
 
     @Configuration
     @Profile("db.urlstring")
