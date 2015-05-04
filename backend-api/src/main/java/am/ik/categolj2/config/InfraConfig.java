@@ -3,6 +3,7 @@ package am.ik.categolj2.config;
 import am.ik.aws.apa.AwsApaRequester;
 import am.ik.aws.apa.AwsApaRequesterImpl;
 import am.ik.categolj2.domain.AuditAwareBean;
+import am.ik.categolj2.infra.db.ConnectionValidator;
 import am.ik.categolj2.infra.db.UrlStringDevider;
 import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 import org.flywaydb.core.Flyway;
@@ -36,7 +37,7 @@ public class InfraConfig {
         DataSourceProperties dataSourceProperties;
         DataSource dataSource;
 
-        @Bean
+        @Bean(destroyMethod = "close")
         DataSource realDataSource() throws URISyntaxException {
             String url = this.dataSourceProperties.getUrl();
             String username = this.dataSourceProperties.getUsername();
@@ -48,6 +49,14 @@ public class InfraConfig {
                     .username(username)
                     .password(password);
             this.dataSource = factory.build();
+            if (this.dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
+                org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) this.dataSource;
+                ds.setValidationQuery("SELECT 1");
+                ds.setTestOnBorrow(true);
+                ds.setTestWhileIdle(true);
+                ds.setValidationInterval(30);
+                ds.setValidatorClassName(ConnectionValidator.class.getName());
+            }
             return this.dataSource;
         }
 
@@ -63,7 +72,7 @@ public class InfraConfig {
     public static class UrlStringDbConfiguration {
         DataSource dataSource;
 
-        @Bean
+        @Bean(destroyMethod = "close")
         DataSource realDataSource() throws URISyntaxException {
             UrlStringDevider urlStringDevider = new UrlStringDevider(
                     System.getenv("CLEARDB_DATABASE_URL"),
@@ -78,6 +87,14 @@ public class InfraConfig {
                     .username(username)
                     .password(password);
             this.dataSource = factory.build();
+            if (this.dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
+                org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) this.dataSource;
+                ds.setValidationQuery("SELECT 1");
+                ds.setTestOnBorrow(true);
+                ds.setTestWhileIdle(true);
+                ds.setValidationInterval(30);
+                ds.setValidatorClassName(ConnectionValidator.class.getName());
+            }
             return this.dataSource;
         }
 
