@@ -20,6 +20,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableJpaAuditing(setDates = false)
@@ -28,6 +29,18 @@ public class InfraConfig {
     @Bean
     AuditAwareBean auditAwareBean() {
         return new AuditAwareBean();
+    }
+
+    static void setValidationQuery(DataSource dataSource) {
+        if (dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
+            org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) dataSource;
+            ds.setValidationQuery("SELECT 1");
+            ds.setTestOnBorrow(true);
+            ds.setTestWhileIdle(true);
+            ds.setValidationInterval(30);
+            ds.setTimeBetweenEvictionRunsMillis((int) TimeUnit.MINUTES.toMillis(5));
+            ds.setValidatorClassName(ConnectionValidator.class.getName());
+        }
     }
 
     @Configuration
@@ -49,14 +62,7 @@ public class InfraConfig {
                     .username(username)
                     .password(password);
             this.dataSource = factory.build();
-            if (this.dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
-                org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) this.dataSource;
-                ds.setValidationQuery("SELECT 1");
-                ds.setTestOnBorrow(true);
-                ds.setTestWhileIdle(true);
-                ds.setValidationInterval(30);
-                ds.setValidatorClassName(ConnectionValidator.class.getName());
-            }
+            setValidationQuery(this.dataSource);
             return this.dataSource;
         }
 
@@ -87,14 +93,7 @@ public class InfraConfig {
                     .username(username)
                     .password(password);
             this.dataSource = factory.build();
-            if (this.dataSource instanceof org.apache.tomcat.jdbc.pool.DataSource) {
-                org.apache.tomcat.jdbc.pool.DataSource ds = (org.apache.tomcat.jdbc.pool.DataSource) this.dataSource;
-                ds.setValidationQuery("SELECT 1");
-                ds.setTestOnBorrow(true);
-                ds.setTestWhileIdle(true);
-                ds.setValidationInterval(30);
-                ds.setValidatorClassName(ConnectionValidator.class.getName());
-            }
+            setValidationQuery(this.dataSource);
             return this.dataSource;
         }
 
