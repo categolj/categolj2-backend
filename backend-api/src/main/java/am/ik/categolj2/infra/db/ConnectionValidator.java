@@ -12,13 +12,6 @@ public class ConnectionValidator implements Validator {
 
     @Override
     public boolean validate(Connection connection, int validateAction) {
-        try {
-            connection.setReadOnly(true);
-        } catch (SQLException e) {
-            if (log.isWarnEnabled()) {
-                log.warn("setReadOnly(true) failed! connection=" + connection + " action=" + validateAction, e);
-            }
-        }
         try (Statement statement = connection.createStatement()) {
             log.trace("validate query connection={} action={}", connection, validateAction);
             statement.setQueryTimeout(5);
