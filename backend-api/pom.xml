@@ -28,7 +28,7 @@
         <jetty-jsp.version>2.2.0.v201112011158</jetty-jsp.version>
         <servlet-api.version>3.0.1</servlet-api.version>
         <backend-ui>categolj2-backend-ui</backend-ui>
-        <frontend-ui>categolj2-frontend-ui-reactjs</frontend-ui>
+        <frontend-ui>categolj2-frontend-ui-backbonejs</frontend-ui>
         <docker.image.prefix>making</docker.image.prefix>
     </properties>
 
@@ -403,13 +403,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                        <version>${spring-loaded.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
