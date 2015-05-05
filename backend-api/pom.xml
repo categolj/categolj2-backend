@@ -511,7 +511,7 @@
                         <executions>
                             <execution>
                                 <!-- Hibernatetool will generate everything before running tests -->
-                                <phase>test-compile</phase>
+                                <phase>validate</phase>
                                 <configuration>
                                     <target>
                                         <echo message="[gen-ddl] start! (database=${database})"/>
