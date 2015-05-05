@@ -230,7 +230,9 @@ public class AppConfig {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Bean
     TraceRequestLoggingFilter loggingFilter() {
-        return new TraceRequestLoggingFilter();
+        TraceRequestLoggingFilter filter = new TraceRequestLoggingFilter();
+        filter.setIncludeClientInfo(true);
+        return filter;
     }
 
     @Bean

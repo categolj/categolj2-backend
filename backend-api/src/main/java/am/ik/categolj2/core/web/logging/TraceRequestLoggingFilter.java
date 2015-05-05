@@ -16,7 +16,7 @@ public class TraceRequestLoggingFilter extends AbstractRequestLoggingFilter {
         if (logger.isTraceEnabled()) {
             boolean isFirstRequest = !isAsyncDispatch(request);
             if (isFirstRequest) {
-                beforeRequest(request, createMessage(request, "Before[", "]"));
+                beforeRequest(request, createMessage(request, "Before[method=" + request.getMethod() + ", ", "]"));
             }
         }
 
@@ -25,7 +25,7 @@ public class TraceRequestLoggingFilter extends AbstractRequestLoggingFilter {
         } finally {
             if (logger.isTraceEnabled()) {
                 if (!isAsyncStarted(request)) {
-                    afterRequest(request, createMessage(request, "After [", "]"));
+                    afterRequest(request, createMessage(request, "After [method=" + request.getMethod() + ",", "]"));
                 }
             }
         }
