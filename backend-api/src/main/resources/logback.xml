@@ -10,6 +10,7 @@
     <logger name="jdbc.resultsettable" level="${log.sql.result:-ERROR}"/>
     <logger name="org.hibernate" level="WARN"/>
     <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="${log.verbose:-TRACE}"/>
+    <logger name="am.ik.categolj2.core.web.logging.TraceRequestLoggingFilter" level="${log.verbose:-TRACE}"/>
     <logger name="org.springframework.data.auditing" level="debug"/>
     <logger name="com.hazelcast" level="${log.verbose:-INFO}"/>
     <logger name="am.ik.categolj2.App" level="INFO"/>

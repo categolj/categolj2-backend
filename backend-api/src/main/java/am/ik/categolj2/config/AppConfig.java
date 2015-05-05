@@ -3,6 +3,7 @@ package am.ik.categolj2.config;
 import am.ik.categolj2.api.MediaTypeResolver;
 import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.core.web.cors.CrossOriginFilter;
+import am.ik.categolj2.core.web.logging.TraceRequestLoggingFilter;
 import am.ik.categolj2.domain.model.EntryFormat;
 import am.ik.categolj2.infra.codelist.EnumCodeList;
 import am.ik.categolj2.infra.dozer.LazyInitDozerMapper;
@@ -224,6 +225,12 @@ public class AppConfig {
     @Bean
     MDCClearFilter mdcClearFilter() {
         return new MDCClearFilter();
+    }
+
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @Bean
+    TraceRequestLoggingFilter loggingFilter() {
+        return new TraceRequestLoggingFilter();
     }
 
     @Bean
