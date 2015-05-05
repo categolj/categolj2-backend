@@ -48,10 +48,9 @@ public class InfraConfig {
     public static class PropertyDbConfiguration {
         @Inject
         DataSourceProperties dataSourceProperties;
-        DataSource dataSource;
 
-        @Bean(destroyMethod = "close")
-        DataSource realDataSource() throws URISyntaxException {
+        @Bean
+        DataSourceBuilder realDataSourceBuilder() throws URISyntaxException {
             String url = this.dataSourceProperties.getUrl();
             String username = this.dataSourceProperties.getUsername();
             String password = this.dataSourceProperties.getPassword();
@@ -61,14 +60,14 @@ public class InfraConfig {
                     .url(url)
                     .username(username)
                     .password(password);
-            this.dataSource = factory.build();
-            setValidationQuery(this.dataSource);
-            return this.dataSource;
+            return factory;
         }
 
         @Bean
-        DataSource dataSource() {
-            return new DataSourceSpy(this.dataSource);
+        DataSource dataSource(DataSourceBuilder factory) {
+            DataSource dataSource = factory.build();
+            setValidationQuery(dataSource);
+            return new DataSourceSpy(dataSource);
         }
     }
 
@@ -83,10 +82,9 @@ public class InfraConfig {
         String database;
         @Inject
         DataSourceProperties dataSourceProperties;
-        DataSource dataSource;
 
-        @Bean(destroyMethod = "close")
-        DataSource realDataSource() throws URISyntaxException {
+        @Bean
+        DataSourceBuilder realDataSourceBuilder() throws URISyntaxException {
             String url = "jdbc:mysql://" + mysqlHost + ":" + mysqlPort + "/" + database + "?zeroDateTimeBehavior=convertToNull";
             String username = this.dataSourceProperties.getUsername();
             String password = this.dataSourceProperties.getPassword();
@@ -96,14 +94,14 @@ public class InfraConfig {
                     .url(url)
                     .username(username)
                     .password(password);
-            this.dataSource = factory.build();
-            setValidationQuery(this.dataSource);
-            return this.dataSource;
+            return factory;
         }
 
         @Bean
-        DataSource dataSource() {
-            return new DataSourceSpy(this.dataSource);
+        DataSource dataSource(DataSourceBuilder factory) {
+            DataSource dataSource = factory.build();
+            setValidationQuery(dataSource);
+            return new DataSourceSpy(dataSource);
         }
     }
 
@@ -112,8 +110,8 @@ public class InfraConfig {
     public static class UrlStringDbConfiguration {
         DataSource dataSource;
 
-        @Bean(destroyMethod = "close")
-        DataSource realDataSource() throws URISyntaxException {
+        @Bean
+        DataSourceBuilder realDataSourceBuilder() throws URISyntaxException {
             UrlStringDevider urlStringDevider = new UrlStringDevider(
                     System.getenv("CLEARDB_DATABASE_URL"),
                     "zeroDateTimeBehavior=convertToNull");
@@ -126,14 +124,14 @@ public class InfraConfig {
                     .url(url)
                     .username(username)
                     .password(password);
-            this.dataSource = factory.build();
-            setValidationQuery(this.dataSource);
-            return this.dataSource;
+            return factory;
         }
 
         @Bean
-        DataSource dataSource() {
-            return new DataSourceSpy(this.dataSource);
+        DataSource dataSource(DataSourceBuilder factory) {
+            DataSource dataSource = factory.build();
+            setValidationQuery(dataSource);
+            return new DataSourceSpy(dataSource);
         }
     }
 
