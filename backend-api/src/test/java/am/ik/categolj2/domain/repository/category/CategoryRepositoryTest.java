@@ -17,6 +17,7 @@ package am.ik.categolj2.domain.repository.category;
 
 import am.ik.categolj2.App;
 import am.ik.categolj2.domain.repository.entry.EntryRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -26,6 +27,7 @@ import org.terasoluna.gfw.common.query.QueryEscapeUtils;
 
 import javax.inject.Inject;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 // TODO fix slow test
 @SpringApplicationConfiguration(classes = App.class)

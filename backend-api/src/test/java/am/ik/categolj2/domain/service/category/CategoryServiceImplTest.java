@@ -16,6 +16,7 @@
 package am.ik.categolj2.domain.service.category;
 
 import am.ik.categolj2.App;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
@@ -25,6 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 // TODO fix slow test
 @SpringApplicationConfiguration(classes = App.class)
