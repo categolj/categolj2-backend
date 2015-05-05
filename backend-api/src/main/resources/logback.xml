@@ -1,51 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
-    <property name="CONSOLE_LOG_PATTERN"
-              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(%32X{X-Track}){green} %clr(---){faint} %clr([%15.15t{14}]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wex"/>
-    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
-    <property name="MONITORING_LOG_PATTERN"
-              value="date:%d{yyyy-MM-dd HH:mm:ss.SSS}\tPID:${PID:- }\tX-Track:%X{X-Track}\tlevel:%-5level\tmessage:%msg%n"/>
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
-    <conversionRule conversionWord="wex"
-                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
-
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-        </encoder>
-    </appender>
-    <appender name="DEBUG_LEVEL_REMAPPER" class="org.springframework.boot.logging.logback.LevelRemappingAppender">
-        <destinationLogger>org.springframework.boot</destinationLogger>
-    </appender>
-    <appender name="MONITORING_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FILE}.monitoring.%d{yyyyMMdd}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FILE}.monitoring.%d{yyyyMMdd}.%i</fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${MONITORING_LOG_PATTERN}</pattern>
-        </encoder>
-    </appender>
-
-    <root level="${log.verbose:-INFO}">
-        <appender-ref ref="CONSOLE"/>
-    </root>
-    <logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
-    <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
-    <logger name="org.crsh.plugin" level="WARN"/>
-    <logger name="org.apache.tomcat.util.net.NioSelectorPool" level="WARN"/>
-    <logger name="org.apache.catalina.startup.DigesterFactory" level="ERROR"/>
-    <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
-    <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
-    <logger name="org.thymeleaf" additivity="false">
-        <appender-ref ref="DEBUG_LEVEL_REMAPPER"/>
-    </logger>
-    <logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" level="ERROR"
-            additivity="false">
-        <appender-ref ref="MONITORING_LOG_FILE"/>
-    </logger>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!--<logger name="org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring" level="ERROR"-->
+            <!--additivity="false">-->
+        <!--<appender-ref ref="MONITORING_LOG_FILE"/>-->
+    <!--</logger>-->
     <logger name="jdbc" level="OFF"/>
     <logger name="jdbc.sqltiming" level="${log.sql:-DEBUG}"/>
     <logger name="jdbc.resultsettable" level="${log.sql.result:-ERROR}"/>
