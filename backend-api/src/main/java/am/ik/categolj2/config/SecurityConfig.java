@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/admin*", "/admin*");
+        web.ignoring().antMatchers("/resources/**", "/admin*", "/admin*", "/management/health");
     }
 
     @Override

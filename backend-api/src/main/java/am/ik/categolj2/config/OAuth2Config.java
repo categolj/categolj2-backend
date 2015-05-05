@@ -47,7 +47,6 @@ public class OAuth2Config {
                     .antMatchers(HttpMethod.POST, "/api/**").authenticated()
                     .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
                     .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
-                    .antMatchers(HttpMethod.GET, "/management/health**").permitAll()
                     .antMatchers(HttpMethod.GET, "/management/**").authenticated()
                     .antMatchers(HttpMethod.POST, "/management/**").authenticated()
                     .antMatchers(HttpMethod.PUT, "/management/**").authenticated()
