@@ -62,4 +62,3 @@ mysql:
     MYSQL_USER: dbuser
     MYSQL_PASSWORD: changeme
     MYSQL_DATABASE1: categolj2
-    MYSQL_DATABASE2: moneyger4u
