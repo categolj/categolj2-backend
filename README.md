@@ -122,12 +122,7 @@ Go to `http://<Docker Host IP>`
 1st log will be as follows:
 
 ```
-$ docker-compose rm -f
-Going to remove target_categolj2_1, target_mysql_1
-Removing target_mysql_1...
-Removing target_categolj2_1...
-
-[maki@saturn:~/git/categolj2-backend-dev/backend-api/target] docker-compose up
+$ docker-compose up
 Creating target_mysql_1...
 Creating target_categolj2_1...
 Attaching to target_mysql_1, target_categolj2_1
