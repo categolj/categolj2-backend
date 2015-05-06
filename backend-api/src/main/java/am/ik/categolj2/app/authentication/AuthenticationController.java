@@ -19,6 +19,7 @@ import am.ik.categolj2.app.Categolj2Cookies;
 import am.ik.categolj2.core.logger.LogManager;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -30,11 +31,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
+import javax.net.ssl.SSLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,6 +53,8 @@ public class AuthenticationController {
     ConsumerTokenServices tokenServices;
     @Inject
     AuthenticationHelper authenticationHelper;
+    @Value("${server.port:8443}")
+    int httpsPort;
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     String loginForm() {
@@ -71,6 +76,15 @@ public class AuthenticationController {
         } catch (HttpStatusCodeException e) {
             authenticationHelper.handleHttpStatusCodeException(e, attributes);
             return "redirect:/login";
+        } catch (ResourceAccessException e) {
+            // I/O error on POST request for "https://xxxx:8080/oauth/token":Unrecognized SSL message, plaintext connection?
+            if (e.getCause() instanceof SSLException) {
+                // fallback to another port
+                UriComponentsBuilder b = builder.replacePath("").port(httpsPort);
+                return login(username, password, b, attributes, request, response);
+            } else {
+                throw e;
+            }
         }
         return "redirect:/admin";
     }
