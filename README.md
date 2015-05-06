@@ -109,6 +109,70 @@ making/categolj2-backend \
 
 Go to `http://<Docker Host IP>`
 
+In case of using MySQL, [docker-compose.yml](backend-api/docker/docker-compose.yml) is really useful.
+
+```
+$ cd backend-api/docker/docker-compose.yml
+$ docker-compose up
+```
+After this command, MySQL and CategoLJ2 will run and connect ;)
+
+Go to `http://<Docker Host IP>`
+
+1st log will be as follows:
+
+```
+$ docker-compose rm -f
+Going to remove target_categolj2_1, target_mysql_1
+Removing target_mysql_1...
+Removing target_categolj2_1...
+
+[maki@saturn:~/git/categolj2-backend-dev/backend-api/target] docker-compose up
+Creating target_mysql_1...
+Creating target_categolj2_1...
+Attaching to target_mysql_1, target_categolj2_1
+mysql_1     | Running mysql_install_db ...
+mysql_1     | 2015-05-06 18:39:46 0 [Note] /usr/sbin/mysqld (mysqld 5.6.24-log) starting as process 13 ...
+...
+mysql_1     | 2015-05-06 18:40:16 13 [Note] InnoDB: Setting log file ./ib_logfile1 size to 1024 MB
+mysql_1     | InnoDB: Progress in MB: 100 200 300 400 500 600 700 800 900 1000
+categolj2_1 | Picked up _JAVA_OPTIONS: -Duser.timezone=JST -Djava.awt.headless=false -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/categolj2/ -Xloggc:/var/log/categolj2/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=10M -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=80 -XX:MaxTenuringThreshold=10 -XX:ErrorFile=/var/log/categolj2/hs_err_pid%p.log
+categolj2_1 |
+categolj2_1 | 2015-05-06 18:40:50.642  INFO 1 --- [           main] am.ik.categolj2.App                      : Starting App v1.0.0-SNAPSHOT on 95041a7555f9 with PID 1 (/opt/categolj2-backend/categolj2-backend.jar started by root in /opt/categolj2-backend)
+mysql_1     | 2015-05-06 18:40:51 13 [Note] InnoDB: Renaming log file ./ib_logfile101 to ./ib_logfile0
+...
+mysql_1     | 2015-05-06 18:41:01 1 [Note] Execution of init_file '/tmp/mysql-first-time.sql' started.
+mysql_1     | 2015-05-06 18:41:01 1 [Warning] 'proxies_priv' entry '@ root@abc9de9b36f2' ignored in --skip-name-resolve mode.
+mysql_1     | 2015-05-06 18:41:01 1 [Note] Execution of init_file '/tmp/mysql-first-time.sql' ended.
+mysql_1     | 2015-05-06 18:41:01 1 [Note] mysqld: ready for connections.
+mysql_1     | Version: '5.6.24-log'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
+categolj2_1 | 2015-05-06 18:41:01.973  INFO 1 --- [           main] am.ik.categolj2.config.InfraConfig       : Check DB availability... (172.17.0.87:3306)
+categolj2_1 | 2015-05-06 18:41:02.696  INFO 1 --- [           main] am.ik.categolj2.config.InfraConfig       : OK
+categolj2_1 | 2015-05-06 18:41:31.401  INFO 1 --- [           main] o.s.w.s.c.a.WebMvcConfigurerAdapter      : Adding welcome page: jar:file:/opt/categolj2-backend/categolj2-backend.jar!/lib/categolj2-frontend-ui-backbonejs-1.0.0-SNAPSHOT.jar!/META-INF/resources/index.html
+categolj2_1 | 2015-05-06 18:41:33.267  INFO 1 --- [           main] am.ik.categolj2.App                      : Started App in 43.453 seconds (JVM running for 73.168)
+```
+It will be slow because mysql is initialized.
+
+2nd+ will be the following:
+
+```
+$ docker-compose up
+Recreating target_mysql_1...
+Recreating target_categolj2_1...
+Attaching to target_mysql_1, target_categolj2_1
+categolj2_1 | Picked up _JAVA_OPTIONS: -Duser.timezone=JST -Djava.awt.headless=false -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/categolj2/ -Xloggc:/var/log/categolj2/gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=10M -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=80 -XX:MaxTenuringThreshold=10 -XX:ErrorFile=/var/log/categolj2/hs_err_pid%p.log
+categolj2_1 |
+mysql_1     | 2015-05-06 18:45:55 0 [Note] mysqld (mysqld 5.6.24-log) starting as process 1 ...
+...
+mysql_1     | 2015-05-06 18:45:57 1 [Note] mysqld: ready for connections.
+mysql_1     | Version: '5.6.24-log'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
+categolj2_1 | 2015-05-06 18:46:08.999  INFO 1 --- [           main] am.ik.categolj2.App                      : Starting App v1.0.0-SNAPSHOT on 115ef47bee44 with PID 1 (/opt/categolj2-backend/categolj2-backend.jar started by root in /opt/categolj2-backend)
+categolj2_1 | 2015-05-06 18:46:19.909  INFO 1 --- [           main] am.ik.categolj2.config.InfraConfig       : Check DB availability... (172.17.0.90:3306)
+categolj2_1 | 2015-05-06 18:46:20.642  INFO 1 --- [           main] am.ik.categolj2.config.InfraConfig       : OK
+categolj2_1 | 2015-05-06 18:46:35.776  INFO 1 --- [           main] o.s.w.s.c.a.WebMvcConfigurerAdapter      : Adding welcome page: jar:file:/opt/categolj2-backend/categolj2-backend.jar!/lib/categolj2-frontend-ui-backbonejs-1.0.0-SNAPSHOT.jar!/META-INF/resources/index.html
+categolj2_1 | 2015-05-06 18:46:37.982  INFO 1 --- [           main] am.ik.categolj2.App                      : Started App in 29.826 seconds (JVM running for 34.083)
+```
+
 ## Backend APIs
 
 Supported REST APIs are following.

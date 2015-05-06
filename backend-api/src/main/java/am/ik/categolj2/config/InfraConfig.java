@@ -5,8 +5,12 @@ import am.ik.aws.apa.AwsApaRequesterImpl;
 import am.ik.categolj2.domain.AuditAwareBean;
 import am.ik.categolj2.infra.db.ConnectionValidator;
 import am.ik.categolj2.infra.db.UrlStringDevider;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.LoggerContext;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 import org.flywaydb.core.Flyway;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -20,10 +24,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableJpaAuditing(setDates = false)
+@Slf4j
 public class InfraConfig {
 
     @Bean
@@ -101,7 +109,47 @@ public class InfraConfig {
         DataSource dataSource(DataSourceBuilder factory) {
             DataSource dataSource = factory.build();
             setValidationQuery(dataSource);
+            checkDbAvailiability(dataSource);
             return new DataSourceSpy(dataSource);
+        }
+
+        void checkDbAvailiability(DataSource dataSource) {
+            // ** Hack for Docker Compose **
+            // Check Availability because DB could not start yet by Docker Compose
+            log.info("Check DB availability... ({}:{})", mysqlHost, mysqlPort);
+
+            LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+            Level currentLevel = context.getLogger("org.apache.tomcat.jdbc.pool.ConnectionPool").getLevel();
+            context.getLogger("org.apache.tomcat.jdbc.pool.ConnectionPool").setLevel(Level.OFF);
+            int retryMax = 10;
+            for (int i = 0; i < retryMax; i++) {
+                if (i > 0) {
+                    long sleep = 2 * i;
+                    log.info("Retry after {} sec ({}/{})", sleep, i + 1, retryMax);
+                    try {
+                        TimeUnit.SECONDS.sleep(sleep);
+                    } catch (InterruptedException e) {
+                        log.info("Interrupted!");
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                try (Connection connection = dataSource.getConnection();
+                     Statement statement = connection.createStatement()) {
+                    statement.execute("SELECT 1");
+                    log.info("OK");
+                    break;
+                } catch (SQLException e) {
+                    String message = e.getMessage();
+                    if (message != null) {
+                        message = message.replace("\n", "").replace("\r", "");
+                    }
+                    log.info("NG ({})", message);
+                    if (i + 1 == retryMax) {
+                        throw new IllegalStateException("Failed checking DB availability", e);
+                    }
+                }
+            }
+            context.getLogger("org.apache.tomcat.jdbc.pool.ConnectionPool").setLevel(currentLevel);
         }
     }
 

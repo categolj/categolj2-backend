@@ -1,0 +1,65 @@
+"categolj2":
+  image: making/categolj2-backend
+  links:
+    - mysql:mysql
+  ports:
+    - "80:8080"
+    - "443:8443"
+  volumes:
+    - "/tmp/categolj2:/tmp"
+    - "/var/log/categolj2:/var/log/categolj2"
+  environment:
+    _JAVA_OPTIONS: >
+     -Duser.timezone=JST
+     -Djava.awt.headless=false
+     -XX:+HeapDumpOnOutOfMemoryError
+     -XX:HeapDumpPath=/var/log/categolj2/
+     -Xloggc:/var/log/categolj2/gc.log
+     -XX:+PrintGCDetails
+     -XX:+PrintGCDateStamps
+     -XX:+UseGCLogFileRotation
+     -XX:NumberOfGCLogFiles=5
+     -XX:GCLogFileSize=10M
+     -XX:+UseConcMarkSweepGC
+     -XX:CMSInitiatingOccupancyFraction=80
+     -XX:MaxTenuringThreshold=10
+     -XX:ErrorFile=/var/log/categolj2/hs_err_pid%p.log
+  command: >
+   --spring.profiles.active=cache.guava,db.docker
+   --spring.thymeleaf.cache=true
+   --log.verbose=WARN
+   --logging.file=/var/log/categolj2/app.log
+   --logging.level.jdbc.resultsettable=ERROR
+   --logging.level.jdbc.sqltiming=ERROR
+   --logging.level.org=WARN
+   --logging.level.am=WARN
+   --logging.level./=WARN
+   --logging.level.am.ik.categolj2.config.InfraConfig=INFO
+   --logging.level.am.ik.categolj2.App=INFO
+   --logging.level.org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter=INFO
+   --logging.level.org.springframework.data.auditing.AuditingHandler=DEBUG
+   --hibernate.search.default.indexBase=/tmp/hibernate-search
+   --aws.accesskey.id=<Accesskey ID>
+   --aws.secret.accesskey=<Secret Accesskey>
+   --spring.datasource.driverClassName=com.mysql.jdbc.Driver
+   --spring.datasource.username=dbuser
+   --spring.datasource.password=changeme
+   --spring.datasource.database=categolj2
+   --spring.jpa.database=MYSQL
+   --categolj2.db=MYSQL
+   --categolj2.filedownload.cache.seconds=345600
+   --server-http.port=8080
+   --endpoints.configprops.keys-to-sanitize=".*(password|secret|key|command).*"
+   --endpoints.env.keys-to-sanitize=".*(password|secret|key|command).*"
+mysql:
+  image: making/mysql
+  ports:
+    - "3306:3306"
+  volumes:
+    - "/opt/mysql/data2:/var/lib/mysql"
+  environment:
+    MYSQL_ROOT_PASSWORD: rootpass
+    MYSQL_USER: dbuser
+    MYSQL_PASSWORD: changeme
+    MYSQL_DATABASE1: categolj2
+    MYSQL_DATABASE2: moneyger4u
