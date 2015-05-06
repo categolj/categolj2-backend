@@ -77,7 +77,7 @@ If Docker is not installed follow this: https://docs.docker.com/installation/
 * Deploy to Docker Container
  ```sh
  docker images # List all Docker images
- docker run -p 8080:8080 -p 8443:8443 <image id>
+ docker run -p 80:80 -p 443:443 <image id>
  ```
 
 ### Run with deployed Docker image
