@@ -124,7 +124,7 @@ public class InfraConfig {
             int retryMax = 10;
             for (int i = 0; i < retryMax; i++) {
                 if (i > 0) {
-                    long sleep = 2 * i;
+                    long sleep = 3 * i;
                     log.info("Retry after {} sec ({}/{})", sleep, i + 1, retryMax);
                     try {
                         TimeUnit.SECONDS.sleep(sleep);
