@@ -1,4 +1,4 @@
-FROM dockerfile/java:oracle-java8
+FROM java:8
 MAINTAINER Toshiaki Maki <makingx at gmail.com>
 
 EXPOSE 8080 8443
