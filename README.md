@@ -59,7 +59,7 @@ In this case, you have to run `create database categolj2` using `mysql` command 
 Other properties are explained in [Configurable properties](#configurable-properties).
 
 
-## Experimental Docker Support
+## Docker Support
 
 If Docker is not installed follow this: https://docs.docker.com/installation/
 
@@ -79,6 +79,35 @@ If Docker is not installed follow this: https://docs.docker.com/installation/
  docker images # List all Docker images
  docker run -p 8080:8080 -p 8443:8443 <image id>
  ```
+
+### Run with deployed Docker image
+
+You can use [deployed Docker image](https://registry.hub.docker.com/u/making/categolj2-backend/).
+
+Run with the following command:
+
+```
+docker run -d \
+--name categolj2 \
+-p 80:8080 \
+-p 443:8443 \
+-v /tmp/categolj2:/tmp \
+-v /var/log/categolj2:/var/log/categolj2 \
+-e "_JAVA_OPTIONS=-Duser.timezone=JST" \
+making/categolj2-backend \
+--spring.thymeleaf.cache=true \
+--log.verbose=WARN \
+--logging.file=/var/log/categolj2/app.log \
+--logging.level.jdbc.resultsettable=ERROR \
+--logging.level.jdbc.sqltiming=ERROR \
+--logging.level.org=WARN \
+--logging.level.am=WARN \
+--logging.level./=WARN \
+--logging.level.am.ik.categolj2.App=INFO \
+--logging.level.org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter=INFO
+```
+
+Go to `http://<Docker Host IP>`
 
 ## Backend APIs
 
