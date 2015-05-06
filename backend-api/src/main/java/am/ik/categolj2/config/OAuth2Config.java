@@ -33,6 +33,8 @@ public class OAuth2Config {
     @EnableResourceServer
     protected static class ResourceServerConfiguration extends
             ResourceServerConfigurerAdapter {
+        @Inject
+        Categolj2AdminProperties adminProperties;
 
         @Override
         public void configure(ResourceServerSecurityConfigurer resources) {
@@ -51,8 +53,10 @@ public class OAuth2Config {
                     .antMatchers(HttpMethod.POST, "/management/**").authenticated()
                     .antMatchers(HttpMethod.PUT, "/management/**").authenticated()
                     .antMatchers(HttpMethod.DELETE, "/management/**").authenticated();
-            http.requiresChannel()
-                    .antMatchers("/login**").requiresSecure();
+            if (adminProperties.isForceHttps()) {
+                http.requiresChannel()
+                        .antMatchers("/login**").requiresSecure();
+            }
             http.headers().disable();
         }
     }
@@ -66,7 +70,7 @@ public class OAuth2Config {
         @Inject
         AuthenticationManager authenticationManager;
         @Inject
-        OAuth2AdminClientProperties adminClientProperties;
+        Categolj2AdminProperties adminClientProperties;
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints)

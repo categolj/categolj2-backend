@@ -7,6 +7,7 @@ categolj2:
   admin:
     clientId: categolj2-admin
     clientSecret: categolj2-secret
+    forceHttps: true
 
 aws:
   accesskey.id: <Your Accesskey ID for AWS>

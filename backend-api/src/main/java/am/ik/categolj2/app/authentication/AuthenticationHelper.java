@@ -16,7 +16,7 @@
 package am.ik.categolj2.app.authentication;
 
 import am.ik.categolj2.app.Categolj2Cookies;
-import am.ik.categolj2.config.OAuth2AdminClientProperties;
+import am.ik.categolj2.config.Categolj2AdminProperties;
 import am.ik.categolj2.core.logger.LogManager;
 import am.ik.categolj2.core.web.RemoteAddresses;
 import am.ik.categolj2.core.web.UserAgents;
@@ -62,7 +62,7 @@ public class AuthenticationHelper {
     @Inject
     ObjectMapper objectMapper;
     @Inject
-    OAuth2AdminClientProperties adminClientProperties;
+    Categolj2AdminProperties adminClientProperties;
 
     public HttpEntity<MultiValueMap<String, Object>> createRopRequest(String username, String password) {
         MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
