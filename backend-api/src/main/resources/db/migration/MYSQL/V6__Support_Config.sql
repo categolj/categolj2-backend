@@ -8,7 +8,7 @@ CREATE TABLE config (
   config_value       VARCHAR(2048) NOT NULL,
   PRIMARY KEY (config_name)
 )
-  ENGINE = InnoDB;
+  ENGINE = InnoDB ROW_FORMAT=DYNAMIC;
 
 
 INSERT INTO config (config_name, config_value, created_by, created_date, last_modified_by, last_modified_date)
