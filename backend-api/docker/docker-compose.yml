@@ -3,8 +3,8 @@
   links:
     - mysql:mysql
   ports:
-    - "80:8080"
-    - "443:8443"
+    - "80:80"
+    - "443:443"
   volumes:
     - "/tmp/categolj2:/tmp"
     - "/var/log/categolj2:/var/log/categolj2"
@@ -12,6 +12,8 @@
     _JAVA_OPTIONS: >
      -Duser.timezone=JST
      -Djava.awt.headless=false
+     -Xms512m
+     -Xmx1g
      -XX:+HeapDumpOnOutOfMemoryError
      -XX:HeapDumpPath=/var/log/categolj2/
      -Xloggc:/var/log/categolj2/gc.log
@@ -48,7 +50,6 @@
    --spring.jpa.database=MYSQL
    --categolj2.db=MYSQL
    --categolj2.filedownload.cache.seconds=345600
-   --server-http.port=8080
    --endpoints.configprops.keys-to-sanitize=".*(password|secret|key|command).*"
    --endpoints.env.keys-to-sanitize=".*(password|secret|key|command).*"
 mysql:

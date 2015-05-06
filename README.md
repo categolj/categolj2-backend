@@ -89,11 +89,13 @@ Run with the following command:
 ```
 docker run -d \
 --name categolj2 \
--p 80:8080 \
--p 443:8443 \
+-p 80:80 \
+-p 443:443 \
 -v /tmp/categolj2:/tmp \
 -v /var/log/categolj2:/var/log/categolj2 \
--e "_JAVA_OPTIONS=-Duser.timezone=JST" \
+-e "_JAVA_OPTIONS=-Duser.timezone=JST \
+-Xms512m \
+-Xmx1g" \
 making/categolj2-backend \
 --spring.thymeleaf.cache=true \
 --log.verbose=WARN \
