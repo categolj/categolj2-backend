@@ -99,7 +99,6 @@ docker run -d \
 making/categolj2-backend \
 --spring.thymeleaf.cache=true \
 --log.verbose=WARN \
---logging.file=/var/log/categolj2/app.log \
 --logging.level.jdbc.resultsettable=ERROR \
 --logging.level.jdbc.sqltiming=ERROR \
 --logging.level.org=WARN \
