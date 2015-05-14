@@ -22,9 +22,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.Collections;
+
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = App.class)
@@ -48,9 +50,9 @@ import java.util.Collections;
 public class ThriftHandlerIntegrationTest {
     @Value("${local.server.port}")
     int port;
-    @Inject
+    @Autowired
     TProtocolFactory protocolFactory;
-    @Inject
+    @Autowired
     HttpClient httpClient;
     TCategolj2.Client client;
 
@@ -64,7 +66,6 @@ public class ThriftHandlerIntegrationTest {
         TTransport transport = new THttpClient("https://localhost:" + port + "/thrift", httpClient);
         TProtocol protocol = protocolFactory.getProtocol(transport);
         client = new TCategolj2.Client(protocol);
-
 
         // clean data
         entryRepository.deleteAll();
@@ -84,6 +85,9 @@ public class ThriftHandlerIntegrationTest {
 
     @Test
     public void testFindOne() throws Exception {
-        System.out.println(client.findOne(1));
+        TEntry result = client.findOne(1);
+        assertThat(result.getEntryId(), is(entry1.getEntryId()));
+        assertThat(result.getTitle(), is(entry1.getTitle()));
+        assertThat(result.getContents(), is(entry1.getContents()));
     }
 }
