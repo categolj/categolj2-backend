@@ -612,6 +612,7 @@
                                 <phase>validate</phase>
                                 <configuration>
                                     <target name="gen">
+                                        <property name="suffix" value="" />
                                         <condition property="suffix" value=".exe">
                                             <os family="windows"/>
                                         </condition>
