@@ -13,7 +13,7 @@
         </encoder>
     </appender>
 
-    <root level="${log.verbose:-WARN}">
+    <root level="${log.verbose:-INFO}">
         <appender-ref ref="CONSOLE"/>
     </root>
     <logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
@@ -31,4 +31,5 @@
     <logger name="org.springframework.data.auditing" level="debug"/>
     <logger name="com.hazelcast" level="${log.verbose:-INFO}"/>
     <logger name="am.ik.categolj2" level="DEBUG" />
+    <logger name="am.ik.categolj2.core.web.logging.TraceRequestLoggingFilter" level="${log.verbose:-TRACE}" />
 </configuration>

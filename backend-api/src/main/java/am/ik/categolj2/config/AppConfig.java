@@ -89,14 +89,19 @@ public class AppConfig {
     }
 
     @Bean
-    RestTemplate restTemplate() throws Exception {
+    HttpClient httpClient() throws Exception {
         SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, new TrustSelfSignedStrategy()).useTLS().build();
         SSLConnectionSocketFactory connectionFactory = new SSLConnectionSocketFactory(sslContext, new AllowAllHostnameVerifier());
 
         HttpClient httpClient = HttpClientBuilder.create()
                 .setSSLSocketFactory(connectionFactory)
                 .build();
-        return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+        return httpClient;
+    }
+
+    @Bean
+    RestTemplate restTemplate() throws Exception {
+        return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient()));
     }
 //
 //    @Bean
@@ -231,6 +236,7 @@ public class AppConfig {
     @Bean
     TraceRequestLoggingFilter loggingFilter() {
         TraceRequestLoggingFilter filter = new TraceRequestLoggingFilter();
+        filter.setIncludePayload(true);
         filter.setIncludeClientInfo(true);
         return filter;
     }

@@ -24,6 +24,7 @@
         <hazelcast.version>3.2</hazelcast.version>
         <dozer.version>5.5.1</dozer.version>
         <flyway.plugin.version>2.3</flyway.plugin.version>
+        <thrift.version>0.9.2</thrift.version>
         <jetty.version>8.1.15.v20140411</jetty.version>
         <jetty-jsp.version>2.2.0.v201112011158</jetty-jsp.version>
         <servlet-api.version>3.0.1</servlet-api.version>
@@ -238,6 +239,11 @@
             <artifactId>dozer-spring</artifactId>
             <version>${dozer.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>${thrift.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
@@ -376,6 +382,39 @@
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9.1</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/generated/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-resource</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/generated/resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
@@ -546,6 +585,44 @@
                                                      format="true"/>
                                         </hibernatetool>
                                         <echo message="[gen-ddl] completed!"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>gen-thrift</id>
+            <properties>
+                <thrift.dir>${basedir}/thrift</thrift.dir>
+                <out.dir>${basedir}/src/generated/java</out.dir>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <target name="gen">
+                                        <condition property="suffix" value=".exe">
+                                            <os family="windows"/>
+                                        </condition>
+                                        <echo message="Clean Files ${out.dir}"/>
+                                        <delete>
+                                            <fileset dir="${out.dir}" />
+                                        </delete>
+                                        <echo message="Gen Thrift"/>
+                                        <exec executable="${thrift.dir}/thrift-${thrift.version}${suffix}">
+                                            <arg line="-r --gen java:beans -out ${out.dir} ${thrift.dir}/categolj2.thrift" />
+                                        </exec>
                                     </target>
                                 </configuration>
                                 <goals>
