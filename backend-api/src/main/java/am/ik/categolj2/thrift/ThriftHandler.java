@@ -16,6 +16,6 @@ public class ThriftHandler implements TCategolj2.Iface {
 
     @Override
     public TEntry findOne(int entryId) throws TException {
-        return beanMapper.map(entryService.findOne(entryId), TEntry.class);
+        return beanMapper.map(entryService.findOnePublished(entryId), TEntry.class);
     }
 }
