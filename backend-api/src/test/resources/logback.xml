@@ -24,9 +24,10 @@
     <logger name="org.apache.catalina.util.LifecycleBase" level="ERROR"/>
     <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="ERROR"/>
     <logger name="jdbc" level="OFF"/>
-    <logger name="jdbc.sqltiming" level="${log.sql:-WARN}"/>
-    <logger name="jdbc.resultsettable" level="${log.sql.result:-WARN}"/>
+    <logger name="jdbc.sqltiming" level="${log.sql:-OFF}"/>
+    <logger name="jdbc.resultsettable" level="${log.sql.result:-OFF}"/>
     <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.hibernate.tool" level="OFF"/>
     <logger name="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" level="${log.verbose:-TRACE}"/>
     <logger name="org.springframework.data.auditing" level="debug"/>
     <logger name="com.hazelcast" level="${log.verbose:-INFO}"/>
