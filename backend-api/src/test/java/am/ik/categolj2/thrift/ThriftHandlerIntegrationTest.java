@@ -85,7 +85,7 @@ public class ThriftHandlerIntegrationTest {
 
     @Test
     public void testFindOne() throws Exception {
-        TEntry result = client.findOne(1);
+        TEntry result = client.findOne(entry1.getEntryId());
         assertThat(result.getEntryId(), is(entry1.getEntryId()));
         assertThat(result.getTitle(), is(entry1.getTitle()));
         assertThat(result.getContents(), is(entry1.getContents()));
