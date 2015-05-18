@@ -1,10 +1,13 @@
 package am.ik.categolj2.thrift;
 
 import am.ik.categolj2.App;
+import am.ik.categolj2.core.message.MessageKeys;
 import am.ik.categolj2.domain.model.Categories;
 import am.ik.categolj2.domain.model.Entry;
+import am.ik.categolj2.domain.model.Link;
 import am.ik.categolj2.domain.model.Tag;
 import am.ik.categolj2.domain.repository.entry.EntryRepository;
+import am.ik.categolj2.domain.repository.link.LinkRepository;
 import com.google.common.collect.Sets;
 import org.apache.http.client.HttpClient;
 import org.apache.thrift.protocol.TProtocol;
@@ -13,7 +16,9 @@ import org.apache.thrift.transport.THttpClient;
 import org.apache.thrift.transport.TTransport;
 import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,9 +29,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = App.class)
@@ -58,8 +64,17 @@ public class ThriftHandlerIntegrationTest {
 
     @Autowired
     EntryRepository entryRepository;
+    @Autowired
+    LinkRepository linkRepository;
+    // Test Data
     Entry entry1;
+    Link link1;
+    Link link2;
+
     DateTime now = new DateTime();
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
@@ -69,6 +84,8 @@ public class ThriftHandlerIntegrationTest {
 
         // clean data
         entryRepository.deleteAll();
+        linkRepository.deleteAll();
+
         // setup data
         entry1 = new Entry(null, "This is entry1!", "**Hello World1!**", "md", Arrays.asList(), true, Arrays.asList(), Collections.<Tag>emptySet());
         entry1.setCreatedBy("admin");
@@ -80,14 +97,42 @@ public class ThriftHandlerIntegrationTest {
         entry1.getCategory().stream().forEach(c -> c.getCategoryPK().setEntryId(entry1.getEntryId()));
         entry1.setTags(Sets.newHashSet(new Tag("Java"), new Tag("Spring")));
 
+        link1 = new Link("https://google.com", "Google");
+        link2 = new Link("https://twitter.com", "Twitter");
+
         entryRepository.save(Arrays.asList(entry1));
+        linkRepository.save(Arrays.asList(link1, link2));
+        entryRepository.flush();
     }
 
     @Test
-    public void testFindOne() throws Exception {
-        TEntry result = client.findOne(entry1.getEntryId());
+    public void testFindOnePublishedEntry() throws Exception {
+        TEntry result = client.findOnePublishedEntry(entry1.getEntryId());
         assertThat(result.getEntryId(), is(entry1.getEntryId()));
         assertThat(result.getTitle(), is(entry1.getTitle()));
         assertThat(result.getContents(), is(entry1.getContents()));
+    }
+
+    @Test
+    public void testFindOnePublishedEntry_NotFound() throws Exception {
+        expectedException.expect(TCategolj2ClientException.class);
+        expectedException.expect(hasProperty("errorCode", is(MessageKeys.E_CT_EN_8201)));
+        expectedException.expect(hasProperty("errorMessage", is("The requested entry is not found. [entryId=" + Integer.MAX_VALUE + "]")));
+        client.findOnePublishedEntry(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void testFindAllLinks() throws Exception {
+        List<TLink> result = client.findAllLinks();
+        TLink tLink1 = new TLink();
+        tLink1.setUrl(link1.getUrl());
+        tLink1.setLinkName(link1.getLinkName());
+        TLink tLink2 = new TLink();
+        tLink2.setUrl(link2.getUrl());
+        tLink2.setLinkName(link2.getLinkName());
+
+        assertThat(result, is(notNullValue()));
+        assertThat(result, hasSize(2));
+        assertThat(result, hasItems(tLink1, tLink2));
     }
 }
