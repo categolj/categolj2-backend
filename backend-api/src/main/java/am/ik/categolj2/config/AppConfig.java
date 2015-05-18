@@ -25,6 +25,7 @@ import org.springframework.aop.Advisor;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -242,12 +243,15 @@ public class AppConfig {
     }
 
     @Bean
-    FilterRegistrationBean crossOriginFilter() {
+    FilterRegistrationBean crossOriginFilter(@Value("${cros.allowOrigin:*}") String allowOrigin) {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        filterRegistrationBean.setFilter(new CrossOriginFilter());
+        CrossOriginFilter filter = new CrossOriginFilter();
+        filter.setAllowOrigin(allowOrigin);
+        filterRegistrationBean.setFilter(filter);
         filterRegistrationBean.addUrlPatterns(
                 "/api/v1/*",
-                "/management/*");
+                "/management/*",
+                "/thrift");
         return filterRegistrationBean;
     }
 
