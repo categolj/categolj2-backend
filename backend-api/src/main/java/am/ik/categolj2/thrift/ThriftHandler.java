@@ -37,6 +37,13 @@ public class ThriftHandler implements TCategolj2.Iface {
     }
 
     @Override
+    public List<TEntry> findAllPublishedUpdatedRecently() throws TException {
+        return entryService.findAllPublishedUpdatedRecently().stream()
+                .map(entry -> beanMapper.map(entry, TEntry.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<TLink> findAllLinks() throws TException {
         return linkService.findAll().stream()
                 .map(link -> beanMapper.map(link, TLink.class))

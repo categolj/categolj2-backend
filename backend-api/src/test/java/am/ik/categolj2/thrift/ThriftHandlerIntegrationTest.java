@@ -68,6 +68,7 @@ public class ThriftHandlerIntegrationTest {
     LinkRepository linkRepository;
     // Test Data
     Entry entry1;
+    Entry entry2;
     Link link1;
     Link link2;
 
@@ -97,20 +98,34 @@ public class ThriftHandlerIntegrationTest {
         entry1.getCategory().stream().forEach(c -> c.getCategoryPK().setEntryId(entry1.getEntryId()));
         entry1.setTags(Sets.newHashSet(new Tag("Java"), new Tag("Spring")));
 
+        entry2 = new Entry(null, "This is entry2!", "**Hello World2!**", "md", Arrays.asList(), true, Arrays.asList(), Collections.<Tag>emptySet());
+        entry2.setCreatedBy("admin");
+        entry2.setCreatedDate(now);
+        entry2.setLastModifiedBy("admin");
+        entry2.setLastModifiedDate(now);
+        entry2 = entryRepository.saveAndFlush(entry2);
+        entry2.setCategory(Categories.fromCategory("aa::bb::cc").getCategories());
+        entry2.getCategory().stream().forEach(c -> c.getCategoryPK().setEntryId(entry2.getEntryId()));
+        entry2.setTags(Sets.newHashSet(new Tag("Java"), new Tag("Spring")));
+
         link1 = new Link("https://google.com", "Google");
         link2 = new Link("https://twitter.com", "Twitter");
 
-        entryRepository.save(Arrays.asList(entry1));
+        entryRepository.save(Arrays.asList(entry1, entry2));
         linkRepository.save(Arrays.asList(link1, link2));
         entryRepository.flush();
     }
 
     @Test
-    public void testFindOnePublishedEntry() throws Exception {
-        TEntry result = client.findOnePublishedEntry(entry1.getEntryId());
-        assertThat(result.getEntryId(), is(entry1.getEntryId()));
-        assertThat(result.getTitle(), is(entry1.getTitle()));
-        assertThat(result.getContents(), is(entry1.getContents()));
+    public void testFindAllPublishedUpdatedRecently() throws Exception {
+        List<TEntry> result = client.findAllPublishedUpdatedRecently();
+        assertThat(result, hasSize(2));
+        TEntry e1 = result.get(0);
+        TEntry e2 = result.get(1);
+        assertThat(e2.getEntryId(), is(entry1.getEntryId()));
+        assertThat(e2.getTitle(), is(entry1.getTitle()));
+        assertThat(e1.getEntryId(), is(entry2.getEntryId()));
+        assertThat(e1.getTitle(), is(entry2.getTitle()));
     }
 
     @Test
@@ -119,6 +134,14 @@ public class ThriftHandlerIntegrationTest {
         expectedException.expect(hasProperty("errorCode", is(MessageKeys.E_CT_EN_8201)));
         expectedException.expect(hasProperty("errorMessage", is("The requested entry is not found. [entryId=" + Integer.MAX_VALUE + "]")));
         client.findOnePublishedEntry(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void testFindOnePublishedEntry() throws Exception {
+        TEntry result = client.findOnePublishedEntry(entry1.getEntryId());
+        assertThat(result.getEntryId(), is(entry1.getEntryId()));
+        assertThat(result.getTitle(), is(entry1.getTitle()));
+        assertThat(result.getContents(), is(entry1.getContents()));
     }
 
     @Test

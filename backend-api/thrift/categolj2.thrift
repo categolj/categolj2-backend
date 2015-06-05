@@ -24,5 +24,6 @@ exception TCategolj2ServerException {
 
 service TCategolj2 {
   TEntry findOnePublishedEntry(1: i32 entryId) throws (1: TCategolj2ClientException clientException, 2: TCategolj2ServerException serverException),
+  list<TEntry> findAllPublishedUpdatedRecently(),
   list<TLink> findAllLinks()
 }
